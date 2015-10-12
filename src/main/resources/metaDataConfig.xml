@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<event id="PIGINFO">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="sireId" order="2" isEmpty="false" />
+			<col key="damId" order="3" isEmpty="false" />
+			<col key="entryDate" order="4" isEmpty="false" />
+			<col key="origin" order="5" isEmpty="false" />
+			<col key="gline" order="6" isEmpty="false" />
+			<col key="gcompany" order="7" isEmpty="false" />
+			<col key="birthDate" order="8" isEmpty="false" />
+			<col key="tattoo" order="9" isEmpty="false" />
+			<col key="alternateTattoo" order="10" isEmpty="false" />
+			<col key="remarks" order="11" isEmpty="false" />
+			<col key="companyId" order="12" isEmpty="false" />
+			<col key="penId" order="13" isEmpty="false" />
+			<col key="barnId" order="14" isEmpty="false" />
+			<col key="sexTypeId" order="15" isEmpty="false" />
+			<col key="parity" order="16" isEmpty="false" />
+			<col key="gfunctionTypeId" order="17" isEmpty="false" />
+		</dataInfo>
+	</event>
+</config>

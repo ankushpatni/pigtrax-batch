@@ -25,7 +25,7 @@ public class BarnDaoImpl implements BarnDao {
 	private static final Logger logger = Logger.getLogger(BarnDaoImpl.class);
 
 	@Override
-	public Integer getBarnPKId(final Integer barnId) throws SQLException {
+	public Integer getBarnPKId(final String barnId) throws SQLException {
 		List<Integer> retValList = new ArrayList<Integer>(0);
 		logger.debug("barnId is :" + barnId);
 		StringBuffer qryBuffer = new StringBuffer();
@@ -35,7 +35,7 @@ public class BarnDaoImpl implements BarnDao {
 			retValList = jdbcTemplate.query(qry, new PreparedStatementSetter() {
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setString(1, barnId.toString());
+					ps.setString(1, barnId);
 				}
 			}, new RowMapper<Integer>() {
 				@Override
@@ -44,7 +44,7 @@ public class BarnDaoImpl implements BarnDao {
 				}
 			});
 		}
-		if(retValList.size() > 0){
+		if (retValList.size() > 0) {
 			logger.debug("retVal is :" + retValList.get(0));
 			return retValList.get(0);
 		}

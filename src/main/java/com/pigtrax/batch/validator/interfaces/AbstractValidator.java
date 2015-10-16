@@ -22,7 +22,7 @@ public abstract class AbstractValidator implements Validator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				for (com.pigtrax.batch.config.Config.Event.DataInfo.Col col : columnList) {
 					try {
-						if (col.getIsEmpty() != null && Boolean.parseBoolean(col.getIsEmpty())) {
+						if (!Boolean.parseBoolean(col.getIsEmpty())) {
 							if (!isEmpty(col.getKey(), processDTO.getBatchType().getMapperClass(), mapper)) {
 								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_EMPTY_CODE, Constants.ERR_EMPTY_MESSAGE, col.getKey(), false));
 								mapper.setRecovrableErrors(false);
@@ -45,7 +45,7 @@ public abstract class AbstractValidator implements Validator {
 	private boolean isEmpty(final String proerty, Class<?> clazz, Object object) throws Exception {
 		Field field = clazz.getDeclaredField(proerty);
 		field.setAccessible(true);
-		if (field == null || field.get(object) == null || !field.get(object).toString().equalsIgnoreCase("")) {
+		if (field == null || field.get(object) == null || field.get(object).toString().equalsIgnoreCase("")) {
 			return false;
 		}
 		return true;

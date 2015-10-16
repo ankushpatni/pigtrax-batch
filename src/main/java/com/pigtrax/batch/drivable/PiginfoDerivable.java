@@ -72,7 +72,7 @@ public class PiginfoDerivable implements Derivable {
 	private void setBarnId(final PigInfoMapper pigInfoMapper) {
 		if (pigInfoMapper.getBarnId() != null) {
 			try {
-				pigInfoMapper.setDeriveBarnId(barnDaoImpl.getBarnPKId(Integer.parseInt(pigInfoMapper.getBarnId())));
+				pigInfoMapper.setDeriveBarnId(barnDaoImpl.getBarnPKId(pigInfoMapper.getBarnId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -101,7 +101,7 @@ public class PiginfoDerivable implements Derivable {
 	private void setPenId(final PigInfoMapper pigInfoMapper) {
 		if (pigInfoMapper.getPenId() != null) {
 			try {
-				pigInfoMapper.setDerivePenId(penDaoImpl.getPenPKId(Integer.parseInt(pigInfoMapper.getPenId())));
+				pigInfoMapper.setDerivePenId(penDaoImpl.getPenPKId(pigInfoMapper.getPenId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

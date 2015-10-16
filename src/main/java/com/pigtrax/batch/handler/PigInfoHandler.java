@@ -23,7 +23,6 @@ import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
-import com.pigtrax.batch.util.DateUtil;
 import com.pigtrax.batch.util.ErrorBeanUtil;
 
 @Service
@@ -129,7 +128,7 @@ public class PigInfoHandler implements Handler {
 			Mapper mapper = null;
 			while (itr.hasNext()) {
 				mapper = (itr.next());
-				bufferedWriter.write("Pig Id is: " + mapper.getId());
+				bufferedWriter.write("----Pig Id is: " + mapper.getId());
 				bufferedWriter.newLine();
 				bufferedWriter.newLine();
 				bufferedWriter.write("Non Recoverable Error are : ");
@@ -192,7 +191,7 @@ public class PigInfoHandler implements Handler {
 	}
 
 	private String getFileName(final String originalFileName) {
-		return originalFileName.toLowerCase().replaceAll(".csv", "_report.csv");
+		return originalFileName.toLowerCase().replaceAll(".csv", "_report.txt");
 	}
 
 }

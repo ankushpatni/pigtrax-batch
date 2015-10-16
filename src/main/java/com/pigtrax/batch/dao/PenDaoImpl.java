@@ -24,7 +24,7 @@ public class PenDaoImpl implements PenDao {
 	private static final Logger logger = Logger.getLogger(PenDaoImpl.class);
 
 	@Override
-	public Integer getPenPKId(final Integer penId) throws SQLException {
+	public Integer getPenPKId(final String penId) throws SQLException {
 		List<Integer> retValList = new ArrayList<Integer>(0);
 		logger.debug("penId is :" + penId);
 		StringBuffer qryBuffer = new StringBuffer();
@@ -34,7 +34,7 @@ public class PenDaoImpl implements PenDao {
 			retValList = jdbcTemplate.query(qry, new PreparedStatementSetter() {
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setString(1, penId.toString());
+					ps.setString(1, penId);
 				}
 			}, new RowMapper<Integer>() {
 				@Override
@@ -43,7 +43,7 @@ public class PenDaoImpl implements PenDao {
 				}
 			});
 		}
-		if(retValList.size() > 0){
+		if (retValList.size() > 0) {
 			logger.debug("retVal is :" + retValList.get(0));
 			return retValList.get(0);
 		}

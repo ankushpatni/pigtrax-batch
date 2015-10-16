@@ -22,7 +22,7 @@ public class PenDaoImpl implements PenDao {
 		Integer retVal = null;
 		logger.debug("penId is :" + penId);
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select id from pigtrax.\"Barn\" where \"penId\" = ?");
+		qryBuffer.append("select id from pigtrax.\"Pen\" where \"penId\" = ?");
 		final String qry = qryBuffer.toString();
 		retVal = jdbcTemplate.queryForObject(qry, Integer.class, penId);
 		logger.debug("retVal is :" + retVal);

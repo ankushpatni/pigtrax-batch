@@ -1,10 +1,14 @@
 package com.pigtrax.batch.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +24,21 @@ public class BarnDaoImpl implements BarnDao {
 
 	@Override
 	public Integer getBarnPKId(final Integer barnId) throws SQLException {
-		Integer retVal = null;
+		List<Integer> retValList = new ArrayList<Integer>(0);
 		logger.debug("barnId is :" + barnId);
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select id from pigtrax.\"Barn\" where \"barnId\" = ?");
 		final String qry = qryBuffer.toString();
-		if(barnId != null){
-			retVal = jdbcTemplate.queryForObject(qry, Integer.class, barnId.toString());
+		if (barnId != null) {
+			retValList = jdbcTemplate.query(qry, new RowMapper<Integer>() {
+				@Override
+				public Integer mapRow(ResultSet rs, int arg1) throws SQLException {
+					return rs.getInt(1);
+				}
+			});
 		}
-		logger.debug("retVal is :" + retVal);
-		return retVal;
+		logger.debug("retVal is :" + retValList.get(0));
+		return retValList.get(0);
 	}
 
 }

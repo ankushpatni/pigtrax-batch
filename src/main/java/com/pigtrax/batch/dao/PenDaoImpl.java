@@ -24,7 +24,9 @@ public class PenDaoImpl implements PenDao {
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select id from pigtrax.\"Pen\" where \"penId\" = ?");
 		final String qry = qryBuffer.toString();
-		retVal = jdbcTemplate.queryForObject(qry, Integer.class, penId);
+		if(penId != null){
+			retVal = jdbcTemplate.queryForObject(qry, Integer.class, penId.toString());
+		}
 		logger.debug("retVal is :" + retVal);
 		return retVal;
 	}

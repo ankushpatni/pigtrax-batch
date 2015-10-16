@@ -25,8 +25,9 @@ public class BarnDaoImpl implements BarnDao {
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select id from pigtrax.\"Barn\" where \"barnId\" = ?");
 		final String qry = qryBuffer.toString();
-
-		retVal = jdbcTemplate.queryForObject(qry, Integer.class, barnId);
+		if(barnId != null){
+			retVal = jdbcTemplate.queryForObject(qry, Integer.class, barnId.toString());
+		}
 		logger.debug("retVal is :" + retVal);
 		return retVal;
 	}

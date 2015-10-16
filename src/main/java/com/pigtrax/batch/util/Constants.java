@@ -38,4 +38,14 @@ public interface Constants {
 
 	public static final String REF_DATA_NOT_FOUND_MSG = "REF_DATA_NOT_FOUND";
 
+	public static final String CUSTOM_VAL_ERR = "CUSTOM_VALIDATION_ERROR";
+
+	public static final String ERR_DATA_TYPE_MIS_MATCH = "501";
+
+	public static final String ERR_DATA_TYPE_MIS_MATCH_MSG = "Data type is wrong";
+
+	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "601";
+
+	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "Entry date should be greater that birthdate by 90 days";
+
 }

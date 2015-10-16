@@ -2,13 +2,13 @@ package com.pigtrax.batch.mapper.interfaces;
 
 public abstract class AbstractMapper implements Mapper {
 
-	private boolean isRecovrableErrors = true;
+	private Boolean isRecovrableErrors;
 
-	public boolean isRecovrableErrors() {
+	public Boolean isRecovrableErrors() {
 		return isRecovrableErrors;
 	}
 
-	public void setRecovrableErrors(boolean isRecovrableErrors) {
+	public void setRecovrableErrors(Boolean isRecovrableErrors) {
 		this.isRecovrableErrors = isRecovrableErrors;
 	}
 

@@ -3,6 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pigtrax-batch</groupId>
 	<artifactId>pigtrax-batch</artifactId>
+	<packaging>war</packaging>
 	<version>0.1</version>
 	<name>PigtraxBatch</name>
 	<url>http://maven.apache.org</url>
@@ -126,6 +127,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<build>
+		<finalName>pigtrax-batch</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

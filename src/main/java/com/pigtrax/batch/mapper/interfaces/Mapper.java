@@ -2,9 +2,9 @@ package com.pigtrax.batch.mapper.interfaces;
 
 public interface Mapper {
 
-	public boolean isRecovrableErrors();
+	public Boolean isRecovrableErrors();
 
-	public void setRecovrableErrors(final boolean isRecovrableErrors);
+	public void setRecovrableErrors(final Boolean isRecovrableErrors);
 
 	public String getId();
 

@@ -13,13 +13,11 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 
 @Repository
-@Transactional
 public class PigInfoDaoImpl implements PigInfoDao {
 
 	@Autowired

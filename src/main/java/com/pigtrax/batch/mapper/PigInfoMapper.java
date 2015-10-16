@@ -1,5 +1,8 @@
 package com.pigtrax.batch.mapper;
 
+import java.util.Date;
+import java.util.UUID;
+
 import com.pigtrax.batch.mapper.interfaces.AbstractMapper;
 
 public class PigInfoMapper extends AbstractMapper {
@@ -20,6 +23,89 @@ public class PigInfoMapper extends AbstractMapper {
 	private String sexTypeId;
 	private String parity;
 	private String gfunctionTypeId;
+
+	// Derivable properties
+	private Integer deriveFfunctionTypeId;
+	private Integer deriveSexId;
+	private Integer derivePenId;
+	private Integer deriveBarnId;
+	private Integer deriveParity;
+	private Integer deriveCompanyId;
+	private Date deriveBirthDate;
+	private Date deriveEntryDate;
+	private Date deriveFarrowEventDate;
+
+	public Integer getDeriveFfunctionTypeId() {
+		return deriveFfunctionTypeId;
+	}
+
+	public void setDeriveFfunctionTypeId(Integer deriveFfunctionTypeId) {
+		this.deriveFfunctionTypeId = deriveFfunctionTypeId;
+	}
+
+	public Integer getDeriveSexId() {
+		return deriveSexId;
+	}
+
+	public void setDeriveSexId(Integer deriveSexId) {
+		this.deriveSexId = deriveSexId;
+	}
+
+	public Integer getDerivePenId() {
+		return derivePenId;
+	}
+
+	public void setDerivePenId(Integer derivePenId) {
+		this.derivePenId = derivePenId;
+	}
+
+	public Integer getDeriveBarnId() {
+		return deriveBarnId;
+	}
+
+	public void setDeriveBarnId(Integer deriveBarnId) {
+		this.deriveBarnId = deriveBarnId;
+	}
+
+	public Integer getDeriveParity() {
+		return deriveParity;
+	}
+
+	public void setDeriveParity(Integer deriveParity) {
+		this.deriveParity = deriveParity;
+	}
+
+	public Integer getDeriveCompanyId() {
+		return deriveCompanyId;
+	}
+
+	public void setDeriveCompanyId(Integer deriveCompanyId) {
+		this.deriveCompanyId = deriveCompanyId;
+	}
+
+	public Date getDeriveBirthDate() {
+		return deriveBirthDate;
+	}
+
+	public void setDeriveBirthDate(Date deriveBirthDate) {
+		this.deriveBirthDate = deriveBirthDate;
+	}
+
+	public Date getDeriveEntryDate() {
+		return deriveEntryDate;
+	}
+
+	public void setDeriveEntryDate(Date deriveEntryDate) {
+		this.deriveEntryDate = deriveEntryDate;
+	}
+
+	public Date getDeriveFarrowEventDate() {
+		return deriveFarrowEventDate;
+	}
+
+	public void setDeriveFarrowEventDate(Date deriveFarrowEventDate) {
+		this.deriveFarrowEventDate = deriveFarrowEventDate;
+	}
 
 	public String getPigId() {
 		return pigId;
@@ -159,7 +245,10 @@ public class PigInfoMapper extends AbstractMapper {
 
 	@Override
 	public String getId() {
-		return getPigId();
+		if (getPigId() == null) {
+			return UUID.randomUUID().toString().replaceAll("-", "");
+		} else {
+			return getPigId();
+		}
 	}
-
 }

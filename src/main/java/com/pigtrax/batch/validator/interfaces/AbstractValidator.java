@@ -2,7 +2,6 @@ package com.pigtrax.batch.validator.interfaces;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +14,9 @@ import com.pigtrax.batch.util.ErrorBeanUtil;
 
 public abstract class AbstractValidator implements Validator {
 
-	public Map<String, List<ErrorBean>> runBaseValidation(final List<Mapper> list, final Config.Event event, final ProcessDTO processDTO) {
+	public Map<Mapper, List<ErrorBean>> runBaseValidation(final List<Mapper> list, final Config.Event event, final ProcessDTO processDTO,
+			final Map<Mapper, List<ErrorBean>> errorMap) {
 		List<com.pigtrax.batch.config.Config.Event.DataInfo.Col> columnList = event.getDataInfo().getCol();
-		Map<String, List<ErrorBean>> errorMap = new HashMap<String, List<ErrorBean>>();
-		int count = 0;
 		if (list != null && list.size() > 0) {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
@@ -31,11 +29,13 @@ public abstract class AbstractValidator implements Validator {
 							}
 						}
 					} catch (Exception exception) {
+						exception.printStackTrace();
 						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE, col.getKey(), false));
+						mapper.setRecovrableErrors(false);
 					}
 				}
 				if (errList != null && errList.size() > 0) {
-					errorMap.put(mapper.getId() == null ? Constants.NO_ID_FOUND + count++ : mapper.getId(), errList);
+					errorMap.put(mapper, errList);
 				}
 			}
 		}

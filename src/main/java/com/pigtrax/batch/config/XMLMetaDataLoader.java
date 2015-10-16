@@ -22,6 +22,7 @@ public class XMLMetaDataLoader implements MetaDataLoader {
 			return config;
 		} catch (Exception e) {
 			logger.error("excption in XMLMetaDataLoader.load" + e);
+			e.printStackTrace();
 			throw new Exception("Exception while loading metadata" + e);
 		}
 	}

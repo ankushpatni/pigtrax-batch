@@ -14,8 +14,8 @@
 			<col key="alternateTattoo" order="10" isEmpty="false" />
 			<col key="remarks" order="11" isEmpty="false" />
 			<col key="companyId" order="12" isEmpty="false" />
-			<col key="penId" order="13" isEmpty="false" />
-			<col key="barnId" order="14" isEmpty="false" />
+			<col key="penId" order="13" isEmpty="true" />
+			<col key="barnId" order="14" isEmpty="true" />
 			<col key="sexTypeId" order="15" isEmpty="false" />
 			<col key="parity" order="16" isEmpty="false" />
 			<col key="gfunctionTypeId" order="17" isEmpty="false" />

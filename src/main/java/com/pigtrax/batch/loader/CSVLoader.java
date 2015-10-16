@@ -39,6 +39,7 @@ public class CSVLoader implements DataLoader<List<Mapper>> {
 			return list;
 		} catch (Exception e) {
 			logger.error("Exception in CSVLoader" + e);
+			e.printStackTrace();
 		}
 		return null;
 	}

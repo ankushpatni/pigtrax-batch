@@ -8,5 +8,5 @@ import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 
 public interface Validator {
-	public Map<String, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO);
+	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO);
 }

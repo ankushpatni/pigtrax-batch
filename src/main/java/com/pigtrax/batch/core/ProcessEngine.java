@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.pigtrax.batch.config.BatchType;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
+import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.loader.interfaces.DataLoader;
@@ -41,6 +42,7 @@ public class ProcessEngine implements Process {
 			logger.info("Total time taken for execution : " + (endTime - startTime) + " (ms)");
 		} catch (Exception e) {
 			logger.error("excption in ProcessEngine.execute" + e);
+			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
 	}
@@ -54,12 +56,14 @@ public class ProcessEngine implements Process {
 		if (mapper == null) {
 			throw new RuntimeException("Data mapping is failed");
 		}
-		Map<String, List<ErrorBean>> errorBeans = getValidator(processDTO.getBatchType()).validate(mapper, processDTO);
+		getDerivable(processDTO.getBatchType()).derive(mapper, processDTO);
+		Map<Mapper, List<ErrorBean>> errorBeans = getValidator(processDTO.getBatchType()).validate(mapper, processDTO);
 		Handler handler = getHandler(processDTO.getBatchType());
 		handler.execute(mapper, errorBeans, processDTO);
 	}
 
 	private ProcessDTO getProcessDTO(final Map<String, Object> inputMap) {
+		System.out.println(inputMap);
 		ProcessDTO processDTO = new ProcessDTO();
 		try {
 			processDTO.setBatchType(BatchType.valueOf(inputMap.get(Constants.EVENT_TYPE).toString()));
@@ -70,6 +74,7 @@ public class ProcessEngine implements Process {
 			processDTO.setUserName(inputMap.get(Constants.USER_NAME).toString());
 		} catch (Exception e) {
 			logger.error("excption in ProcessEngine.getProcessDTO" + e);
+			e.printStackTrace();
 			throw new RuntimeException("input map is invalid, Please check all params.");
 		}
 		return processDTO;
@@ -83,4 +88,7 @@ public class ProcessEngine implements Process {
 		return (Handler) applicationContext.getBean(batchType.getHandlerClass());
 	}
 
+	private Derivable getDerivable(final BatchType batchType) {
+		return (Derivable) applicationContext.getBean(batchType.getDriveClass());
+	}
 }

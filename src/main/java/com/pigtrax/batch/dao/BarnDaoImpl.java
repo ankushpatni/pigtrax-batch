@@ -23,7 +23,7 @@ public class BarnDaoImpl implements BarnDao {
 		Integer retVal = null;
 		logger.debug("barnId is :" + barnId);
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select id from pigtrax.barn where barnId = ?");
+		qryBuffer.append("select id from pigtrax.\"Barn\" where \"barnId\" = ?");
 		final String qry = qryBuffer.toString();
 
 		retVal = jdbcTemplate.queryForObject(qry, Integer.class, barnId);

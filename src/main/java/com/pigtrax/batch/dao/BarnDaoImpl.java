@@ -39,8 +39,8 @@ public class BarnDaoImpl implements BarnDao {
 				}
 			}, new RowMapper<Integer>() {
 				@Override
-				public Integer mapRow(ResultSet rs, int arg1) throws SQLException {
-					return rs.getInt(1);
+				public Integer mapRow(ResultSet rs, int rownum) throws SQLException {
+					return rs.getInt(rownum);
 				}
 			});
 		}

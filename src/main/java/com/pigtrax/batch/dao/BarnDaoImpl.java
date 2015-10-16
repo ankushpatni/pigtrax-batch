@@ -44,8 +44,11 @@ public class BarnDaoImpl implements BarnDao {
 				}
 			});
 		}
-		logger.debug("retVal is :" + retValList.get(0));
-		return retValList.get(0);
+		if(retValList.size() > 0){
+			logger.debug("retVal is :" + retValList.get(0));
+			return retValList.get(0);
+		}
+		return null;
 	}
 
 }

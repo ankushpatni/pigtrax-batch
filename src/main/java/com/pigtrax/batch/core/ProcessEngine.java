@@ -112,7 +112,7 @@ public class ProcessEngine implements Process {
 			outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
 			bufferedWriter = new BufferedWriter(outputStreamWriter);
 
-			bufferedWriter.write(":::::::::::::::Start - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
+			bufferedWriter.write(":::::::::::::::Start - " + processDTO.getBatchType() + " Batch Report :::::::::::::::::::::::");
 			bufferedWriter.newLine();
 			bufferedWriter.write("Total Input Records ::" + totalRecordsInInput);
 			bufferedWriter.newLine();
@@ -163,7 +163,7 @@ public class ProcessEngine implements Process {
 
 			}
 			bufferedWriter.newLine();
-			bufferedWriter.write(":::::::::::::::END - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
+			bufferedWriter.write(":::::::::::::::End - " + processDTO.getBatchType() + " Batch Report :::::::::::::::::::::::");
 			bufferedWriter.close();
 		} catch (Exception ex) {
 			if (bufferedWriter != null) {

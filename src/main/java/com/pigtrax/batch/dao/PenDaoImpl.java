@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,28 +27,31 @@ public class PenDaoImpl implements PenDao {
 
 	@Override
 	public Integer getPenPKId(final String penId) throws SQLException {
-		List<Integer> retValList = new ArrayList<Integer>(0);
 		logger.debug("penId is :" + penId);
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select id from pigtrax.\"Pen\" where \"penId\" = ?");
 		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
 		if (penId != null) {
-			retValList = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
 					ps.setString(1, penId);
 				}
-			}, new RowMapper<Integer>() {
-				@Override
-				public Integer mapRow(ResultSet rs, int rownum) throws SQLException {
-					return rs.getInt(rownum);
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
 				}
 			});
+			logger.debug("penId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
 		}
-		if (retValList.size() > 0) {
-			logger.debug("retVal is :" + retValList.get(0));
-			return retValList.get(0);
-		}
+
 		return null;
 	}
 }

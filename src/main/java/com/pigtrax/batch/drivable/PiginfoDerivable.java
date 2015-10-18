@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.BarnDaoImpl;
-import com.pigtrax.batch.dao.PenDaoImpl;
+import com.pigtrax.batch.dao.interfaces.BarnDao;
+import com.pigtrax.batch.dao.interfaces.CompanyDao;
+import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -18,10 +19,13 @@ import com.pigtrax.batch.util.DateUtil;
 public class PiginfoDerivable implements Derivable {
 
 	@Autowired
-	private BarnDaoImpl barnDaoImpl;
+	private BarnDao barnDao;
 
 	@Autowired
-	private PenDaoImpl penDaoImpl;
+	private PenDao penDao;
+
+	@Autowired
+	private CompanyDao companyDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -72,7 +76,7 @@ public class PiginfoDerivable implements Derivable {
 	private void setBarnId(final PigInfoMapper pigInfoMapper) {
 		if (pigInfoMapper.getBarnId() != null) {
 			try {
-				pigInfoMapper.setDeriveBarnId(barnDaoImpl.getBarnPKId(pigInfoMapper.getBarnId()));
+				pigInfoMapper.setDeriveBarnId(barnDao.getBarnPKId(pigInfoMapper.getBarnId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -81,7 +85,7 @@ public class PiginfoDerivable implements Derivable {
 
 	private void setCompanyId(final PigInfoMapper pigInfoMapper) {
 		try {
-			pigInfoMapper.setDeriveCompanyId(Integer.parseInt(pigInfoMapper.getCompanyId()));
+			pigInfoMapper.setDeriveCompanyId(companyDao.getCompanyId(pigInfoMapper.getCompanyId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,7 +105,7 @@ public class PiginfoDerivable implements Derivable {
 	private void setPenId(final PigInfoMapper pigInfoMapper) {
 		if (pigInfoMapper.getPenId() != null) {
 			try {
-				pigInfoMapper.setDerivePenId(penDaoImpl.getPenPKId(pigInfoMapper.getPenId()));
+				pigInfoMapper.setDerivePenId(penDao.getPenPKId(pigInfoMapper.getPenId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

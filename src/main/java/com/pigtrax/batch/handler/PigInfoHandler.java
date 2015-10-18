@@ -1,12 +1,7 @@
 package com.pigtrax.batch.handler;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +29,9 @@ public class PigInfoHandler implements Handler {
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
-	public void execute(final List<Mapper> list, final Map<Mapper, List<ErrorBean>> errorMap, final ProcessDTO processDTO) {
+	public Map<String, Object> execute(final List<Mapper> list, final Map<Mapper, List<ErrorBean>> errorMap, final ProcessDTO processDTO) {
+		Map<String, Object> output = new HashMap<String, Object>();
+
 		int totalRecordsInInput = list != null ? list.size() : 0;
 		int totalRecordsProcessed = 0;
 		if (list != null) {
@@ -60,8 +57,11 @@ public class PigInfoHandler implements Handler {
 					}
 				}
 			}
-			sendReport(errorMap, totalRecordsProcessed, totalRecordsInInput, processDTO);
+			output.put("errors", errorMap);
+			output.put("size", totalRecordsInInput);
+			output.put("success", totalRecordsProcessed);
 		}
+		return output;
 	}
 
 	private PigInfo populatePigIfnfo(final Map<Mapper, List<ErrorBean>> errorMap, final PigInfoMapper pigInfoMaper, final ProcessDTO processDTO) {
@@ -97,101 +97,6 @@ public class PigInfoHandler implements Handler {
 			errorMap.put(pigInfoMaper, errList);
 		}
 		return pigInfo;
-	}
-
-	// Need to refactor this method make it more generic/modular and use string
-	// buffer.
-	private void sendReport(final Map<Mapper, List<ErrorBean>> errorMap, final int totalProcessedRecords, final int totalRecordsInInput,
-			final ProcessDTO processDTO) {
-
-		FileOutputStream outputStream = null;
-		OutputStreamWriter outputStreamWriter = null;
-		BufferedWriter bufferedWriter = null;
-		try {
-			String fileName = "report.txt";
-			File reportFile = new File(getFileName(processDTO.getDataSrc()));
-			outputStream = new FileOutputStream(reportFile);
-			outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
-			bufferedWriter = new BufferedWriter(outputStreamWriter);
-
-			bufferedWriter.write(":::::::::::::::Start - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
-			bufferedWriter.newLine();
-			bufferedWriter.write("Total Input Records ::" + totalRecordsInInput);
-			bufferedWriter.newLine();
-			bufferedWriter.newLine();
-			bufferedWriter.write("Total Successfully Processed Records ::" + totalProcessedRecords);
-			bufferedWriter.newLine();
-			bufferedWriter.newLine();
-
-			Iterator<Mapper> itr = errorMap.keySet().iterator();
-			List<ErrorBean> lst = null;
-			Mapper mapper = null;
-			while (itr.hasNext()) {
-				mapper = (itr.next());
-				bufferedWriter.write("----Pig Id is: " + mapper.getId());
-				bufferedWriter.newLine();
-				bufferedWriter.newLine();
-				bufferedWriter.write("Non Recoverable Error are : ");
-				lst = errorMap.get(mapper);
-				int nonRecoverCount = 0;
-				for (ErrorBean errBean : lst) {
-					if (!errBean.isRecoverable()) {
-						bufferedWriter.newLine();
-						bufferedWriter.write("Error Code : " + errBean.getCode() + "  Error for Property : " + errBean.getProperty() + "  Error Message is : "
-								+ errBean.getMessage());
-						bufferedWriter.newLine();
-						nonRecoverCount++;
-					}
-				}
-				bufferedWriter.write("Total Non Recoverable Error are : " + nonRecoverCount);
-				bufferedWriter.newLine();
-				bufferedWriter.newLine();
-				bufferedWriter.write("Recoverable Error are:");
-				bufferedWriter.newLine();
-				lst = errorMap.get(mapper);
-				int recoverCount = 0;
-				for (ErrorBean errBean : lst) {
-					if (errBean.isRecoverable()) {
-						bufferedWriter.newLine();
-						bufferedWriter.write("Error Code : " + errBean.getCode() + "  Error for Property : " + errBean.getProperty() + "  Error Message is : "
-								+ errBean.getMessage());
-						bufferedWriter.newLine();
-						recoverCount++;
-					}
-				}
-				bufferedWriter.newLine();
-				bufferedWriter.write("Total Recoverable Error are:" + recoverCount);
-				bufferedWriter.newLine();
-
-			}
-			bufferedWriter.newLine();
-			bufferedWriter.write(":::::::::::::::END - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
-			bufferedWriter.close();
-		} catch (Exception ex) {
-			if (bufferedWriter != null) {
-				try {
-					bufferedWriter.close();
-				} catch (IOException e) {
-				}
-			}
-			if (outputStreamWriter != null) {
-				try {
-					outputStreamWriter.close();
-				} catch (IOException e) {
-				}
-			}
-			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-				}
-			}
-			ex.printStackTrace();
-		}
-	}
-
-	private String getFileName(final String originalFileName) {
-		return originalFileName.toLowerCase().replaceAll(".csv", "_report.txt");
 	}
 
 }

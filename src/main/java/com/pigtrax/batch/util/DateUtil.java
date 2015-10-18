@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 public class DateUtil {
 
+	private static final String DATE_FORMATTER = "MM/dd/yyyy";
+
 	private static final String DEFAULT_FORMATTER = "yyyy-MM-dd";
 
 	private static final Logger logger = Logger.getLogger(DateUtil.class);
@@ -28,8 +30,12 @@ public class DateUtil {
 		try {
 			return new SimpleDateFormat(DEFAULT_FORMATTER).parse(date);
 		} catch (Exception e) {
-			logger.error("Exception in DateUtil.getDateFromString" + e.getMessage());
-			e.printStackTrace();
+			try {
+				logger.error("Exception in DateUtil.getDateFromString" + e.getMessage());
+				return new SimpleDateFormat(DATE_FORMATTER).parse(date);
+			} catch (Exception ex) {
+				logger.error("Exception in DateUtil.getDateFromString" + ex.getMessage());
+			}
 		}
 		return null;
 	}

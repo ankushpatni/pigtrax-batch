@@ -9,6 +9,6 @@ import com.pigtrax.batch.mapper.interfaces.Mapper;
 
 public interface Handler {
 
-	public void execute(final List<Mapper> list, final Map<Mapper, List<ErrorBean>> map, final ProcessDTO processDTO);
+	public Map<String, Object> execute(final List<Mapper> list, final Map<Mapper, List<ErrorBean>> map, final ProcessDTO processDTO);
 
 }

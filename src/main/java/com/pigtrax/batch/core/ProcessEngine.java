@@ -1,5 +1,11 @@
 package com.pigtrax.batch.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,12 +64,11 @@ public class ProcessEngine implements Process {
 		}
 		getDerivable(processDTO.getBatchType()).derive(mapper, processDTO);
 		Map<Mapper, List<ErrorBean>> errorBeans = getValidator(processDTO.getBatchType()).validate(mapper, processDTO);
-		Handler handler = getHandler(processDTO.getBatchType());
-		handler.execute(mapper, errorBeans, processDTO);
+		Map<String, Object> output = getHandler(processDTO.getBatchType()).execute(mapper, errorBeans, processDTO);
+		sendReport(output, processDTO);
 	}
 
 	private ProcessDTO getProcessDTO(final Map<String, Object> inputMap) {
-		System.out.println(inputMap);
 		ProcessDTO processDTO = new ProcessDTO();
 		try {
 			processDTO.setBatchType(BatchType.valueOf(inputMap.get(Constants.EVENT_TYPE).toString()));
@@ -90,5 +95,100 @@ public class ProcessEngine implements Process {
 
 	private Derivable getDerivable(final BatchType batchType) {
 		return (Derivable) applicationContext.getBean(batchType.getDriveClass());
+	}
+
+	// Refactor will do it later..
+	@SuppressWarnings("unchecked")
+	private void sendReport(final Map<String, Object> output, final ProcessDTO processDTO) {
+		final Map<Mapper, List<ErrorBean>> errorMap = (Map<Mapper, List<ErrorBean>>) output.get("errors");
+		final int totalProcessedRecords = (int) output.get("success");
+		final int totalRecordsInInput = (int) output.get("size");
+		FileOutputStream outputStream = null;
+		OutputStreamWriter outputStreamWriter = null;
+		BufferedWriter bufferedWriter = null;
+		try {
+			File reportFile = new File(getFileName(processDTO.getDataSrc()));
+			outputStream = new FileOutputStream(reportFile);
+			outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+			bufferedWriter = new BufferedWriter(outputStreamWriter);
+
+			bufferedWriter.write(":::::::::::::::Start - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
+			bufferedWriter.newLine();
+			bufferedWriter.write("Total Input Records ::" + totalRecordsInInput);
+			bufferedWriter.newLine();
+			bufferedWriter.newLine();
+			bufferedWriter.write("Total Successfully Processed Records ::" + totalProcessedRecords);
+			bufferedWriter.newLine();
+			bufferedWriter.newLine();
+
+			Iterator<Mapper> itr = errorMap.keySet().iterator();
+			List<ErrorBean> lst = null;
+			Mapper mapper = null;
+			while (itr.hasNext()) {
+				mapper = (itr.next());
+				bufferedWriter.write("----Pig Id is: " + mapper.getId());
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
+				bufferedWriter.write("Non Recoverable Error are : ");
+				lst = errorMap.get(mapper);
+				int nonRecoverCount = 0;
+				for (ErrorBean errBean : lst) {
+					if (!errBean.isRecoverable()) {
+						bufferedWriter.newLine();
+						bufferedWriter.write("Error Code : " + errBean.getCode() + "  Error for Property : " + errBean.getProperty() + "  Error Message is : "
+								+ errBean.getMessage());
+						bufferedWriter.newLine();
+						nonRecoverCount++;
+					}
+				}
+				bufferedWriter.write("Total Non Recoverable Error are : " + nonRecoverCount);
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
+				bufferedWriter.write("Recoverable Error are:");
+				bufferedWriter.newLine();
+				lst = errorMap.get(mapper);
+				int recoverCount = 0;
+				for (ErrorBean errBean : lst) {
+					if (errBean.isRecoverable()) {
+						bufferedWriter.newLine();
+						bufferedWriter.write("Error Code : " + errBean.getCode() + "  Error for Property : " + errBean.getProperty() + "  Error Message is : "
+								+ errBean.getMessage());
+						bufferedWriter.newLine();
+						recoverCount++;
+					}
+				}
+				bufferedWriter.newLine();
+				bufferedWriter.write("Total Recoverable Error are:" + recoverCount);
+				bufferedWriter.newLine();
+
+			}
+			bufferedWriter.newLine();
+			bufferedWriter.write(":::::::::::::::END - PigTrax Batch Report - Piginfo Entry Event:::::::::::::::::::::::");
+			bufferedWriter.close();
+		} catch (Exception ex) {
+			if (bufferedWriter != null) {
+				try {
+					bufferedWriter.close();
+				} catch (IOException e) {
+				}
+			}
+			if (outputStreamWriter != null) {
+				try {
+					outputStreamWriter.close();
+				} catch (IOException e) {
+				}
+			}
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+				}
+			}
+			ex.printStackTrace();
+		}
+	}
+
+	private String getFileName(final String originalFileName) {
+		return originalFileName.toLowerCase().replaceAll(".csv", "_report.txt");
 	}
 }

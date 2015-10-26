@@ -19,6 +19,10 @@ public interface Constants {
 	public static final String REF_DATA_SEX = "SEX";
 
 	public static final String REF_DATA_GFUNCTION = "GFUNCTION";
+	
+	public static final String REF_DATA_PREGNANCYEVENTTYPE = "PREGNANCYEVENTTYPE";
+	
+	public static final String REF_DATA_PREGNANCYEXAMRESULTTYPE = "PREGNANCYEXAMRESULTTYPE";
 
 	public static final String ERR_SYS_CODE = "100";
 
@@ -47,5 +51,25 @@ public interface Constants {
 	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "601";
 
 	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "Entry date should be greater that birthdate by 90 days";
-
+	
+	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "701";
+	
+	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_MSG = "An entry already exist with the given combination of (Pig Id, Company Id, service Date, Event Type, Result Type)";
+	
+	public static final String ERR_PREGNANCY_EVENT_DATE_CODE = "702";
+	
+	public static final String ERR_PREGNANCY_EVENT_DATE_MSG = "Pregnancy exam and result dates should be between 18 to 60 days from service date";
+	
+	public static final String ERR_ABORTION_DATE_CODE = "703";
+	
+	public static final String ERR_ABORTION_DATE_MSG = "Abortion date should be between 18 to 110 days from service date";
+	
+	public static final String ERR_NOT_IN_PIG_DATE_CODE ="704";
+	
+	public static final String ERR_NOT_IN_PIG_DATE_MSG = "Not in pig date should be between 105 to 125 days from service date";
+	
+	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "705";
+	
+	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Service record not found for the given service date";	
+	
 }

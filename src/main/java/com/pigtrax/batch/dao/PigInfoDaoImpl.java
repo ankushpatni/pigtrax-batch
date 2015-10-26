@@ -2,14 +2,18 @@ package com.pigtrax.batch.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -71,4 +75,36 @@ public class PigInfoDaoImpl implements PigInfoDao {
 
 	}
 
+	@Override
+	public Integer getPigInfoId(String pigId, int companyId) throws SQLException {
+		logger.debug("Pig Id/company Ids are :" + pigId+"/"+companyId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"PigInfo\" where lower(\"pigId\") = ? and \"id_Company\" = ?");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (pigId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, pigId.trim().toLowerCase());
+					ps.setInt(2, companyId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("pigInfoId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+
+		return null;
+
+	}
+	
 }

@@ -8,4 +8,6 @@ import com.pigtrax.batch.beans.PigInfo;
 
 public interface PigInfoDao {
 	public int insertPigInformation(PigInfo pigInfo) throws SQLException, DuplicateKeyException;
+	
+	public Integer getPigInfoId(String pigId, int companyId) throws  SQLException;
 }

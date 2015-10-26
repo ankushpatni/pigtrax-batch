@@ -25,11 +25,23 @@ public class RefDataDaoImpl implements RefDataDao {
 	}
 
 	@Override
-	public List<RefDataTranslation> getGfunctionType() {
+	public List<RefDataTranslation> getGfunctionType() { 
 		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_GfunctionType\" FROM pigtraxrefdata.\"GfunctionTypeTranslation\" order by \"fieldLanguage\", \"id_GfunctionType\"; ";
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
 
+	@Override
+	public List<RefDataTranslation> getPregnancyEventType() {
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyEventType\" FROM pigtraxrefdata.\"PregnancyEventTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}
+	
+	@Override
+	public List<RefDataTranslation> getPregnancyExamResultType() {
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyExamResultType\" FROM pigtraxrefdata.\"PregnancyExamResultTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}
+	
 	private final static class CacheRefDataRowMaper implements RowMapper<RefDataTranslation> {
 		@Override
 		public RefDataTranslation mapRow(ResultSet rs, int rowNum) throws SQLException {

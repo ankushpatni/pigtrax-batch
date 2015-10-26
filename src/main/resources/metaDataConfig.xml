@@ -21,4 +21,17 @@
 			<col key="gfunctionTypeId" order="17" isEmpty="false" />
 		</dataInfo>
 	</event>
+	<event id="PREGNANCYINFO">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="serviceDate" order="2" isEmpty="false" />
+			<col key="employeeGroup" order="3" isEmpty="true" />
+			<col key="pregnancyEventType" order="4" isEmpty="false" />
+			<col key="PregnancyExamResultType" order="5" isEmpty="true" />
+			<col key="examDate" order="6" isEmpty="true" />
+			<col key="resultDate" order="7" isEmpty="false" />
+			<col key="sowCondition" order="8" isEmpty="false" />
+			<col key="companyId" order="9" isEmpty="false" />
+		</dataInfo>
+	</event>	
 </config>

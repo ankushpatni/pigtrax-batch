@@ -17,6 +17,10 @@ public class RefDataCache {
 	private Map<String, Map<Integer, String>> sexTypeMap = null;
 
 	private Map<String, Map<Integer, String>> gfunctionTypeMap = null;
+	
+	private Map<String, Map<Integer, String>> pregnancyEventTypeMap = null;
+	
+	private Map<String, Map<Integer, String>> pregnancyExamResultTypeMap = null;
 
 	private RefDataCache() {
 		if (_INSTANCE != null) {
@@ -27,6 +31,8 @@ public class RefDataCache {
 	public synchronized void load(final RefDataDao refDataDao) {
 		sexTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getSexData()));
 		gfunctionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getGfunctionType()));
+		pregnancyEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPregnancyEventType()));
+		pregnancyExamResultTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPregnancyExamResultType()));
 	}
 
 	private Map<String, Map<Integer, String>> convertToMap(final List<RefDataTranslation> rolesList) {
@@ -62,6 +68,13 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_GFUNCTION:
 			retVal = retRefdDataValue(gfunctionTypeMap, value);
+			break;
+		case Constants.REF_DATA_PREGNANCYEVENTTYPE:
+			retVal = retRefdDataValue(pregnancyEventTypeMap, value);
+			break;
+			
+		case Constants.REF_DATA_PREGNANCYEXAMRESULTTYPE:
+			retVal = retRefdDataValue(pregnancyExamResultTypeMap, value);
 			break;
 		default:
 			retVal = -1;

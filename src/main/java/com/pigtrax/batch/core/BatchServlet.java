@@ -61,11 +61,11 @@ public class BatchServlet extends HttpServlet {
 	public static void main(String[] args) {
 		ApplicationContext apContext = new ClassPathXmlApplicationContext("springConfig.xml");
 		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put(Constants.EVENT_TYPE.toString(), "PIGINFO");
+		inputMap.put(Constants.EVENT_TYPE.toString(), "PREGNANCYINFO");
 		inputMap.put(Constants.HEADER.toString(), "false");
 		inputMap.put(Constants.SEPERATOR.toString(), ",");
 		inputMap.put(Constants.FILE_TYPE.toString(), "csv");
-		inputMap.put(Constants.USER_NAME.toString(), "AG");
+		inputMap.put(Constants.USER_NAME.toString(), "pigtraxsuperadmin");
 		inputMap.put(Constants.DATA.toString(), "d://test.csv");
 		ProcessEngine p = apContext.getBean(ProcessEngine.class);
 		p.execute(inputMap);

@@ -14,6 +14,20 @@ public enum RefData {
 		public Integer getId(String value) {
 			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_GFUNCTION);
 		}
+	},
+	
+	PREGNANCYEVENTTYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_PREGNANCYEVENTTYPE);
+		}
+	},	
+	
+	PREGNANCYEXAMRESULTTYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_PREGNANCYEXAMRESULTTYPE);
+		}
 	};
 
 	public abstract Integer getId(String value);

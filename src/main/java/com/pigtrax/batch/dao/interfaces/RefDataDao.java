@@ -9,5 +9,9 @@ public interface RefDataDao {
 	List<RefDataTranslation> getSexData();
 
 	List<RefDataTranslation> getGfunctionType();
+	
+	List<RefDataTranslation> getPregnancyEventType();
+	
+	List<RefDataTranslation> getPregnancyExamResultType();
 
 }

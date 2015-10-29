@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pigtrax.batch.beans.PigInfo;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.PregnancyInfo;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
-import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
@@ -28,6 +28,9 @@ public class PregnancyInfoHandler implements Handler {
 
 	@Autowired
 	private PregnancyInfoDao pregnancyInfoDao;
+	
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
@@ -45,7 +48,10 @@ public class PregnancyInfoHandler implements Handler {
 					try {
 						PregnancyInfo pregnancyInfo = populatePregnancyInfo(errorMap, pregnancyInfoMapper, processDTO);
 						if (pregnancyInfoMapper != null) {
-							pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);
+							int generatedKey = pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);							
+							PigTraxEventMaster eventMaster = populateEventMaster(pregnancyInfoMapper, generatedKey, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
+							
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -89,6 +95,22 @@ public class PregnancyInfoHandler implements Handler {
 			errorMap.put(pregnancyInfoMapper, errList);
 		}
 		return info;
+	}
+	
+	
+	private PigTraxEventMaster populateEventMaster(PregnancyInfoMapper pregnancyInfoMapper, Integer generatedKey, ProcessDTO processDTO)
+	{
+		PigTraxEventMaster eventMaster = null;
+		
+		if(generatedKey != null && generatedKey > 0)
+		{
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setPigInfoId(pregnancyInfoMapper.getDerivePigInfoId());
+			eventMaster.setEventTime(pregnancyInfoMapper.getDeriveResultDate());
+			eventMaster.setPregnancyEventId(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 
 }

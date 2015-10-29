@@ -21,6 +21,10 @@ public class RefDataCache {
 	private Map<String, Map<Integer, String>> pregnancyEventTypeMap = null;
 	
 	private Map<String, Map<Integer, String>> pregnancyExamResultTypeMap = null;
+	
+	private Map<String, Map<Integer, String>> mortalityReasonTypeMap = null;
+	
+	private Map<String, Map<Integer, String>> pigletStatusEventTypeMap = null;
 
 	private RefDataCache() {
 		if (_INSTANCE != null) {
@@ -33,6 +37,8 @@ public class RefDataCache {
 		gfunctionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getGfunctionType()));
 		pregnancyEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPregnancyEventType()));
 		pregnancyExamResultTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPregnancyExamResultType()));
+		mortalityReasonTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getMortalityReasonType()));
+		pigletStatusEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPigletStatusEventType()));
 	}
 
 	private Map<String, Map<Integer, String>> convertToMap(final List<RefDataTranslation> rolesList) {
@@ -75,6 +81,12 @@ public class RefDataCache {
 			
 		case Constants.REF_DATA_PREGNANCYEXAMRESULTTYPE:
 			retVal = retRefdDataValue(pregnancyExamResultTypeMap, value);
+			break;
+		case Constants.REF_DATA_MORTALITYREASONTYPE:
+			retVal = retRefdDataValue(mortalityReasonTypeMap, value);
+			break;
+		case Constants.REF_DATA_PIGLETSTATUSEVENTTYPE: 
+			retVal = retRefdDataValue(pigletStatusEventTypeMap, value);
 			break;
 		default:
 			retVal = -1;

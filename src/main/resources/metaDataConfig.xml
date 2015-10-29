@@ -34,4 +34,26 @@
 			<col key="companyId" order="9" isEmpty="false" />
 		</dataInfo>
 	</event>	
+	<event id="PIGLETSTATUSINFO">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="companyId" order="2" isEmpty="false" />
+			<col key="farrowDate" order="3" isEmpty="false" />
+			<col key="numberOfPigsWeaned" order="4" isEmpty="true" />
+			<col key="weightOfPigsWeaned" order="5" isEmpty="true" />
+			<col key="weaningDate" order="6" isEmpty="true" />
+			<col key="weanGroupEventId" order="7" isEmpty="true" />
+			<col key="numberOfPigsTransferred" order="8" isEmpty="true" />
+			<col key="weightOfPigsTransferred" order="9" isEmpty="true" />
+			<col key="transferredDate" order="10" isEmpty="true" />
+			<col key="transferredToPig" order="11" isEmpty="true" />
+			<col key="numberOfPigsMortality" order="12" isEmpty="true" />
+			<col key="weightOfPigsMortality" order="13" isEmpty="true" />
+			<col key="mortalityEventDate" order="14" isEmpty="true" />
+			<col key="mortalityReason" order="15" isEmpty="true" />
+			<col key="weanGroupId" order="16" isEmpty="true" />
+			<col key="remarks" order="17" isEmpty="true" />
+			<col key="sowCondition" order="18" isEmpty="false" />
+		</dataInfo>
+	</event>	
 </config>

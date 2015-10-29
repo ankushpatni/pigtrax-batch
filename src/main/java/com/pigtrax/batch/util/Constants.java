@@ -23,6 +23,10 @@ public interface Constants {
 	public static final String REF_DATA_PREGNANCYEVENTTYPE = "PREGNANCYEVENTTYPE";
 	
 	public static final String REF_DATA_PREGNANCYEXAMRESULTTYPE = "PREGNANCYEXAMRESULTTYPE";
+	
+	public static final String REF_DATA_MORTALITYREASONTYPE = "MORTALITYREASONTYPE";
+	
+	public static final String REF_DATA_PIGLETSTATUSEVENTTYPE = "PIGLETSTATUSEVENTTYPE";	
 
 	public static final String ERR_SYS_CODE = "100";
 
@@ -71,5 +75,16 @@ public interface Constants {
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "705";
 	
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Service record not found for the given service date";	
+
+	public static final String ERR_FOSTER_PIG_NOT_FOUND_CODE = "801";
 	
+	public static final String ERR_FOSTER_PIG_NOT_FOUND_MSG = "Transferred to Pig is not found";
+	
+	public static final String ERR_FOSTER_FARROW_NOT_FOUND_CODE = "802";
+	
+	public static final String ERR_FOSTER_FARROW_NOT_FOUND_MSG = "No valid farrow event associated with transferred to Pig";
+	
+	public static final String ERR_WEAN_GROUPID_NOT_FOUND_CODE = "803";
+	
+	public static final String ERR_WEAN_GROUPID_NOT_FOUND_MSG = "No valid group event found for the wean record";
 }

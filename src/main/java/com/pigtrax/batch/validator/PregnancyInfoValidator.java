@@ -151,13 +151,16 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	
 	private void validatePregnancyEventEntryExist(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
 		
-		boolean flag = pregnancyInfoDao.checkIfPregnancyEventExist(pregnancyInfoMapper.getDeriveBreedingEventId(),
-				pregnancyInfoMapper.getDerivePregnancyEventTypeId(), pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
-		
-		if (flag) {
-			pregnancyInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DUPLICATE_CODE, Constants.ERR_PREGNANCY_EVENT_DUPLICATE_MSG, "", false));
-		} 
+		if(pregnancyInfoMapper.getDeriveBreedingEventId() != null && pregnancyInfoMapper.getDerivePregnancyEventTypeId() != null && pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() != null)
+		{
+			boolean flag = pregnancyInfoDao.checkIfPregnancyEventExist(pregnancyInfoMapper.getDeriveBreedingEventId(),
+					pregnancyInfoMapper.getDerivePregnancyEventTypeId(), pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
+			
+			if (flag) {
+				pregnancyInfoMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DUPLICATE_CODE, Constants.ERR_PREGNANCY_EVENT_DUPLICATE_MSG, "", false));
+			} 
+		}
 	}
 	
 	private void validatePregnacyEventTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	

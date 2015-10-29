@@ -13,5 +13,9 @@ public interface RefDataDao {
 	List<RefDataTranslation> getPregnancyEventType();
 	
 	List<RefDataTranslation> getPregnancyExamResultType();
+	
+	List<RefDataTranslation> getMortalityReasonType();
+	
+	List<RefDataTranslation> getPigletStatusEventType();
 
 }

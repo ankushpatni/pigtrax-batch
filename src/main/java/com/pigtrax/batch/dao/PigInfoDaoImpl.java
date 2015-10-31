@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -77,7 +78,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 
 	@Override
 	public Integer getPigInfoId(String pigId, int companyId) throws SQLException {
-		logger.debug("Pig Id/company Ids are :" + pigId+"/"+companyId);
+		logger.debug("Pig Id/company Ids are :" + pigId + "/" + companyId);
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select id from pigtrax.\"PigInfo\" where lower(\"pigId\") = ? and \"id_Company\" = ?");
 		final String qry = qryBuffer.toString();
@@ -102,9 +103,48 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				return Integer.decode(retValList1.toString());
 			}
 		}
-
 		return null;
-
 	}
-	
+
+	@Override
+	public Integer getPKfromPigId(final Map<String, String> searchCriteria) throws SQLException {
+		if (searchCriteria != null && !searchCriteria.isEmpty()) {
+			String companyId = searchCriteria.get("companyId");
+			String pigId = searchCriteria.get("pigId");
+			StringBuffer qryBuffer = new StringBuffer();
+			qryBuffer
+					.append("select id from pigtrax.\"PigInfo\" where upper(\"pigId\") = COALESCE(?,\"pigId\") and \"id_Company\" = COALESCE(?,\"id_Company\")");
+			final String qry = qryBuffer.toString();
+			Long retValList1 = null;
+
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					if (pigId != null) {
+						ps.setString(1, pigId.trim().toUpperCase());
+					} else {
+						ps.setNull(1, java.sql.Types.VARCHAR);
+					}
+					if (companyId != null) {
+						ps.setInt(2, Integer.parseInt(companyId));
+					} else {
+						ps.setNull(2, java.sql.Types.INTEGER);
+					}
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("penId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+		return null;
+	}
+
 }

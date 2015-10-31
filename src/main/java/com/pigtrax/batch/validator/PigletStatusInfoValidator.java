@@ -1,11 +1,9 @@
 package com.pigtrax.batch.validator;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
 
@@ -14,10 +12,8 @@ import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
-import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
-import com.pigtrax.batch.util.DateUtil;
 import com.pigtrax.batch.util.ErrorBeanUtil;
 import com.pigtrax.batch.validator.interfaces.AbstractValidator;
 

@@ -33,7 +33,7 @@
 			<col key="sowCondition" order="8" isEmpty="false" />
 			<col key="companyId" order="9" isEmpty="false" />
 		</dataInfo>
-	</event>	
+	</event>
 	<event id="PIGLETSTATUSINFO">
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
@@ -55,5 +55,24 @@
 			<col key="remarks" order="17" isEmpty="true" />
 			<col key="sowCondition" order="18" isEmpty="false" />
 		</dataInfo>
-	</event>	
+	</event>
+	<event id="FARROWEVENT">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="serviceDate" order="2" isEmpty="false" />
+			<col key="penId" order="3" isEmpty="true" />
+			<col key="farrowDate" order="4" isEmpty="false" />
+			<col key="liveBorns" order="5" isEmpty="true" />
+			<col key="stillBorns" order="6" isEmpty="true" />
+			<col key="maleBorns" order="7" isEmpty="true" />
+			<col key="femaleBorns" order="8" isEmpty="true" />
+			<col key="mummies" order="9" isEmpty="true" />
+			<col key="weightInKGs" order="10" isEmpty="true" />
+			<col key="typeOfBirth" order="11" isEmpty="false" />
+			<col key="employeeGrpId" order="12" isEmpty="false" />
+			<col key="sowCondition" order="13" isEmpty="false" />
+			<col key="teasts" order="14" isEmpty="true" />
+			<col key="companyId" order="15" isEmpty="false" />
+		</dataInfo>
+	</event>
 </config>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,7 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 	public int insertPregnancyInfo(final PregnancyInfo pregnancyInfo) throws SQLException, DuplicateKeyException {
 		final String Qry = "insert into pigtrax.\"PregnancyEvent\"(\"id_PigInfo\", \"id_BreedingEvent\", "
 				+ "\"id_EmployeeGroup\", \"id_PregnancyEventType\", \"id_PregnancyExamResultType\", \"examDate\", \"resultDate\", "
-				+ "\"sowCondition\", \"lastUpdated\", \"userUpdated\") "
-				+ "values(?,?,?,?,?,?,?,?,current_timestamp,?)";
+				+ "\"sowCondition\", \"lastUpdated\", \"userUpdated\") " + "values(?,?,?,?,?,?,?,?,current_timestamp,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -43,8 +43,8 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 				ps.setObject(3, pregnancyInfo.getEmployeeGroupId(), java.sql.Types.INTEGER);
 				ps.setObject(4, pregnancyInfo.getPregnancyEventTypeId(), java.sql.Types.INTEGER);
 				ps.setObject(5, pregnancyInfo.getPregnancyExamResultTypeId(), java.sql.Types.INTEGER);
-				ps.setObject(6, new java.sql.Date(pregnancyInfo.getExamDate().getTime()),java.sql.Types.DATE);
-				ps.setDate(7, new java.sql.Date(pregnancyInfo.getResultDate().getTime()));				
+				ps.setObject(6, new java.sql.Date(pregnancyInfo.getExamDate().getTime()), java.sql.Types.DATE);
+				ps.setDate(7, new java.sql.Date(pregnancyInfo.getResultDate().getTime()));
 				ps.setInt(8, pregnancyInfo.getSowCondition());
 				ps.setString(9, pregnancyInfo.getUserUpdated());
 				return ps;
@@ -55,38 +55,69 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 		return keyVal;
 
 	}
-	
-	 /**
-	    * checkIfPregnancyEventExist for a given breedingEventId
-	    * @param breedingEventId
-	    * @return 
-	    */
-	   public boolean checkIfPregnancyEventExist(final Integer breedingEventId, final Integer eventTypeId, final Integer resultTypeId)
-	   {
+
+	/**
+	 * checkIfPregnancyEventExist for a given breedingEventId
+	 * 
+	 * @param breedingEventId
+	 * @return
+	 */
+	public boolean checkIfPregnancyEventExist(final Integer breedingEventId, final Integer eventTypeId, final Integer resultTypeId) {
 		String sql = "select \"id\" from pigtrax.\"PregnancyEvent\" where \"id_BreedingEvent\" = ? and \"id_PregnancyEventType\" = ?"
 				+ " and \"id_PregnancyExamResultType\" = ?";
 		Long retValList1 = null;
-			retValList1 = jdbcTemplate.query(sql, new PreparedStatementSetter() {
-				@Override
-				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setInt(1, breedingEventId);
-					ps.setInt(2, eventTypeId );
-					ps.setInt(3, resultTypeId);
-				}
-			}, new ResultSetExtractor<Long>() {
-				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-					if (resultSet.next()) {
-						return resultSet.getLong(1);
-					}
-					return null;
-				}
-			});
-			if (retValList1 != null) {
-				return true;
+		retValList1 = jdbcTemplate.query(sql, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, breedingEventId);
+				ps.setInt(2, eventTypeId);
+				ps.setInt(3, resultTypeId);
 			}
-			else
-				return false;
-	   }
-	  
+		}, new ResultSetExtractor<Long>() {
+			public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
+				return null;
+			}
+		});
+		if (retValList1 != null) {
+			return true;
+		} else
+			return false;
+	}
 
+	@Override
+	public Integer getPragnancyId(final Map<String, Object> creteriaMap) throws SQLException {
+		Integer breedingEvenId = (Integer) creteriaMap.get("breedingEvenId");
+		logger.debug("isPragnant ::creteriaMap is breedingEvenId:" + breedingEvenId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer
+				.append("select \"id\" from pigtrax.\"PregnancyEvent\"  where \"id_BreedingEvent\" = ? and \"id_PregnancyEventType\" =1 and \"id_PregnancyExamResultType\"=1 ");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				if (breedingEvenId != null) {
+					ps.setInt(1, breedingEvenId);
+				} else {
+					ps.setNull(1, java.sql.Types.INTEGER);
+				}
+
+			}
+		}, new ResultSetExtractor<Long>() {
+			public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
+				return null;
+			}
+		});
+		logger.debug("isPragnant::isPragnant retVal is :" + retValList1);
+		if (retValList1 != null) {
+			return Integer.decode(retValList1.toString());
+		}
+		return null;
+	}
 }

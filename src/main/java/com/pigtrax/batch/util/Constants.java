@@ -87,4 +87,6 @@ public interface Constants {
 	public static final String ERR_WEAN_GROUPID_NOT_FOUND_CODE = "803";
 	
 	public static final String ERR_WEAN_GROUPID_NOT_FOUND_MSG = "No valid group event found for the wean record";
+	
+	public static final String REF_DATA_PHASEOFPRODUCTIONTYPE = "PHASEOFPRODUCTIONTYPE"; 
 }

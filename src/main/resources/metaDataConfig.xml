@@ -55,5 +55,26 @@
 			<col key="remarks" order="17" isEmpty="true" />
 			<col key="sowCondition" order="18" isEmpty="false" />
 		</dataInfo>
+	</event>
+	<event id="GROUPEVENT">
+		<dataInfo>
+			<col key="groupId" order="1" isEmpty="false" />
+			<col key="companyId" order="2" isEmpty="false" />
+			<col key="groupStartDateTime" order="3" isEmpty="false" />
+			<col key="phaseOfProductionType" order="4" isEmpty="false" />
+			<col key="remarks" order="5" isEmpty="true" />
+			<col key="groupCloseDateTime" order="6" isEmpty="true" />
+			<col key="currentInventory" order="7" isEmpty="true" />
+			<col key="previousGroupId" order="8" isEmpty="true" />
+			<col key="tattoo" order="9" isEmpty="false" />
+			<col key="alternateTattoo" order="10" isEmpty="false" />
+			<col key="remarks" order="11" isEmpty="false" />
+			<col key="companyId" order="12" isEmpty="false" />
+			<col key="penId" order="13" isEmpty="true" />
+			<col key="barnId" order="14" isEmpty="true" />
+			<col key="sexTypeId" order="15" isEmpty="false" />
+			<col key="parity" order="16" isEmpty="false" />
+			<col key="gfunctionTypeId" order="17" isEmpty="false" />
+		</dataInfo>
 	</event>	
 </config>

@@ -41,6 +41,12 @@ public enum RefData {
 		public Integer getId(String value) {
 			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_PIGLETSTATUSEVENTTYPE);
 		}
+	},
+	PHASEOFPRODUCTIONTYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_PHASEOFPRODUCTIONTYPE);
+		}
 	};
 
 	public abstract Integer getId(String value);

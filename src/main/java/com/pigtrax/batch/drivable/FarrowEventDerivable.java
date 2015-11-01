@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
@@ -15,7 +16,7 @@ import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
-
+@Component
 public class FarrowEventDerivable implements Derivable {
 
 	@Autowired

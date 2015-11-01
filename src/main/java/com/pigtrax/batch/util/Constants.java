@@ -167,4 +167,41 @@ public interface Constants {
 	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL = "615";
 
 	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG = "Sow Condition should be between 1-30";
+	
+	public static final String FEED_EVNT_ERR_RATIONID = "701";
+
+	public static final String FEED_EVNT_ERR_RATIONID_MSG = "Ration Id is missing";
+	
+	public static final String FEED_EVNT_ERR_TICKETID = "702";
+
+	public static final String FEED_EVNT_ERR_TICKETID_MSG = "Ticket id is missing";
+	
+	public static final String FEED_EVNT_ERR_INI_ENTRY_DATE = "703";
+
+	public static final String FEED_EVNT_ERR_INI_ENTRY_DATE_MSG = "Initial Feed Entry Date is missing";
+	
+	public static final String FEED_EVNT_ERR_TRNS_JRNY_ID = "704";
+
+	public static final String FEED_EVNT_ERR_TRNS_JRNY_ID_MSG = "Transport Journey Id is missing";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

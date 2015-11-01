@@ -12,7 +12,6 @@ import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
-import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;

@@ -1,15 +1,12 @@
 package com.pigtrax.batch.dao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +17,7 @@ import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 @Transactional
 public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
     
-	private static final Logger logger = Logger.getLogger(PigInfoDaoImpl.class);
+	private static final Logger logger = Logger.getLogger(PigTraxEventMasterDaoImpl.class);
 	
 	private JdbcTemplate jdbcTemplate;
 	
@@ -36,6 +33,7 @@ public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
 	 * @throws SQLException
 	 */
 	public int insertEventMaster(final PigTraxEventMaster master) throws SQLException {
+		logger.info("Entering insertEventMaster");
 		String Qry = "insert into pigtrax.\"PigTraxEventMaster\"( \"eventTime\", \"id_PigInfo\", \"lastUpdated\", \"userUpdated\", \"id_GroupEvent\", \"id_BreedingEvent\", \"id_PregnancyEvent\", \"id_FarrowEvent\", \"id_PigletStatus\", \"id_FeedEvent\", \"id_RemovalEvent\") "
 				+ "values(?,?,current_timestamp,?,?,?,?,?,?,?,?)";
 		

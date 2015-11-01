@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.FarrowEvent;
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.interfaces.FarrowEventDao;
+import com.pigtrax.batch.dao.FarrowEventDaoImpl;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
@@ -25,7 +25,7 @@ import com.pigtrax.batch.util.ErrorBeanUtil;
 public class FarrowEventHandler implements Handler {
 
 	@Autowired
-	private FarrowEventDao farrowEventDao;
+	private FarrowEventDaoImpl farrowEventDao;
 
 	private static final Logger logger = Logger.getLogger(FarrowEventHandler.class);
 

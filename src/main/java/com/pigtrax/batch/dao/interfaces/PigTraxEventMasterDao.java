@@ -1,9 +1,6 @@
 package com.pigtrax.batch.dao.interfaces;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 

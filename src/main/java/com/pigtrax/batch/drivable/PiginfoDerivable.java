@@ -41,10 +41,29 @@ public class PiginfoDerivable implements Derivable {
 				setFarrowEventDate(pigInfoMapper);
 				setBarnId(pigInfoMapper);
 				setPenId(pigInfoMapper);
+				setGline(pigInfoMapper);
+				setGCompany(pigInfoMapper);
 			}
 		}
 	}
-
+	
+	
+	private void setGline(final PigInfoMapper pigInfoMapper) {
+		try {
+			pigInfoMapper.setDeriveGline(Integer.parseInt(pigInfoMapper.getGline()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setGCompany(final PigInfoMapper pigInfoMapper) {
+		try {
+			pigInfoMapper.setDeriveGCompany(Integer.parseInt(pigInfoMapper.getGcompany()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void setEntryDate(final PigInfoMapper pigInfoMapper) {
 		try {
 			pigInfoMapper.setDeriveEntryDate(DateUtil.getDateFromString(pigInfoMapper.getEntryDate()));

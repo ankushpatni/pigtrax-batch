@@ -102,7 +102,28 @@ public enum BatchType {
 		public Class<?> getDriveClass() {
 			return FarrowEventDerivable.class;
 		}
-	};
+	},
+	GROUPEVENT{
+		@Override
+		public Class<?> getMapperClass() {
+			return FarrowEventMapper.class;
+		}
+
+		@Override
+		public Class<?> getValidatorClass() {
+			return FarrowEventValidator.class;
+		}
+
+		@Override
+		public Class<?> getHandlerClass() {
+			return FarrowEventHandler.class;
+		}
+
+		@Override
+		public Class<?> getDriveClass() {
+			return FarrowEventDerivable.class;
+		}
+	}
 	;
 
 	public abstract Class<?> getMapperClass();

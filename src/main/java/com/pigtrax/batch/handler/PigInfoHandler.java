@@ -76,9 +76,9 @@ public class PigInfoHandler implements Handler {
 			pigInfo.setCurrentFarrowEventDate(pigInfoMaper.getDeriveFarrowEventDate());
 			pigInfo.setDamId(pigInfoMaper.getDamId());
 			pigInfo.setEntryDate(pigInfoMaper.getDeriveEntryDate());
-			pigInfo.setGcompany(pigInfoMaper.getGcompany());
+			pigInfo.setGcompany(pigInfoMaper.getDeriveGCompany());
 			pigInfo.setGfunctionTypeId(pigInfoMaper.getDeriveFfunctionTypeId());
-			pigInfo.setGline(pigInfoMaper.getGline());
+			pigInfo.setGline(pigInfoMaper.getDeriveGline());
 			pigInfo.setPigId(pigInfoMaper.getPigId());
 			pigInfo.setOrigin(pigInfoMaper.getOrigin());
 			pigInfo.setParity(pigInfoMaper.getDeriveParity());

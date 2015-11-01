@@ -96,4 +96,18 @@
 			<col key="companyId" order="15" isEmpty="false" />
 		</dataInfo>
 	</event>
+	<event id="GROUPEVENTDETAILEVENT">
+		<dataInfo>
+			<col key="barnId" order="1" isEmpty="true" />
+			<col key="dateOfEntry" order="2" isEmpty="false" />
+			<col key="numberOfPigs" order="3" isEmpty="true" />
+			<col key="weightInKgs" order="4" isEmpty="false" />
+			<col key="inventoryAdjustment" order="5" isEmpty="true" />
+			<col key="remarks" order="6" isEmpty="true" />
+			<col key="roomId" order="7" isEmpty="true" />
+			<col key="employeeGroupId" order="8" isEmpty="true" />
+			<col key="groupId" order="9" isEmpty="true" />
+			<col key="transportDestination" order="10" isEmpty="true" />
+		</dataInfo>
+	</event>
 </config>

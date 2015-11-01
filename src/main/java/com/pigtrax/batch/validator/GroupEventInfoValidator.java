@@ -51,6 +51,10 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 			groupEventInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "groupStartDate", false));
 		}
+		else
+		{
+			
+		}
 	}
 	
 	private void validateCompanyId(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {

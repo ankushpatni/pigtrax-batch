@@ -72,11 +72,11 @@ public class GroupEventInfoDerivable implements Derivable {
 	private void setCurrentInventry(final GroupEventInfoMapper groupEventInfoMapper) {
 		try {
 			if (StringUtils.isEmpty(groupEventInfoMapper.getCurrentInventory())) {
-				Integer phaseOfProductionTypeIdFromRefData = Integer
+				Integer currentInventory = Integer
 						.parseInt(groupEventInfoMapper.getCurrentInventory());
-				if (phaseOfProductionTypeIdFromRefData > -1) {
+				if (currentInventory > -1) {
 					groupEventInfoMapper
-							.setDerivePhaseOfProductionTypeId(phaseOfProductionTypeIdFromRefData);
+							.setDerivePhaseOfProductionTypeId(currentInventory);
 				}
 			}
 		} catch (Exception e) {

@@ -152,6 +152,27 @@ public enum BatchType {
 		public Class<?> getDriveClass() {
 			return FeedEventDerivable.class;
 		}
+	},
+	GROUPEVENTDETAILEVENT{
+		@Override
+		public Class<?> getMapperClass() {
+			return GroupEventInfoMapper.class;
+		}
+
+		@Override
+		public Class<?> getValidatorClass() {
+			return GroupEventInfoValidator.class;
+		}
+
+		@Override
+		public Class<?> getHandlerClass() {
+			return GroupEventInfoHandler.class;
+		}
+
+		@Override
+		public Class<?> getDriveClass() {
+			return GroupEventInfoDerivable.class;
+		}
 	}
 	;
 

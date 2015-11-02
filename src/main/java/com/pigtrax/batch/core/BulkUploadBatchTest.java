@@ -13,23 +13,18 @@ public class BulkUploadBatchTest {
 
 	public static void main(String[] args) {
 		execute(new ClassPathXmlApplicationContext("springConfig.xml"));
-		//Map<String, Object> inputMap = new HashMap<String, Object>();
-		//inputMap.put(Constants.DATA, "C:\\Users\\agu171\\Desktop\\kshitiz\\piginfo.csv"); 
-		
-	//	Process process = 
 	}
 
 	private static void execute(final ApplicationContext context) {
 		Process processEngine = context.getBean(ProcessEngine.class);
 		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put(Constants.EVENT_TYPE, BatchType.FEEDEVENT);
-		inputMap.put(Constants.DATA, "D:\\workspace\\report\\test_feed.csv");
-		inputMap.put(Constants.HEADER, "true");
+		inputMap.put(Constants.EVENT_TYPE, BatchType.PIGINFO);
+		inputMap.put(Constants.DATA, "C:\\Users\\agu171\\Desktop\\khishitiz\\pig_info.csv");
+		inputMap.put(Constants.HEADER, "false");
 		inputMap.put(Constants.SEPERATOR, ",");
 		inputMap.put(Constants.FILE_TYPE, "csv");
-		inputMap.put(Constants.USER_NAME, "Aadit Gupta");
+		inputMap.put(Constants.USER_NAME, "pigtraxsuperadmin");
 		processEngine.execute(inputMap);
 	}
-	
-	
+
 }

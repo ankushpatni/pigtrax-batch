@@ -106,11 +106,11 @@ public class PigInfoHandler implements Handler {
 		return pigInfo;
 	}
 
-	private PigTraxEventMaster populateEventMaster(PigInfoMapper pregnancyInfoMapper, Integer generatedKey, ProcessDTO processDTO) {
+	private PigTraxEventMaster populateEventMaster(PigInfoMapper mapper, Integer generatedKey, ProcessDTO processDTO) {
 		PigTraxEventMaster eventMaster = null;
 		if (generatedKey != null && generatedKey > 0) {
 			eventMaster = new PigTraxEventMaster();
-			eventMaster.setEventTime(pregnancyInfoMapper.getDeriveEntryDate());
+			eventMaster.setEventTime(mapper.getDeriveEntryDate());
 			eventMaster.setPigInfoId(generatedKey);
 			eventMaster.setUserUpdated(processDTO.getUserName());
 		}

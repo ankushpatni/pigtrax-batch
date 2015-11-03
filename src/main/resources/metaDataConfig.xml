@@ -113,4 +113,14 @@
 			<col key="transPortJourneyId" order="8" isEmpty="false" />
 		</dataInfo>
 	</event>
+	<event id="INDIVIDUALPIGLETSTATUS">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="companyId" order="2" isEmpty="false" />
+			<col key="farrowDate" order="3" isEmpty="false" />
+			<col key="tattooId" order="4" isEmpty="false" />
+			<col key="wtAtBirth" order="5" isEmpty="false" />
+			<col key="wtAtWeaning" order="6" isEmpty="false" />
+		</dataInfo>
+	</event>	
 </config>

@@ -184,6 +184,36 @@ public interface Constants {
 
 	public static final String FEED_EVNT_ERR_TRNS_JRNY_ID_MSG = "Transport Journey Id is missing";
 	
+	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE = "801";
+	
+	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG = "Individual piglet duplicate tattoo Id";
+	
+	public static final String IND_PIGLET_ERR_WT_WEANING_CODE= "802";
+	
+	public static final String IND_PIGLET_ERR_WT_WEANING_MSG= "Individual piglet weight at weaning is missing";
+	
+	public static final String IND_PIGLET_ERR_WT_BIRTH_CODE = "803";
+	
+	public static final String IND_PIGLET_ERR_WT_BIRTH_MSG = "Individual piglet weight at birth is missing";
+	
+	public static final String IND_PIGLET_ERR_TATTOO_CODE = "804";
+	
+	public static final String IND_PIGLET_ERR_TATTOO_MSG = "Individual piglet tattoo is missing";
+	
+	public static final String IND_PIGLET_ERR_FARROW_DATE_CODE = "805";
+	
+	public static final String IND_PIGLET_ERR_FARROW_DATE_MSG = "Individual piglet farrow date is missing";
+	
+	public static final String IND_PIGLET_ERR_FARROW_EVENT_CODE = "806";
+	
+	public static final String IND_PIGLET_ERR_FARROW_EVENT_MSG = "Individual piglet invalid farrow event. Please check the farrow date given";
+	
+	public static final String IND_PIGLET_ERR_PIGLET_CNT_CODE = "807";
+	
+	public static final String IND_PIGLET_ERR_PIGLET_CNT_MSG = "Individual piglet count can not be more than live borns captured in farrow event";
+	
+	
+	
 	
 	
 	

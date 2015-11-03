@@ -87,19 +87,20 @@
 			<col key="companyId" order="15" isEmpty="false" />
 		</dataInfo>
 	</event>
-	<!--  <event id="GROUPEVENTDETAILEVENT">
+	<event id="GROUPEVENTDETAILEVENT">
 		<dataInfo>
-			<col key="barnId" order="1" isEmpty="true" />
-			<col key="dateOfEntry" order="2" isEmpty="false" />
-			<col key="numberOfPigs" order="3" isEmpty="true" />
-			<col key="weightInKgs" order="4" isEmpty="false" />
-			<col key="inventoryAdjustment" order="5" isEmpty="true" />
-			<col key="remarks" order="6" isEmpty="true" />
-			<col key="roomId" order="7" isEmpty="true" />
-			<col key="employeeGroupId" order="8" isEmpty="true" />
-			<col key="groupId" order="9" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />
+			<col key="barnId" order="2" isEmpty="true" />
+			<col key="dateOfEntry" order="3" isEmpty="false" />
+			<col key="numberOfPigs" order="4" isEmpty="true" />
+			<col key="weightInKgs" order="5" isEmpty="false" />
+			<col key="inventoryAdjustment" order="6" isEmpty="true" />
+			<col key="remarks" order="7" isEmpty="true" />
+			<col key="roomId" order="8" isEmpty="true" />
+			<col key="employeeGroupId" order="9" isEmpty="true" />
+			<col key="groupId" order="10" isEmpty="false" />
 		</dataInfo>
-	</event>-->
+	</event>
 	<event id="FEEDEVENT">
 		<dataInfo>
 			<col key="rationId" order="1" isEmpty="false" />

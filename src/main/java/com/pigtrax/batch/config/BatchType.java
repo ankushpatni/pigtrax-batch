@@ -2,24 +2,28 @@ package com.pigtrax.batch.config;
 
 import com.pigtrax.batch.drivable.FarrowEventDerivable;
 import com.pigtrax.batch.drivable.FeedEventDerivable;
+import com.pigtrax.batch.drivable.GroupEventDetailDerivable;
 import com.pigtrax.batch.drivable.GroupEventInfoDerivable;
 import com.pigtrax.batch.drivable.PiginfoDerivable;
 import com.pigtrax.batch.drivable.PigletStatusInfoDerivable;
 import com.pigtrax.batch.drivable.PregnancyInfoDerivable;
 import com.pigtrax.batch.handler.FarrowEventHandler;
 import com.pigtrax.batch.handler.FeedEventHandler;
+import com.pigtrax.batch.handler.GroupEventDetailHandler;
 import com.pigtrax.batch.handler.GroupEventInfoHandler;
 import com.pigtrax.batch.handler.PigInfoHandler;
 import com.pigtrax.batch.handler.PigletStatusInfoHandler;
 import com.pigtrax.batch.handler.PregnancyInfoHandler;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
 import com.pigtrax.batch.mapper.FeedEventMapper;
+import com.pigtrax.batch.mapper.GroupEventDetailMapper;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.validator.FarrowEventValidator;
 import com.pigtrax.batch.validator.FeedEventValidator;
+import com.pigtrax.batch.validator.GroupEventDetailValidator;
 import com.pigtrax.batch.validator.GroupEventInfoValidator;
 import com.pigtrax.batch.validator.PigInfoValidator;
 import com.pigtrax.batch.validator.PigletStatusInfoValidator;
@@ -156,22 +160,22 @@ public enum BatchType {
 	GROUPEVENTDETAILEVENT{
 		@Override
 		public Class<?> getMapperClass() {
-			return GroupEventInfoMapper.class;
+			return GroupEventDetailMapper.class;
 		}
 
 		@Override
 		public Class<?> getValidatorClass() {
-			return GroupEventInfoValidator.class;
+			return GroupEventDetailValidator.class;
 		}
 
 		@Override
 		public Class<?> getHandlerClass() {
-			return GroupEventInfoHandler.class;
+			return GroupEventDetailHandler.class;
 		}
 
 		@Override
 		public Class<?> getDriveClass() {
-			return GroupEventInfoDerivable.class;
+			return GroupEventDetailDerivable.class;
 		}
 	}
 	;

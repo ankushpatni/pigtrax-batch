@@ -3,6 +3,8 @@ package com.pigtrax.batch.drivable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
@@ -14,11 +16,10 @@ import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.RoomDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
-import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
-import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 
+@Component
 public class GroupEventDetailDerivable implements Derivable {
 	
 	@Autowired
@@ -47,20 +48,24 @@ public class GroupEventDetailDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				GroupEventDetailMapper groupEventDetailMapper = (GroupEventDetailMapper) mapper;
+				
+				setCompanyId(groupEventDetailMapper);
+				setGroupId(groupEventDetailMapper);
 				setBarnId(groupEventDetailMapper);
 				setDateOfEntry(groupEventDetailMapper);
 				setNumberOfPigs(groupEventDetailMapper);
 				setWeightInKgs(groupEventDetailMapper);
 				setRoomId(groupEventDetailMapper);
-				setEmployeeGroupId(groupEventDetailMapper);
-				setCompanyId(groupEventDetailMapper);
-				setGroupId(groupEventDetailMapper);
+				setEmployeeGroupId(groupEventDetailMapper);				
+				setIndeventoryAdjustment(groupEventDetailMapper);
+				
 			}
 		}
 	}
 	
 	private void setBarnId(final GroupEventDetailMapper groupEventDetailMapper) {
-		if (groupEventDetailMapper.getBarnId() != null) {
+		if (groupEventDetailMapper.getBarnId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getBarnId()) &&
+				groupEventDetailMapper.getBarnId().equalsIgnoreCase("null")) {
 			try {
 				groupEventDetailMapper.setDeriveBarnId(barnDao.getBarnPKId(groupEventDetailMapper.getBarnId()));
 			} catch (Exception e) {
@@ -95,7 +100,10 @@ public class GroupEventDetailDerivable implements Derivable {
 	
 	private void setRoomId(final GroupEventDetailMapper groupEventDetailMapper){
 		try {
+			if (groupEventDetailMapper.getRoomId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getRoomId()) &&
+					groupEventDetailMapper.getRoomId().equalsIgnoreCase("null")) {
 			groupEventDetailMapper.setDeriveRoomId(roomDao.getRoomPkId(groupEventDetailMapper.getRoomId()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,7 +111,10 @@ public class GroupEventDetailDerivable implements Derivable {
 	
 	private void setEmployeeGroupId(final GroupEventDetailMapper groupEventDetailMapper) {
 		try {
-			groupEventDetailMapper.setDeriveEmployeeGroupId(employeeGroupDao.getEmployeeGroupPKId(groupEventDetailMapper.getDerivecompanyId(), groupEventDetailMapper.getEmployeeGroupId()));  
+			if (groupEventDetailMapper.getEmployeeGroupId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getEmployeeGroupId()) &&
+					groupEventDetailMapper.getEmployeeGroupId().equalsIgnoreCase("null")) {
+			groupEventDetailMapper.setDeriveEmployeeGroupId(employeeGroupDao.getEmployeeGroupPKId(groupEventDetailMapper.getDerivecompanyId(), groupEventDetailMapper.getEmployeeGroupId()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -125,6 +136,22 @@ public class GroupEventDetailDerivable implements Derivable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	private void setIndeventoryAdjustment(
+			final GroupEventDetailMapper groupEventDetailMapper) {
+		try {
+			if (groupEventDetailMapper.getInventoryAdjustment() != null
+					&& !StringUtils.isEmpty(groupEventDetailMapper
+							.getInventoryAdjustment())
+					&& groupEventDetailMapper.getInventoryAdjustment()
+							.equalsIgnoreCase("null")) {
+				
+				groupEventDetailMapper.setDeriveInventoryAdjustment(Integer.parseInt(groupEventDetailMapper.getInventoryAdjustment()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

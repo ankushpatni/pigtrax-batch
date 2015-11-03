@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
@@ -24,6 +25,7 @@ import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
 import com.pigtrax.batch.validator.interfaces.AbstractValidator;
 
+@Component
 public class GroupEventDetailValidator extends AbstractValidator {
 	
 	@Autowired

@@ -66,15 +66,6 @@
 			<col key="groupCloseDateTime" order="6" isEmpty="true" />
 			<col key="currentInventory" order="7" isEmpty="true" />
 			<col key="previousGroupId" order="8" isEmpty="true" />
-			<col key="tattoo" order="9" isEmpty="false" />
-			<col key="alternateTattoo" order="10" isEmpty="false" />
-			<col key="remarks" order="11" isEmpty="false" />
-			<col key="companyId" order="12" isEmpty="false" />
-			<col key="penId" order="13" isEmpty="true" />
-			<col key="barnId" order="14" isEmpty="true" />
-			<col key="sexTypeId" order="15" isEmpty="false" />
-			<col key="parity" order="16" isEmpty="false" />
-			<col key="gfunctionTypeId" order="17" isEmpty="false" />
 		</dataInfo>
 	</event>
 	<event id="FARROWEVENT">
@@ -96,7 +87,7 @@
 			<col key="companyId" order="15" isEmpty="false" />
 		</dataInfo>
 	</event>
-	<event id="GROUPEVENTDETAILEVENT">
+	<!--  <event id="GROUPEVENTDETAILEVENT">
 		<dataInfo>
 			<col key="barnId" order="1" isEmpty="true" />
 			<col key="dateOfEntry" order="2" isEmpty="false" />
@@ -107,9 +98,8 @@
 			<col key="roomId" order="7" isEmpty="true" />
 			<col key="employeeGroupId" order="8" isEmpty="true" />
 			<col key="groupId" order="9" isEmpty="true" />
-			<col key="transportDestination" order="10" isEmpty="true" />
 		</dataInfo>
-	</event>
+	</event>-->
 	<event id="FEEDEVENT">
 		<dataInfo>
 			<col key="rationId" order="1" isEmpty="false" />

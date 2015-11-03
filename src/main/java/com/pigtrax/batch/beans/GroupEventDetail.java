@@ -15,7 +15,6 @@ public class GroupEventDetail {
 	private Integer roomId;
 	private Integer employeeGroupId;
 	private int groupId;
-	private Integer transportDestination;
 	public Integer getBarnId() {
 		return barnId;
 	}
@@ -82,11 +81,4 @@ public class GroupEventDetail {
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
-	public Integer getTransportDestination() {
-		return transportDestination;
-	}
-	public void setTransportDestination(Integer transportDestination) {
-		this.transportDestination = transportDestination;
-	}
-
 }

@@ -55,7 +55,6 @@ public class GroupEventDetailDerivable implements Derivable {
 				setEmployeeGroupId(groupEventDetailMapper);
 				setCompanyId(groupEventDetailMapper);
 				setGroupId(groupEventDetailMapper);
-				//setTransportDestination(pigInfoMapper);
 			}
 		}
 	}

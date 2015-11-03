@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.core.ProcessDTO;
@@ -17,7 +18,7 @@ import com.pigtrax.batch.mapper.GroupEventInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
-
+@Component
 public class GroupEventInfoHandler implements Handler{
 	
 	@Autowired

@@ -24,6 +24,7 @@ public class GroupEventInfoMapper extends AbstractMapper{
 	private Date deriveGroupStartDateTime;
 	private Date deriveGroupcloseDateTime;
 	private Integer deriveCurrentInventory;
+	private Integer derivePreviousGroupId;
 
 	public String getGroupId() {
 		return groupId;
@@ -153,5 +154,13 @@ public class GroupEventInfoMapper extends AbstractMapper{
 		} else {
 			return getGroupId();
 		}
-	}	
+	}
+
+	public Integer getDerivePreviousGroupId() {
+		return derivePreviousGroupId;
+	}
+
+	public void setDerivePreviousGroupId(Integer derivePreviousGroupId) {
+		this.derivePreviousGroupId = derivePreviousGroupId;
+	}
 }

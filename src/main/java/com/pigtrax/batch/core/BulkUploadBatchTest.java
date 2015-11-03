@@ -22,8 +22,8 @@ public class BulkUploadBatchTest {
 	private static void execute(final ApplicationContext context) {
 		Process processEngine = context.getBean(ProcessEngine.class);
 		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put(Constants.EVENT_TYPE, BatchType.FEEDEVENT);
-		inputMap.put(Constants.DATA, "D:\\workspace\\report\\test_feed.csv");
+		inputMap.put(Constants.EVENT_TYPE, BatchType.GROUPEVENT);
+		inputMap.put(Constants.DATA, "C:\\ankush\\Elance\\Khitij\\xls\\GroupEvent1.csv");
 		inputMap.put(Constants.HEADER, "true");
 		inputMap.put(Constants.SEPERATOR, ",");
 		inputMap.put(Constants.FILE_TYPE, "csv");

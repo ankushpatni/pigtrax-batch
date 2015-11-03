@@ -109,7 +109,7 @@
 			<col key="ticketNumber" order="5" isEmpty="false" />
 			<col key="feedContentId" order="6" isEmpty="false" />
 			<col key="intialFeedEntryDate" order="7" isEmpty="false" />
-			<col key="transPortJourneyId" order="8" isEmpty="true" />
+			<col key="transPortJourneyId" order="8" isEmpty="false" />
 		</dataInfo>
 	</event>
 </config>

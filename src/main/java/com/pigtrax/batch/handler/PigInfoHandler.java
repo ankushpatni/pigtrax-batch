@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.PigInfo;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PigInfoDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.PigInfoMapper;
@@ -26,6 +28,9 @@ public class PigInfoHandler implements Handler {
 
 	@Autowired
 	private PigInfoDaoImpl pigInfoDaoImpl;
+
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
@@ -43,7 +48,9 @@ public class PigInfoHandler implements Handler {
 					try {
 						PigInfo pigInfo = populatePigIfnfo(errorMap, pigInfoMaper, processDTO);
 						if (pigInfo != null) {
-							pigInfoDaoImpl.insertPigInformation(pigInfo);
+							int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
+							PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -99,4 +106,14 @@ public class PigInfoHandler implements Handler {
 		return pigInfo;
 	}
 
+	private PigTraxEventMaster populateEventMaster(PigInfoMapper mapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(mapper.getDeriveEntryDate());
+			eventMaster.setPigInfoId(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
+	}
 }

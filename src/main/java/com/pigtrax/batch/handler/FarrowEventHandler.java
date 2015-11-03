@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.FarrowEvent;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.FarrowEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
@@ -27,6 +29,10 @@ public class FarrowEventHandler implements Handler {
 	@Autowired
 	private FarrowEventDaoImpl farrowEventDao;
 
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
+
+	
 	private static final Logger logger = Logger.getLogger(FarrowEventHandler.class);
 
 	@Override
@@ -43,7 +49,9 @@ public class FarrowEventHandler implements Handler {
 					try {
 						FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
 						if (farrowEvent != null) {
-							farrowEventDao.insertFarrowEventformation(farrowEvent);
+							int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
+							PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -100,5 +108,16 @@ public class FarrowEventHandler implements Handler {
 			errorMap.put(farrowEventfoMaper, errList);
 		}
 		return farrowEvent;
+	}
+	
+	private PigTraxEventMaster populateEventMaster(FarrowEventMapper mapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(mapper.getDeriveFarrowDate());
+			eventMaster.setFarrowEventId(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 }

@@ -70,7 +70,7 @@
 	</event>
 	<event id="FARROWEVENT">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
+			<col key="pigInfoId" order="1" isEmpty="false" />
 			<col key="serviceDate" order="2" isEmpty="false" />
 			<col key="penId" order="3" isEmpty="true" />
 			<col key="farrowDate" order="4" isEmpty="false" />

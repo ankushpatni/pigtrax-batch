@@ -212,26 +212,29 @@ public interface Constants {
 	
 	public static final String IND_PIGLET_ERR_PIGLET_CNT_MSG = "Individual piglet count can not be more than live borns captured in farrow event";
 	
+    public static final String REF_DATA_BREEDINGSERIVCETYPE = "BREEDINGSERVICETYPE";	
 	
+    public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE = "808";
+    
+    public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG = "Incomplete service cycle identified for the pig Id.";
 	
+    public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_CODE = "809";
+    
+    public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_MSG = "Invalid service type given";
+    
+    public static final String BREEDING_EVNT_ERR_INVALID_PEN_CODE = "810";
+    
+    public static final String BREEDING_EVNT_ERR_INVALID_PEN_MSG = "Invalid pen given";
+    
+    public static final String BREED_NG_EVNT_INVALID_PIGID_CODE = "810";
+    
+    public static final String BREED_NG_EVNT_INVALID_PIGID_MSG = "Invalid Pig Id for the company";
+    
+    public static final String BREED_NG_EVNT_INVALID_COMPANY_CODE = "811";
+    
+    public static final String BREED_NG_EVNT_INVALID_COMPANY_MSG = "Invalid company id";
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    
 	
 }
+

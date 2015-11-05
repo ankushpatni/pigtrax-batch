@@ -74,7 +74,10 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	private void setFarrowEventId(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
-			individualPigletMapper.setDeriveFarrowEventId(farrowEventDao.getFarrowEventId(individualPigletMapper.getDerivePigInfoId(), individualPigletMapper.getFarrowEventDate()));
+			if(individualPigletMapper.getDerivePigInfoId() != null && individualPigletMapper.getFarrowEventDate() != null)
+			{
+				individualPigletMapper.setDeriveFarrowEventId(farrowEventDao.getFarrowEventId(individualPigletMapper.getDerivePigInfoId(), individualPigletMapper.getFarrowEventDate()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

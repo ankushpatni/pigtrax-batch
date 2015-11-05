@@ -17,8 +17,8 @@ public class FarrowEvent implements Serializable {
 	private Integer femaleBorns;
 	private Integer mummies;
 	private Integer weightInKGs;
-	private Boolean inducedBirth;
-	private Boolean assistedBirth;
+	private Boolean inducedBirth = false;
+	private Boolean assistedBirth = false;
 	private String remarks;
 	private Integer sowCondition;
 	private Integer employeeGrpId;

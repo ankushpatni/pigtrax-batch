@@ -9,4 +9,6 @@ public interface GroupEventDao {
 	public Integer getGroupEventId(String groupId, int companyId) throws  SQLException;
 
 	int addGroupEvent(GroupEvent groupEvent) throws SQLException;
+
+	GroupEvent getGroupEventByGeneratedGroupId(int groupId, int companyId);
 }

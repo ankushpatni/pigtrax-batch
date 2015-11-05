@@ -211,7 +211,7 @@ public interface Constants {
 	public static final String IND_PIGLET_ERR_PIGLET_CNT_CODE = "807";
 	
 	public static final String IND_PIGLET_ERR_PIGLET_CNT_MSG = "Individual piglet count can not be more than live borns captured in farrow event";
-	
+
     public static final String REF_DATA_BREEDINGSERIVCETYPE = "BREEDINGSERVICETYPE";	
 	
     public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE = "808";
@@ -234,7 +234,35 @@ public interface Constants {
     
     public static final String BREED_NG_EVNT_INVALID_COMPANY_MSG = "Invalid company id";
 	
-    
+	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
+	
+	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal can have either GroupID or PigInfoId Not Both Of them";
+	
+	public static final String REM_REM_EVENT_TYPE_PRESENT_CODE = "1002";
+	
+	public static final String REM_REM_EVENT_TYPE_PRESENT_MSG = "Removal Event Type missing";
+	
+	public static final String REM_COMPANY_PRESENT_CODE = "1003";
+	
+	public static final String REM_COMPANY_PRESENT_MSG = "Company missing";
+	
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_CODE = "1004";
+	
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_MSG = "Number Of Pigs are missing";
+	
+	public static final String REM_REMOVAL_DATE_PRESENT_CODE = "1005";
+	
+	public static final String REM_REMOVAL_DATE_PRESENT_MSG = "Removal Date is missing";
+	
+	public static final String REM_WEIGHT_IN_KG_PRESENT_PRESENT_CODE = "1006";
+	
+	public static final String REM_WEIGHT_IN_KG_PRESENT_PRESENT_MSG = "Weight in KG missing";
+	
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_CODE = "1007";
+	
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG = "Number of Pigs can not be more then Group  in KG missing";
+	
+	public static final String REF_DATA_REMOVALEVENTTYPE = "REF_DATA_REMOVALEVENTTYPE";
 	
 }
 

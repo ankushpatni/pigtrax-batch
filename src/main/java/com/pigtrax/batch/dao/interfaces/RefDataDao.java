@@ -18,8 +18,10 @@ public interface RefDataDao {
 	
 	List<RefDataTranslation> getPigletStatusEventType();
 
-	List<RefDataTranslation> getPhaseOfProductionType();
+	List<RefDataTranslation> getPhaseOfProductionType(); 
 	
 	List<RefDataTranslation> getBreedingServiceType();
+
+	List<RefDataTranslation> getRemovalEventType();
 
 }

@@ -2,7 +2,7 @@ package com.pigtrax.batch.config;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Iterator; 
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +29,8 @@ public class RefDataCache {
 	private Map<String, Map<Integer, String>> phaseOfProductionTypeMap  = null;
 	
 	private Map<String, Map<Integer, String>> breedingServiceTypeMap = null;
+	
+	private Map<String, Map<Integer, String>> removalEventTypeMap  = null;
 
 	private RefDataCache() {
 		if (_INSTANCE != null) {
@@ -45,6 +47,7 @@ public class RefDataCache {
 		pigletStatusEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPigletStatusEventType()));
 		phaseOfProductionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPhaseOfProductionType()));
 		breedingServiceTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getBreedingServiceType()));
+		removalEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getRemovalEventType()));
 	}
 
 	private Map<String, Map<Integer, String>> convertToMap(final List<RefDataTranslation> rolesList) {
@@ -98,6 +101,9 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_BREEDINGSERIVCETYPE:
 			retVal = retRefdDataValue(breedingServiceTypeMap, value);
+			break;
+		case Constants.REF_DATA_REMOVALEVENTTYPE:
+			retVal = retRefdDataValue(removalEventTypeMap,value);
 			break;
 		default:
 			retVal = -1;

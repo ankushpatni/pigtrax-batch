@@ -27,6 +27,8 @@ public class RefDataCache {
 	private Map<String, Map<Integer, String>> pigletStatusEventTypeMap = null;
 	
 	private Map<String, Map<Integer, String>> phaseOfProductionTypeMap  = null;
+	
+	private Map<String, Map<Integer, String>> removalEventTypeMap  = null;
 
 	private RefDataCache() {
 		if (_INSTANCE != null) {
@@ -42,6 +44,7 @@ public class RefDataCache {
 		mortalityReasonTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getMortalityReasonType()));
 		pigletStatusEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPigletStatusEventType()));
 		phaseOfProductionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPhaseOfProductionType()));
+		removalEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getRemovalEventType()));
 	}
 
 	private Map<String, Map<Integer, String>> convertToMap(final List<RefDataTranslation> rolesList) {
@@ -93,6 +96,9 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_PHASEOFPRODUCTIONTYPE:
 			retVal = retRefdDataValue(phaseOfProductionTypeMap,value);
+			break;
+		case Constants.REF_DATA_REMOVALEVENTTYPE:
+			retVal = retRefdDataValue(removalEventTypeMap,value);
 			break;
 		default:
 			retVal = -1;

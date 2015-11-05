@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 
 @Repository
@@ -57,6 +60,26 @@ public class GroupEventDaoImpl implements GroupEventDao {
 
 		return null;
 
+	}
+	
+	@Override
+	public GroupEvent getGroupEventByGeneratedGroupId(final int groupId, final int companyId)
+	{
+		String qry = "select \"id\", \"groupId\", \"groupStartDateTime\", \"groupCloseDateTime\", \"isActive\", "
+		   		+ "\"remarks\", \"lastUpdated\", \"userUpdated\",\"id_Company\",  \"currentInventory\",\"previousGroupId\", \"id_PhaseOfProductionType\" "+
+				"from pigtrax.\"GroupEvent\" where  \"id\" = ? and \"id_Company\" = ?";
+			
+			List<GroupEvent> groupEventList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setInt(1, groupId);
+					ps.setInt(2, companyId);
+				}}, new GroupEventMapper());
+
+			if(groupEventList != null && groupEventList.size() > 0){
+				return groupEventList.get(0);
+			}
+			return null;
 	}
 	
 	@Override
@@ -116,5 +139,22 @@ public class GroupEventDaoImpl implements GroupEventDao {
 		return keyVal;
 	}
 	
-	
+	private static final class GroupEventMapper implements RowMapper<GroupEvent> {
+		public GroupEvent mapRow(ResultSet rs, int rowNum) throws SQLException {
+			GroupEvent groupEvent = new GroupEvent();
+			groupEvent.setId(rs.getInt("id"));
+			groupEvent.setGroupId(rs.getString("groupId"));
+			groupEvent.setGroupStartDateTime(rs.getDate("groupStartDateTime"));
+			groupEvent.setGroupCloseDateTime(rs.getDate("groupCloseDateTime"));
+			groupEvent.setActive(rs.getBoolean("isActive"));
+			groupEvent.setRemarks(rs.getString("remarks"));
+			groupEvent.setLastUpdated(rs.getDate("lastUpdated"));
+			groupEvent.setUserUpdated(rs.getString("userUpdated"));
+			groupEvent.setCompanyId(rs.getInt("id_Company"));
+			groupEvent.setCurrentInventory(rs.getInt("currentInventory"));
+			groupEvent.setPreviousGroupId(rs.getString("previousGroupId"));
+			groupEvent.setPhaseOfProductionTypeId(rs.getInt("id_PhaseOfProductionType"));
+			return groupEvent;
+		}
+	}
 }

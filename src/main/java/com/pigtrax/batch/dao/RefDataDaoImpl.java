@@ -59,6 +59,13 @@ public class RefDataDaoImpl implements RefDataDao {
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
 	
+	@Override
+	public List<RefDataTranslation> getRemovalEventType() {
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_RemovalType\" FROM pigtraxrefdata.\"RemovalEventTypeTranslation\" order by \"fieldLanguage\", \"id_RemovalType\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}	
+	
+	
 	private final static class CacheRefDataRowMaper implements RowMapper<RefDataTranslation> {
 		@Override
 		public RefDataTranslation mapRow(ResultSet rs, int rowNum) throws SQLException {

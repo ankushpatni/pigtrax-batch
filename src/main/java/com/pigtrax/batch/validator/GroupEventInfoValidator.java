@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
@@ -54,7 +55,7 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 	}
 	
 	private void validateCompanyId(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
-		if (groupEventInfoMapper.getDeriveCompanyId() == null || groupEventInfoMapper.getDeriveCompanyId() < 0) {
+		if (groupEventInfoMapper.getCompanyId() == null || StringUtils.isEmpty(groupEventInfoMapper.getCompanyId())) {
 			groupEventInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "companyId", false));
 		}

@@ -20,4 +20,6 @@ public interface RefDataDao {
 
 	List<RefDataTranslation> getPhaseOfProductionType();
 
+	List<RefDataTranslation> getRemovalEventType();
+
 }

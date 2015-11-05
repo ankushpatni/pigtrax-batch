@@ -18,8 +18,8 @@ public class BulkUploadBatchTest {
 	private static void execute(final ApplicationContext context) {
 		Process processEngine = context.getBean(ProcessEngine.class);
 		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put(Constants.EVENT_TYPE, BatchType.REMOVALEVENTEXCEPTSALESEVENT);
-		inputMap.put(Constants.DATA, "C:\\ankush\\Elance\\Khitij\\xls\\RemovalExcept.csv");
+		inputMap.put(Constants.EVENT_TYPE, BatchType.BREEDINGEVENT);
+		inputMap.put(Constants.DATA, "C:\\Users\\Rajesh\\Desktop\\PigTraxfiles\\input\\BreedingEvent.csv");
 		inputMap.put(Constants.HEADER, "true");
 		inputMap.put(Constants.SEPERATOR, ",");
 		inputMap.put(Constants.FILE_TYPE, "csv");

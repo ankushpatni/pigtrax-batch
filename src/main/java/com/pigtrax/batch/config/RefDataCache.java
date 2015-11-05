@@ -2,7 +2,7 @@ package com.pigtrax.batch.config;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Iterator; 
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +28,8 @@ public class RefDataCache {
 	
 	private Map<String, Map<Integer, String>> phaseOfProductionTypeMap  = null;
 	
+	private Map<String, Map<Integer, String>> breedingServiceTypeMap = null;
+	
 	private Map<String, Map<Integer, String>> removalEventTypeMap  = null;
 
 	private RefDataCache() {
@@ -44,6 +46,7 @@ public class RefDataCache {
 		mortalityReasonTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getMortalityReasonType()));
 		pigletStatusEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPigletStatusEventType()));
 		phaseOfProductionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPhaseOfProductionType()));
+		breedingServiceTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getBreedingServiceType()));
 		removalEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getRemovalEventType()));
 	}
 
@@ -83,8 +86,7 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_PREGNANCYEVENTTYPE:
 			retVal = retRefdDataValue(pregnancyEventTypeMap, value);
-			break;
-			
+			break;			
 		case Constants.REF_DATA_PREGNANCYEXAMRESULTTYPE:
 			retVal = retRefdDataValue(pregnancyExamResultTypeMap, value);
 			break;
@@ -96,6 +98,9 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_PHASEOFPRODUCTIONTYPE:
 			retVal = retRefdDataValue(phaseOfProductionTypeMap,value);
+			break;
+		case Constants.REF_DATA_BREEDINGSERIVCETYPE:
+			retVal = retRefdDataValue(breedingServiceTypeMap, value);
 			break;
 		case Constants.REF_DATA_REMOVALEVENTTYPE:
 			retVal = retRefdDataValue(removalEventTypeMap,value);

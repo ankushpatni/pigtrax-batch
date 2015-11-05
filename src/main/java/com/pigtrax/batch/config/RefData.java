@@ -48,6 +48,14 @@ public enum RefData {
 			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_PHASEOFPRODUCTIONTYPE);
 		}
 	},
+
+	BREEDINGSERVICETYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_BREEDINGSERIVCETYPE);
+		}
+	},
+
 	REMOVALEVENTTYPE {
 		@Override
 		public Integer getId(String value) {

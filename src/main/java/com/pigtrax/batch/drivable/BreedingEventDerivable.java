@@ -1,0 +1,126 @@
+package com.pigtrax.batch.drivable;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.pigtrax.batch.config.RefData;
+import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.CompanyDao;
+import com.pigtrax.batch.dao.interfaces.PenDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.RefDataDao;
+import com.pigtrax.batch.drivable.interfaces.Derivable;
+import com.pigtrax.batch.mapper.BreedingEventMapper;
+import com.pigtrax.batch.mapper.interfaces.Mapper;
+import com.pigtrax.batch.util.Constants;
+
+@Component
+public class BreedingEventDerivable implements Derivable {
+
+	@Autowired
+	private CompanyDao companyDao;
+	
+	@Autowired
+	private PigInfoDao pigInfoDao;
+	
+	@Autowired
+	PenDao penDao;
+	
+	@Autowired
+	RefDataDao refDataDao;
+
+	@Override
+	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
+		if (list != null) {
+			for (Mapper mapper : list) {
+				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;						
+				setCompanyId(breedingEventMapper);
+				setPigInfoId(breedingEventMapper);
+				setBreedingServiceTypeId(breedingEventMapper);
+				setSowCondition(breedingEventMapper);
+				setPenId(breedingEventMapper);
+				setWtInKgs(breedingEventMapper);
+			}
+		}
+	}
+
+	
+	private void setCompanyId(final BreedingEventMapper breedingEventMapper) {
+		if(breedingEventMapper.getCompanyId() != null)
+		{
+			try {
+				breedingEventMapper.setDeriveCompanyId(companyDao.getCompanyId(breedingEventMapper.getCompanyId().trim()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setPigInfoId(final BreedingEventMapper breedingEventMapper) {
+		if(breedingEventMapper.getPigId() != null && breedingEventMapper.getDeriveCompanyId() != null)
+		{
+			try {
+				breedingEventMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(breedingEventMapper.getPigId().trim(), breedingEventMapper.getDeriveCompanyId()));  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setBreedingServiceTypeId(final BreedingEventMapper breedingEventMapper)
+	{
+		if(breedingEventMapper.getServiceType() != null)
+		{
+			try {
+				Integer breedingServiceTypeIdFromRefData = RefData.BREEDINGSERVICETYPE.getId(breedingEventMapper.getServiceType().trim());
+				if (breedingServiceTypeIdFromRefData > -1) {
+					breedingEventMapper.setDeriveServiceTypeId(breedingServiceTypeIdFromRefData);
+				}
+			} catch (Exception e) {
+				e.printStackTrace(); 
+			}
+		}
+	}
+	
+	private void setSowCondition(final BreedingEventMapper breedingEventMapper)
+	{
+		if(breedingEventMapper.getSowCondition() != null)
+		{
+			try{
+				breedingEventMapper.setDeriveSowCondition(Integer.parseInt(breedingEventMapper.getSowCondition().trim()));
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setPenId(final BreedingEventMapper breedingEventMapper)
+	{
+		if(breedingEventMapper.getPen() != null && !Constants.BLANK_STRING.equals(breedingEventMapper.getPen().trim()))
+		{
+			try {
+				breedingEventMapper.setDerivePenId(penDao.getPenPKId(breedingEventMapper.getPen().trim(), breedingEventMapper.getDeriveCompanyId()));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	private void setWtInKgs(final BreedingEventMapper breedingEventMapper)
+	{
+		if(breedingEventMapper.getWeightInKgs() != null)
+		{
+			try{
+				breedingEventMapper.setDeriveWtInKgs(Double.parseDouble(breedingEventMapper.getWeightInKgs().trim()));
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

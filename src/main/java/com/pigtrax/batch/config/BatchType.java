@@ -1,5 +1,6 @@
 package com.pigtrax.batch.config;
 
+import com.pigtrax.batch.drivable.BreedingEventDerivable;
 import com.pigtrax.batch.drivable.FarrowEventDerivable;
 import com.pigtrax.batch.drivable.FeedEventDerivable;
 import com.pigtrax.batch.drivable.GroupEventDetailDerivable;
@@ -8,6 +9,7 @@ import com.pigtrax.batch.drivable.IndividualPigletStatusDerivable;
 import com.pigtrax.batch.drivable.PiginfoDerivable;
 import com.pigtrax.batch.drivable.PigletStatusInfoDerivable;
 import com.pigtrax.batch.drivable.PregnancyInfoDerivable;
+import com.pigtrax.batch.handler.BreedingEventHandler;
 import com.pigtrax.batch.drivable.RemovalEventExceptSalesDetailsDerivable;
 import com.pigtrax.batch.handler.FarrowEventHandler;
 import com.pigtrax.batch.handler.FeedEventHandler;
@@ -17,6 +19,7 @@ import com.pigtrax.batch.handler.IndividualPigletStatusHandler;
 import com.pigtrax.batch.handler.PigInfoHandler;
 import com.pigtrax.batch.handler.PigletStatusInfoHandler;
 import com.pigtrax.batch.handler.PregnancyInfoHandler;
+import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.handler.RemovalEventExceptSalesDetailsHandler;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
 import com.pigtrax.batch.mapper.FeedEventMapper;
@@ -26,6 +29,7 @@ import com.pigtrax.batch.mapper.IndividualPigletStatusMapper;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
+import com.pigtrax.batch.validator.BreedingEventValidator;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
 import com.pigtrax.batch.validator.FarrowEventValidator;
 import com.pigtrax.batch.validator.FeedEventValidator;
@@ -207,6 +211,27 @@ public enum BatchType {
 			return IndividualPigletStatusDerivable.class;
 		}
 	},
+	BREEDINGEVENT{
+		@Override
+		public Class<?> getMapperClass() {
+			return BreedingEventMapper.class;
+		}
+		@Override
+		public Class<?> getValidatorClass() {
+			return BreedingEventValidator.class;
+		}
+		
+		@Override
+		public Class<?> getHandlerClass() {
+			return BreedingEventHandler.class;
+		}
+		
+		@Override
+		public Class<?> getDriveClass() {
+			return BreedingEventDerivable.class;
+		}
+	},
+		
 	REMOVALEVENTEXCEPTSALESEVENT{
 		@Override
 		public Class<?> getMapperClass() {

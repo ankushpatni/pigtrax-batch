@@ -149,4 +149,14 @@
 			<col key="mortalityReasonId" order="11" isEmpty="true" />
 		</dataInfo>
 	</event>
+	<event id="MATINGDETAILS">
+		<dataInfo>
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="companyId" order="2" isEmpty="false" />
+			<col key="matingDate" order="3" isEmpty="false" />
+			<col key="employeeGroup" order="4" isEmpty="true" />
+			<col key="semenId" order="5" isEmpty="true" />
+			<col key="mateQuality" order="6" isEmpty="true" />
+		</dataInfo>
+	</event>
 </config>

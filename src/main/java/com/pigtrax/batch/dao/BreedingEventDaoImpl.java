@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -173,7 +174,7 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 	}
 	
 	
-	private Integer getLatestServiceEventId(Integer pigInfoId) {
+	public Integer getLatestServiceEventId(Integer pigInfoId) {
 		String qry = "Select BE.\"id\" from pigtrax.\"BreedingEvent\" BE  where BE.\"id_PigInfo\" = ? order by BE.\"id\" desc";
 		
 		Long retValList1 = null;
@@ -196,5 +197,39 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public Date getServiceStartDate(final Integer breedingEventId){
+		String qry = "Select  BE.\"serviceStartDate\" from pigtrax.\"BreedingEvent\" BE  where BE.\"id\" = ? ";
+		Date serviceStartDate = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, breedingEventId);
+			}}, new ResultSetExtractor<Date>() {
+				public Date extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getDate(1);
+					}
+					return null;
+				}
+			});	
 
+		return serviceStartDate;
+	}
+
+	@Override 
+	public int updateServiceStartDate(final Date matingDate, final Integer breedingEventId) {
+		String qry = "update pigtrax.\"BreedingEvent\" set \"serviceStartDate\" = ? where \"id\" = ?";
+		return this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				if(matingDate != null)
+					ps.setObject(1, new java.sql.Date(matingDate.getTime()));
+				else
+					ps.setObject(1, null);
+				ps.setInt(2, breedingEventId);
+			}
+		});
+	}
+	
 }

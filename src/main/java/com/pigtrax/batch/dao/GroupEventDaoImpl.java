@@ -139,6 +139,38 @@ public class GroupEventDaoImpl implements GroupEventDao {
 		return keyVal;
 	}
 	
+public int updateGroupEventCurrentInventory(final GroupEvent groupEvent) throws SQLException{
+		
+		String query = "update pigtrax.\"GroupEvent\" SET \"currentInventory\"=?  where \"id\" = ? and \"id_Company\" = ?";
+
+		return this.jdbcTemplate.update(query, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, groupEvent.getCurrentInventory());				
+				ps.setInt(2,groupEvent.getId());
+				ps.setInt(3, groupEvent.getCompanyId());
+			}
+		});
+		
+	}
+	
+	public int updateGroupEventCurrentInventorywithStatus(final GroupEvent groupEvent) throws SQLException{
+		
+		String query = "update pigtrax.\"GroupEvent\" SET \"currentInventory\"=?,\"isActive\"=?  where \"id\" = ? and \"id_Company\" = ?";
+
+		return this.jdbcTemplate.update(query, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, groupEvent.getCurrentInventory());	
+				ps.setBoolean(2, groupEvent.isActive());	
+				ps.setInt(3,groupEvent.getId());
+				ps.setInt(4, groupEvent.getCompanyId());
+			}
+		});
+		
+	}
+	
+	
 	private static final class GroupEventMapper implements RowMapper<GroupEvent> {
 		public GroupEvent mapRow(ResultSet rs, int rowNum) throws SQLException {
 			GroupEvent groupEvent = new GroupEvent();

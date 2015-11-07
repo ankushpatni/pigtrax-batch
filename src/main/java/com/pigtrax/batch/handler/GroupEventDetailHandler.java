@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.GroupEventDetail;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
@@ -24,6 +26,9 @@ public class GroupEventDetailHandler implements Handler{
 	
 	@Autowired
 	private GroupEventDetailsDaoImpl groupEventDetailDaoImpl;
+	
+	@Autowired
+	private GroupEventDaoImpl groupEventDaoImpl;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -42,9 +47,13 @@ public class GroupEventDetailHandler implements Handler{
 						GroupEventDetail groupEventDetail = populateGroupEventDetails(errorMap, groupEventDetailMapper, processDTO);
 						if (groupEventDetail != null) {
 							groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetail);
+							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(groupEventDetail.getGroupId(),groupEventDetail.getCompanyId());
+							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory()+groupEventDetail.getNumberOfPigs());
+							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
-					} catch (Exception e) {
+					} 
+					catch (Exception e) {
 						e.printStackTrace();
 						logger.error("Exception in GroupEventInfoHandler.execute : " + e);
 						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
@@ -78,6 +87,7 @@ public class GroupEventDetailHandler implements Handler{
 			groupEventDetail.setRoomId(groupEventDetailMapper.getDeriveRoomId());
 			groupEventDetail.setEmployeeGroupId(groupEventDetailMapper.getDeriveEmployeeGroupId());
 			groupEventDetail.setUserUpdated(processDTO.getUserName());
+			groupEventDetail.setCompanyId(groupEventDetailMapper.getDerivecompanyId());
 			
 		} catch (Exception e) {
 			logger.error("Exception in GroupEventDetailHandler.populateGroupEventDetails" + e.getMessage());

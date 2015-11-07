@@ -10,8 +10,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.RemovalEventExceptSalesDetails;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.RemovalEventExceptSalesDetailsDaoImpl;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
@@ -25,6 +27,9 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 	
 	@Autowired
 	private RemovalEventExceptSalesDetailsDaoImpl removalEventExceptSalesDetailsDaoImpl;
+	
+	@Autowired
+	private GroupEventDaoImpl groupEventDaoImpl;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -43,6 +48,9 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 						RemovalEventExceptSalesDetails removalEventExceptSalesDetails = populateRemovalEventExceptSalesDetails(errorMap, removalEventExceptSalesDetailsMapper, processDTO);
 						if (removalEventExceptSalesDetails != null) {
 							removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
+							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
+							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
+							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -79,6 +87,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			removalEventExceptSalesDetails.setDestPremiseId(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId());
 			removalEventExceptSalesDetails.setRemarks(removalEventExceptSalesDetailsMapper.getRemarks());
 			removalEventExceptSalesDetails.setMortalityReasonId(removalEventExceptSalesDetailsMapper.getDeriveMortalityReasonId());
+			removalEventExceptSalesDetails.setUserUpdated(processDTO.getUserName());
 		} catch (Exception e) {
 			logger.error("Exception in RemovalEventExceptSalesDetailsHandler.removalEventExceptSalesDetails" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

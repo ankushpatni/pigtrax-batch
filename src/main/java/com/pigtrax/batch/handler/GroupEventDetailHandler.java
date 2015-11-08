@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.GroupEventDetail;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
+import com.pigtrax.batch.mapper.GroupEventInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -29,6 +32,9 @@ public class GroupEventDetailHandler implements Handler{
 	
 	@Autowired
 	private GroupEventDaoImpl groupEventDaoImpl;
+	
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -50,6 +56,9 @@ public class GroupEventDetailHandler implements Handler{
 							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(groupEventDetail.getGroupId(),groupEventDetail.getCompanyId());
 							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory()+groupEventDetail.getNumberOfPigs());
 							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+							
+							PigTraxEventMaster eventMaster = populateEventMaster(groupEventDetailMapper, groupEventDetailMapper.getDeriveGroupId(), processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} 
@@ -98,6 +107,17 @@ public class GroupEventDetailHandler implements Handler{
 			errorMap.put(groupEventDetailMapper, errList);
 		}
 		return groupEventDetail;
+	}
+	
+	private PigTraxEventMaster populateEventMaster(GroupEventDetailMapper groupEventDetailMapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(groupEventDetailMapper.getDeriveDateOfEntry());
+			eventMaster.setGroupEventId(groupEventDetailMapper.getDeriveGroupId());
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 
 

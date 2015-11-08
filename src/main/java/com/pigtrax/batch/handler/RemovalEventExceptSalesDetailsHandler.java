@@ -11,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.RemovalEventExceptSalesDetails;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.RemovalEventExceptSalesDetailsDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
+import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -30,6 +33,9 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 	
 	@Autowired
 	private GroupEventDaoImpl groupEventDaoImpl;
+	
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -47,10 +53,14 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 					try {
 						RemovalEventExceptSalesDetails removalEventExceptSalesDetails = populateRemovalEventExceptSalesDetails(errorMap, removalEventExceptSalesDetailsMapper, processDTO);
 						if (removalEventExceptSalesDetails != null) {
-							removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
+							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
 							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
 							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
 							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+							
+							PigTraxEventMaster eventMaster = populateEventMaster(removalEventExceptSalesDetailsMapper, id, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
+							
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -97,6 +107,17 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			errorMap.put(removalEventExceptSalesDetailsMapper, errList);
 		}
 		return removalEventExceptSalesDetails;
+	}
+	
+	private PigTraxEventMaster populateEventMaster(RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime());
+			eventMaster.setRemovalEventExceptSalesDetails(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 	
 }

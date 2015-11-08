@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -148,7 +150,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 	}
 	
 	@Override
-	public boolean isPigASow(Integer pigInfoId) {
+	public boolean isPigASow(final Integer pigInfoId) {
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select CASE WHEN \"id_SexType\" = 1 THEN 'false' ELSE 'true' END  as isSow from pigtrax.\"PigInfo\" where \"id\" = ?");
 		final String qry = qryBuffer.toString();
@@ -175,6 +177,56 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				return false;
 		}
 		return false;
+	}
+	
+	
+	@Override
+	public PigInfo getPigDetails(final Integer pigInfoId)
+	{
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select \"id\", \"pigId\",\"sireId\",\"damId\",\"origin\",\"gline\","
+				+ "\"gcompany\",\"birthDate\",\"tattoo\",\"alternateTattoo\",\"remarks\",\"id_Company\","
+				+ "\"id_Barn\",\"id_Pen\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\" "
+				+ "from pigtrax.\"PigInfo\" where \"id\" = ?");
+		final String qry = qryBuffer.toString();
+		List<PigInfo> pigInfoList = null;
+		if (pigInfoId != null) {
+			pigInfoList = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {					
+					ps.setInt(1,pigInfoId);
+				}
+			}, new PigInfoRecordMapper());
+			if(pigInfoList != null && 0<pigInfoList.size())
+				return pigInfoList.get(0);
+		}
+		return null;
+	}
+	
+	
+	private static final class PigInfoRecordMapper implements RowMapper<PigInfo> {
+		public PigInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			PigInfo pigInfo = new PigInfo();
+			pigInfo.setId(rs.getInt("id"));
+			pigInfo.setPigId(rs.getString("pigId"));
+			pigInfo.setSireId(rs.getString("sireId"));
+			pigInfo.setDamId(rs.getString("damId"));
+			pigInfo.setOrigin(rs.getString("origin"));
+			pigInfo.setGline(rs.getObject("gline") != null ? rs.getInt("gline") : null);
+			pigInfo.setGcompany((rs.getObject("gcompany") != null) ? rs.getInt("gcompany") : 0);
+			pigInfo.setBirthDate(rs.getDate("birthDate"));
+			pigInfo.setTattoo(rs.getString("tattoo"));
+			pigInfo.setAlternateTattoo(rs.getString("alternateTattoo"));
+			pigInfo.setRemarks(rs.getString("remarks"));
+			pigInfo.setCompanyId(rs.getInt("id_Company"));
+			pigInfo.setBarnId((rs.getObject("id_Barn")!=null)?(Integer)rs.getObject("id_Barn") : null);
+			pigInfo.setPenId((rs.getObject("id_Pen")!=null)?(Integer)rs.getObject("id_Pen") : null);
+			pigInfo.setSexTypeId(rs.getInt("id_SexType")); 
+			pigInfo.setEntryDate(rs.getDate("entryDate"));
+			pigInfo.setActive(rs.getBoolean("isActive"));
+			pigInfo.setGfunctionTypeId((rs.getObject("id_GfunctionType")!=null)?(Integer)rs.getObject("id_GfunctionType") : null);
+			return pigInfo;
+		}
 	}
 
 }

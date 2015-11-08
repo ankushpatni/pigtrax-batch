@@ -11,6 +11,7 @@ import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
@@ -101,7 +102,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	
 	private void validateEmployeeGroupId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
 		if (matingDetailsMapper.getEmployeeGroup() != null && !Constants.BLANK_STRING.equals(matingDetailsMapper.getEmployeeGroup().trim()) && matingDetailsMapper.getDeriveEmployeeGroupId() == null ) {
-			matingDetailsMapper.setRecovrableErrors(true);
+			matingDetailsMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_EMP_GRP, Constants.FRW_EVNT_ERR_EMP_GRP_MSG, "employeeGroup", true));
 		}
 
@@ -115,13 +116,13 @@ public class MatingDetailsValidator extends AbstractValidator {
 					matingDetailsMapper.setDeriveMateQuality(mateQuality);
 				else
 				{
-					matingDetailsMapper.setRecovrableErrors(true);
+					matingDetailsMapper.setRecovrableErrors(false);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_MATEQUALITY_CODE, Constants.MATING_ERR_INVALID_MATEQUALITY_MSG, "mateQuality", true));
 				}
 			}			
 			catch(NumberFormatException nFEx)
 			{
-				matingDetailsMapper.setRecovrableErrors(true);
+				matingDetailsMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_MATEQUALITY_CODE, Constants.MATING_ERR_INVALID_MATEQUALITY_MSG, "mateQuality", true));
 			}
 		}
@@ -130,12 +131,15 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validateMatingRecord(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
 		if (matingDetailsMapper.getDeriveMatingDate() != null) {
 			
+			PigInfo pigInfoBean = pigInfoDao.getPigDetails(matingDetailsMapper.getDerivePigInfoId());
+			
 			DateTime recordMatingDate = new DateTime(matingDetailsMapper.getDeriveMatingDate());
 			
 			Integer lastBreedingEventId = breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId());
 			if(lastBreedingEventId == null)
 			{
-				matingDetailsMapper.setRecovrableErrors(true);
+				
+				matingDetailsMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_NO_SERVICE_RECORD_CODE, Constants.MATING_ERR_NO_SERVICE_RECORD_MSG, "pigId", true));
 			} 
 			else
@@ -151,29 +155,29 @@ public class MatingDetailsValidator extends AbstractValidator {
 					
 					 if(recordMatingDate.toLocalDate().equals(serviceStartDateTime.toLocalDate()))
 					  {
-						 matingDetailsMapper.setRecovrableErrors(true);
+						 matingDetailsMapper.setRecovrableErrors(false);
 						 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_DUPLICATE_MATINGDATE_CODE, Constants.MATING_ERR_DUPLICATE_MATINGDATE_MSG, "pigId", true));
 					  }
 					 else if(recordMatingDate.toLocalDate().isBefore(serviceStartDateTime.toLocalDate()))
 					  {
 						 if(pregnancyEventFlag)
 						 {
-							 matingDetailsMapper.setRecovrableErrors(true);
+							 matingDetailsMapper.setRecovrableErrors(false);
 							 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_EARLY_DATE_CODE, Constants.MATING_ERR_EARLY_DATE_MSG, "pigId", true));
 						 }
 						 else
-							 matingDetailsMapper.setUpdateServiceStartDate(true);
+							 matingDetailsMapper.setUpdateServiceStartDate(false);
 					  }	
 					 else if(durationDays > 130)
 					 {
-						 matingDetailsMapper.setRecovrableErrors(true);
+						 matingDetailsMapper.setRecovrableErrors(false);
 						 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_NEXT_SERVICE_CODE, Constants.MATING_ERR_NEXT_SERVICE_MSG, "pigId", true));
 					 }
 					 else if(durationDays > 18 && durationDays < 130 )
 					 {
 						 if(pregnancyEventFlag)
 						 {
-							 matingDetailsMapper.setRecovrableErrors(true);
+							 matingDetailsMapper.setRecovrableErrors(false);
 							 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_PREG_RECORD_CODE, Constants.MATING_ERR_PREG_RECORD_MSG, "pigId", true));
 						 }
 						 else
@@ -181,16 +185,37 @@ public class MatingDetailsValidator extends AbstractValidator {
 					 }
 					 else if(durationDays > 5 && durationDays < 18)
 					 {
-						 matingDetailsMapper.setRecovrableErrors(true);
+						 matingDetailsMapper.setRecovrableErrors(false);
 						 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_WINDOW_CODE, Constants.MATING_ERR_INVALID_WINDOW_MSG, "pigId", true));
 					 }
 						 
 				}	
-				else
-					matingDetailsMapper.setUpdateServiceStartDate(true);
+				else 
+				{
+					if(pigInfoBean != null)
+					{
+						DateTime birthDate = new DateTime(pigInfoBean.getBirthDate());
+						DateTime entryDate = new DateTime(pigInfoBean.getEntryDate());
+						
+						if(recordMatingDate.toLocalDate().compareTo(birthDate.toLocalDate()) != 1)
+						{
+							matingDetailsMapper.setRecovrableErrors(false);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE, Constants.MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG, "pigId", true));
+						}
+						else if(recordMatingDate.toLocalDate().compareTo(entryDate.toLocalDate()) != 1)
+						{
+							matingDetailsMapper.setRecovrableErrors(false);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_DATE_EARLIER_ENTRYDATE_CODE, Constants.MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG, "pigId", true));
+						}
+						else
+						{
+							matingDetailsMapper.setUpdateServiceStartDate(true);
+						}
+					}
+				}
 			}
-		}
 
-	}
+		}
 	
+	}
 }

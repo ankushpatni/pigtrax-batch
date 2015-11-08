@@ -270,6 +270,14 @@ public interface Constants {
     
     public static final String BREED_EVNT_PIG_NOTA_SOW_MSG = "The given pig  is a boar";
     
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE="821";
+    
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG = "Mating date given is earlier than birth date";
+    
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_CODE="822";
+    
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG = "Mating date given is earlier than entry date";    
+    
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
 	
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal can have either GroupID or PigInfoId Not Both Of them";

@@ -15,4 +15,6 @@ public interface PigInfoDao {
 	public Integer getPKfromPigId(final Map<String, String> searchCriteria) throws SQLException;
 	
 	public boolean isPigASow(Integer pigInfoId);
+	
+	public PigInfo getPigDetails(Integer pigInfoId);
 }

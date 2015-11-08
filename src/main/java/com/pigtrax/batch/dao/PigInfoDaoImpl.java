@@ -146,5 +146,35 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean isPigASow(Integer pigInfoId) {
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select CASE WHEN \"id_SexType\" = 1 THEN 'false' ELSE 'true' END  as isSow from pigtrax.\"PigInfo\" where \"id\" = ?");
+		final String qry = qryBuffer.toString();
+		Boolean retValList1 = null;
+		if (pigInfoId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {					
+					ps.setInt(1,pigInfoId);
+				}
+			}, new ResultSetExtractor<Boolean>() {
+				public Boolean extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getBoolean(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("pigInfoId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return retValList1;
+			}
+			else
+				return false;
+		}
+		return false;
+	}
 
 }

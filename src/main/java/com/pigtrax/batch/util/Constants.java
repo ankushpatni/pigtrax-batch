@@ -260,7 +260,15 @@ public interface Constants {
     
     public static final String MATING_ERR_NO_SERVICE_RECORD_CODE = "818";
     
-    public static final String MATING_ERR_NO_SERVICE_RECORD_MSG = "No active breeding event record available for the given pig Id";    
+    public static final String MATING_ERR_NO_SERVICE_RECORD_MSG = "No active breeding event record available for the given pig Id";
+    
+    public static final String BREED_EVNT_INVALID_SOW_CONDITION_CODE="819";
+    
+    public static final String BREED_EVNT_INVALID_SOW_CONDITION_MSG = "Invalid sow condition given. Value should be between 1-5";
+    
+    public static final String BREED_EVNT_PIG_NOTA_SOW_CODE="820";
+    
+    public static final String BREED_EVNT_PIG_NOTA_SOW_MSG = "The given pig  is a boar";
     
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
 	

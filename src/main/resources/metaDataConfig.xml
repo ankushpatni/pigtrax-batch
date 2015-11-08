@@ -147,6 +147,12 @@
 			<col key="destPremiseId" order="9" isEmpty="true" />
 			<col key="remarks" order="10" isEmpty="true" />
 			<col key="mortalityReasonId" order="11" isEmpty="true" />
+			<col key="trailerFunction" order="12" isEmpty="true" />
+			<col key="journeyStartTime" order="13" isEmpty="true" />
+			<col key="journeyEndTime" order="14" isEmpty="true" />
+			<col key="transportDestinationId" order="15" isEmpty="true" />
+			<col key="transportTruckId" order="16" isEmpty="true" />
+			<col key="transportTrailerId" order="17" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="SALESEVENTDETAILS">

@@ -15,6 +15,7 @@ import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
+import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -29,7 +30,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 	PregnancyInfoDao pregnancyInfoDao;
 	
 	@Autowired
-	GroupEventDao groupEventDao;
+	GroupEventDao groupEventDao;	
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();

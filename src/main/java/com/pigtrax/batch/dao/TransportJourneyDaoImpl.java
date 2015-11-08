@@ -1,5 +1,6 @@
 package com.pigtrax.batch.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +11,15 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 
 @Repository
@@ -58,6 +63,55 @@ public class TransportJourneyDaoImpl implements TransportJourneyDao {
 
 		return null;
 
+	}
+	
+	@Override
+	public int addTransportJourney(final TransportJourney transportJourney)
+			throws SQLException {
+		final String Qry = "insert into pigtrax.\"TransportJourney\"(\"trailerFunction\", \"journeyStartTime\", \"journeyEndTime\","
+			+" \"id_TransportDestination\", \"id_TransportTruck\", \"id_TransportTrailer\", \"lastUpdated\", \"userUpdated\") "
+				+ "values(?,?,?,?,?,?,current_timestamp,?)";
+			
+		KeyHolder holder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(
+	    	    new PreparedStatementCreator() {
+	    	        public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+	    	            PreparedStatement ps =
+	    	                con.prepareStatement(Qry, new String[] {"id"});	    	           
+	    	            ps.setString(1, transportJourney.getTrailerFunction());
+	    	            if(transportJourney.getJourneyStartTime() != null )
+	    	            	ps.setDate(2, new java.sql.Date(transportJourney.getJourneyStartTime().getTime()));
+	    	            else
+	    	            	ps.setNull(2, java.sql.Types.DATE);
+	    	            if(transportJourney.getJourneyEndTime() != null )
+	    	            	ps.setDate(3, new java.sql.Date(transportJourney.getJourneyEndTime().getTime()));
+	    	            else
+	    	            	ps.setNull(3, java.sql.Types.DATE);
+	    	            if(transportJourney.getTransportDestinationId() != null )
+	    	            	ps.setInt(4, transportJourney.getTransportDestinationId());
+	    	            else 
+	    	            	ps.setNull(4, java.sql.Types.INTEGER);
+	    	            
+	    	            if(transportJourney.getTransportTruckId() != null )
+	    	            	ps.setInt(5, transportJourney.getTransportTruckId());
+	    	            else 
+	    	            	ps.setNull(5, java.sql.Types.INTEGER);
+	    	            if(transportJourney.getTransportTrailerId() != null )
+	    	            	ps.setInt(6, transportJourney.getTransportTrailerId());
+	    	            else 
+	    	            	ps.setNull(6, java.sql.Types.INTEGER);
+	    	          
+	    	            ps.setString(7, transportJourney.getUserUpdated());
+	    			
+	    	            return ps;
+	    	        }
+	    	    },
+	    	    holder);
+		int keyVal = holder.getKey().intValue();
+		logger.info("Key generated = "+keyVal);
+		
+		return keyVal;
 	}
 
 }

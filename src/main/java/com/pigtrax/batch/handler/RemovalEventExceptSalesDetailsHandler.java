@@ -13,14 +13,15 @@ import org.springframework.stereotype.Component;
 import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.RemovalEventExceptSalesDetails;
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.RemovalEventExceptSalesDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
-import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -36,6 +37,9 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	TransportJourneyDao transportJourneyDao;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -53,6 +57,10 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 					try {
 						RemovalEventExceptSalesDetails removalEventExceptSalesDetails = populateRemovalEventExceptSalesDetails(errorMap, removalEventExceptSalesDetailsMapper, processDTO);
 						if (removalEventExceptSalesDetails != null) {
+							
+							TransportJourney transportJourney = populateTransportJourney(removalEventExceptSalesDetailsMapper,processDTO);
+							Integer transportJourneyId =  transportJourneyDao.addTransportJourney(transportJourney);
+							removalEventExceptSalesDetails.setTransportJourneyId(transportJourneyId);
 							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
 							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
 							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
@@ -118,6 +126,19 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			eventMaster.setUserUpdated(processDTO.getUserName());
 		}
 		return eventMaster;
+	}
+	
+	private TransportJourney populateTransportJourney(RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, final ProcessDTO processDTO)
+	{
+		TransportJourney transportJourney = new TransportJourney();
+		transportJourney.setJourneyStartTime(removalEventExceptSalesDetailsMapper.getDeriveJourneyStartTime());
+		transportJourney.setJourneyEndTime(removalEventExceptSalesDetailsMapper.getDeriveJourneyEndTime());
+		transportJourney.setTrailerFunction(removalEventExceptSalesDetailsMapper.getTrailerFunction());
+		transportJourney.setTransportDestinationId(removalEventExceptSalesDetailsMapper.getDeriveTransportDestinationId());
+		transportJourney.setTransportTrailerId(removalEventExceptSalesDetailsMapper.getDeriveTransportTrailerId());
+		transportJourney.setTransportTruckId(removalEventExceptSalesDetailsMapper.getDeriveTransportTruckId());
+		transportJourney.setUserUpdated(processDTO.getUserName());
+		return transportJourney;
 	}
 	
 }

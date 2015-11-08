@@ -233,7 +233,51 @@ public interface Constants {
     public static final String BREED_NG_EVNT_INVALID_COMPANY_CODE = "811";
     
     public static final String BREED_NG_EVNT_INVALID_COMPANY_MSG = "Invalid company id";
+    
+    public static final String MATING_ERR_INVALID_MATEQUALITY_CODE = "812";
+    
+    public static final String MATING_ERR_INVALID_MATEQUALITY_MSG = "Invalid mate quality given";
+    
+    public static final String MATING_ERR_DUPLICATE_MATINGDATE_CODE = "813";
+    
+    public static final String MATING_ERR_DUPLICATE_MATINGDATE_MSG = "Mating date given is same as that of current service date";
 	
+    public static final String MATING_ERR_EARLY_DATE_CODE = "814";
+    
+    public static final String MATING_ERR_EARLY_DATE_MSG = "Mating date given is earlier than service date. Pregnancy record already added for the service event";
+    
+    public static final String MATING_ERR_NEXT_SERVICE_CODE = "815";
+    
+    public static final String MATING_ERR_NEXT_SERVICE_MSG = "Duration is more than 130 days. It should be added as a new service record";
+
+    public static final String MATING_ERR_PREG_RECORD_CODE = "816";
+    
+    public static final String MATING_ERR_PREG_RECORD_MSG = "Pregnancy record already added for the service event";
+
+    public static final String MATING_ERR_INVALID_WINDOW_CODE = "817";
+    
+    public static final String MATING_ERR_INVALID_WINDOW_MSG = "Mating record added for invalid window of 19 - 60 days";
+    
+    public static final String MATING_ERR_NO_SERVICE_RECORD_CODE = "818";
+    
+    public static final String MATING_ERR_NO_SERVICE_RECORD_MSG = "No active breeding event record available for the given pig Id";
+    
+    public static final String BREED_EVNT_INVALID_SOW_CONDITION_CODE="819";
+    
+    public static final String BREED_EVNT_INVALID_SOW_CONDITION_MSG = "Invalid sow condition given. Value should be between 1-5";
+    
+    public static final String BREED_EVNT_PIG_NOTA_SOW_CODE="820";
+    
+    public static final String BREED_EVNT_PIG_NOTA_SOW_MSG = "The given pig  is a boar";
+    
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE="821";
+    
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG = "Mating date given is earlier than birth date";
+    
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_CODE="822";
+    
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG = "Mating date given is earlier than entry date";    
+    
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
 	
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal can have either GroupID or PigInfoId Not Both Of them";
@@ -263,6 +307,8 @@ public interface Constants {
 	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG = "Number of Pigs can not be more then Group  in KG missing";
 	
 	public static final String REF_DATA_REMOVALEVENTTYPE = "REF_DATA_REMOVALEVENTTYPE";
+
+	
 	
 }
 

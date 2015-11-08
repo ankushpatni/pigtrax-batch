@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.BreedingEventMapper;
-import com.pigtrax.batch.mapper.IndividualPigletStatusMapper;
-import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -22,6 +22,8 @@ import com.pigtrax.batch.validator.interfaces.AbstractValidator;
 @Component
 public class BreedingEventValidator extends AbstractValidator {
 	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -39,6 +41,7 @@ public class BreedingEventValidator extends AbstractValidator {
 				
 				validatePigId(breedingEventMapper, errList);
 				validatePigInfoId(breedingEventMapper, errList);
+				validatePigGender(breedingEventMapper, errList);
 				validateCompanyId(breedingEventMapper, errList);
 				validateSeriveTypeId(breedingEventMapper, errList);
 				validatePenId(breedingEventMapper, errList);
@@ -68,6 +71,17 @@ public class BreedingEventValidator extends AbstractValidator {
 		}
 	}
 	
+	private void validatePigGender(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {	
+		if(breedingEventMapper.getDerivePigInfoId() != null)			
+		{
+			if(!pigInfoDao.isPigASow(breedingEventMapper.getDerivePigInfoId()))
+			{
+				breedingEventMapper.setRecovrableErrors(false); 
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+			}
+		}
+	}
+	
 	private void validateCompanyId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
 		if (breedingEventMapper.getDeriveCompanyId() == null || breedingEventMapper.getDeriveCompanyId() < 0) {
 			breedingEventMapper.setRecovrableErrors(false);
@@ -90,14 +104,16 @@ public class BreedingEventValidator extends AbstractValidator {
 	}
 	
 	private void validateSowCondition(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
-		if (breedingEventMapper.getDeriveSowCondition() == null || breedingEventMapper.getDeriveSowCondition() < 0) {
+		if (breedingEventMapper.getSowCondition() != null && !Constants.BLANK_STRING.equals(breedingEventMapper.getSowCondition()) && 
+				(breedingEventMapper.getDeriveSowCondition() == null || (breedingEventMapper.getDeriveSowCondition() != null&& breedingEventMapper.getDeriveSowCondition() < 0)  ||( breedingEventMapper.getDeriveSowCondition() != null && breedingEventMapper.getDeriveSowCondition() > 5))) {
 			breedingEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "sowCondition", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_INVALID_SOW_CONDITION_CODE, Constants.BREED_EVNT_INVALID_SOW_CONDITION_MSG, "sowCondition", false));
 		}
+		
 	}
 	
 	private void validateWeight(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
-		if (breedingEventMapper.getWeightInKgs() != null ) {
+		if (breedingEventMapper.getWeightInKgs() != null && ! Constants.BLANK_STRING.equals(breedingEventMapper.getWeightInKgs())) {
 			try{
 				double weight = Double.parseDouble(breedingEventMapper.getWeightInKgs());
 			}

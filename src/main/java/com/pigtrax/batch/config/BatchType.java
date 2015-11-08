@@ -6,6 +6,7 @@ import com.pigtrax.batch.drivable.FeedEventDerivable;
 import com.pigtrax.batch.drivable.GroupEventDetailDerivable;
 import com.pigtrax.batch.drivable.GroupEventInfoDerivable;
 import com.pigtrax.batch.drivable.IndividualPigletStatusDerivable;
+import com.pigtrax.batch.drivable.MatingDetailsDerivable;
 import com.pigtrax.batch.drivable.PiginfoDerivable;
 import com.pigtrax.batch.drivable.PigletStatusInfoDerivable;
 import com.pigtrax.batch.drivable.PregnancyInfoDerivable;
@@ -17,6 +18,7 @@ import com.pigtrax.batch.handler.FeedEventHandler;
 import com.pigtrax.batch.handler.GroupEventDetailHandler;
 import com.pigtrax.batch.handler.GroupEventInfoHandler;
 import com.pigtrax.batch.handler.IndividualPigletStatusHandler;
+import com.pigtrax.batch.handler.MatingDetailsHandler;
 import com.pigtrax.batch.handler.PigInfoHandler;
 import com.pigtrax.batch.handler.PigletStatusInfoHandler;
 import com.pigtrax.batch.handler.PregnancyInfoHandler;
@@ -28,6 +30,7 @@ import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
 import com.pigtrax.batch.mapper.IndividualPigletStatusMapper;
+import com.pigtrax.batch.mapper.MatingDetailsMapper;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
@@ -39,11 +42,13 @@ import com.pigtrax.batch.validator.FeedEventValidator;
 import com.pigtrax.batch.validator.GroupEventDetailValidator;
 import com.pigtrax.batch.validator.GroupEventInfoValidator;
 import com.pigtrax.batch.validator.IndividualPigletStatusValidator;
+import com.pigtrax.batch.validator.MatingDetailsValidator;
 import com.pigtrax.batch.validator.PigInfoValidator;
 import com.pigtrax.batch.validator.PigletStatusInfoValidator;
 import com.pigtrax.batch.validator.PregnancyInfoValidator;
 import com.pigtrax.batch.validator.RemovalEventExceptSalesDetailsValidator;
 import com.pigtrax.batch.validator.SalesEventDetailsValidator;
+
 
 public enum BatchType {
 	PIGINFO {
@@ -262,7 +267,7 @@ public enum BatchType {
 		public Class<?> getMapperClass() {
 			return SalesEventDetailsMapper.class;
 		}
-
+			
 		@Override
 		public Class<?> getValidatorClass() {
 			return SalesEventDetailsValidator.class;
@@ -276,6 +281,28 @@ public enum BatchType {
 		@Override
 		public Class<?> getDriveClass() {
 			return SalesEventDetailsDrivable.class;
+		}
+	},
+			
+	MATINGDETAILS{
+		@Override
+		public Class<?> getMapperClass() {
+			return MatingDetailsMapper.class;
+		}
+		
+		@Override
+		public Class<?> getValidatorClass() {
+			return MatingDetailsValidator.class;
+		}
+
+		@Override
+		public Class<?> getHandlerClass() {
+			return MatingDetailsHandler.class;
+		}
+
+		@Override
+		public Class<?> getDriveClass() {
+			return MatingDetailsDerivable.class;
 		}
 	}
 	;

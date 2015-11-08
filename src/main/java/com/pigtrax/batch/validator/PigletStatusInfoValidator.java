@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -20,6 +22,8 @@ import com.pigtrax.batch.validator.interfaces.AbstractValidator;
 @Component
 public class PigletStatusInfoValidator extends AbstractValidator {
 	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -36,6 +40,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				validatePigId(pigletStatusInfoMapper, errList);
 				validatePigInfoId(pigletStatusInfoMapper, errList);
+				validatePigGender(pigletStatusInfoMapper, errList);
 				validateCompanyId(pigletStatusInfoMapper, errList);
 				validateFarrowDate(pigletStatusInfoMapper, errList);
 				validateFarrowEvent(pigletStatusInfoMapper, errList);
@@ -63,6 +68,17 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 		if(pigletStatusInfoMapper.getDerivePigInfoId() == null || pigletStatusInfoMapper.getDerivePigInfoId() < 0) {
 			pigletStatusInfoMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+		}
+	}
+	
+	private void validatePigGender(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
+		if(pigletStatusInfoMapper.getDerivePigInfoId() != null)			
+		{
+			if(!pigInfoDao.isPigASow(pigletStatusInfoMapper.getDerivePigInfoId()))
+			{
+				pigletStatusInfoMapper.setRecovrableErrors(false); 
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+			}
 		}
 	}
 	

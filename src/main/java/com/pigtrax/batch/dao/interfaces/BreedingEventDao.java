@@ -1,8 +1,11 @@
 package com.pigtrax.batch.dao.interfaces;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
+
+import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.pigtrax.batch.beans.BreedingEvent;
 
@@ -11,7 +14,13 @@ public interface BreedingEventDao {
 
 	public Integer getBreedingEventId(final Map<String, Object> creteriaMap) throws SQLException;
 	
-	Integer insertBreedingEventInfo(final BreedingEvent breedingEvent) throws SQLException;	
+	Integer insertBreedingEventInfo(final BreedingEvent breedingEvent) throws SQLException;
+	
+	Integer getLatestServiceEventId(Integer pigInfoId);
 		
 	boolean checkIfPreviousCycleCompleted(Integer pigInfoId);
+	
+	Date getServiceStartDate(final Integer breedingEventId);	
+	 
+	int updateServiceStartDate(Date matingDate, Integer breedingEventId);
 }

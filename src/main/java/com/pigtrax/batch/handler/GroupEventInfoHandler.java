@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
+import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -23,6 +26,9 @@ public class GroupEventInfoHandler implements Handler{
 	
 	@Autowired
 	private GroupEventDaoImpl groupEventDaoImpl;
+	
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
@@ -40,7 +46,9 @@ public class GroupEventInfoHandler implements Handler{
 					try {
 						GroupEvent groupEvent = populateGroupEvent(errorMap, groupEventInfoMapper, processDTO);
 						if (groupEvent != null) {
-							groupEventDaoImpl.addGroupEvent(groupEvent);
+							Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
+							PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
 					} catch (Exception e) {
@@ -86,6 +94,17 @@ public class GroupEventInfoHandler implements Handler{
 			errorMap.put(groupEventInfoMapper, errList);
 		}
 		return groupEvent;
+	}
+	
+	private PigTraxEventMaster populateEventMaster(GroupEventInfoMapper groupEventInfoMapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(groupEventInfoMapper.getDeriveGroupStartDateTime());
+			eventMaster.setGroupEventId(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 
 }

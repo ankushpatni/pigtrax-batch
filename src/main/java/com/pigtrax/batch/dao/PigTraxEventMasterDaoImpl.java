@@ -34,8 +34,8 @@ public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
 	 */
 	public int insertEventMaster(final PigTraxEventMaster master) throws SQLException {
 		logger.info("Entering insertEventMaster");
-		String Qry = "insert into pigtrax.\"PigTraxEventMaster\"( \"eventTime\", \"id_PigInfo\", \"lastUpdated\", \"userUpdated\", \"id_GroupEvent\", \"id_BreedingEvent\", \"id_PregnancyEvent\", \"id_FarrowEvent\", \"id_PigletStatus\", \"id_FeedEvent\", \"id_RemovalEvent\") "
-				+ "values(?,?,current_timestamp,?,?,?,?,?,?,?,?)";
+		String Qry = "insert into pigtrax.\"PigTraxEventMaster\"( \"eventTime\", \"id_PigInfo\", \"lastUpdated\", \"userUpdated\", \"id_GroupEvent\", \"id_BreedingEvent\", \"id_PregnancyEvent\", \"id_FarrowEvent\", \"id_PigletStatus\", \"id_FeedEvent\", \"id_RemovalEventExceptSalesDetails\",\"id_SalesEventDetails\") "
+				+ "values(?,?,current_timestamp,?,?,?,?,?,?,?,?,?)";
 		
 		return this.jdbcTemplate.update(Qry, new PreparedStatementSetter() {
 		
@@ -53,7 +53,8 @@ public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
 				ps.setObject(7, (master.getFarrowEventId() != null)?master.getFarrowEventId():null);
 				ps.setObject(8, (master.getPigletStatusId() != null)?master.getPigletStatusId():null);
 				ps.setObject(9, (master.getFeedEventId() != null)?master.getFeedEventId():null);
-				ps.setObject(10, (master.getRemovalEventId() != null)?master.getRemovalEventId():null);
+				ps.setObject(10, (master.getRemovalEventExceptSalesDetails() != null)?master.getRemovalEventExceptSalesDetails():null);
+				ps.setObject(11, (master.getSalesEventDetails() != null)?master.getSalesEventDetails():null);
 			}
 		});
 		

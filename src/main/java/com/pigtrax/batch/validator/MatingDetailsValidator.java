@@ -15,6 +15,7 @@ import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.MatingDetailsMapper;
@@ -30,7 +31,10 @@ public class MatingDetailsValidator extends AbstractValidator {
 	BreedingEventDao breedingEventDao;
 	
 	@Autowired
-	PregnancyInfoDao pregnancyInfoDao; 
+	PregnancyInfoDao pregnancyInfoDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -48,6 +52,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 				
 				validatePigId(matingDetailsMapper, errList);
 				validatePigInfoId(matingDetailsMapper, errList);
+				validatePigGender(matingDetailsMapper, errList);
 				validateCompanyId(matingDetailsMapper, errList);				
 				validateEmployeeGroupId(matingDetailsMapper, errList);
 				validateMateQuality(matingDetailsMapper, errList);
@@ -72,6 +77,17 @@ public class MatingDetailsValidator extends AbstractValidator {
 		if(matingDetailsMapper.getDerivePigInfoId() == null || matingDetailsMapper.getDerivePigInfoId() < 0) {
 			matingDetailsMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_PIGID_CODE, Constants.BREED_NG_EVNT_INVALID_PIGID_MSG, "pigId", false));
+		}
+	}
+	
+	private void validatePigGender(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {	
+		if(matingDetailsMapper.getDerivePigInfoId() != null)			
+		{
+			if(!pigInfoDao.isPigASow(matingDetailsMapper.getDerivePigInfoId()))
+			{
+				matingDetailsMapper.setRecovrableErrors(false); 
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+			}
 		}
 	}
 	

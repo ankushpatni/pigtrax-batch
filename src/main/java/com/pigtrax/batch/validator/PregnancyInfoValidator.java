@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
+import com.pigtrax.batch.mapper.MatingDetailsMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
@@ -27,6 +29,9 @@ public class PregnancyInfoValidator extends AbstractValidator {
 
 	@Autowired
 	PregnancyInfoDao pregnancyInfoDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -43,6 +48,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				validatePigId(pregnancyInfoMapper, errList);
 				validatePigInfoId(pregnancyInfoMapper, errList);
+				validatePigGender(pregnancyInfoMapper, errList);
 				validateCompanyId(pregnancyInfoMapper, errList);
 				validateServiceDate(pregnancyInfoMapper, errList);
 				validateBreedingEvent(pregnancyInfoMapper, errList);
@@ -73,6 +79,17 @@ public class PregnancyInfoValidator extends AbstractValidator {
 		if(pregnancyInfoMapper.getDerivePigInfoId() == null || pregnancyInfoMapper.getDerivePigInfoId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+		}
+	}
+	
+	private void validatePigGender(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
+		if(pregnancyInfoMapper.getDerivePigInfoId() != null)			
+		{
+			if(!pigInfoDao.isPigASow(pregnancyInfoMapper.getDerivePigInfoId()))
+			{
+				pregnancyInfoMapper.setRecovrableErrors(false); 
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+			}
 		}
 	}
 	

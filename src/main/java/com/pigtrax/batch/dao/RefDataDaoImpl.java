@@ -32,19 +32,19 @@ public class RefDataDaoImpl implements RefDataDao {
 
 	@Override
 	public List<RefDataTranslation> getPregnancyEventType() {
-		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyEventType\" FROM pigtraxrefdata.\"PregnancyEventTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyEventType\" FROM pigtraxrefdata.\"PregnancyEventTypeTranslation\" order by \"fieldLanguage\", \"id_PregnancyEventType\"; ";
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
 	
 	@Override
 	public List<RefDataTranslation> getPregnancyExamResultType() {
-		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyExamResultType\" FROM pigtraxrefdata.\"PregnancyExamResultTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_PregnancyExamResultType\" FROM pigtraxrefdata.\"PregnancyExamResultTypeTranslation\" order by \"fieldLanguage\", \"id_PregnancyExamResultType\"; ";
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
 	
 	@Override
 	public List<RefDataTranslation> getMortalityReasonType() {
-		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_MortalityReasonType\" FROM pigtraxrefdata.\"MortalityReasonTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_MortalityReasonType\" FROM pigtraxrefdata.\"MortalityReasonTypeTranslation\" order by \"fieldLanguage\", \"id_MortalityReasonType\"; ";
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
 	

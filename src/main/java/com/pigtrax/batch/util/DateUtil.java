@@ -26,7 +26,8 @@ public class DateUtil {
 		return new SimpleDateFormat(DEFAULT_FORMATTER).format(date);
 	}
 
-	public static Date getDateFromString(final String date) {
+	public static Date getDateFromString( String date) {
+		if(date != null) date = date.trim();
 		try {
 			return new SimpleDateFormat(DEFAULT_FORMATTER).parse(date);
 		} catch (Exception e) {

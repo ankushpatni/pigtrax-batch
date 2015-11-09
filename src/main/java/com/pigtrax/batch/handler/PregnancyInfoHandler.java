@@ -80,7 +80,10 @@ public class PregnancyInfoHandler implements Handler {
 			info.setBreedingEventId(pregnancyInfoMapper.getDeriveBreedingEventId());
 			info.setPigInfoId(pregnancyInfoMapper.getDerivePigInfoId());
 			info.setEmployeeGroupId(pregnancyInfoMapper.getDeriveEmployeeGroupId());
-			info.setExamDate(pregnancyInfoMapper.getDeriveExamDate());
+			if(pregnancyInfoMapper.getDeriveExamDate() != null)
+				info.setExamDate(pregnancyInfoMapper.getDeriveExamDate());
+			else
+				info.setExamDate(pregnancyInfoMapper.getDeriveResultDate());
 			info.setResultDate(pregnancyInfoMapper.getDeriveResultDate());
 			info.setPregnancyEventTypeId(pregnancyInfoMapper.getDerivePregnancyEventTypeId());
 			info.setPregnancyExamResultTypeId(pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());

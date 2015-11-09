@@ -54,9 +54,9 @@ public class PregnancyInfoValidator extends AbstractValidator {
 				validateBreedingEvent(pregnancyInfoMapper, errList);
 				validateExamDate(pregnancyInfoMapper, errList);
 				validateResultDate(pregnancyInfoMapper, errList);
-				validatePregnancyEventEntryExist(pregnancyInfoMapper, errList);
 				validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
 				validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);
+				validatePregnancyEventEntryExist(pregnancyInfoMapper, errList);				
 				validateSowCondition(pregnancyInfoMapper, errList);
 				
 				if (errList.size() > 0) {
@@ -143,17 +143,17 @@ public class PregnancyInfoValidator extends AbstractValidator {
 			
 			if (serviceDate != null) {
 				long diff = pregnancyInfoMapper.getDeriveResultDate().getTime() - serviceDate.getTime();
-				if (eventTypeId == 1 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 60) {
+				if (eventTypeId == 1 && (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 60)) {
 					pregnancyInfoMapper.setRecovrableErrors(false);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DATE_CODE, Constants.ERR_PREGNANCY_EVENT_DATE_MSG,
 							"resultDate", false));
 				}
-				else if (eventTypeId == 2 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >110) {
+				else if (eventTypeId == 2 &&( TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >110)) {
 					pregnancyInfoMapper.setRecovrableErrors(false);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_ABORTION_DATE_CODE, Constants.ERR_ABORTION_DATE_MSG,
 							"resultDate", false));
 				}
-				else if (eventTypeId == 3 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 105 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 125) {
+				else if (eventTypeId == 3 && (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 105 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 125)) {
 					pregnancyInfoMapper.setRecovrableErrors(false);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_NOT_IN_PIG_DATE_CODE, Constants.ERR_NOT_IN_PIG_DATE_MSG,
 							"resultDate", false));
@@ -185,14 +185,14 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	}
 	
 	private void validatePregnacyExamResultTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
-		if(pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0) {
+		if(pregnancyInfoMapper.getDerivePregnancyEventTypeId() != null && pregnancyInfoMapper.getDerivePregnancyEventTypeId() == 1 && (pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0)) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pregnancyExamResultType", false));
 		}
 	}
 	
 	private void validateSowCondition(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
-		if (pregnancyInfoMapper.getDeriveSowCondition() == null || pregnancyInfoMapper.getDeriveSowCondition() < 0) {
+		if (pregnancyInfoMapper.getSowCondition() != null && (pregnancyInfoMapper.getDeriveSowCondition() == null || pregnancyInfoMapper.getDeriveSowCondition() < 0 || pregnancyInfoMapper.getDeriveSowCondition() > 5)) {
 			pregnancyInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "sowCondition", false));
 		}

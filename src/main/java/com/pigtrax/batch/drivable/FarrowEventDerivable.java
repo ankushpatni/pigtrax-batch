@@ -161,7 +161,7 @@ public class FarrowEventDerivable implements Derivable {
 	private void setEmployeeGroupId(final FarrowEventMapper farrowEventMapper) {
 		if (farrowEventMapper.getEmployeeGrpId() != null) {
 			try {
-				farrowEventMapper.setDeriveEmployeeGrpId(employeeGroupDao.getEmployeeGroupPKId(farrowEventMapper.getEmployeeGrpId()));
+				farrowEventMapper.setDeriveEmployeeGrpId(employeeGroupDao.getEmployeeGroupPKId(farrowEventMapper.getDeriveCompanyId(),farrowEventMapper.getEmployeeGrpId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

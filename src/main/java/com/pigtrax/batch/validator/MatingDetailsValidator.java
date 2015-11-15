@@ -181,7 +181,10 @@ public class MatingDetailsValidator extends AbstractValidator {
 							 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_PREG_RECORD_CODE, Constants.MATING_ERR_PREG_RECORD_MSG, "pigId", true));
 						 }
 						 else
+						 {
 							 matingDetailsMapper.setUpdateServiceStartDate(true);
+							 breedingEventDao.updateServiceStartDate(matingDetailsMapper.getDeriveMatingDate(), lastBreedingEventId);
+						 }
 					 }
 					 else if(durationDays > 5 && durationDays < 18)
 					 {
@@ -210,6 +213,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 						else
 						{
 							matingDetailsMapper.setUpdateServiceStartDate(true);
+							breedingEventDao.updateServiceStartDate(matingDetailsMapper.getDeriveMatingDate(), lastBreedingEventId);
 						}
 					}
 				}

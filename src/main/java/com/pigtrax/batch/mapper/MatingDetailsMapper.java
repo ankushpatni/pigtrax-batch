@@ -12,7 +12,7 @@ public class MatingDetailsMapper extends AbstractMapper {
 	private String matingDate;
 	private String employeeGroup;
 	private String semenId;
-	private String mateQuality;
+	private String mateQuality;	
 	
 	//Derived properties
 	private Integer deriveCompanyId;

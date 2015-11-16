@@ -92,7 +92,16 @@ public class MatingDetailsDerivable implements Derivable {
 		if(matingDetailsMapper.getMateQuality() != null)
 		{
 			try {
-				matingDetailsMapper.setDeriveMateQuality(Integer.parseInt(matingDetailsMapper.getMateQuality()));  
+				String matingQuality = matingDetailsMapper.getMateQuality();
+				if(matingQuality== null) matingQuality = "";
+				int derivedQuality = 0;
+				if("Good".equalsIgnoreCase(matingDetailsMapper.getMateQuality()))
+						derivedQuality = 1;
+				else if("OK".equalsIgnoreCase(matingDetailsMapper.getMateQuality()))
+					derivedQuality = 2;
+				else if("poor".equalsIgnoreCase(matingDetailsMapper.getMateQuality()))
+					derivedQuality = 3;
+				matingDetailsMapper.setDeriveMateQuality(derivedQuality);  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

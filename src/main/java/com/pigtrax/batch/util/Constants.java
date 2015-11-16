@@ -308,7 +308,17 @@ public interface Constants {
 	
 	public static final String REF_DATA_REMOVALEVENTTYPE = "REF_DATA_REMOVALEVENTTYPE";
 
+	public static final String ENTRY_EVENT_INVALID_ORIGIN_CODE = "610";
 	
+	public static final String ENTRY_EVENT_INVALID_ORIGIN_MSG = "Invalid origin specified";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_PIGID_CODE = "611";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig Id given already exists in the company";
+	
+	public static final String ENTRY_EVENT_INVALID_COMPANYID_CODE ="612";
+
+	public static final String ENTRY_EVENT_INVALID_COMPANYID_MSG ="Invalid company id specified";
 	
 }
 

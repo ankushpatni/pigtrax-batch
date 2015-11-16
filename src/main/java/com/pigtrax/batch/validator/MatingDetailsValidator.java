@@ -111,7 +111,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validateMateQuality(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
 		if (matingDetailsMapper.getMateQuality() != null && !Constants.BLANK_STRING.equals(matingDetailsMapper.getMateQuality().trim())) {
 			try{
-				int mateQuality = Integer.parseInt(matingDetailsMapper.getMateQuality());
+				int mateQuality = matingDetailsMapper.getDeriveMateQuality();
 				if(mateQuality >= 1 && mateQuality <= 3)
 					matingDetailsMapper.setDeriveMateQuality(mateQuality);
 				else
@@ -213,7 +213,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 						else
 						{
 							matingDetailsMapper.setUpdateServiceStartDate(true);
-							breedingEventDao.updateServiceStartDate(matingDetailsMapper.getDeriveMatingDate(), lastBreedingEventId);
+							//breedingEventDao.updateServiceStartDate(matingDetailsMapper.getDeriveMatingDate(), lastBreedingEventId);
 						}
 					}
 				}

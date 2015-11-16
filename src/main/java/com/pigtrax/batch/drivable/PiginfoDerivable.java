@@ -9,6 +9,7 @@ import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BarnDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
+import com.pigtrax.batch.dao.interfaces.OriginDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PigInfoMapper;
@@ -26,6 +27,9 @@ public class PiginfoDerivable implements Derivable {
 
 	@Autowired
 	private CompanyDao companyDao;
+	
+	@Autowired
+	private OriginDao originDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -43,6 +47,7 @@ public class PiginfoDerivable implements Derivable {
 				setPenId(pigInfoMapper);
 				setGline(pigInfoMapper);
 				setGCompany(pigInfoMapper);
+				setOrigin(pigInfoMapper);
 			}
 		}
 	}
@@ -53,6 +58,17 @@ public class PiginfoDerivable implements Derivable {
 			Integer glineDerived = RefData.GLINE.getId(pigInfoMapper.getGline());
 			if (glineDerived > -1) {
 				pigInfoMapper.setDeriveGline(glineDerived);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setOrigin(final PigInfoMapper pigInfoMapper) {	
+		try {
+			Integer originDerived = originDao.getOriginId(pigInfoMapper.getOrigin());
+			if (originDerived > 0) {
+				pigInfoMapper.setDeriveOriginId(originDerived);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

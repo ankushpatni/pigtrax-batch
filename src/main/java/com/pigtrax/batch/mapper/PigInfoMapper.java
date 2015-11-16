@@ -36,7 +36,8 @@ public class PigInfoMapper extends AbstractMapper {
 	private Date deriveFarrowEventDate;
 	private Integer deriveGline;
 	private Integer deriveGCompany;
-
+	private Integer deriveOriginId;
+	
 	public Integer getDeriveGline() {
 		return deriveGline;
 	}
@@ -269,4 +270,14 @@ public class PigInfoMapper extends AbstractMapper {
 			return getPigId();
 		}
 	}
+
+	public Integer getDeriveOriginId() {
+		return deriveOriginId;
+	}
+
+	public void setDeriveOriginId(Integer deriveOriginId) {
+		this.deriveOriginId = deriveOriginId;
+	}
+	
+	
 }

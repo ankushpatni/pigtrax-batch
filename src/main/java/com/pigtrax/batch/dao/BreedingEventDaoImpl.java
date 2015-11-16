@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.BreedingEvent;
+import com.pigtrax.batch.beans.MatingDetails;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.FarrowEventDao;
 
@@ -231,5 +233,54 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 			}
 		});
 	}
+	
+	@Override
+	public void resetServiceStartDate(Integer breedingEventId) {
+		List<MatingDetails> matingDetailsList = getMatingDetails(breedingEventId);
+		DateTime serviceDate = null;
+		if(matingDetailsList != null)
+		{
+			for(MatingDetails matingDetails : matingDetailsList)
+			{
+				DateTime matingDate = new DateTime(matingDetails.getMatingDate());
+				if(!(serviceDate != null && serviceDate.isBefore(matingDate)))
+					serviceDate = matingDate;
+				
+			}
+		}
+		
+		if(serviceDate != null)
+			updateServiceStartDate(serviceDate.toDate(), breedingEventId);
+		
+	}
+	
+	
+	private List<MatingDetails> getMatingDetails(final Integer breedingEventId) {
+		String qry = "select \"id\", \"id_BreedingEvent\", \"semenId\", \"matingDate\", \"matingQuality\", "
+				+ "\"id_EmployeeGroup\", \"lastUpdated\", \"userUpdated\" from pigtrax.\"MatingDetails\" where \"id_BreedingEvent\" = ?";
+		
+		List<MatingDetails> matingDetailsList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, breedingEventId);
+			}}, new MatingEventWrapper());
+		
+		return matingDetailsList;
+	}
+	
+	private static final class MatingEventWrapper implements RowMapper<MatingDetails> {
+		public MatingDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+			MatingDetails matingDetails = new MatingDetails();			
+			matingDetails.setBreedingEventId(rs.getInt("id_BreedingEvent"));
+			matingDetails.setEmployeeGroupId(rs.getInt("id_EmployeeGroup"));
+			matingDetails.setMatingDate(rs.getDate("matingDate"));
+			matingDetails.setSemenId(rs.getString("semenId"));
+			matingDetails.setMatingQuality(rs.getInt("matingQuality"));
+			matingDetails.setLastUpdated(rs.getDate("lastUpdated"));
+			matingDetails.setUserUpdated(rs.getString("userUpdated"));
+			return matingDetails;
+		}
+	}
+	
 	
 }

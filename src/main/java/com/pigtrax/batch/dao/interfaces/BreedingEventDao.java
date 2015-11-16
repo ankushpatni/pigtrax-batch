@@ -23,4 +23,6 @@ public interface BreedingEventDao {
 	Date getServiceStartDate(final Integer breedingEventId);	
 	 
 	int updateServiceStartDate(Date matingDate, Integer breedingEventId);
+	
+	void resetServiceStartDate(Integer breedingEventId);
 }

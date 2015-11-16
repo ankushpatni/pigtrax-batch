@@ -48,8 +48,9 @@ public class MatingDetailsHandler implements Handler {
 						MatingDetails matingDetails = populateMatingDetails(errorMap, matingDetailsMapper, processDTO);
 						if (matingDetails != null) {
 							matingDetailsDao.insertMatingDetails(matingDetails);
-							/*if(matingDetailsMapper.isUpdateServiceStartDate())
-								breedingEventDao.updateServiceStartDate(matingDetails.getMatingDate(), matingDetails.getBreedingEventId());*/
+							
+							breedingEventDao.resetServiceStartDate(matingDetails.getBreedingEventId());
+							
 							totalRecordsProcessed+=1;
 						}
 					} catch (Exception e) {

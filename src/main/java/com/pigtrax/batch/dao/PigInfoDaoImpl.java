@@ -47,8 +47,8 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				ps.setString(3, pigInfo.getDamId());
 				ps.setDate(4, new java.sql.Date(pigInfo.getEntryDate().getTime()));
 				ps.setString(5, pigInfo.getOrigin());
-				ps.setInt(6, pigInfo.getGline());
-				ps.setInt(7, pigInfo.getGcompany());
+				ps.setObject(6, pigInfo.getGline(), java.sql.Types.INTEGER);
+				ps.setObject(7, pigInfo.getGcompany(), java.sql.Types.INTEGER);
 				if (pigInfo.getBirthDate() != null) {
 					ps.setDate(8, new java.sql.Date(new DateTime(pigInfo.getBirthDate()).toLocalDate().toDateMidnight().getMillis()));
 				} else {

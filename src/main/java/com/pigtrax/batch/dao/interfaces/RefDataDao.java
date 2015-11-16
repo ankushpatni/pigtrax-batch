@@ -23,5 +23,9 @@ public interface RefDataDao {
 	List<RefDataTranslation> getBreedingServiceType();
 
 	List<RefDataTranslation> getRemovalEventType();
+	
+	List<RefDataTranslation> getGcompanyType();
+	
+	List<RefDataTranslation> getGlineTypes();
 
 }

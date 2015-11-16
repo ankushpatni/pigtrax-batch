@@ -61,7 +61,22 @@ public enum RefData {
 		public Integer getId(String value) {
 			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_REMOVALEVENTTYPE);
 		}
-	};
+	},
+	GCOMPANY {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, "GCOMPANY");
+		}
+	},
+	GLINE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value, "GLINE");
+		}
+	}	
+	;
+	
+	
 
 	public abstract Integer getId(String value);
 

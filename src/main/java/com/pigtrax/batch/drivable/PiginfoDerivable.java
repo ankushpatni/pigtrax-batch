@@ -48,9 +48,12 @@ public class PiginfoDerivable implements Derivable {
 	}
 	
 	
-	private void setGline(final PigInfoMapper pigInfoMapper) {
+	private void setGline(final PigInfoMapper pigInfoMapper) {	
 		try {
-			pigInfoMapper.setDeriveGline(Integer.parseInt(pigInfoMapper.getGline()));
+			Integer glineDerived = RefData.GLINE.getId(pigInfoMapper.getGline());
+			if (glineDerived > -1) {
+				pigInfoMapper.setDeriveGline(glineDerived);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,7 +61,10 @@ public class PiginfoDerivable implements Derivable {
 	
 	private void setGCompany(final PigInfoMapper pigInfoMapper) {
 		try {
-			pigInfoMapper.setDeriveGCompany(Integer.parseInt(pigInfoMapper.getGcompany()));
+			Integer gcompanyIdDerived = RefData.GCOMPANY.getId(pigInfoMapper.getGcompany());
+			if (gcompanyIdDerived > -1) {
+				pigInfoMapper.setDeriveGCompany(gcompanyIdDerived);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

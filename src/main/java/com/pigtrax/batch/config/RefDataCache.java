@@ -31,6 +31,10 @@ public class RefDataCache {
 	private Map<String, Map<Integer, String>> breedingServiceTypeMap = null;
 	
 	private Map<String, Map<Integer, String>> removalEventTypeMap  = null;
+	
+	private Map<String, Map<Integer, String>> gcompanyMap = null;
+	
+	private Map<String, Map<Integer, String>> glineMap = null;
 
 	private RefDataCache() {
 		if (_INSTANCE != null) {
@@ -48,6 +52,8 @@ public class RefDataCache {
 		phaseOfProductionTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getPhaseOfProductionType()));
 		breedingServiceTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getBreedingServiceType()));
 		removalEventTypeMap = Collections.unmodifiableMap(convertToMap(refDataDao.getRemovalEventType()));
+		gcompanyMap =  Collections.unmodifiableMap(convertToMap(refDataDao.getGcompanyType()));
+		glineMap = Collections.unmodifiableMap(convertToMap(refDataDao.getGlineTypes()));
 	}
 
 	private Map<String, Map<Integer, String>> convertToMap(final List<RefDataTranslation> rolesList) {
@@ -104,6 +110,12 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_REMOVALEVENTTYPE:
 			retVal = retRefdDataValue(removalEventTypeMap,value);
+			break;
+		case "GCOMPANY":
+			retVal = retRefdDataValue(gcompanyMap,value);
+			break;
+		case "GLINE":
+			retVal = retRefdDataValue(glineMap,value);
 			break;
 		default:
 			retVal = -1;

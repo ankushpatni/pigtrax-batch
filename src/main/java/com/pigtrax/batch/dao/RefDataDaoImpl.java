@@ -88,5 +88,16 @@ public class RefDataDaoImpl implements RefDataDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
+	@Override
+	public List<RefDataTranslation> getGcompanyType() { 
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_GcompanyType\" FROM pigtraxrefdata.\"GcompanyTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}
+	@Override
+	public List<RefDataTranslation> getGlineTypes() {
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_GlineType\" FROM pigtraxrefdata.\"GlineTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}
 
 }

@@ -103,9 +103,11 @@ public class FarrowEventHandler implements Handler {
 			farrowEvent.setSowCondition(farrowEventfoMaper.getDeriveSowCondition());
 			if ("Induced".equalsIgnoreCase(farrowEventfoMaper.getTypeOfBirth())) {
 				farrowEvent.setInducedBirth(true);
+				farrowEvent.setAssistedBirth(false);
 			}
-			if ("Assisted ".equalsIgnoreCase(farrowEventfoMaper.getTypeOfBirth())) {
+			if ("Assisted".equalsIgnoreCase(farrowEventfoMaper.getTypeOfBirth())) {
 				farrowEvent.setAssistedBirth(true);
+				farrowEvent.setInducedBirth(false);
 			}
 			farrowEvent.setEmployeeGrpId(farrowEventfoMaper.getDeriveEmployeeGrpId());
 			farrowEvent.setUserUpdated(processDTO.getUserName());

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -69,7 +70,7 @@ public class FarrowEventValidator extends AbstractValidator {
 		if (farrowEventMapper.getDeriveTeasts() == null) {
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS, Constants.FRW_EVNT_ERR_EMP_TEATS_MSG, "Teats", false));
-		} else if (farrowEventMapper.getDeriveTeasts() < 1 || farrowEventMapper.getDeriveTeasts() > 5) {
+		} else if (farrowEventMapper.getDeriveTeasts() < 1 || farrowEventMapper.getDeriveTeasts() > 30) {
 
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS_VAL, Constants.FRW_EVNT_ERR_TEATS_VAL_MSG, "Teats", false));
@@ -79,22 +80,22 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void validateSowCondition(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getDeriveSowCondition() == null) {
+		if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() == null || farrowEventMapper.getDeriveSowCondition()  < 0)) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN, Constants.FRW_EVNT_ERR_SOW_CNDTN_MSG, "Teats", false));
-		} else if (farrowEventMapper.getDeriveTeasts() < 1 || farrowEventMapper.getDeriveTeasts() > 30) {
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN, Constants.FRW_EVNT_ERR_SOW_CNDTN_MSG, "sowCondition", false));
+		} else if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() < 1 || farrowEventMapper.getDeriveSowCondition() > 5)) {
 
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL, Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG, "Teats", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL, Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG, "sowCondition", false));
 
 		}
 
 	}
 
 	private void validateLEmployeeGrp(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getDeriveEmployeeGrpId() == null) {
+		if (farrowEventMapper.getEmployeeGrpId() != null && farrowEventMapper.getEmployeeGrpId().trim().length() > 0 && (farrowEventMapper.getDeriveEmployeeGrpId() == null || farrowEventMapper.getDeriveEmployeeGrpId() < 0)) {
 			farrowEventMapper.setRecovrableErrors(true);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_EMP_GRP, Constants.FRW_EVNT_ERR_EMP_GRP_MSG, "LitterWeightKgs", true));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_EMP_GRP, Constants.FRW_EVNT_ERR_EMP_GRP_MSG, "employeeGroupId", true));
 		}
 
 	}
@@ -102,7 +103,12 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validateLBirthType(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getTypeOfBirth() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getTypeOfBirth())) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_BIRTH_TYPE, Constants.FRW_EVNT_ERR_BIRTH_TYPE_MSG, "LitterWeightKgs", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_BIRTH_TYPE, Constants.FRW_EVNT_ERR_BIRTH_TYPE_MSG, "typeOfBirth", false));
+		}
+		else if(farrowEventMapper.getTypeOfBirth() != null && !("induced".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim()) || "assisted".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim())))
+		{
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_BIRTH_TYPE, Constants.FRW_EVNT_INVALID_BIRTH_TYPE_MSG, "typeOfBirth", false));
 		}
 
 	}
@@ -112,6 +118,12 @@ public class FarrowEventValidator extends AbstractValidator {
 			farrowEventMapper.setRecovrableErrors(true);
 			errList.add(ErrorBeanUtil
 					.populateErrorBean(Constants.FRW_EVNT_ERR_LITTER_WEIGHT, Constants.FRW_EVNT_ERR_LITTER_WEIGHT_MSG, "LitterWeightKgs", true));
+		}
+		else if(farrowEventMapper.getWeightInKGs() !=  null && farrowEventMapper.getWeightInKGs().trim().length() > 0 && farrowEventMapper.getDeriveWeightInKGs() == null)
+		{
+			farrowEventMapper.setRecovrableErrors(true);
+			errList.add(ErrorBeanUtil
+					.populateErrorBean(Constants.FRW_EVNT_INVALID_LITTER_WEIGHT, Constants.FRW_EVNT_INVALID_LITTER_WEIGHT_MSG, "LitterWeightKgs", true));
 		}
 
 	}
@@ -204,7 +216,7 @@ public class FarrowEventValidator extends AbstractValidator {
 			if (farrowEventMapper.getDeriveServiceDate() != null) {
 				long diff = farrowEventMapper.getDeriveFarrowDate().getTime() - farrowEventMapper.getDeriveServiceDate().getTime();
 
-				if (diff <= 105 || diff >= 130) {
+				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) <= 105 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 130) {
 
 					farrowEventMapper.setRecovrableErrors(false);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_FRW_DATE_2, Constants.FRW_EVNT_ERR_FRW_DATE_2_MSG, "FarrowDate", false));
@@ -220,64 +232,30 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void ValidateBornsMummies(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		int cnt = 0;
-		if (farrowEventMapper.getDeriveLiveBorns() != null) {
-			farrowEventMapper.setDeriveStillBorns(0);
-			farrowEventMapper.setDeriveMaleBorns(0);
-			farrowEventMapper.setDeriveFemaleBorns(0);
-			farrowEventMapper.setDeriveMummies(0);
-		} else {
-			cnt++;
-		}
-
-		if (farrowEventMapper.getDeriveStillBorns() != null) {
-
-			farrowEventMapper.setDeriveLiveBorns(0);
-			farrowEventMapper.setDeriveMaleBorns(0);
-			farrowEventMapper.setDeriveFemaleBorns(0);
-			farrowEventMapper.setDeriveMummies(0);
-
-		} else {
-			cnt++;
-		}
-
-		if (farrowEventMapper.getDeriveMaleBorns() != null) {
-
-			farrowEventMapper.setDeriveLiveBorns(0);
-			farrowEventMapper.setDeriveStillBorns(0);
-			farrowEventMapper.setDeriveFemaleBorns(0);
-			farrowEventMapper.setDeriveMummies(0);
-
-		} else {
-			cnt++;
-		}
-
-		if (farrowEventMapper.getDeriveFemaleBorns() == null) {
-
-			farrowEventMapper.setDeriveLiveBorns(0);
-			farrowEventMapper.setDeriveStillBorns(0);
-			farrowEventMapper.setDeriveMaleBorns(0);
-			farrowEventMapper.setDeriveMummies(0);
-
-		} else {
-			cnt++;
-		}
-
-		if (farrowEventMapper.getDeriveMummies() == null) {
-
-			farrowEventMapper.setDeriveLiveBorns(0);
-			farrowEventMapper.setDeriveStillBorns(0);
-			farrowEventMapper.setDeriveMaleBorns(0);
-			farrowEventMapper.setDeriveFemaleBorns(0);
-
-		} else {
-			cnt++;
-		}
-
-		if (cnt == 5) {
+		if(farrowEventMapper.getLiveBorns() != null && farrowEventMapper.getLiveBorns().trim().length() > 0 && farrowEventMapper.getDeriveLiveBorns() == null)
+		{
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_BORNS_MUM_VAL, Constants.FRW_EVNT_ERR_BORNS_MUM_VAL_MSG, "liveBorns", false));
-
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_FARROW_NUM, Constants.FRW_EVNT_INVALID_FARROW_NUM_MSG, "liveBorns", false)); 
+		}
+		else if(farrowEventMapper.getStillBorns() != null && farrowEventMapper.getStillBorns().trim().length() > 0 && farrowEventMapper.getDeriveStillBorns() == null)
+		{
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_FARROW_NUM, Constants.FRW_EVNT_INVALID_FARROW_NUM_MSG, "stillBorns", false)); 
+		}
+		else if(farrowEventMapper.getMaleBorns() != null && farrowEventMapper.getMaleBorns().trim().length() > 0 && farrowEventMapper.getDeriveMaleBorns() == null)
+		{
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_FARROW_NUM, Constants.FRW_EVNT_INVALID_FARROW_NUM_MSG, "maleBorns", false)); 
+		}
+		else if(farrowEventMapper.getFemaleBorns() != null && farrowEventMapper.getFemaleBorns().trim().length() > 0 && farrowEventMapper.getDeriveFemaleBorns() == null)
+		{
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_FARROW_NUM, Constants.FRW_EVNT_INVALID_FARROW_NUM_MSG, "femaleBorns", false)); 
+		}
+		else if(farrowEventMapper.getMummies() != null && farrowEventMapper.getMummies().trim().length() > 0 && farrowEventMapper.getDeriveMummies() == null)
+		{
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_FARROW_NUM, Constants.FRW_EVNT_INVALID_FARROW_NUM_MSG, "mummies", false)); 
 		}
 
 	}

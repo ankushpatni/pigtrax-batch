@@ -57,7 +57,7 @@ public class FarrowEventDerivable implements Derivable {
 
 	private void setTeats(final FarrowEventMapper farrowEventMapper) {
 		try {
-			farrowEventMapper.setDeriveTeasts(Integer.parseInt(farrowEventMapper.getTeasts()));
+			farrowEventMapper.setDeriveTeasts(Integer.parseInt(farrowEventMapper.getTeats()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,7 +88,7 @@ public class FarrowEventDerivable implements Derivable {
 		try {
 			farrowEventMapper.setDeriveServiceDate(DateUtil.getDateFromString(farrowEventMapper.getServiceDate()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 	}
 

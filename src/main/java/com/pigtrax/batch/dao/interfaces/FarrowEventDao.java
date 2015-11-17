@@ -15,4 +15,6 @@ public interface FarrowEventDao {
 	public int insertFarrowEventformation(final FarrowEvent farrowEvent) throws SQLException, DuplicateKeyException;
 	
 	boolean checkFarrowEventByBreedingEvent(Integer breedingEventId);
+	
+	boolean checkIfFarrowExists(final Integer pregnancyEventId);
 }

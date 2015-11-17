@@ -49,10 +49,20 @@ public class FarrowEventHandler implements Handler {
 					try {
 						FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
 						if (farrowEvent != null) {
-							int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
-							PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+							
+							boolean flag = farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
+							if (flag) {
+								
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FARROW_DUPLICATE_CODE, Constants.ERR_FARROW_DUPLICATE_CODE_MSG, "serviceDate", false));
+								isErrorOccured = true;
+							} 
+							else
+							{							
+								int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
+								PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

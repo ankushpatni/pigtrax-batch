@@ -241,7 +241,7 @@ public class PigletStatusInfoHandler implements Handler {
 				info.setSowCondition(pigletStatusInfoMapper.getDeriveSowCondition());
 				info.setWeanGroupId(pigletStatusInfoMapper.getWeanGroupId());	
 				info.setUserUpdated(processDTO.getUserName());
-				info.setPigletStatusEventType(PigletStatusEventType.FosterOut.getTypeCode());
+				info.setPigletStatusEventType(PigletStatusEventType.Death.getTypeCode());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in PigletStatusInfoHandler.populateFosterOutInfo" + e.getMessage());

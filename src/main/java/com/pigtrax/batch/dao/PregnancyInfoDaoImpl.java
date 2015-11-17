@@ -63,15 +63,13 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 	 * @return
 	 */
 	public boolean checkIfPregnancyEventExist(final Integer breedingEventId, final Integer eventTypeId, final Integer resultTypeId) {
-		String sql = "select \"id\" from pigtrax.\"PregnancyEvent\" where \"id_BreedingEvent\" = ? and \"id_PregnancyEventType\" = ?"
-				+ " and \"id_PregnancyExamResultType\" = ?";
+		String sql = "select \"id\" from pigtrax.\"PregnancyEvent\" where \"id_BreedingEvent\" = ? ";
+				
 		Long retValList1 = null;
 		retValList1 = jdbcTemplate.query(sql, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, breedingEventId);
-				ps.setInt(2, eventTypeId);
-				ps.setInt(3, resultTypeId);
 			}
 		}, new ResultSetExtractor<Long>() {
 			public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {

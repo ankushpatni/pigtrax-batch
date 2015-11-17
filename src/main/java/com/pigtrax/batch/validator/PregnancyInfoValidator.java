@@ -3,6 +3,7 @@ package com.pigtrax.batch.validator;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
-		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
+		final Map<Mapper, List<ErrorBean>> errorMap = new LinkedHashMap<Mapper, List<ErrorBean>>();
 		Config.Event eventConfig = ConfigCache.getInstance().getConfig().get(processDTO.getBatchType());
 		super.runBaseValidation(list, eventConfig, processDTO, errorMap);
 		return runCustomValidation(list, errorMap);

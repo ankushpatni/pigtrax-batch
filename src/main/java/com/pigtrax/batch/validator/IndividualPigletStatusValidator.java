@@ -63,9 +63,9 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 	}
 	
 	private void validatePigInfoId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(individualPigletStatusMapper.getDerivePigInfoId() == null || individualPigletStatusMapper.getDerivePigInfoId() < 0) {
+		if(individualPigletStatusMapper.getPigId() != null && individualPigletStatusMapper.getPigId().trim().length() > 0 && (individualPigletStatusMapper.getDerivePigInfoId() == null || individualPigletStatusMapper.getDerivePigInfoId() < 0)) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_PIGID_CODE, Constants.BREED_NG_EVNT_INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 	}
 
 	private void validateFarrowDate(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(individualPigletStatusMapper.getFarrowDate() == null)
+		if(!(individualPigletStatusMapper.getFarrowDate() != null &&  0<individualPigletStatusMapper.getFarrowDate().trim().length()))
 		{
 			individualPigletStatusMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_FARROW_DATE_CODE, Constants.IND_PIGLET_ERR_FARROW_DATE_MSG, "farrowDate", false));
@@ -85,7 +85,7 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 	}
 	
 	private void validateFarrowEvent(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(individualPigletStatusMapper.getDeriveFarrowEventId() == null || individualPigletStatusMapper.getDeriveFarrowEventId() < 0) {
+		if(individualPigletStatusMapper.getFarrowDate() != null &&  0<individualPigletStatusMapper.getFarrowDate().trim().length() && (individualPigletStatusMapper.getDeriveFarrowEventId() == null || individualPigletStatusMapper.getDeriveFarrowEventId() < 0)) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_FARROW_EVENT_CODE, Constants.IND_PIGLET_ERR_FARROW_EVENT_MSG, "farrowEvent", false));
 		}

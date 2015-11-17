@@ -48,11 +48,22 @@ public class PregnancyInfoHandler implements Handler {
 					try {
 						PregnancyInfo pregnancyInfo = populatePregnancyInfo(errorMap, pregnancyInfoMapper, processDTO);
 						if (pregnancyInfoMapper != null) {
-							int generatedKey = pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);							
-							PigTraxEventMaster eventMaster = populateEventMaster(pregnancyInfoMapper, generatedKey, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
 							
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+							boolean flag = pregnancyInfoDao.checkIfPregnancyEventExist(pregnancyInfoMapper.getDeriveBreedingEventId(),
+									pregnancyInfoMapper.getDerivePregnancyEventTypeId(), pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
+							if (flag) {
+								pregnancyInfoMapper.setRecovrableErrors(false);
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DUPLICATE_CODE, Constants.ERR_PREGNANCY_EVENT_DUPLICATE_MSG, "pigId", false));
+								isErrorOccured = true;
+							} 
+							else
+							{
+								int generatedKey = pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);							
+								PigTraxEventMaster eventMaster = populateEventMaster(pregnancyInfoMapper, generatedKey, processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

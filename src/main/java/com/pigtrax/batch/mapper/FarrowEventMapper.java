@@ -20,7 +20,7 @@ public class FarrowEventMapper extends AbstractMapper {
 	private String typeOfBirth;
 	private String employeeGrpId;
 	private String sowCondition;
-	private String teasts;
+	private String teats;
 	private String companyId;
 
 	private Integer derivePigInfoId;
@@ -167,12 +167,12 @@ public class FarrowEventMapper extends AbstractMapper {
 		this.sowCondition = sowCondition;
 	}
 
-	public String getTeasts() {
-		return teasts;
+	public String getTeats() {
+		return teats;
 	}
 
-	public void setTeasts(String teasts) {
-		this.teasts = teasts;
+	public void setTeats(String teats) {
+		this.teats = teats;
 	}
 
 	public Integer getDerivePigInfoId() {

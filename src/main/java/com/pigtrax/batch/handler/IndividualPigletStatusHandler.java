@@ -46,16 +46,27 @@ public class IndividualPigletStatusHandler implements Handler {
 					try {
 						IndividualPigletStatus individualPigletStatus = populateIndividualPigletInfo(errorMap, individualPigletMapper, processDTO);
 						if (individualPigletStatus != null) {
-							if(individualPigletDao.canAddPigletStatus(individualPigletStatus.getFarrowEventId()))
+							
+							boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDeriveCompanyId());
+							if(flag)
 							{
-								individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
-								totalRecordsProcessed = totalRecordsProcessed + 1;
-							}
-							else
-							{
-								individualPigletMapper.setRecovrableErrors(false);
+								individualPigletMapper.setRecovrableErrors(false); 
 								isErrorOccured = true;
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_PIGLET_CNT_CODE, Constants.IND_PIGLET_ERR_PIGLET_CNT_MSG, "pigId", false));
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
+							}
+							else 
+							{
+								if(individualPigletDao.canAddPigletStatus(individualPigletStatus.getFarrowEventId()))							
+								{
+									individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
+								else
+								{
+									individualPigletMapper.setRecovrableErrors(false);
+									isErrorOccured = true;
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_PIGLET_CNT_CODE, Constants.IND_PIGLET_ERR_PIGLET_CNT_MSG, "pigId", false));
+								}
 							}
 						}
 					} catch (Exception e) {

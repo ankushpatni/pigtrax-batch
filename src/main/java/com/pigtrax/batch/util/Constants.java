@@ -60,7 +60,7 @@ public interface Constants {
 
 	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "701";
 
-	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_MSG = "An entry already exist with the given combination of (Pig Id, Company Id, service Date, Event Type, Result Type)";
+	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_MSG = "An entry already exist with the given combination of (Pig Id, Company Id, service Date)";
 
 	public static final String ERR_PREGNANCY_EVENT_DATE_CODE = "702";
 
@@ -114,7 +114,7 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_PRG_TEST = "606";
 
-	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "Pragnancy Test Failed.";
+	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No positive pregnancy records found";
 
 	public static final String FRW_EVNT_ERR_PEN_ID = "607";
 
@@ -143,14 +143,23 @@ public interface Constants {
 	public static final String FRW_EVNT_ERR_LITTER_WEIGHT = "613";
 
 	public static final String FRW_EVNT_ERR_LITTER_WEIGHT_MSG = "Litter Weight in KGs is missing";
+	
+	public static final String FRW_EVNT_INVALID_LITTER_WEIGHT = "613";
+
+	public static final String FRW_EVNT_INVALID_LITTER_WEIGHT_MSG = "Invalid Litter Weight specified";
+
 
 	public static final String FRW_EVNT_ERR_BIRTH_TYPE = "614";
 
 	public static final String FRW_EVNT_ERR_BIRTH_TYPE_MSG = "Type Of Birth is missing";
+	
+	public static final String FRW_EVNT_INVALID_BIRTH_TYPE = "614";
+
+	public static final String FRW_EVNT_INVALID_BIRTH_TYPE_MSG = "Invalid birth type specified. Please give Assisted/Induced";
 
 	public static final String FRW_EVNT_ERR_EMP_GRP = "615";
 
-	public static final String FRW_EVNT_ERR_EMP_GRP_MSG = "Employee Group is missing";
+	public static final String FRW_EVNT_ERR_EMP_GRP_MSG = "Invalid employee group specified";
 
 	public static final String FRW_EVNT_ERR_TEATS = "616";
 
@@ -158,15 +167,15 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_TEATS_VAL = "617";
 
-	public static final String FRW_EVNT_ERR_TEATS_VAL_MSG = "Teats should be between 1-5";
+	public static final String FRW_EVNT_ERR_TEATS_VAL_MSG = "Teats should be between 1-30";
 
 	public static final String FRW_EVNT_ERR_SOW_CNDTN = "618";
 
-	public static final String FRW_EVNT_ERR_SOW_CNDTN_MSG = "Sow Condition is missing";
+	public static final String FRW_EVNT_ERR_SOW_CNDTN_MSG = "Invalid sow condition";
 
 	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL = "615";
 
-	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG = "Sow Condition should be between 1-30";
+	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG = "Sow Condition should be between 1-5";
 	
 	public static final String FEED_EVNT_ERR_RATIONID = "701";
 
@@ -206,7 +215,7 @@ public interface Constants {
 	
 	public static final String IND_PIGLET_ERR_FARROW_EVENT_CODE = "806";
 	
-	public static final String IND_PIGLET_ERR_FARROW_EVENT_MSG = "Individual piglet invalid farrow event. Please check the farrow date given";
+	public static final String IND_PIGLET_ERR_FARROW_EVENT_MSG = "Invalid farrow date specified.";
 	
 	public static final String IND_PIGLET_ERR_PIGLET_CNT_CODE = "807";
 	
@@ -320,5 +329,28 @@ public interface Constants {
 
 	public static final String ENTRY_EVENT_INVALID_COMPANYID_MSG ="Invalid company id specified";
 	
+	public static final String FRW_EVNT_INVALID_FARROW_NUM = "613";
+	
+	public static final String FRW_EVNT_INVALID_FARROW_NUM_MSG = "Invalid count value";
+
+	public static final String ERR_FARROW_DUPLICATE_CODE = "614";
+	
+	public static final String ERR_FARROW_DUPLICATE_CODE_MSG = "Farrow entry already exists for the given service record";
+	
+	public static final String PIGLETSTATUS_INVALID_FARROWDATE_CODE = "615";
+	
+	public static final String PIGLETSTATUS_INVALID_FARROWDATE_MSG = "Invalid farrow date specified";
+
+	public static final String PIGLETSTATUS_INVALID_TRANSFERDATE_CODE = "616";
+	
+	public static final String PIGLETSTATUS_INVALID_TRANSFERDATE_MSG = "Invalid transfer date specified. The date should be between 0-50 days of farrow event";
+	
+	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_CODE = "617";
+	
+	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_MSG = "Invalid wean date specified. The date should be between 0-60 days of farrow event";
+
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_CODE = "618";
+	
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";
 }
 

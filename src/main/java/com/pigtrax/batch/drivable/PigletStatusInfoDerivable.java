@@ -197,6 +197,7 @@ public class PigletStatusInfoDerivable implements Derivable {
 			pigletStatusInfoMapper.setDeriveMortalityPigWt(Double.parseDouble(pigletStatusInfoMapper.getWeightOfPigsMortality()));
 		}catch(Exception e)
 		{
+			
 			e.printStackTrace();
 		}
 	}

@@ -171,4 +171,26 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 			
 			return cnt > 0? true : false;
 		}
+	 
+	 @Override
+	 public boolean checkIfFarrowExists(final Integer pregnancyEventId) {
+		 String sql = "select count(FE.\"id\") from pigtrax.\"FarrowEvent\" FE where \"id_PregnancyEvent\" = ? ";
+			@SuppressWarnings("unchecked")
+			Integer cnt  = (Integer)jdbcTemplate.query(sql,new PreparedStatementSetter() {
+				@Override
+					public void setValues(PreparedStatement ps) throws SQLException {					
+						ps.setInt(1, pregnancyEventId);
+					}
+				},
+			        new ResultSetExtractor() {
+			          public Object extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+			            if (resultSet.next()) {
+			              return resultSet.getInt(1);
+			            }
+			            return null;
+			          }
+			        });
+			
+			return cnt > 0? true : false;
+	 }
 }

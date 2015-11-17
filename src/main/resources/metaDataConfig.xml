@@ -51,9 +51,8 @@
 			<col key="weightOfPigsMortality" order="13" isEmpty="true" />
 			<col key="mortalityEventDate" order="14" isEmpty="true" />
 			<col key="mortalityReason" order="15" isEmpty="true" />
-			<col key="weanGroupId" order="16" isEmpty="true" />
-			<col key="remarks" order="17" isEmpty="true" />
-			<col key="sowCondition" order="18" isEmpty="false" />
+			<col key="remarks" order="16" isEmpty="true" />
+			<col key="sowCondition" order="17" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="GROUPEVENT">
@@ -81,9 +80,9 @@
 			<col key="mummies" order="9" isEmpty="true" />
 			<col key="weightInKGs" order="10" isEmpty="true" />
 			<col key="typeOfBirth" order="11" isEmpty="false" />
-			<col key="employeeGrpId" order="12" isEmpty="false" />
-			<col key="sowCondition" order="13" isEmpty="false" />
-			<col key="teasts" order="14" isEmpty="true" />
+			<col key="employeeGrpId" order="12" isEmpty="true" />
+			<col key="sowCondition" order="13" isEmpty="true" />
+			<col key="teats" order="14" isEmpty="true" />
 			<col key="companyId" order="15" isEmpty="false" />
 		</dataInfo>
 	</event>

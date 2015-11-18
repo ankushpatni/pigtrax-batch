@@ -14,6 +14,7 @@ import com.pigtrax.batch.beans.FeedEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.FeedEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.FeedEventDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
@@ -26,7 +27,7 @@ import com.pigtrax.batch.util.ErrorBeanUtil;
 @Transactional
 public class FeedEventHandler implements Handler {
 	@Autowired
-	private FeedEventDaoImpl feedEventDaoImpl;
+	private FeedEventDao feedEventDaoImpl;
 
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
@@ -46,11 +47,20 @@ public class FeedEventHandler implements Handler {
 					boolean isErrorOccured = false;
 					try {
 						FeedEvent feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
-						if (feedEvent != null) {
-							int id = feedEventDaoImpl.addFeedEvent(feedEvent);
-							PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, id, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+						boolean flag = feedEventDaoImpl.checkIfTicketNumberExists(feedEvent.getTicketNumber());
+						if(flag)
+						{
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FEED_DUPLICATE_TKTNUM, Constants.ERR_FEED_DUPLICATE_TKTNUM_MSG, "ticketNumber", false));
+							isErrorOccured = true;
+						}
+						else
+						{
+							if (feedEvent != null) {
+								int id = feedEventDaoImpl.addFeedEvent(feedEvent);
+								PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, id, processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

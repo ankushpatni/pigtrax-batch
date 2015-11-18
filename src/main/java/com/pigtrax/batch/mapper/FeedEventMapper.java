@@ -21,11 +21,11 @@ public class FeedEventMapper  extends AbstractMapper	{
 	private String feedMadication;
 	private String ticketNumber;
 	private String feedContentId;
-	private String intialFeedEntryDate;
+	private String feedEntryDate;
 	private String transPortJourneyId;
 	
-	private Integer deriveFeedQuantityKGs;
-	private Integer deriveFeedCost;
+	private Double deriveFeedQuantityKGs;
+	private Double deriveFeedCost;
 	private Date deriveIntialFeedEntryDate;
 	private Integer deriveTransPortJourneyId;
 	private Integer deriveRationId;
@@ -37,16 +37,16 @@ public class FeedEventMapper  extends AbstractMapper	{
 	public void setDeriveRationId(Integer deriveRationId) {
 		this.deriveRationId = deriveRationId;
 	}
-	public Integer getDeriveFeedQuantityKGs() {
+	public Double getDeriveFeedQuantityKGs() {
 		return deriveFeedQuantityKGs;
 	}
-	public void setDeriveFeedQuantityKGs(Integer deriveFeedQuantityKGs) {
+	public void setDeriveFeedQuantityKGs(Double deriveFeedQuantityKGs) {
 		this.deriveFeedQuantityKGs = deriveFeedQuantityKGs;
 	}
-	public Integer getDeriveFeedCost() {
+	public Double getDeriveFeedCost() {
 		return deriveFeedCost;
 	}
-	public void setDeriveFeedCost(Integer deriveFeedCost) {
+	public void setDeriveFeedCost(Double deriveFeedCost) {
 		this.deriveFeedCost = deriveFeedCost;
 	}
 	public Date getDeriveIntialFeedEntryDate() {
@@ -96,18 +96,20 @@ public class FeedEventMapper  extends AbstractMapper	{
 	}
 	public void setFeedContentId(String feedContentId) {
 		this.feedContentId = feedContentId;
-	}
-	public String getIntialFeedEntryDate() {
-		return intialFeedEntryDate;
-	}
-	public void setIntialFeedEntryDate(String intialFeedEntryDate) {
-		this.intialFeedEntryDate = intialFeedEntryDate;
-	}
+	}	
 	public String getTransPortJourneyId() {
 		return transPortJourneyId;
 	}
 	public void setTransPortJourneyId(String transPortJourneyId) {
 		this.transPortJourneyId = transPortJourneyId;
 	}
+	public String getFeedEntryDate() {
+		return feedEntryDate;
+	}
+	public void setFeedEntryDate(String feedEntryDate) {
+		this.feedEntryDate = feedEntryDate;
+	}
+	
+	
 
 }

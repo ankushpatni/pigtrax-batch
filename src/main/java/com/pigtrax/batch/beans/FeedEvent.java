@@ -9,8 +9,8 @@ public class FeedEvent implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer rationId;
-	private Integer feedQuantityKGs;
-	private Integer feedCost;
+	private Double feedQuantityKGs;
+	private Double feedCost;
 	private String feedMadication;
 	private String ticketNumber;
 	private String feedContentId;
@@ -34,19 +34,19 @@ public class FeedEvent implements Serializable {
 		this.rationId = rationId;
 	}
 
-	public Integer getFeedQuantityKGs() {
+	public Double getFeedQuantityKGs() {
 		return feedQuantityKGs;
 	}
 
-	public void setFeedQuantityKGs(Integer feedQuantityKGs) {
+	public void setFeedQuantityKGs(Double feedQuantityKGs) {
 		this.feedQuantityKGs = feedQuantityKGs;
 	}
 
-	public Integer getFeedCost() {
+	public Double getFeedCost() {
 		return feedCost;
 	}
 
-	public void setFeedCost(Integer feedCost) {
+	public void setFeedCost(Double feedCost) {
 		this.feedCost = feedCost;
 	}
 

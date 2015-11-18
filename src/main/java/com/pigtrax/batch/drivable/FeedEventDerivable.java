@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.TransportJourneyDaoImpl;
+import com.pigtrax.batch.dao.interfaces.MasterRationDao;
+import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -17,7 +18,10 @@ import com.pigtrax.batch.util.DateUtil;
 public class FeedEventDerivable implements Derivable {
 
 	@Autowired
-	private TransportJourneyDaoImpl transportJourneyDaoImpl;
+	private TransportJourneyDao transportJourneyDao;
+	
+	@Autowired
+	MasterRationDao rationDao;
 
 	@Override
 	public void derive(List<Mapper> list, ProcessDTO processDTO) {
@@ -35,15 +39,15 @@ public class FeedEventDerivable implements Derivable {
 
 	private void setRationId(FeedEventMapper feedEventMapper) {
 		try {
-			feedEventMapper.setDeriveRationId(Integer.parseInt(feedEventMapper.getRationId()));
+			feedEventMapper.setDeriveRationId(rationDao.getPKRationId(feedEventMapper.getRationId()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			feedEventMapper.setDeriveRationId(null);
 		}
 	}
 
 	private void setFeedquantitykgs(FeedEventMapper feedEventMapper) {
 		try {
-			feedEventMapper.setDeriveFeedQuantityKGs(Integer.parseInt(feedEventMapper.getFeedQuantityKGs()));
+			feedEventMapper.setDeriveFeedQuantityKGs(Double.parseDouble(feedEventMapper.getFeedQuantityKGs()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +55,7 @@ public class FeedEventDerivable implements Derivable {
 
 	private void setFeedCost(FeedEventMapper feedEventMapper) {
 		try {
-			feedEventMapper.setDeriveFeedCost(Integer.parseInt(feedEventMapper.getFeedCost()));
+			feedEventMapper.setDeriveFeedCost(Double.parseDouble(feedEventMapper.getFeedCost()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,7 +64,7 @@ public class FeedEventDerivable implements Derivable {
 	private void setInitialFeedEntryDate(final FeedEventMapper feedEventMapper) {
 		try {
 			feedEventMapper
-					.setDeriveIntialFeedEntryDate(DateUtil.getDateFromString(feedEventMapper.getIntialFeedEntryDate()));
+					.setDeriveIntialFeedEntryDate(DateUtil.getDateFromString(feedEventMapper.getFeedEntryDate()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +75,7 @@ public class FeedEventDerivable implements Derivable {
 			Map<String, Object> criteriaMap = new HashMap<String, Object>();
 			criteriaMap.put("jrnyStartDate", feedEventMapper.getDeriveIntialFeedEntryDate());
 			feedEventMapper
-					.setDeriveTransPortJourneyId(transportJourneyDaoImpl.getTranportJrnyIdByStartDat(criteriaMap));
+					.setDeriveTransPortJourneyId(transportJourneyDao.getTranportJrnyIdByStartDat(criteriaMap));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

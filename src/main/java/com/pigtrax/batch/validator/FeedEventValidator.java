@@ -39,6 +39,8 @@ public class FeedEventValidator extends AbstractValidator {
 				validateTicketNumber(feedEventMapper, errList);
 				validateInitialFeedEntryDate(feedEventMapper, errList);
 				validateTransportJourneyId(feedEventMapper, errList);
+				validateFeedCost(feedEventMapper, errList);
+				validateFeedQuantity(feedEventMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -47,6 +49,25 @@ public class FeedEventValidator extends AbstractValidator {
 		return errorMap;
 	}
 
+	private void validateFeedCost(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getDeriveFeedCost() == null || feedEventMapper.getDeriveFeedCost() <= 0) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_FEEDCOST,
+					Constants.FEED_EVNT_ERR_FEEDCOST_MSG, "feedCost", false));
+		}
+
+	}
+	
+	private void validateFeedQuantity(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getDeriveFeedQuantityKGs() == null || feedEventMapper.getDeriveFeedQuantityKGs() <= 0) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_FEEDQTY,
+					Constants.FEED_EVNT_ERR_FEEDQTY_MSG, "feedQuantityKGs", false));
+		}
+
+	}
+	
+	
 	private void validateRationId(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
 		if (feedEventMapper.getDeriveRationId() == null) {
 			feedEventMapper.setRecovrableErrors(false);
@@ -57,7 +78,7 @@ public class FeedEventValidator extends AbstractValidator {
 	}
 	
 	private void validateTicketNumber(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
-		if (feedEventMapper.getTicketNumber() == null) {
+		if (feedEventMapper.getTicketNumber() == null || Constants.BLANK_STRING.equals(feedEventMapper.getTicketNumber().trim())) {
 			feedEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_TICKETID,
 					Constants.FEED_EVNT_ERR_TICKETID_MSG, "TicketNumber", false));

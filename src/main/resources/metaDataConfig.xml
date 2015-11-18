@@ -11,7 +11,7 @@
 			<col key="gcompany" order="7" isEmpty="true" />
 			<col key="birthDate" order="8" isEmpty="false" />
 			<col key="tattoo" order="9" isEmpty="false" />
-			<col key="alternateTattoo" order="10" isEmpty="false" />
+			<col key="alternateTattoo" order="10" isEmpty="true" />
 			<col key="remarks" order="11" isEmpty="true" />
 			<col key="companyId" order="12" isEmpty="false" />
 			<col key="penId" order="13" isEmpty="true" />
@@ -102,14 +102,14 @@
 	</event>
 	<event id="FEEDEVENT">
 		<dataInfo>
-			<col key="rationId" order="1" isEmpty="false" />
-			<col key="feedQuantityKGs" order="2" isEmpty="false" />
-			<col key="feedCost" order="3" isEmpty="false" />
-			<col key="feedMadication" order="4" isEmpty="false" />
-			<col key="ticketNumber" order="5" isEmpty="false" />
-			<col key="feedContentId" order="6" isEmpty="false" />
-			<col key="intialFeedEntryDate" order="7" isEmpty="false" />
-			<col key="transPortJourneyId" order="8" isEmpty="false" />
+			<col key="feedContentId" order="1" isEmpty="true" />
+			<col key="ticketNumber" order="2" isEmpty="false" />			
+			<col key="feedEntryDate" order="3" isEmpty="false" />
+			<col key="rationId" order="4" isEmpty="false" />
+			<col key="feedQuantityKGs" order="5" isEmpty="false" />
+			<col key="feedCost" order="6" isEmpty="false" />
+			<col key="feedMadication" order="7" isEmpty="true" />
+			<col key="transPortJourneyId" order="8" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="INDIVIDUALPIGLETSTATUS">

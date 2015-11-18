@@ -2,12 +2,16 @@ package com.pigtrax.batch.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -37,8 +41,8 @@ public class FeedEventDaoImpl implements FeedEventDao {
 				ps.setString(2, feedEvent.getFeedContentId());
 				ps.setDate(3, new java.sql.Date(feedEvent.getIntialFeedEntryDate().getTime()));
 				ps.setInt(4, feedEvent.getRationId());
-				ps.setInt(5, feedEvent.getFeedQuantityKGs());
-				ps.setInt(6, feedEvent.getFeedCost());
+				ps.setObject(5, feedEvent.getFeedQuantityKGs(), java.sql.Types.DOUBLE);
+				ps.setObject(6, feedEvent.getFeedCost(), java.sql.Types.DOUBLE);
 				ps.setString(7, feedEvent.getFeedMadication());
 				if (null != feedEvent.getTransPortJourneyId() && feedEvent.getTransPortJourneyId() > 0)
 					ps.setInt(8, feedEvent.getTransPortJourneyId());
@@ -51,6 +55,38 @@ public class FeedEventDaoImpl implements FeedEventDao {
 		int keyVal = holder.getKey().intValue();
 		logger.info("Key generated = " + keyVal);
 		return keyVal;
+	}
+	
+	
+	@Override
+	public boolean checkIfTicketNumberExists(final String ticketNumber) {
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select count(*) from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ?");
+		final String qry = qryBuffer.toString();
+		if (ticketNumber != null) {
+			Long id = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					if (ticketNumber != null) {
+						ps.setString(1, ticketNumber.trim().toLowerCase());
+					} 
+				} 
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+		   
+			if (id != null && id > 0) {
+				return true;
+			}
+			else
+				return false;
+		}
+		return false;
 	}
 
 }

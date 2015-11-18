@@ -352,5 +352,17 @@ public interface Constants {
 	public static final String PIGLETSTATUS_INVALID_MORTALITY_CODE = "618";
 	
 	public static final String PIGLETSTATUS_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";
+	
+	public static final String FEED_EVNT_ERR_FEEDCOST = "619";
+	
+	public static final String FEED_EVNT_ERR_FEEDCOST_MSG = "Invalid feed cost";
+	
+	public static final String FEED_EVNT_ERR_FEEDQTY = "620";
+	
+	public static final String FEED_EVNT_ERR_FEEDQTY_MSG = "Invalid feed quantity";
+	
+	public static final String ERR_FEED_DUPLICATE_TKTNUM = "621";
+	
+	public static final String ERR_FEED_DUPLICATE_TKTNUM_MSG = "Duplicate ticket number";
 }
 

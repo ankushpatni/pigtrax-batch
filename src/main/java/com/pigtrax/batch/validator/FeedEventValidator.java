@@ -38,7 +38,7 @@ public class FeedEventValidator extends AbstractValidator {
 				validateRationId(feedEventMapper, errList);
 				validateTicketNumber(feedEventMapper, errList);
 				validateInitialFeedEntryDate(feedEventMapper, errList);
-				validateTransportJourneyId(feedEventMapper, errList);
+				//validateTransportJourneyId(feedEventMapper, errList);
 				validateFeedCost(feedEventMapper, errList);
 				validateFeedQuantity(feedEventMapper, errList);
 				if (errList.size() > 0) {

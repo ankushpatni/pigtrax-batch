@@ -9,10 +9,10 @@ public class FeedEventMapper  extends AbstractMapper	{
 
 	@Override
 	public String getId() {
-		if (getRationId() == null) {
+		if (getTicketNumber() == null) {
 			return UUID.randomUUID().toString().replaceAll("-", "");
 		} else {
-			return getRationId();
+			return getTicketNumber();
 		}
 	}
 	private String rationId;

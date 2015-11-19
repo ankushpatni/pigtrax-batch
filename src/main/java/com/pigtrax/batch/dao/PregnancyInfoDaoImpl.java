@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -117,5 +119,40 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 			return Integer.decode(retValList1.toString());
 		}
 		return null;
+	}
+	
+	@Override
+	public List<PregnancyInfo> getOpenPregnancyRecords(Integer pigInfoId) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("select PE.* from pigtrax.\"PregnancyEvent\" PE where PE.\"id_PregnancyEventType\" = ? and PE.\"id_PregnancyExamResultType\" = ? "
+				+ "and PE.\"id_PigInfo\" = ? and PE.\"id\" not in (select FE.\"id_PregnancyEvent\" from pigtrax.\"FarrowEvent\" FE where FE.\"id_PigInfo\" = ?) order by PE.\"id\" desc");
+		List<PregnancyInfo> pregnancyEventList = jdbcTemplate.query(buffer.toString(), new PreparedStatementSetter(){
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, 1);
+				ps.setInt(2, 1);
+				ps.setInt(3, pigInfoId);
+				ps.setInt(4, pigInfoId);
+			}}, new PregnancyInfoRowMapper());
+		
+		return pregnancyEventList;
+		
+	}
+	
+	private static final class PregnancyInfoRowMapper implements RowMapper<PregnancyInfo> {
+		public PregnancyInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			PregnancyInfo info = new PregnancyInfo();
+			info.setId(rs.getInt("id"));
+			info.setPigInfoId(rs.getInt("id_PigInfo"));
+			info.setBreedingEventId(rs.getInt("id_BreedingEvent"));
+			info.setEmployeeGroupId(rs.getInt("id_EmployeeGroup"));
+			info.setPregnancyEventTypeId(rs.getInt("id_PregnancyEventType"));
+			info.setPregnancyExamResultTypeId(rs.getInt("id_PregnancyExamResultType"));
+			info.setExamDate(rs.getDate("examDate"));
+			info.setResultDate(rs.getDate("resultDate"));
+			info.setSowCondition(rs.getInt("sowCondition"));
+			info.setUserUpdated(rs.getString("userUpdated"));
+			return info;
+		}
 	}
 }

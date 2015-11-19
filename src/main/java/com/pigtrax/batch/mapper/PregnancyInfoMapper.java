@@ -187,7 +187,7 @@ public class PregnancyInfoMapper extends AbstractMapper {
 		if (getPigId() == null) {
 			return UUID.randomUUID().toString().replaceAll("-", "");
 		} else {
-			return getPigId().toString();
+			return "["+getPigId().toString()+", "+getCompanyId()+", "+getResultDate()+"]";
 		}
 	}
 }

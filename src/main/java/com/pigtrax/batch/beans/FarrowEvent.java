@@ -16,7 +16,7 @@ public class FarrowEvent implements Serializable {
 	private Integer maleBorns;
 	private Integer femaleBorns;
 	private Integer mummies;
-	private Integer weightInKGs;
+	private Double weightInKGs;
 	private Boolean inducedBirth = false;
 	private Boolean assistedBirth = false;
 	private String remarks;
@@ -101,11 +101,11 @@ public class FarrowEvent implements Serializable {
 		this.mummies = mummies;
 	}
 
-	public Integer getWeightInKGs() {
+	public Double getWeightInKGs() {
 		return weightInKGs;
 	}
 
-	public void setWeightInKGs(Integer weightInKGs) {
+	public void setWeightInKGs(Double weightInKGs) {
 		this.weightInKGs = weightInKGs;
 	}
 

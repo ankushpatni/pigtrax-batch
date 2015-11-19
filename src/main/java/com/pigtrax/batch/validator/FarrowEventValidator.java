@@ -48,7 +48,6 @@ public class FarrowEventValidator extends AbstractValidator {
 				validatePigId(farrowEventMapper, errList);
 				validateCompanyId(farrowEventMapper, errList);
 				validatePigPKId(farrowEventMapper, errList);
-				validateServiceDate(farrowEventMapper, errList);
 				validatePragnancyTest(farrowEventMapper, errList);
 				validatePenId(farrowEventMapper, errList);
 				validateFarrowDate(farrowEventMapper, errList);
@@ -129,7 +128,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void validatePigId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getPigInfoId() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getPigInfoId())) {
+		if (farrowEventMapper.getPigId() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getPigId())) {
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PIG_ID, Constants.FRW_EVNT_ERR_PIG_ID_MSG, "pigId", false));
 		}
@@ -152,43 +151,12 @@ public class FarrowEventValidator extends AbstractValidator {
 
 	}
 
-	private void validateServiceDate(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getDeriveServiceDate() == null) {
-			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SRV_DATE, Constants.FRW_EVNT_ERR_SRV_DATE_MSG, "serviceDate", false));
-		}
-
-	}
-
+	
 	private void validatePragnancyTest(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getDeriveServiceDate() != null && farrowEventMapper.getDerivePigInfoId() != null) {
-
-			Map<String, Object> creteriaMap = new HashMap<String, Object>();
-			try {
-				creteriaMap.put("penPKId", farrowEventMapper.getDerivePigInfoId());
-				creteriaMap.put("serviceDate", farrowEventMapper.getDeriveServiceDate());
-
-				Integer breedingEventId = breedingEventDao.getBreedingEventId(creteriaMap);
-				if (breedingEventDao.getBreedingEventId(creteriaMap) == null) {
-					farrowEventMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_BRD_DATE, Constants.FRW_EVNT_ERR_BRD_DATE_MSG, "serviceDate", false));
-				} else {
-					creteriaMap.put("breedingEvenId", breedingEventId);
-					Integer pragagncyId = pregnancyInfoDao.getPragnancyId(creteriaMap);
-					farrowEventMapper.setPragnancyEventId(pragagncyId);
-					if (pragagncyId == null) {
-						farrowEventMapper.setRecovrableErrors(false);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PRG_TEST, Constants.FRW_EVNT_ERR_PRG_TEST_MSG, "serviceDate", false));
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				farrowEventMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), "serviceDate", false));
-			}
-
+		if ( farrowEventMapper.getPragnancyEventId() == null) {
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PRG_TEST, Constants.FRW_EVNT_ERR_PRG_TEST_MSG, "resultDate", false));
 		}
-
 	}
 
 	private void validatePenId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
@@ -212,23 +180,7 @@ public class FarrowEventValidator extends AbstractValidator {
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_FRW_DATE_1, Constants.FRW_EVNT_ERR_FRW_DATE_1_MSG, "FarrowDate", false));
 
-		} else {
-			if (farrowEventMapper.getDeriveServiceDate() != null) {
-				long diff = farrowEventMapper.getDeriveFarrowDate().getTime() - farrowEventMapper.getDeriveServiceDate().getTime();
-
-				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) <= 105 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >= 130) {
-
-					farrowEventMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_FRW_DATE_2, Constants.FRW_EVNT_ERR_FRW_DATE_2_MSG, "FarrowDate", false));
-				}
-			} else {
-
-				farrowEventMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_FRW_DATE_1, Constants.FRW_EVNT_ERR_FRW_DATE_1_MSG, "FarrowDate", false));
-
-			}
-		}
-
+		} 
 	}
 
 	private void ValidateBornsMummies(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {

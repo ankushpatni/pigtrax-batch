@@ -2,6 +2,7 @@ package com.pigtrax.batch.dao.interfaces;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.dao.DuplicateKeyException;
 
@@ -17,4 +18,6 @@ public interface FarrowEventDao {
 	boolean checkFarrowEventByBreedingEvent(Integer breedingEventId);
 	
 	boolean checkIfFarrowExists(final Integer pregnancyEventId);
+	
+	List<FarrowEvent> getFarrowEvents(Integer pigInfoId);
 }

@@ -51,7 +51,6 @@ public class PregnancyInfoValidator extends AbstractValidator {
 				validatePigInfoId(pregnancyInfoMapper, errList);
 				validatePigGender(pregnancyInfoMapper, errList);
 				validateCompanyId(pregnancyInfoMapper, errList);
-				validateServiceDate(pregnancyInfoMapper, errList);
 				validateBreedingEvent(pregnancyInfoMapper, errList);
 				validateExamDate(pregnancyInfoMapper, errList);
 				validateResultDate(pregnancyInfoMapper, errList);
@@ -101,66 +100,29 @@ public class PregnancyInfoValidator extends AbstractValidator {
 		}
 	}
 
-	private void validateServiceDate(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
-		if(pregnancyInfoMapper.getServiceDate() == null)
-		{
-			pregnancyInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "serviceDate", false));
-		}
-	}
 	
 	private void validateBreedingEvent(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDeriveBreedingEventId() == null || pregnancyInfoMapper.getDeriveBreedingEventId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE, Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG, "serviceDate", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE, Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG, "pigId, resultDate", false));
 		}
 	}
 
 	
 	private void validateExamDate(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
-		if(pregnancyInfoMapper.getDeriveExamDate() != null ) {
-			Date serviceDate = DateUtil.getDateFromString(pregnancyInfoMapper.getServiceDate());
-			Integer eventTypeId = pregnancyInfoMapper.getDerivePregnancyEventTypeId();
-			
-			if (serviceDate != null) {
-				long diff = pregnancyInfoMapper.getDeriveExamDate().getTime() - serviceDate.getTime();
-				if (eventTypeId == 1 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >60) {
-					pregnancyInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DATE_CODE, Constants.ERR_PREGNANCY_EVENT_DATE_MSG,
-							"examDate", false));
-				}
-			}
+		if(pregnancyInfoMapper.getExamDate() != null && pregnancyInfoMapper.getExamDate().trim().length() > 0 && pregnancyInfoMapper.getDeriveExamDate() == null ) {
+			pregnancyInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DATE_CODE, Constants.ERR_PREGNANCY_EVENT_DATE_MSG,"examDate", false));
 		}
+		
 	}
 	
 	
 	private void validateResultDate(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
 		if (pregnancyInfoMapper.getDeriveResultDate() == null) {
 			pregnancyInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "resultDate", false));
-		} else {
-			Date serviceDate = DateUtil.getDateFromString(pregnancyInfoMapper.getServiceDate());
-			Integer eventTypeId = pregnancyInfoMapper.getDerivePregnancyEventTypeId();
-			
-			if (serviceDate != null) {
-				long diff = pregnancyInfoMapper.getDeriveResultDate().getTime() - serviceDate.getTime();
-				if (eventTypeId == 1 && (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 60)) {
-					pregnancyInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DATE_CODE, Constants.ERR_PREGNANCY_EVENT_DATE_MSG,
-							"resultDate", false));
-				}
-				else if (eventTypeId == 2 &&( TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 18 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) >110)) {
-					pregnancyInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_ABORTION_DATE_CODE, Constants.ERR_ABORTION_DATE_MSG,
-							"resultDate", false));
-				}
-				else if (eventTypeId == 3 && (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 105 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 125)) {
-					pregnancyInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_NOT_IN_PIG_DATE_CODE, Constants.ERR_NOT_IN_PIG_DATE_MSG,
-							"resultDate", false));
-				}
-			}
-		}
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENTRESULT_DATE, Constants.ERR_PREGNANCY_EVENTRESULT_DATE_MSG, "resultDate", false));
+		} 
 	}
 	
 	

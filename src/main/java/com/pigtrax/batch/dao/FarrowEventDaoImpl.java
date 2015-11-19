@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.FarrowEvent;
+import com.pigtrax.batch.beans.PregnancyInfo;
 import com.pigtrax.batch.dao.interfaces.FarrowEventDao;
 
 @Repository
@@ -193,4 +196,47 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 			
 			return cnt > 0? true : false;
 	 }
+	 
+	 
+	 @Override
+		public List<FarrowEvent> getFarrowEvents(Integer pigInfoId) {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("select FE.* from pigtrax.\"FarrowEvent\" FE where FE.\"id_PigInfo\" = ? order by FE.\"id\" desc");
+			List<FarrowEvent> farrowEvents = jdbcTemplate.query(buffer.toString(), new PreparedStatementSetter(){
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setInt(1, 1);
+					ps.setInt(2, 1);
+					ps.setInt(3, pigInfoId);
+					ps.setInt(4, pigInfoId);
+				}}, new FarrowEventRowMapper());
+			
+			return farrowEvents;
+			
+		}
+		
+		private static final class FarrowEventRowMapper implements RowMapper<FarrowEvent> {
+			public FarrowEvent mapRow(ResultSet rs, int rowNum) throws SQLException {				
+				FarrowEvent farrowEvent = new FarrowEvent();
+				farrowEvent.setId(rs.getInt("id"));
+				farrowEvent.setFarrowDateTime(rs.getDate("farrowDateTime"));
+				farrowEvent.setPenId(rs.getObject("id_Pen") != null ? (Integer)rs.getObject("id_Pen") : null);
+				farrowEvent.setLiveBorns(rs.getInt("liveBorns"));
+				farrowEvent.setStillBorns(rs.getInt("stillBorns"));
+				farrowEvent.setMummies(rs.getInt("mummies"));
+				farrowEvent.setMaleBorns(rs.getInt("maleBorns"));
+				farrowEvent.setFemaleBorns(rs.getInt("femaleBorns"));
+				farrowEvent.setWeightInKGs(rs.getDouble("weightInKgs"));;
+				farrowEvent.setInducedBirth(rs.getBoolean("inducedBirth"));
+				farrowEvent.setAssistedBirth(rs.getBoolean("assistedBirth"));
+				farrowEvent.setRemarks(rs.getString("remarks"));
+				farrowEvent.setUserUpdated(rs.getString("userUpdated"));;
+				farrowEvent.setEmployeeGrpId(rs.getInt("id_EmployeeGroup"));
+				farrowEvent.setPigInfoId(rs.getInt("id_PigInfo"));
+				farrowEvent.setPragnancyEventId(rs.getInt("id_PregnancyEvent"));
+				farrowEvent.setSowCondition(rs.getInt("sowCondition"));
+				farrowEvent.setTeasts(rs.getInt("teats"));
+				return farrowEvent;
+			}
+		}
 }

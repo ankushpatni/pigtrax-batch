@@ -7,7 +7,7 @@ import com.pigtrax.batch.mapper.interfaces.AbstractMapper;
 
 public class FarrowEventMapper extends AbstractMapper {
 
-	private String pigInfoId;
+	private String pigId;
 	private String serviceDate;
 	private String penId;
 	private String farrowDate;
@@ -63,12 +63,12 @@ public class FarrowEventMapper extends AbstractMapper {
 		this.deriveCompanyId = deriveCompanyId;
 	}
 
-	public String getPigInfoId() {
-		return pigInfoId;
+	public String getPigId() {
+		return pigId;
 	}
 
-	public void setPigInfoId(String pigInfoId) {
-		this.pigInfoId = pigInfoId;
+	public void setPigId(String pigId) {
+		this.pigId = pigId;
 	}
 
 	public String getServiceDate() {
@@ -280,14 +280,8 @@ public class FarrowEventMapper extends AbstractMapper {
 	}
 
 	@Override
-	public String getId() {
-		// TODO : when Company ID question is answered then here , need to pick
-		// pigInfoID and ComapanyId combination.
-		if (getPigInfoId() == null) {
-			return UUID.randomUUID().toString().replaceAll("-", "");
-		} else {
-			return getPigInfoId();
-		}
+	public String getId() {		
+		return "["+getPigId()+", "+getCompanyId()+", "+getFarrowDate()+"]";
 	}
 
 }

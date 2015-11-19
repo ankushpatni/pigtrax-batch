@@ -1,5 +1,7 @@
 package com.pigtrax.batch.beans;
 
+import java.util.Date;
+
 public class BreedingEvent {
 	private Integer id;
 	private Integer pigInfoId;
@@ -9,6 +11,7 @@ public class BreedingEvent {
 	private Integer penId;
 	private Double weight;
 	private String userUpdated;
+	private Date serviceStartDate;
 
 	
 	public Integer getId() {
@@ -75,4 +78,13 @@ public class BreedingEvent {
 		this.userUpdated = userUpdated;
 	}
 
+	public Date getServiceStartDate() {
+		return serviceStartDate;
+	}
+
+	public void setServiceStartDate(Date serviceStartDate) {
+		this.serviceStartDate = serviceStartDate;
+	}
+  
+	
 }

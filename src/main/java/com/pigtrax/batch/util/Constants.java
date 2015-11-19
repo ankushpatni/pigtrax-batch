@@ -76,7 +76,7 @@ public interface Constants {
 
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "705";
 
-	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Service record not found for the given service date";
+	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Matching Service record not found for the pig";
 
 	public static final String ERR_FOSTER_PIG_NOT_FOUND_CODE = "801";
 
@@ -114,7 +114,7 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_PRG_TEST = "606";
 
-	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No positive pregnancy records found";
+	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No positive pregnancy records found for the given result date";
 
 	public static final String FRW_EVNT_ERR_PEN_ID = "607";
 
@@ -364,5 +364,13 @@ public interface Constants {
 	public static final String ERR_FEED_DUPLICATE_TKTNUM = "621";
 	
 	public static final String ERR_FEED_DUPLICATE_TKTNUM_MSG = "Duplicate ticket number";
+	
+	public static final String ERR_PREGNANCY_EVENTRESULT_DATE_MSG = "Pregnancy result date is missing";
+	
+	public static final String ERR_PREGNANCY_EVENTRESULT_DATE = "622";
+	
+	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS = "623";
+	
+	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS_MSG = "No breeding records available for the pig ";
 }
 

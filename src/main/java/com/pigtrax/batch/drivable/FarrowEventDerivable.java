@@ -4,14 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.PregnancyInfo;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
+import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -30,7 +35,13 @@ public class FarrowEventDerivable implements Derivable {
 
 	@Autowired
 	private EmployeeGroupDao employeeGroupDao;
+	
+	@Autowired
+	private PregnancyInfoDao pregnancyInfoDao;
 
+	@Autowired
+	BreedingEventDao breedingEventDao;
+	
 	@Override
 	public void derive(List<Mapper> list, ProcessDTO processDTO) {
 		if (list != null) {
@@ -49,6 +60,7 @@ public class FarrowEventDerivable implements Derivable {
 				setEmployeeGroupId(farrowEventMapper);
 				setTeats(farrowEventMapper);
 				setSowCondition(farrowEventMapper);
+				setPregnancyEventId(farrowEventMapper);
 
 			}
 		}
@@ -77,7 +89,7 @@ public class FarrowEventDerivable implements Derivable {
 			farrowEventMapper.setDeriveCompanyId(derivedCompanyId);
 			Map<String, String> searchCriteria = new HashMap<String, String>();
 			searchCriteria.put("companyId", derivedCompanyId != null ? derivedCompanyId.toString() : null);
-			searchCriteria.put("pigId", farrowEventMapper.getPigInfoId());
+			searchCriteria.put("pigId", farrowEventMapper.getPigId());
 			farrowEventMapper.setDerivePigInfoId(pigInfoDao.getPKfromPigId(searchCriteria));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -164,6 +176,31 @@ public class FarrowEventDerivable implements Derivable {
 				farrowEventMapper.setDeriveEmployeeGrpId(employeeGroupDao.getEmployeeGroupPKId(farrowEventMapper.getDeriveCompanyId(),farrowEventMapper.getEmployeeGrpId()));
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setPregnancyEventId(final FarrowEventMapper farrowEventMapper)
+	{
+		if(farrowEventMapper.getPigId() != null && farrowEventMapper.getDeriveFarrowDate() != null)
+		{
+			List<PregnancyInfo> pregnancyList = pregnancyInfoDao.getOpenPregnancyRecords(farrowEventMapper.getDerivePigInfoId());
+			if(pregnancyList != null && 0 <pregnancyList.size())
+			{
+				for(PregnancyInfo pregnancyInfo :  pregnancyList)
+				{
+					if(pregnancyInfo != null)
+					{
+						DateTime serviceDate = new DateTime(breedingEventDao.getServiceStartDate(pregnancyInfo.getBreedingEventId()));
+						DateTime farrowDate = new DateTime(farrowEventMapper.getDeriveFarrowDate());
+						int duration = Days.daysBetween(serviceDate, farrowDate).getDays();
+						if(duration >= 105 && duration <= 130)
+						{
+							farrowEventMapper.setPragnancyEventId(pregnancyInfo.getId());
+							break;
+						}
+					}
+				}
 			}
 		}
 	}

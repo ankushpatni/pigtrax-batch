@@ -282,5 +282,35 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 		}
 	}
 	
+	@Override
+	public List<BreedingEvent> getOpenServiceRecords(Integer pigInfoId) {
+		String qry = "select BE.* from pigtrax.\"BreedingEvent\" BE where BE.\"serviceStartDate\" "
+				+ "	is not NULL and BE.\"id\" not in (select PE.\"id_BreedingEvent\" from pigtrax.\"PregnancyEvent\" PE "
+				+ " JOIN pigtrax.\"BreedingEvent\" BE on PE.\"id_BreedingEvent\" = BE.\"id\" JOIN pigtrax.\"PigInfo\" PI "
+				+ " on BE.\"id_PigInfo\" = PI.\"id\" where PI.\"id\" = ?) and  BE.\"id_PigInfo\" = ? order by BE.\"id\" desc";
+		
+		List<BreedingEvent> breedingEventList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, pigInfoId);
+				ps.setInt(2, pigInfoId);
+			}}, new BreedingEventMapper());
+		
+		return breedingEventList;
+	}
 	
+	private static final class BreedingEventMapper implements RowMapper<BreedingEvent> {
+		public BreedingEvent mapRow(ResultSet rs, int rowNum) throws SQLException {
+			BreedingEvent breedingEvent = new BreedingEvent();			
+			breedingEvent.setId(rs.getInt("id"));
+			breedingEvent.setPigInfoId(rs.getInt("id_PigInfo"));
+			breedingEvent.setBreedingServiceTypeId(rs.getInt("id_BreedingServiceType"));
+			breedingEvent.setServiceGroupId(rs.getString("serviceGroupId"));
+			breedingEvent.setServiceStartDate(rs.getDate("serviceStartDate"));
+			breedingEvent.setSowCondition(rs.getInt("sowCondition"));
+			breedingEvent.setPenId(rs.getInt("id_Pen"));
+			breedingEvent.setWeight(rs.getDouble("weightInKgs"));			
+			return breedingEvent;
+		}
+	}
 }

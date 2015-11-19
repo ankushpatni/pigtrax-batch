@@ -1,6 +1,7 @@
 package com.pigtrax.batch.dao.interfaces;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.dao.DuplicateKeyException;
@@ -13,4 +14,6 @@ public interface PregnancyInfoDao {
 	boolean checkIfPregnancyEventExist(final Integer breedingEventId, final Integer eventTypeId, final Integer resultTypeId);
 
 	public Integer getPragnancyId(final Map<String, Object> creteriaMap) throws SQLException;
+	
+	List<PregnancyInfo> getOpenPregnancyRecords(Integer pigInfoId);
 }

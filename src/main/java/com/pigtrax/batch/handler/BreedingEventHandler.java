@@ -43,18 +43,9 @@ public class BreedingEventHandler implements Handler {
 					boolean isErrorOccured = false;
 					try {
 						BreedingEvent breedingEvent = populateBreedingEvent(errorMap, breedingEventMapper, processDTO);
-						if (breedingEvent != null) {
-							if(breedingEventDao.checkIfPreviousCycleCompleted(breedingEvent.getPigInfoId()))
-							{
-								breedingEventDao.insertBreedingEventInfo(breedingEvent);
-								totalRecordsProcessed+=1;
-							}
-							else
-							{
-								breedingEventMapper.setRecovrableErrors(false);
-								isErrorOccured = true;
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE, Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG, "pigId", false));
-							}
+						if (breedingEvent != null) {							
+							breedingEventDao.insertBreedingEventInfo(breedingEvent);
+							totalRecordsProcessed+=1;							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

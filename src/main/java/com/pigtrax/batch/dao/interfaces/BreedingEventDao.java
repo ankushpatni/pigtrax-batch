@@ -1,11 +1,9 @@
 package com.pigtrax.batch.dao.interfaces;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
-
-import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.pigtrax.batch.beans.BreedingEvent;
 
@@ -25,4 +23,6 @@ public interface BreedingEventDao {
 	int updateServiceStartDate(Date matingDate, Integer breedingEventId);
 	
 	void resetServiceStartDate(Integer breedingEventId);
+	
+	List<BreedingEvent> getOpenServiceRecords(Integer pigInfoId);
 }

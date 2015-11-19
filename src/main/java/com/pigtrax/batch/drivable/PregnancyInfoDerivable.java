@@ -1,10 +1,14 @@
 package com.pigtrax.batch.drivable;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.BreedingEvent;
 import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
@@ -14,7 +18,9 @@ import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
+import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.DateUtil;
+import com.pigtrax.batch.util.ErrorBeanUtil;
 
 @Component
 public class PregnancyInfoDerivable implements Derivable {
@@ -45,7 +51,6 @@ public class PregnancyInfoDerivable implements Derivable {
 				setBreedingEventId(pregnancyInfoMapper);
 				setEmployeeGroupId(pregnancyInfoMapper);
 				setSowCondition(pregnancyInfoMapper);
-				setBreedingEventId(pregnancyInfoMapper);
 			}
 		}
 	}
@@ -92,7 +97,37 @@ public class PregnancyInfoDerivable implements Derivable {
 	
 	private void setBreedingEventId(final PregnancyInfoMapper pregnancyInfoMapper) {
 		try {
-			pregnancyInfoMapper.setDeriveBreedingEventId(breedingEventDao.getBreedingEventPKId(pregnancyInfoMapper.getDerivePigInfoId(), DateUtil.getDateFromString(pregnancyInfoMapper.getServiceDate().trim())));  
+			if(pregnancyInfoMapper.getDeriveResultDate() != null)
+			{
+				DateTime pregnancyResultDate = new DateTime(pregnancyInfoMapper.getDeriveResultDate());
+				Integer eventTypeId = pregnancyInfoMapper.getDerivePregnancyEventTypeId();
+				
+				List<BreedingEvent> breedingEventList = breedingEventDao.getOpenServiceRecords(pregnancyInfoMapper.getDerivePigInfoId());
+				
+				if(breedingEventList != null && 0<breedingEventList.size())
+				{
+					for(BreedingEvent breedingEvent : breedingEventList)
+					{
+						DateTime serviceDate = new DateTime(breedingEvent.getServiceStartDate());
+						int durationDays = Days.daysBetween(serviceDate, pregnancyResultDate).getDays();
+						
+						
+						if (eventTypeId == 1 && durationDays >= 18 && durationDays <= 60) {
+							pregnancyInfoMapper.setDeriveBreedingEventId(breedingEvent.getId());
+							break;
+						}
+						else if (eventTypeId == 2 && durationDays >= 18 && durationDays >= 110) {
+							pregnancyInfoMapper.setDeriveBreedingEventId(breedingEvent.getId());
+							break;
+						}
+						else if (eventTypeId == 3 && durationDays >= 105 && durationDays <= 125) {
+							pregnancyInfoMapper.setDeriveBreedingEventId(breedingEvent.getId());
+							break;
+						} 
+					}
+				}
+				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

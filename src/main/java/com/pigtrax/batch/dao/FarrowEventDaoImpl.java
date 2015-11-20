@@ -205,10 +205,7 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 			List<FarrowEvent> farrowEvents = jdbcTemplate.query(buffer.toString(), new PreparedStatementSetter(){
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setInt(1, 1);
-					ps.setInt(2, 1);
-					ps.setInt(3, pigInfoId);
-					ps.setInt(4, pigInfoId);
+					ps.setInt(1, pigInfoId);
 				}}, new FarrowEventRowMapper());
 			
 			return farrowEvents;

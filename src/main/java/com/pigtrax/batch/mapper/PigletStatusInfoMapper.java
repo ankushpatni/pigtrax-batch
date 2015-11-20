@@ -45,6 +45,9 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 	private Integer deriveMortalityReasonId;
 	private Integer deriveSowCondition;	
 	private Integer deriveFosterFarrowEventId;
+	private boolean isWeanType;
+	private boolean isTransferType;
+	private boolean isDeathType;
 
 	public String getPigId() {
 		return pigId;
@@ -478,14 +481,49 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 		this.deriveFosterFarrowEventId = deriveFosterFarrowEventId;
 	}
 
+	
+
+
+	public boolean isWeanType() {
+		return isWeanType;
+	}
+
+
+
+	public void setWeanType(boolean isWeanType) {
+		this.isWeanType = isWeanType;
+	}
+
+
+
+	public boolean isTransferType() {
+		return isTransferType;
+	}
+
+
+
+	public void setTransferType(boolean isTransferType) {
+		this.isTransferType = isTransferType;
+	}
+
+
+
+	public boolean isDeathType() {
+		return isDeathType;
+	}
+
+
+
+	public void setDeathType(boolean isDeathType) {
+		this.isDeathType = isDeathType;
+	}
+
 
 
 	@Override
 	public String getId() {
-		if (getPigId() == null) {
-			return UUID.randomUUID().toString().replaceAll("-", "");
-		} else {
-			return getPigId().toString();
-		}
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("[ Pig Id :"+getPigId()+", Company Id: "+getCompanyId()+", Wean Date : "+getWeaningDate()+", Transferred Date :"+getTransferredDate()+", Mortality Date:"+getMortalityEventDate()+"]");
+		return buffer.toString();
 	}
 }

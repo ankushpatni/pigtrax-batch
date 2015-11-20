@@ -67,16 +67,14 @@ public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
 	 * @throws SQLException
 	 */
 	@Override
-	public int deletePigletStatusEvents(final Integer farrowEventId)
+	public int deletePigletStatusEvents(final Integer pigletStatusId)
 			throws SQLException {
-		final String qry = "delete from pigtrax.\"PigTraxEventMaster\" where \"id_PigletStatus\" IN "
-				+ "(select \"id\" from pigtrax.\"PigletStatus\" where \"id_FarrowEvent\" = ? or \"id_fosterFarrowEvent\" = ?)";
+		final String qry = "delete from pigtrax.\"PigTraxEventMaster\" where \"id_PigletStatus\" = ? ";
 				
 		int rowsDeleted = this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
-				ps.setInt(1, farrowEventId);
-				ps.setInt(2, farrowEventId);
+				ps.setInt(1, pigletStatusId);
 			}
 		});
 		return rowsDeleted;

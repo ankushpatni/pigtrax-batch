@@ -43,14 +43,15 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 				validatePigInfoId(pigletStatusInfoMapper, errList);
 				validatePigGender(pigletStatusInfoMapper, errList);
 				validateCompanyId(pigletStatusInfoMapper, errList);
-				validateFarrowDate(pigletStatusInfoMapper, errList);
+				validateWeanDate(pigletStatusInfoMapper, errList);	
+				validateTransferDate(pigletStatusInfoMapper, errList);
+				validateMortalityDate(pigletStatusInfoMapper, errList);
+				//validateFarrowDate(pigletStatusInfoMapper, errList);
 				validateFarrowEvent(pigletStatusInfoMapper, errList);
 				validateSowCondition(pigletStatusInfoMapper, errList);
 				validateFosterPig(pigletStatusInfoMapper, errList);
 				validateFosterFarrowEvent(pigletStatusInfoMapper, errList);
 				validateGroupEventId(pigletStatusInfoMapper, errList);
-				validateWeanDate(pigletStatusInfoMapper, errList);				
-				validateTransferDate(pigletStatusInfoMapper, errList);
 				validateMortalityReason(pigletStatusInfoMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
@@ -102,43 +103,39 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateWeanDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
-		if(pigletStatusInfoMapper.getDeriveFarrowDate() != null && pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum()  > 0)
+		if(pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum()  > 0)
 		{
 			if(pigletStatusInfoMapper.getWeaningDate() == null || pigletStatusInfoMapper.getDeriveWeanDate() == null)
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE, Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "weaningDate", false));
-			}
-			else
+			}			
+		}
+	}
+	
+	
+	private void validateMortalityDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
+		if( pigletStatusInfoMapper.getDeriveMortalityPigNum() != null && pigletStatusInfoMapper.getDeriveMortalityPigNum()  > 0)
+		{
+			if(pigletStatusInfoMapper.getMortalityEventDate() == null || pigletStatusInfoMapper.getDeriveMortalityEventDate() == null)
 			{
-				long diff = pigletStatusInfoMapper.getDeriveWeanDate().getTime() - pigletStatusInfoMapper.getDeriveFarrowDate().getTime();
-				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) <  0 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 60) {
-					pigletStatusInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE,
-							Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "weaningDate", false));
-				}
+				pigletStatusInfoMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE, Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "weaningDate", false));
 			}
+			
 		}
 	}
 	
 	
 	private void validateTransferDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
-		if(pigletStatusInfoMapper.getDeriveFarrowDate() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum()>0)
+		if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum()>0)
 		{
 			if(pigletStatusInfoMapper.getTransferredDate() == null || pigletStatusInfoMapper.getDeriveTransferDate() == null)
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_CODE, Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_MSG, "transferredDate", false));
 			}
-			else
-			{
-				long diff = pigletStatusInfoMapper.getDeriveTransferDate().getTime() - pigletStatusInfoMapper.getDeriveFarrowDate().getTime();
-				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) <  0 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 50) {
-					pigletStatusInfoMapper.setRecovrableErrors(false);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_CODE,
-							Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_MSG, "transferredDate", false));
-				}
-			}
+			
 		}
 	}
 	

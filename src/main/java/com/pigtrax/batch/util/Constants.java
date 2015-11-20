@@ -372,5 +372,26 @@ public interface Constants {
 	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS = "623";
 	
 	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS_MSG = "No breeding records available for the pig ";
+	
+	public static final String REM_REMOVAL_REVENUE_CODE = "624";
+	
+	public static final String REM_REMOVAL_REVENUE_MSG = "Invalid revenue value specified";
+	
+	public static final String ERR_REMOVAL_MISSING_GRP_PIGID_CODE = "625";
+	
+	public static final String ERR_REMOVAL_MISSING_GRP_PIGID_MSG = "Both group event id and pig id are missing. Please specify any one of the value";
+	
+	public static final String REMOVAL_INVALID_GROUPID_CODE = "626";
+		
+	public static final String REMOVAL_INVALID_GROUPID_MSG = "Invalid group event id specified";
+	
+	public static final String REMOVAL_INVALID_PIGID_CODE = "627";
+	
+	public static final String REMOVAL_INVALID_PIGID_MSG = "Invalid pig id specified. Please specify an active pig id";
+	
+	public static final String REMOVAL_INVALID_MORTALITY_CODE = "628";
+	
+	public static final String REMOVAL_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";
+				
 }
 

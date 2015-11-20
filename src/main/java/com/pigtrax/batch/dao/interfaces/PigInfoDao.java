@@ -17,4 +17,8 @@ public interface PigInfoDao {
 	public boolean isPigASow(Integer pigInfoId);
 	
 	public PigInfo getPigDetails(Integer pigInfoId);
+	
+	int updatePigInfoStatus(Integer id, Boolean pigStatus);
+	
+	Integer getActivePigInfoId(String pigId, int companyId) throws SQLException;
 }

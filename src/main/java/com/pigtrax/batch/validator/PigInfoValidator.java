@@ -85,7 +85,8 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 
 	private void validateParity(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getDeriveParity() == null || pigInfoMapper.getDeriveParity() < 0) {
+		if (pigInfoMapper.getParity() != null && (pigInfoMapper.getDeriveParity() == null || pigInfoMapper.getDeriveParity() < 0)) {
+			pigInfoMapper.setDeriveParity(0);
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH,
 					Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "parity", false));

@@ -30,12 +30,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private String remarks;
 	private String mortalityReasonId;
 	private String companyId;
-	private String trailerFunction;
-	private String journeyStartTime;
-	private String journeyEndTime;
-	private String transportDestinationId;
-	private String transportTruckId;
-	private String transportTrailerId;
+	private String revenue;
 	
 	
 /*	private Integer transportJourneyId;
@@ -52,11 +47,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private Integer deriveDestPremiseId;
 	private Integer deriveMortalityReasonId;
 	private Integer deriveCompanyId;
-	private Date deriveJourneyStartTime;
-	private Date deriveJourneyEndTime;
-	private Integer deriveTransportDestinationId;
-	private Integer deriveTransportTruckId;
-	private Integer deriveTransportTrailerId;
+	private Double  deriveRevenue;
 	
 	public String getNumberOfPigs() {
 		return numberOfPigs;
@@ -183,74 +174,8 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	}
 	public void setDeriveCompanyId(Integer deriveCompanyId) {
 		this.deriveCompanyId = deriveCompanyId;
-	}
+	}	
 	
-	public String getTrailerFunction() {
-		return trailerFunction;
-	}
-	public void setTrailerFunction(String trailerFunction) {
-		this.trailerFunction = trailerFunction;
-	}
-	public String getJourneyStartTime() {
-		return journeyStartTime;
-	}
-	public void setJourneyStartTime(String journeyStartTime) {
-		this.journeyStartTime = journeyStartTime;
-	}
-	public String getJourneyEndTime() {
-		return journeyEndTime;
-	}
-	public void setJourneyEndTime(String journeyEndTime) {
-		this.journeyEndTime = journeyEndTime;
-	}
-	public String getTransportDestinationId() {
-		return transportDestinationId;
-	}
-	public void setTransportDestinationId(String transportDestinationId) {
-		this.transportDestinationId = transportDestinationId;
-	}
-	public String getTransportTruckId() {
-		return transportTruckId;
-	}
-	public void setTransportTruckId(String transportTruckId) {
-		this.transportTruckId = transportTruckId;
-	}
-	public String getTransportTrailerId() {
-		return transportTrailerId;
-	}
-	public void setTransportTrailerId(String transportTrailerId) {
-		this.transportTrailerId = transportTrailerId;
-	}
-	public Date getDeriveJourneyStartTime() {
-		return deriveJourneyStartTime;
-	}
-	public void setDeriveJourneyStartTime(Date deriveJourneyStartTime) {
-		this.deriveJourneyStartTime = deriveJourneyStartTime;
-	}
-	public Date getDeriveJourneyEndTime() {
-		return deriveJourneyEndTime;
-	}
-	public void setDeriveJourneyEndTime(Date deriveJourneyEndTime) {
-		this.deriveJourneyEndTime = deriveJourneyEndTime;
-	}
-	public Integer getDeriveTransportDestinationId() {
-		return deriveTransportDestinationId;
-	}
-	public void setDeriveTransportDestinationId(Integer deriveTransportDestinationId) {
-		this.deriveTransportDestinationId = deriveTransportDestinationId;
-	}
-	public Integer getDeriveTransportTruckId() {
-		return deriveTransportTruckId;
-	}
-	public void setDeriveTransportTruckId(Integer deriveTransportTruckId) {
-		this.deriveTransportTruckId = deriveTransportTruckId;
-	}
-	public Integer getDeriveTransportTrailerId() {
-		return deriveTransportTrailerId;
-	}
-	public void setDeriveTransportTrailerId(Integer deriveTransportTrailerId) {
-		this.deriveTransportTrailerId = deriveTransportTrailerId;
-	}
 	public Integer getDeriveRemovalEventTypeId() {
 		return deriveRemovalEventTypeId;
 	}
@@ -262,4 +187,18 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 			return groupEventId;
 		}
 	}
+	public String getRevenue() {
+		return revenue;
+	}
+	public void setRevenue(String revenue) {
+		this.revenue = revenue;
+	}
+	public Double getDeriveRevenue() {
+		return deriveRevenue;
+	}
+	public void setDeriveRevenue(Double deriveRevenue) {
+		this.deriveRevenue = deriveRevenue;
+	}
+	
+	
 }

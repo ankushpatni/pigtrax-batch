@@ -36,8 +36,8 @@ private static final Logger logger = Logger.getLogger(RemovalEventExceptSalesDet
 			final RemovalEventExceptSalesDetails removalEventExceptSalesDetails)
 			throws SQLException {
 		final String Qry = "insert into pigtrax.\"RemovalEventExceptSalesDetails\"(\"numberOfPigs\", \"removalDateTime\", \"id_PigInfo\", \"id_GroupEvent\","+ 
-			    "\"weightInKgs\", \"id_RemovalEvent\", \"id_Premise\", \"lastUpdated\", \"userUpdated\",\"id_TransportJourney\",\"id_DestPremise\",\"remarks\",\"id_MortalityReason\") " + 
-			       "values(?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?)";	
+			    "\"weightInKgs\", \"id_RemovalEvent\", \"id_Premise\", \"lastUpdated\", \"userUpdated\",\"id_TransportJourney\",\"id_DestPremise\",\"remarks\",\"id_MortalityReason\", \"revenueUsd\") " + 
+			       "values(?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?)";	
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -137,6 +137,15 @@ private static final Logger logger = Logger.getLogger(RemovalEventExceptSalesDet
 				else
 				{
 					ps.setNull(12, java.sql.Types.INTEGER);
+				}
+				
+				if(removalEventExceptSalesDetails.getRevenue() != null)
+				{
+					ps.setDouble(13, removalEventExceptSalesDetails.getRevenue());
+				}
+				else
+				{
+					ps.setNull(13, java.sql.Types.DOUBLE);
 				}
 				return ps;
 			}

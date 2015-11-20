@@ -133,22 +133,17 @@
 	<event id="REMOVALEVENTEXCEPTSALESEVENT">
 		<dataInfo>
 			<col key="companyId" order="1" isEmpty="false" />
-			<col key="groupEventId" order="2" isEmpty="true" />
+			<col key="groupEventId" order="2" isEmpty="true" />			
 			<col key="pigInfoId" order="3" isEmpty="true" />
-			<col key="numberOfPigs" order="4" isEmpty="false" />
-			<col key="removalDateTime" order="5" isEmpty="false" />
-			<col key="weightInKgs" order="6" isEmpty="false" />
-			<col key="removalEventTypeId" order="7" isEmpty="false" />
-			<col key="premiseId" order="8" isEmpty="true" />
-			<col key="destPremiseId" order="9" isEmpty="true" />
-			<col key="remarks" order="10" isEmpty="true" />
-			<col key="mortalityReasonId" order="11" isEmpty="true" />
-			<col key="trailerFunction" order="12" isEmpty="true" />
-			<col key="journeyStartTime" order="13" isEmpty="true" />
-			<col key="journeyEndTime" order="14" isEmpty="true" />
-			<col key="transportDestinationId" order="15" isEmpty="true" />
-			<col key="transportTruckId" order="16" isEmpty="true" />
-			<col key="transportTrailerId" order="17" isEmpty="true" />
+			<col key="removalDateTime" order="4" isEmpty="false" />
+			<col key="removalEventTypeId" order="5" isEmpty="false" />
+			<col key="mortalityReasonId" order="6" isEmpty="true" />
+			<col key="numberOfPigs" order="7" isEmpty="false" />			
+			<col key="weightInKgs" order="8" isEmpty="false" />			
+			<col key="premiseId" order="9" isEmpty="true" />
+			<col key="destPremiseId" order="10" isEmpty="true" />
+			<col key="revenue" order="11" isEmpty="true" />
+			<col key="remarks" order="12" isEmpty="true" />	
 		</dataInfo>
 	</event>
 	<event id="SALESEVENTDETAILS">

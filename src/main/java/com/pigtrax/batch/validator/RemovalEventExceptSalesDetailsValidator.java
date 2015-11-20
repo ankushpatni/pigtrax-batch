@@ -63,6 +63,8 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				validatePigInfoAndGroupEvent(removalEventExceptSalesDetailsMapper, errList);
 				validateWeightInKg(removalEventExceptSalesDetailsMapper, errList);
 				validateRemovalEventType(removalEventExceptSalesDetailsMapper, errList);
+				validateRevenue(removalEventExceptSalesDetailsMapper, errList);
+				validateMortalityReason(removalEventExceptSalesDetailsMapper, errList);
 				
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
@@ -87,19 +89,30 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 		}
 	}
 	
+	private void validateRevenue(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
+		if (removalEventExceptSalesDetailsMapper.getRevenue() != null && removalEventExceptSalesDetailsMapper.getRevenue().trim().length() > 0
+				 && removalEventExceptSalesDetailsMapper.getDeriveRevenue() == null) {
+			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_REVENUE_CODE, Constants.REM_REMOVAL_REVENUE_MSG, "revenue", false));
+		}
+	}
+	
 	
 	private void validateNumberOfPigs(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
-		if (removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs() == null || removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs() <1) {
+		if (!(removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs() != null && removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs() >= 1)) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_NUMBER_OF_PIGS_PRESENT_CODE, Constants.REM_NUMBER_OF_PIGS_PRESENT_MSG, "NumberOfPigs", false));
 		}
 		
-		GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId(), removalEventExceptSalesDetailsMapper.getDeriveCompanyId());
-		if(removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs()>groupEvent.getCurrentInventory())
+		if(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null)
 		{
-			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_NUMBER_OF_PIGS_PRESENT_MORE_CODE, Constants.REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG, "NumberOfPigs", false));
-
+			GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId(), removalEventExceptSalesDetailsMapper.getDeriveCompanyId());
+			if(removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs()>groupEvent.getCurrentInventory())
+			{
+				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_NUMBER_OF_PIGS_PRESENT_MORE_CODE, Constants.REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG, "NumberOfPigs", false));
+	
+			}
 		}
 	}
 	
@@ -111,23 +124,38 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 	}	
 	
 	private void validateRemovalEventType(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
-		if (removalEventExceptSalesDetailsMapper.getRemovalEventTypeId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getRemovalEventTypeId())) {
+		if (removalEventExceptSalesDetailsMapper.getRemovalEventTypeId() != null && removalEventExceptSalesDetailsMapper.getRemovalEventTypeId().trim().length() > 0 && removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId() == null) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REM_EVENT_TYPE_PRESENT_CODE, Constants.REM_REM_EVENT_TYPE_PRESENT_MSG, "RemovalEventType", false));
 		}
 	}
 	
-	private void validatePigInfoAndGroupEvent(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
-		if ((removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId()))
-				&& (removalEventExceptSalesDetailsMapper.getDerivePigInfoId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDerivePigInfoId()))) {
+	private void validateMortalityReason(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
+		if (removalEventExceptSalesDetailsMapper.getMortalityReasonId() != null && removalEventExceptSalesDetailsMapper.getMortalityReasonId().trim().length() > 0 && removalEventExceptSalesDetailsMapper.getDeriveMortalityReasonId() == null) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "RemovalEventType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REMOVAL_INVALID_MORTALITY_CODE, Constants.REMOVAL_INVALID_MORTALITY_MSG, "Mortality Reason Type", false));
 		}
-		else if(!(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId()))
-				&& !(removalEventExceptSalesDetailsMapper.getDerivePigInfoId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDerivePigInfoId()))) {
+	}
+	
+	private void validatePigInfoAndGroupEvent(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
+		if((removalEventExceptSalesDetailsMapper.getGroupEventId() == null || removalEventExceptSalesDetailsMapper.getGroupEventId().trim().length() == 0) &&
+				(removalEventExceptSalesDetailsMapper.getPigInfoId() == null || removalEventExceptSalesDetailsMapper.getPigInfoId().trim().length() == 0))
+		{
+			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_REMOVAL_MISSING_GRP_PIGID_CODE, Constants.ERR_REMOVAL_MISSING_GRP_PIGID_MSG, "pigInfoId, groupEventId", false));
+		}
+		else if(removalEventExceptSalesDetailsMapper.getDerivePigInfoId() != null && removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE, Constants.REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG, "RemovalEventType", false));
 		}
+		else if (removalEventExceptSalesDetailsMapper.getGroupEventId() != null && removalEventExceptSalesDetailsMapper.getGroupEventId().trim().length() > 0 && removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() == null){
+			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REMOVAL_INVALID_GROUPID_CODE, Constants.REMOVAL_INVALID_GROUPID_MSG, "groupEventId", false));
+		}
+		else if (removalEventExceptSalesDetailsMapper.getPigInfoId() != null && removalEventExceptSalesDetailsMapper.getPigInfoId().trim().length() > 0 && removalEventExceptSalesDetailsMapper.getDerivePigInfoId() == null){
+			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REMOVAL_INVALID_PIGID_CODE, Constants.REMOVAL_INVALID_PIGID_MSG, "pigInfoId", false));
+		}		
 	}
 	
 

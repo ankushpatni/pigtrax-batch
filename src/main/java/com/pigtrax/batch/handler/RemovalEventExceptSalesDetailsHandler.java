@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.RemovalEventExceptSalesDetails;
-import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.RemovalEventExceptSalesDetailsDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
@@ -40,6 +40,9 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 	
 	@Autowired
 	TransportJourneyDao transportJourneyDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 
 	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
 
@@ -58,14 +61,17 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 						RemovalEventExceptSalesDetails removalEventExceptSalesDetails = populateRemovalEventExceptSalesDetails(errorMap, removalEventExceptSalesDetailsMapper, processDTO);
 						if (removalEventExceptSalesDetails != null) {
 							
-							TransportJourney transportJourney = populateTransportJourney(removalEventExceptSalesDetailsMapper,processDTO);
-							Integer transportJourneyId =  transportJourneyDao.addTransportJourney(transportJourney);
-							removalEventExceptSalesDetails.setTransportJourneyId(transportJourneyId);
 							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
-							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
-							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
-							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
-							
+							if(removalEventExceptSalesDetails.getGroupEventId() != null)
+							{
+								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
+								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
+								groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+							}
+							else if(removalEventExceptSalesDetails.getPigInfoId() != null)
+							{
+								pigInfoDao.updatePigInfoStatus(removalEventExceptSalesDetails.getPigInfoId(), false);
+							}
 							PigTraxEventMaster eventMaster = populateEventMaster(removalEventExceptSalesDetailsMapper, id, processDTO);
 							eventMasterDao.insertEventMaster(eventMaster);
 							
@@ -105,6 +111,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			removalEventExceptSalesDetails.setDestPremiseId(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId());
 			removalEventExceptSalesDetails.setRemarks(removalEventExceptSalesDetailsMapper.getRemarks());
 			removalEventExceptSalesDetails.setMortalityReasonId(removalEventExceptSalesDetailsMapper.getDeriveMortalityReasonId());
+			removalEventExceptSalesDetails.setRevenue(removalEventExceptSalesDetailsMapper.getDeriveRevenue());
 			removalEventExceptSalesDetails.setUserUpdated(processDTO.getUserName());
 		} catch (Exception e) {
 			logger.error("Exception in RemovalEventExceptSalesDetailsHandler.removalEventExceptSalesDetails" + e.getMessage());
@@ -126,19 +133,6 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			eventMaster.setUserUpdated(processDTO.getUserName());
 		}
 		return eventMaster;
-	}
-	
-	private TransportJourney populateTransportJourney(RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, final ProcessDTO processDTO)
-	{
-		TransportJourney transportJourney = new TransportJourney();
-		transportJourney.setJourneyStartTime(removalEventExceptSalesDetailsMapper.getDeriveJourneyStartTime());
-		transportJourney.setJourneyEndTime(removalEventExceptSalesDetailsMapper.getDeriveJourneyEndTime());
-		transportJourney.setTrailerFunction(removalEventExceptSalesDetailsMapper.getTrailerFunction());
-		transportJourney.setTransportDestinationId(removalEventExceptSalesDetailsMapper.getDeriveTransportDestinationId());
-		transportJourney.setTransportTrailerId(removalEventExceptSalesDetailsMapper.getDeriveTransportTrailerId());
-		transportJourney.setTransportTruckId(removalEventExceptSalesDetailsMapper.getDeriveTransportTruckId());
-		transportJourney.setUserUpdated(processDTO.getUserName());
-		return transportJourney;
 	}
 	
 }

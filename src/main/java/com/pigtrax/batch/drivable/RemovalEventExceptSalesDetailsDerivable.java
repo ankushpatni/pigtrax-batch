@@ -76,11 +76,7 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 				setPremiseId(removalEventExceptSalesDetailsMapper);
 				setDestPremiseId(removalEventExceptSalesDetailsMapper);
 				setMortalityReason(removalEventExceptSalesDetailsMapper);
-				setTransportDestination(removalEventExceptSalesDetailsMapper);
-				setTransportTruck(removalEventExceptSalesDetailsMapper);
-				setTransportTrailer(removalEventExceptSalesDetailsMapper);
-				setTransportStartDate(removalEventExceptSalesDetailsMapper);
-				setTransportEndDate(removalEventExceptSalesDetailsMapper);
+				setRevenue(removalEventExceptSalesDetailsMapper);
 			}
 		}
 	}
@@ -88,6 +84,14 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 	private void setCompanyId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
 		try {
 			removalEventExceptSalesDetailsMapper.setDeriveCompanyId(companyDao.getCompanyId(removalEventExceptSalesDetailsMapper.getCompanyId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setRevenue(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
+		try {
+			removalEventExceptSalesDetailsMapper.setDeriveRevenue(Double.parseDouble(removalEventExceptSalesDetailsMapper.getRevenue()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,25 +134,31 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 	
 	private void setPigInfoId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
 		try {
-			removalEventExceptSalesDetailsMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(removalEventExceptSalesDetailsMapper.getPigInfoId(), removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
+			removalEventExceptSalesDetailsMapper.setDerivePigInfoId(pigInfoDao.getActivePigInfoId(removalEventExceptSalesDetailsMapper.getPigInfoId(), removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void setGroupEventId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(removalEventExceptSalesDetailsMapper.getGroupEventId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(removalEventExceptSalesDetailsMapper.getGroupEventId() != null && removalEventExceptSalesDetailsMapper.getGroupEventId().trim().length() > 0)
+		{
+			try {
+				removalEventExceptSalesDetailsMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(removalEventExceptSalesDetailsMapper.getGroupEventId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	private void setPremiseId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
-		try {
-			removalEventExceptSalesDetailsMapper.setDerivePremiseId(premisesDao.getPremisesPK(removalEventExceptSalesDetailsMapper.getPremiseId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(removalEventExceptSalesDetailsMapper.getPremiseId() != null && removalEventExceptSalesDetailsMapper.getPremiseId().trim().length() > 0)
+		{
+			try {
+				removalEventExceptSalesDetailsMapper.setDerivePremiseId(premisesDao.getPremisesPK(removalEventExceptSalesDetailsMapper.getPremiseId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -172,44 +182,5 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 		}
 	}
 	
-	private void setTransportDestination(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveTransportDestinationId(transportDestinationDao.findByTransportDestinationName(removalEventExceptSalesDetailsMapper.getTransportDestinationId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void setTransportTruck(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveTransportTruckId(transportTruckDao.findByTransportTruckByTruckNumber(removalEventExceptSalesDetailsMapper.getTransportTruckId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void setTransportTrailer(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveTransportTrailerId(transportTrailerDao.findByTransportTrailerByTrailerNumberPlate(removalEventExceptSalesDetailsMapper.getTransportTrailerId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void setTransportStartDate(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveJourneyStartTime(DateUtil.getDateFromString(removalEventExceptSalesDetailsMapper.getJourneyStartTime()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void setTransportEndDate(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
-		try {
-			removalEventExceptSalesDetailsMapper.setDeriveJourneyEndTime(DateUtil.getDateFromString(removalEventExceptSalesDetailsMapper.getJourneyEndTime()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 }

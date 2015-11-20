@@ -79,7 +79,7 @@ public class MatingDetailsHandler implements Handler {
 			matingDetails = new MatingDetails();
 			matingDetails.setBreedingEventId(matingDetailsMapper.getDeriveBreedingEventId()); 
 			matingDetails.setEmployeeGroupId(matingDetailsMapper.getDeriveEmployeeGroupId());
-			matingDetails.setSemenId(matingDetails.getSemenId());
+			matingDetails.setSemenId(matingDetailsMapper.getSemenId());
 			matingDetails.setMatingDate(matingDetailsMapper.getDeriveMatingDate());
 			matingDetails.setMatingQuality(matingDetailsMapper.getDeriveMateQuality());
 			matingDetails.setUserUpdated(processDTO.getUserName());

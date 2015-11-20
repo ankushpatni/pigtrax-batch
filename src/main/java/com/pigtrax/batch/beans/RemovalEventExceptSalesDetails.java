@@ -18,6 +18,7 @@ public class RemovalEventExceptSalesDetails {
 	private Integer destPremiseId;
 	private String remarks;
 	private Integer mortalityReasonId;
+	private Double revenue;
 	
 	private Integer transportJourneyId;
 	private Integer companyId;
@@ -111,5 +112,12 @@ public class RemovalEventExceptSalesDetails {
 	}
 	public void setMortalityReasonId(Integer mortalityReasonId) {
 		this.mortalityReasonId = mortalityReasonId;
+	}
+	public Double getRevenue() {
+		return revenue;
+	}
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
 	}	
+	
 }

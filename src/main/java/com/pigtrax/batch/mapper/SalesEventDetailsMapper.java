@@ -7,7 +7,7 @@ import com.pigtrax.batch.mapper.interfaces.AbstractMapper;
 
 public class SalesEventDetailsMapper extends AbstractMapper  {
 	
-	private String invoiceId;
+	private String invoiceNumber;
 	private String ticketNumber;
 	private String numberOfPigs;//required//done
 	private String revenueUsd;
@@ -16,26 +16,11 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	private String pigInfoId;//done
 	private String groupEventId;//done
 	private String soldTo;
-	private String removalEventId;//done
 	private String companyId;//done
 	private String remarks;
+	private String salesType;
 	
-	/*"invoiceId" varchar(20),
-	"ticketNumber" varchar(20),
-	"numberOfPigs" smallint NOT NULL,
-	"revenueUsd" numeric(20,2),
-	"weightInKgs" numeric(20,2) NOT NULL,
-	"salesDateTime" timestamp NOT NULL,
-	"id_PigInfo" integer,
-	"id_GroupEvent" integer,
-	"soldTo" varchar(75),
-	"id_RemovalEvent" integer,
-	"lastUpdated" timestamp NOT NULL,
-	"userUpdated" varchar(20) NOT NULL,
-	"id_TransportJourney" integer,
-	remarks varchar(255),
-	*/
-	/////////////
+	
 	
 	private Integer deriveNumberOfPigs;	
 	private BigDecimal deriveRevenueUsd;
@@ -43,14 +28,9 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	private Integer derivePigInfoId;
 	private Integer deriveGroupEventId;
 	private Double deriveWeightInKgs;
-	private Integer deriveRemovalEventTypeId;
 	private Integer deriveCompanyId;
-	public String getInvoiceId() {
-		return invoiceId;
-	}
-	public void setInvoiceId(String invoiceId) {
-		this.invoiceId = invoiceId;
-	}
+	private String deriveSalesTypes;
+	
 	public String getTicketNumber() {
 		return ticketNumber;
 	}
@@ -99,12 +79,7 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	public void setSoldTo(String soldTo) {
 		this.soldTo = soldTo;
 	}
-	public String getRemovalEventId() {
-		return removalEventId;
-	}
-	public void setRemovalEventId(String removalEventId) {
-		this.removalEventId = removalEventId;
-	}
+	
 	public String getCompanyId() {
 		return companyId;
 	}
@@ -153,22 +128,35 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	public void setDeriveWeightInKgs(Double deriveWeightInKgs) {
 		this.deriveWeightInKgs = deriveWeightInKgs;
 	}
-	public Integer getDeriveRemovalEventTypeId() {
-		return deriveRemovalEventTypeId;
-	}
-	public void setDeriveRemovalEventTypeId(Integer deriveRemovalEventTypeId) {
-		this.deriveRemovalEventTypeId = deriveRemovalEventTypeId;
-	}
+
 	public Integer getDeriveCompanyId() {
 		return deriveCompanyId;
 	}
 	public void setDeriveCompanyId(Integer deriveCompanyId) {
 		this.deriveCompanyId = deriveCompanyId;
 	}
+	
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	public String getSalesType() {
+		return salesType;
+	}
+	public void setSalesType(String salesType) {
+		this.salesType = salesType;
+	}
+	public String getDeriveSalesTypes() {
+		return deriveSalesTypes;
+	}
+	public void setDeriveSalesTypes(String deriveSalesTypes) {
+		this.deriveSalesTypes = deriveSalesTypes;
+	}
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return "["+getPigInfoId()+","+getGroupEventId()+", "+getCompanyId()+"]";
 	}
 	
 }

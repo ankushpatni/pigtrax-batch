@@ -65,13 +65,20 @@ public enum RefData {
 	GCOMPANY {
 		@Override
 		public Integer getId(String value) {
-			return RefDataCache.getInstance().getRefDataId(value, "GCOMPANY");
+			return RefDataCache.getInstance().getRefDataId(value, Constants.REF_DATA_GCOMPANY);
 		}
 	},
 	GLINE {
 		@Override
 		public Integer getId(String value) {
-			return RefDataCache.getInstance().getRefDataId(value, "GLINE");
+			return RefDataCache.getInstance().getRefDataId(value,  Constants.REF_DATA_GLINE);
+		}
+	},
+	
+	SALESTYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value,  Constants.REF_DATA_SALETYPE);
 		}
 	}	
 	;

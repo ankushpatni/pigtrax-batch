@@ -181,11 +181,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	}
 	@Override
 	public String getId() {
-		if (groupEventId == null) {
-			return UUID.randomUUID().toString().replaceAll("-", "");
-		} else {
-			return groupEventId;
-		}
+		return "["+getPigInfoId()+","+getGroupEventId()+", "+getCompanyId()+"]";
 	}
 	public String getRevenue() {
 		return revenue;

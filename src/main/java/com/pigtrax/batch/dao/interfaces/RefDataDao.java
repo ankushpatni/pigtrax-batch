@@ -27,5 +27,7 @@ public interface RefDataDao {
 	List<RefDataTranslation> getGcompanyType();
 	
 	List<RefDataTranslation> getGlineTypes();
+	
+	List<RefDataTranslation> getSaleTypes();
 
 }

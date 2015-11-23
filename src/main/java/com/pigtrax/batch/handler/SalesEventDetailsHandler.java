@@ -16,10 +16,10 @@ import com.pigtrax.batch.beans.SalesEventDetails;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.SalesEventDetailsDaoImpl;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
-import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
@@ -35,8 +35,11 @@ public class SalesEventDetailsHandler implements Handler{
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 
-	private static final Logger logger = Logger.getLogger(GroupEventDetailHandler.class);
+	private static final Logger logger = Logger.getLogger(SalesEventDetailsHandler.class);
 
 	public Map<String, Object> execute(final List<Mapper> list, final Map<Mapper, List<ErrorBean>> errorMap, final ProcessDTO processDTO) {
 		Map<String, Object> output = new HashMap<String, Object>();
@@ -53,10 +56,16 @@ public class SalesEventDetailsHandler implements Handler{
 						SalesEventDetails salesEventDetails = populateSalesEventDetails(errorMap, salesEventDetailsMapper, processDTO);
 						if (salesEventDetails != null) {
 							int id =salesEventDetailsDaoImpl.addSalesEventDetails(salesEventDetails);
-							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(salesEventDetails.getGroupEventId(),salesEventDetails.getCompanyId());
-							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - salesEventDetails.getNumberOfPigs());
-							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
-							
+							if(salesEventDetails.getGroupEventId() != null)
+							{
+								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(salesEventDetails.getGroupEventId(),salesEventDetails.getCompanyId());
+								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - salesEventDetails.getNumberOfPigs());
+								groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+							}
+							if(salesEventDetails.getPigInfoId() != null)
+							{
+								pigInfoDao.updatePigInfoStatus(salesEventDetails.getPigInfoId(), false);
+							}
 							PigTraxEventMaster eventMaster = populateEventMaster(salesEventDetailsMapper, id, processDTO);
 							eventMasterDao.insertEventMaster(eventMaster);
 							totalRecordsProcessed = totalRecordsProcessed + 1;
@@ -89,11 +98,11 @@ public class SalesEventDetailsHandler implements Handler{
 			salesEventDetails.setCompanyId(salesEventDetailsMapper.getDeriveCompanyId());
 			salesEventDetails.setNumberOfPigs(salesEventDetailsMapper.getDeriveNumberOfPigs());
 			salesEventDetails.setSalesDateTime(salesEventDetailsMapper.getDeriveSalesDateTime());
-			salesEventDetails.setWeightInKgs(new BigDecimal(salesEventDetailsMapper.getDeriveWeightInKgs().intValue()));
-			salesEventDetails.setRemovalEventId(salesEventDetailsMapper.getDeriveRemovalEventTypeId());
+			salesEventDetails.setWeightInKgs(new BigDecimal(salesEventDetailsMapper.getDeriveWeightInKgs().doubleValue()));
+			salesEventDetails.setRemovalEventId(3);
 			salesEventDetails.setRemarks(salesEventDetailsMapper.getRemarks());
 			salesEventDetails.setRevenueUsd(salesEventDetailsMapper.getDeriveRevenueUsd());
-			salesEventDetails.setInvoiceId(salesEventDetailsMapper.getInvoiceId());
+			salesEventDetails.setInvoiceId(salesEventDetailsMapper.getInvoiceNumber());
 			salesEventDetails.setSoldTo(salesEventDetailsMapper.getSoldTo());
 			salesEventDetails.setTicketNumber(salesEventDetailsMapper.getTicketNumber());
 			salesEventDetails.setUserUpdated(processDTO.getUserName());

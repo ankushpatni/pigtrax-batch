@@ -151,14 +151,14 @@
 			<col key="companyId" order="1" isEmpty="false" />
 			<col key="groupEventId" order="2" isEmpty="true" />
 			<col key="pigInfoId" order="3" isEmpty="true" />
-			<col key="invoiceId" order="4" isEmpty="true" />
-			<col key="ticketNumber" order="5" isEmpty="true" />
-			<col key="numberOfPigs" order="6" isEmpty="false" />
-			<col key="revenueUsd" order="7" isEmpty="true" />
-			<col key="salesDateTime" order="8" isEmpty="false" />
-			<col key="weightInKgs" order="9" isEmpty="false" />
-			<col key="removalEventId" order="10" isEmpty="false" />
-			<col key="soldTo" order="11" isEmpty="true" />
+			<col key="salesType" order="4" isEmpty="true" />
+			<col key="ticketNumber" order="5" isEmpty="false" />
+			<col key="invoiceNumber" order="6" isEmpty="true" />			
+			<col key="numberOfPigs" order="7" isEmpty="false" />
+			<col key="revenueUsd" order="8" isEmpty="true" />
+			<col key="soldTo" order="9" isEmpty="true" />
+			<col key="salesDateTime" order="10" isEmpty="false" />			
+			<col key="weightInKgs" order="11" isEmpty="false" />			
 			<col key="remarks" order="12" isEmpty="true" />
 		</dataInfo>
 	</event>

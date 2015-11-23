@@ -289,7 +289,7 @@ public interface Constants {
     
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
 	
-	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal can have either GroupID or PigInfoId Not Both Of them";
+	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal/Transfer/Sales can have either GroupID or PigInfoId, not both Of them";
 	
 	public static final String REM_REM_EVENT_TYPE_PRESENT_CODE = "1002";
 	
@@ -316,6 +316,12 @@ public interface Constants {
 	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG = "Number of Pigs can not be more then Group  in KG missing";
 	
 	public static final String REF_DATA_REMOVALEVENTTYPE = "REF_DATA_REMOVALEVENTTYPE";
+	
+	public static final String REF_DATA_GCOMPANY = "REF_DATA_GCOMPANY";
+	
+	public static final String REF_DATA_GLINE = "REF_DATA_GLINE";
+	
+	public static final String REF_DATA_SALETYPE = "REF_DATA_SALETYPE";
 
 	public static final String ENTRY_EVENT_INVALID_ORIGIN_CODE = "610";
 	

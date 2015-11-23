@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.RefData;
+import com.pigtrax.batch.config.RefDataCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
 import com.pigtrax.batch.dao.interfaces.BarnDao;
@@ -54,9 +55,9 @@ public class SalesEventDetailsDrivable implements Derivable{
 				setNumberOfPigs(salesEventDetailsMapper);
 				setSalesDateTime(salesEventDetailsMapper);
 				setWeightInKgs(salesEventDetailsMapper);
-				setRemovalEventType(salesEventDetailsMapper);
 				setPigInfoId(salesEventDetailsMapper);
 				setGroupEventId(salesEventDetailsMapper);
+				setSalesTypes(salesEventDetailsMapper);
 				
 			}
 		}
@@ -65,6 +66,33 @@ public class SalesEventDetailsDrivable implements Derivable{
 	private void setCompanyId(final SalesEventDetailsMapper salesEventDetailsMapper) {
 		try {
 			salesEventDetailsMapper.setDeriveCompanyId(companyDao.getCompanyId(salesEventDetailsMapper.getCompanyId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setSalesTypes(final SalesEventDetailsMapper salesEventDetailsMapper) {
+		String salesType = salesEventDetailsMapper.getSalesType();
+		StringBuffer buffer = new StringBuffer();
+		try {
+			if(salesType != null && salesType.trim().length() > 0)
+			{
+				String[]  types = salesType.split(",");
+				if(types != null && types.length > 0)
+				{
+					int i= 0;
+					for(String type : types)
+					{
+						i++;
+						Integer salesTypeId = RefData.SALESTYPE.getId((type !=null)?type.trim():"");
+						if(salesTypeId != null)
+							buffer.append(salesTypeId);
+						if(i<types.length)
+							buffer.append(",");
+					}
+				}
+			}
+			salesEventDetailsMapper.setDeriveSalesTypes(buffer.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,17 +121,7 @@ public class SalesEventDetailsDrivable implements Derivable{
 			e.printStackTrace();
 		}
 	}
-	
-	private void setRemovalEventType(final SalesEventDetailsMapper salesEventDetailsMapper){
-		try {
-				Integer phaseOfProductionTypeIdFromRefData = RefData.REMOVALEVENTTYPE.getId(salesEventDetailsMapper.getRemovalEventId());
-				if (phaseOfProductionTypeIdFromRefData > -1) {
-					salesEventDetailsMapper.setDeriveRemovalEventTypeId(phaseOfProductionTypeIdFromRefData);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
+
 	
 	private void setPigInfoId(final SalesEventDetailsMapper salesEventDetailsMapper){
 		try {

@@ -42,7 +42,7 @@ public class PregnancyInfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PregnancyInfoMapper pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
-				setExamDate(pregnancyInfoMapper);
+				//setExamDate(pregnancyInfoMapper);
 				setResultDate(pregnancyInfoMapper);				
 				setCompanyId(pregnancyInfoMapper);
 				setPregnancyEventTypeId(pregnancyInfoMapper);

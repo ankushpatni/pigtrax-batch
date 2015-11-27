@@ -52,7 +52,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 				validatePigGender(pregnancyInfoMapper, errList);
 				validateCompanyId(pregnancyInfoMapper, errList);
 				validateBreedingEvent(pregnancyInfoMapper, errList);
-				validateExamDate(pregnancyInfoMapper, errList);
+				//validateExamDate(pregnancyInfoMapper, errList);
 				validateResultDate(pregnancyInfoMapper, errList);
 				validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
 				validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);

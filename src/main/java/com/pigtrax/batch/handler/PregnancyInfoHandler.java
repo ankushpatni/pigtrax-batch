@@ -100,6 +100,7 @@ public class PregnancyInfoHandler implements Handler {
 			info.setPregnancyExamResultTypeId(pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
 			info.setSowCondition(pregnancyInfoMapper.getDeriveSowCondition());
 			info.setUserUpdated(processDTO.getUserName());
+			info.setPremiseId(pregnancyInfoMapper.getDerivePremiseId());
 		} catch (Exception e) {
 			logger.error("Exception in PregnancyInfoHandler.populatePregnancyInfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

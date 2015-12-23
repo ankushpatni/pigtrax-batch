@@ -17,6 +17,7 @@ import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -42,6 +43,9 @@ public class FarrowEventDerivable implements Derivable {
 	@Autowired
 	BreedingEventDao breedingEventDao;
 	
+	@Autowired
+	PremisesDao premiseDao;
+	
 	@Override
 	public void derive(List<Mapper> list, ProcessDTO processDTO) {
 		if (list != null) {
@@ -56,12 +60,12 @@ public class FarrowEventDerivable implements Derivable {
 				setMaleBorns(farrowEventMapper);
 				setFemaleBorns(farrowEventMapper);
 				setMummies(farrowEventMapper);
+				setWeakBorns(farrowEventMapper);
 				setweightInKGs(farrowEventMapper);
 				setEmployeeGroupId(farrowEventMapper);
 				setTeats(farrowEventMapper);
 				setSowCondition(farrowEventMapper);
 				setPregnancyEventId(farrowEventMapper);
-
 			}
 		}
 
@@ -87,10 +91,11 @@ public class FarrowEventDerivable implements Derivable {
 		try {
 			Integer derivedCompanyId = companyDao.getCompanyId(farrowEventMapper.getCompanyId());
 			farrowEventMapper.setDeriveCompanyId(derivedCompanyId);
-			Map<String, String> searchCriteria = new HashMap<String, String>();
-			searchCriteria.put("companyId", derivedCompanyId != null ? derivedCompanyId.toString() : null);
-			searchCriteria.put("pigId", farrowEventMapper.getPigId());
-			farrowEventMapper.setDerivePigInfoId(pigInfoDao.getPKfromPigId(searchCriteria));
+			
+			Integer derivedPremiseId = premiseDao.getPremisesPK(farrowEventMapper.getFarmName(), farrowEventMapper.getDeriveCompanyId());
+			farrowEventMapper.setDerivePremiseId(derivedPremiseId);			
+		
+			farrowEventMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(farrowEventMapper.getPigId(), farrowEventMapper.getDeriveCompanyId(), farrowEventMapper.getDerivePremiseId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -161,6 +166,15 @@ public class FarrowEventDerivable implements Derivable {
 			e.printStackTrace();
 		}
 	}
+	
+	private void setWeakBorns(final FarrowEventMapper farrowEventMapper) {
+		try {
+			farrowEventMapper.setDeriveWeakBorns(Integer.parseInt(farrowEventMapper.getWeakBorns()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	private void setweightInKGs(final FarrowEventMapper farrowEventMapper) {
 		try {

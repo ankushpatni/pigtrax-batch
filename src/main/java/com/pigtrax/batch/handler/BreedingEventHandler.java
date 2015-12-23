@@ -87,6 +87,7 @@ public class BreedingEventHandler implements Handler {
 			breedingEvent.setSowCondition(breedingEventMapper.getDeriveSowCondition());
 			breedingEvent.setWeight(breedingEventMapper.getDeriveWtInKgs());
 			breedingEvent.setUserUpdated(processDTO.getUserName());
+			breedingEvent.setPremiseId(breedingEventMapper.getDerivePremiseId());
 		} catch (Exception e) {
 			logger.error("Exception in FarrowEventHandler.populateFarrowEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

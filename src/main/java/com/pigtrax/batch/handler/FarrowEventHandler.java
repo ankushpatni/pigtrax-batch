@@ -101,6 +101,8 @@ public class FarrowEventHandler implements Handler {
 			farrowEvent.setLitterId(farrowEventfoMaper.getDeriveWeightInKGs());
 			farrowEvent.setTeasts(farrowEventfoMaper.getDeriveTeasts());
 			farrowEvent.setSowCondition(farrowEventfoMaper.getDeriveSowCondition());
+			farrowEvent.setPremiseId(farrowEventfoMaper.getDerivePremiseId());
+			farrowEvent.setWeakBorns(farrowEventfoMaper.getDeriveWeakBorns()); 
 			if ("Induced".equalsIgnoreCase(farrowEventfoMaper.getTypeOfBirth())) {
 				farrowEvent.setInducedBirth(true);
 				farrowEvent.setAssistedBirth(false);

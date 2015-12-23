@@ -14,6 +14,7 @@ public class PregnancyInfo {
 	private Date resultDate;
 	private Integer sowCondition;
 	private String userUpdated;
+	private Integer premiseId;
 
 	public Integer getId() {
 		return id;
@@ -127,5 +128,15 @@ public class PregnancyInfo {
 	}
 
 
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+
+
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
+	}
+
+	
 
 }

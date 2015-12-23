@@ -17,6 +17,7 @@ import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
+import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -45,8 +46,9 @@ public class FarrowEventValidator extends AbstractValidator {
 			farrowEventMapper = (FarrowEventMapper) mapper;
 			if (farrowEventMapper.isRecovrableErrors() == null || farrowEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validatePigId(farrowEventMapper, errList);
 				validateCompanyId(farrowEventMapper, errList);
+				validatePremiseId(farrowEventMapper, errList);
+				validatePigId(farrowEventMapper, errList);				
 				validatePigPKId(farrowEventMapper, errList);
 				validatePragnancyTest(farrowEventMapper, errList);
 				validatePenId(farrowEventMapper, errList);
@@ -78,6 +80,14 @@ public class FarrowEventValidator extends AbstractValidator {
 
 	}
 
+	private void validatePremiseId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
+		if (farrowEventMapper.getDerivePremiseId() == null || farrowEventMapper.getDerivePremiseId() < 0) {
+			farrowEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
 	private void validateSowCondition(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() == null || farrowEventMapper.getDeriveSowCondition()  < 0)) {
 			farrowEventMapper.setRecovrableErrors(false);

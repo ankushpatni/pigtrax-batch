@@ -14,6 +14,7 @@ import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.BreedingEventMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -38,11 +39,11 @@ public class BreedingEventValidator extends AbstractValidator {
 			breedingEventMapper = (BreedingEventMapper) mapper;
 			if (breedingEventMapper.isRecovrableErrors() == null || breedingEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				
+				validateCompanyId(breedingEventMapper, errList);
+				validatePremiseId(breedingEventMapper, errList);
 				validatePigId(breedingEventMapper, errList);
 				validatePigInfoId(breedingEventMapper, errList);
-				validatePigGender(breedingEventMapper, errList);
-				validateCompanyId(breedingEventMapper, errList);
+				validatePigGender(breedingEventMapper, errList);				
 				validateSeriveTypeId(breedingEventMapper, errList);
 				validatePenId(breedingEventMapper, errList);
 				validateSowCondition(breedingEventMapper, errList);
@@ -64,6 +65,17 @@ public class BreedingEventValidator extends AbstractValidator {
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
 		}
 	}
+	
+	
+	private void validatePremiseId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
+		if (breedingEventMapper.getDerivePremiseId() == null || breedingEventMapper.getDerivePremiseId() < 0) {
+			breedingEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	
 	private void validatePigInfoId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {	
 		if(breedingEventMapper.getDerivePigInfoId() == null || breedingEventMapper.getDerivePigInfoId() < 0) {
 			breedingEventMapper.setRecovrableErrors(false); 

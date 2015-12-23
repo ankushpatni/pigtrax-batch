@@ -2,34 +2,36 @@
 <config>
 	<event id="PIGINFO">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
-			<col key="sireId" order="2" isEmpty="true" />
-			<col key="damId" order="3" isEmpty="true" />
-			<col key="entryDate" order="4" isEmpty="false" />
-			<col key="origin" order="5" isEmpty="true" />
-			<col key="gline" order="6" isEmpty="true" />
-			<col key="gcompany" order="7" isEmpty="true" />
-			<col key="birthDate" order="8" isEmpty="false" />
-			<col key="tattoo" order="9" isEmpty="false" />
-			<col key="alternateTattoo" order="10" isEmpty="true" />
-			<col key="remarks" order="11" isEmpty="true" />
-			<col key="companyId" order="12" isEmpty="false" />
-			<col key="penId" order="13" isEmpty="true" />
-			<col key="barnId" order="14" isEmpty="true" />
-			<col key="sexTypeId" order="15" isEmpty="false" />
-			<col key="parity" order="16" isEmpty="false" />
-			<col key="gfunctionTypeId" order="17" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="penId" order="3" isEmpty="true" />
+			<col key="pigId" order="4" isEmpty="false" />
+			<col key="tattoo" order="5" isEmpty="true" />
+			<col key="alternateTattoo" order="6" isEmpty="true" />
+			<col key="entryDate" order="7" isEmpty="false" />
+			<col key="sexTypeId" order="8" isEmpty="false" />
+			<col key="geneticOrigin" order="9" isEmpty="true" />
+			<col key="geneticCompany" order="10" isEmpty="false" />			
+			<col key="geneticLine" order="11" isEmpty="false" />
+			<col key="geneticFunction" order="12" isEmpty="false" />
+			<col key="birthDate" order="13" isEmpty="false" />			
+			<col key="sireId" order="14" isEmpty="true" />
+			<col key="damId" order="15" isEmpty="true" />
+			<col key="remarks" order="16" isEmpty="true" />			
+			<col key="parity" order="17" isEmpty="false" />			
 		</dataInfo>
 	</event>
 	<event id="PREGNANCYINFO">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
-			<col key="employeeGroup" order="2" isEmpty="true" />
-			<col key="pregnancyEventType" order="3" isEmpty="false" />
-			<col key="PregnancyExamResultType" order="4" isEmpty="true" />			
-			<col key="resultDate" order="5" isEmpty="false" />
-			<col key="sowCondition" order="6" isEmpty="true" />
-			<col key="companyId" order="7" isEmpty="false" />
+			<col key="companyId" order="1" isEmpty="false" />
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="pigId" order="3" isEmpty="false" />
+			<col key="resultDate" order="4" isEmpty="false" />			
+			<col key="pregnancyEventType" order="5" isEmpty="false" />
+			<col key="PregnancyExamResultType" order="6" isEmpty="true" />			
+			<col key="employeeGroup" order="7" isEmpty="true" />
+			<col key="sowCondition" order="8" isEmpty="true" />
+			
 		</dataInfo>
 	</event>
 	<event id="PIGLETSTATUSINFO">
@@ -66,20 +68,22 @@
 	</event>
 	<event id="FARROWEVENT">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
-			<col key="penId" order="2" isEmpty="true" />
-			<col key="farrowDate" order="3" isEmpty="false" />
-			<col key="liveBorns" order="4" isEmpty="true" />
-			<col key="stillBorns" order="5" isEmpty="true" />
-			<col key="maleBorns" order="6" isEmpty="true" />
-			<col key="femaleBorns" order="7" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="penId" order="3" isEmpty="false" />
+			<col key="pigId" order="4" isEmpty="false" />			
+			<col key="farrowDate" order="5" isEmpty="false" />
+			<col key="liveBorns" order="6" isEmpty="true" />
+			<col key="stillBorns" order="7" isEmpty="true" />
 			<col key="mummies" order="8" isEmpty="true" />
-			<col key="weightInKGs" order="9" isEmpty="true" />
-			<col key="typeOfBirth" order="10" isEmpty="false" />
-			<col key="employeeGrpId" order="11" isEmpty="true" />
-			<col key="sowCondition" order="12" isEmpty="true" />
-			<col key="teats" order="13" isEmpty="false" />
-			<col key="companyId" order="14" isEmpty="false" />
+			<col key="weakBorns" order="9" isEmpty="true" />
+			<col key="maleBorns" order="10" isEmpty="true" />
+			<col key="femaleBorns" order="11" isEmpty="true" />			
+			<col key="weightInKGs" order="12" isEmpty="true" />
+			<col key="typeOfBirth" order="13" isEmpty="true" />
+			<col key="employeeGrpId" order="14" isEmpty="true" />
+			<col key="sowCondition" order="15" isEmpty="true" />
+			<col key="teats" order="16" isEmpty="false" />
 		</dataInfo>
 	</event>
 	<event id="GROUPEVENTDETAILEVENT">
@@ -120,13 +124,14 @@
 	</event>	
 	<event id="BREEDINGEVENT">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
-			<col key="companyId" order="2" isEmpty="false" />
-			<col key="serviceType" order="3" isEmpty="true" />
-			<col key="serviceGroupId" order="4" isEmpty="true" />
-			<col key="pen" order="5" isEmpty="true" />
-			<col key="sowCondition" order="6" isEmpty="true" />
-			<col key="weightInKgs" order="6" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="pigId" order="3" isEmpty="false" />			
+			<col key="serviceType" order="4" isEmpty="true" />
+			<col key="serviceGroupId" order="5" isEmpty="true" />
+			<col key="pen" order="6" isEmpty="true" />
+			<col key="sowCondition" order="7" isEmpty="true" />
+			<col key="weightInKgs" order="8" isEmpty="true" />
 		</dataInfo>
 	</event>	
 	<event id="REMOVALEVENTEXCEPTSALESEVENT">
@@ -163,12 +168,14 @@
 	</event>
 	<event id="MATINGDETAILS">
 		<dataInfo>
-			<col key="pigId" order="1" isEmpty="false" />
-			<col key="companyId" order="2" isEmpty="false" />
-			<col key="matingDate" order="3" isEmpty="false" />
-			<col key="employeeGroup" order="4" isEmpty="true" />
-			<col key="semenId" order="5" isEmpty="true" />
-			<col key="mateQuality" order="6" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />			
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="pigId" order="3" isEmpty="false" />
+			<col key="matingDate" order="4" isEmpty="false" />
+			<col key="employeeGroup" order="5" isEmpty="true" />
+			<col key="semenId" order="6" isEmpty="true" />
+			<col key="semenDate" order="7" isEmpty="true" />
+			<col key="mateQuality" order="8" isEmpty="true" />
 		</dataInfo>
 	</event>
 </config>

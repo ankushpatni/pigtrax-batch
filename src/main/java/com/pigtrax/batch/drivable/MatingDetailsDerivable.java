@@ -10,6 +10,7 @@ import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.MatingDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -29,6 +30,9 @@ public class MatingDetailsDerivable implements Derivable {
 	
 	@Autowired
 	BreedingEventDao breedingEventDao;
+	
+	@Autowired
+	PremisesDao premisesDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -36,8 +40,10 @@ public class MatingDetailsDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				MatingDetailsMapper matingDetailsMapper = (MatingDetailsMapper) mapper;						
 				setCompanyId(matingDetailsMapper);
+				setPremiseId(matingDetailsMapper);
 				setPigInfoId(matingDetailsMapper);
 				setMatingDate(matingDetailsMapper);
+				setSemenDate(matingDetailsMapper);
 				setEmployeeGroupId(matingDetailsMapper);
 				setMateQuality(matingDetailsMapper);
 				setBreedingEventId(matingDetailsMapper);
@@ -57,11 +63,19 @@ public class MatingDetailsDerivable implements Derivable {
 		}
 	}
 	
+	private void setPremiseId(final MatingDetailsMapper matingDetailsMapper) {
+		try {
+			matingDetailsMapper.setDerivePremiseId(premisesDao.getPremisesPK(matingDetailsMapper.getFarmName(), matingDetailsMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	
 	private void setPigInfoId(final MatingDetailsMapper matingDetailsMapper) {
-		if(matingDetailsMapper.getPigId() != null && matingDetailsMapper.getDeriveCompanyId() != null)
+		if(matingDetailsMapper.getPigId() != null && matingDetailsMapper.getDeriveCompanyId() != null && matingDetailsMapper.getDerivePremiseId() != null)
 		{
 			try {
-				matingDetailsMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(matingDetailsMapper.getPigId().trim(), matingDetailsMapper.getDeriveCompanyId()));  
+				matingDetailsMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(matingDetailsMapper.getPigId().trim(), matingDetailsMapper.getDeriveCompanyId(), matingDetailsMapper.getDerivePremiseId()));  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -78,6 +92,18 @@ public class MatingDetailsDerivable implements Derivable {
 			}
 		}
 	}
+	
+	private void setSemenDate(final MatingDetailsMapper matingDetailsMapper) {
+		if(matingDetailsMapper.getSemenDate() != null)
+		{
+			try {
+				matingDetailsMapper.setDeriveSemenDate(DateUtil.getDateFromString(matingDetailsMapper.getSemenDate()));  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private void setEmployeeGroupId(final MatingDetailsMapper matingDetailsMapper) {
 		if(matingDetailsMapper.getEmployeeGroup() != null)
 		{

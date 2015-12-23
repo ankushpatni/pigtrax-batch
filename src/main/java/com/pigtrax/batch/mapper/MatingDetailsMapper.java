@@ -13,6 +13,8 @@ public class MatingDetailsMapper extends AbstractMapper {
 	private String employeeGroup;
 	private String semenId;
 	private String mateQuality;	
+	private String farmName;
+	private String semenDate;
 	
 	//Derived properties
 	private Integer deriveCompanyId;
@@ -22,7 +24,9 @@ public class MatingDetailsMapper extends AbstractMapper {
 	private Integer deriveMateQuality;
 	private Integer deriveBreedingEventId;
 	private boolean updateServiceStartDate;
-
+	private Integer derivePremiseId;
+	private Date deriveSemenDate;
+	
 	public String getPigId() {
 		return pigId;
 	}
@@ -177,6 +181,55 @@ public class MatingDetailsMapper extends AbstractMapper {
 
 	public void setUpdateServiceStartDate(boolean updateServiceStartDate) {
 		this.updateServiceStartDate = updateServiceStartDate;
+	}
+
+	
+
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+
+	
+	
+	public String getSemenDate() {
+		return semenDate;
+	}
+
+
+
+	public void setSemenDate(String semenDate) {
+		this.semenDate = semenDate;
+	}
+
+
+
+	public Date getDeriveSemenDate() {
+		return deriveSemenDate;
+	}
+
+
+
+	public void setDeriveSemenDate(Date deriveSemenDate) {
+		this.deriveSemenDate = deriveSemenDate;
 	}
 
 

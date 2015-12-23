@@ -42,11 +42,13 @@ public class PigInfoValidator extends AbstractValidator {
 			pigInfoMapper = (PigInfoMapper) mapper;
 			if (pigInfoMapper.isRecovrableErrors() == null || pigInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
+				validateCompanyId(pigInfoMapper, errList);
+				validatePremiseId(pigInfoMapper, errList);
 				validateUniquePigId(pigInfoMapper, errList);
 				validateEntryDate(pigInfoMapper, errList);
 				validateBirthdate(pigInfoMapper, errList);
 				validateParity(pigInfoMapper, errList);
-				validateCompanyId(pigInfoMapper, errList);
+				
 				validateSexId(pigInfoMapper, errList);
 				validateOrigin(pigInfoMapper, errList);
 				validateGfunctionTypeId(pigInfoMapper, errList);
@@ -101,12 +103,21 @@ public class PigInfoValidator extends AbstractValidator {
 		}
 	}
 	
+	private void validatePremiseId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
+		if (pigInfoMapper.getDerivePremiseId() == null || pigInfoMapper.getDerivePremiseId() < 0) {
+			pigInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
 	
 	private void validateUniquePigId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) { 
-		if (pigInfoMapper.getPigId() != null && pigInfoMapper.getDeriveCompanyId() != null && pigInfoMapper.getDeriveCompanyId() > 0) {
+		if (pigInfoMapper.getPigId() != null && pigInfoMapper.getDeriveCompanyId() != null && pigInfoMapper.getDeriveCompanyId() > 0 
+				&& pigInfoMapper.getDerivePremiseId() != null && pigInfoMapper.getDerivePremiseId() > 0) {
 			Integer existingPifgId = null;
 			try {
-				 existingPifgId = pigInfoDao.getPigInfoId(pigInfoMapper.getPigId() , pigInfoMapper.getDeriveCompanyId());
+				 existingPifgId = pigInfoDao.getPigInfoId(pigInfoMapper.getPigId() , pigInfoMapper.getDeriveCompanyId(), pigInfoMapper.getDerivePremiseId());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -122,7 +133,7 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateOrigin(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) { 
-		if (pigInfoMapper.getOrigin() != null && pigInfoMapper.getOrigin().trim().length() > 0 &&  (pigInfoMapper.getDeriveOriginId() == null || pigInfoMapper.getDeriveOriginId() < 0)) {
+		if (pigInfoMapper.getGeneticOrigin() != null && pigInfoMapper.getGeneticOrigin().trim().length() > 0 &&  (pigInfoMapper.getDeriveOriginId() == null || pigInfoMapper.getDeriveOriginId() < 0)) {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_ORIGIN_CODE,
 					Constants.ENTRY_EVENT_INVALID_ORIGIN_MSG, "origin", false));
@@ -139,7 +150,7 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 
 	private void validateGfunctionTypeId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getGfunctionTypeId() != null && 0<pigInfoMapper.getGfunctionTypeId().trim().length() && (pigInfoMapper.getDeriveFfunctionTypeId() == null || pigInfoMapper.getDeriveFfunctionTypeId() < 0)) {
+		if (pigInfoMapper.getGeneticFunction() != null && 0<pigInfoMapper.getGeneticFunction().trim().length() && (pigInfoMapper.getDeriveFfunctionTypeId() == null || pigInfoMapper.getDeriveFfunctionTypeId() < 0)) {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
 					Constants.REF_DATA_NOT_FOUND_MSG, "gfunctionTypeId", false));

@@ -329,11 +329,15 @@ public interface Constants {
 	
 	public static final String ENTRY_EVENT_DUPLICATE_PIGID_CODE = "611";
 	
-	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig Id given already exists in the company";
+	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig Id given already exists in the farm";
 	
 	public static final String ENTRY_EVENT_INVALID_COMPANYID_CODE ="612";
+	
+	public static final String ENTRY_EVENT_INVALID_PREMISEID_CODE ="612";
 
 	public static final String ENTRY_EVENT_INVALID_COMPANYID_MSG ="Invalid company id specified";
+	
+	public static final String ENTRY_EVENT_INVALID_PREMISEID_MSG ="Invalid farm name specified";
 	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM = "613";
 	

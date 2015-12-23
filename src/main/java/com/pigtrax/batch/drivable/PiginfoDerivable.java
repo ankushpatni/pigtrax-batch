@@ -11,6 +11,7 @@ import com.pigtrax.batch.dao.interfaces.BarnDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.OriginDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -30,16 +31,20 @@ public class PiginfoDerivable implements Derivable {
 	
 	@Autowired
 	private OriginDao originDao;
+	
+	@Autowired
+	PremisesDao premiseDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PigInfoMapper pigInfoMapper = (PigInfoMapper) mapper;
+				setCompanyId(pigInfoMapper);
+				setPremiseId(pigInfoMapper);
 				setEntryDate(pigInfoMapper);
 				setBirthdate(pigInfoMapper);
-				setParity(pigInfoMapper);
-				setCompanyId(pigInfoMapper);
+				setParity(pigInfoMapper);				
 				setSexId(pigInfoMapper);
 				setGfunctionTypeId(pigInfoMapper);
 				setFarrowEventDate(pigInfoMapper);
@@ -55,7 +60,7 @@ public class PiginfoDerivable implements Derivable {
 	
 	private void setGline(final PigInfoMapper pigInfoMapper) {	
 		try {
-			Integer glineDerived = RefData.GLINE.getId(pigInfoMapper.getGline());
+			Integer glineDerived = RefData.GLINE.getId(pigInfoMapper.getGeneticLine());
 			if (glineDerived > -1) {
 				pigInfoMapper.setDeriveGline(glineDerived);
 			}
@@ -66,7 +71,7 @@ public class PiginfoDerivable implements Derivable {
 	
 	private void setOrigin(final PigInfoMapper pigInfoMapper) {	
 		try {
-			Integer originDerived = originDao.getOriginId(pigInfoMapper.getOrigin());
+			Integer originDerived = originDao.getOriginId(pigInfoMapper.getGeneticOrigin());
 			if (originDerived > 0) {
 				pigInfoMapper.setDeriveOriginId(originDerived);
 			}
@@ -77,7 +82,7 @@ public class PiginfoDerivable implements Derivable {
 	
 	private void setGCompany(final PigInfoMapper pigInfoMapper) {
 		try {
-			Integer gcompanyIdDerived = RefData.GCOMPANY.getId(pigInfoMapper.getGcompany());
+			Integer gcompanyIdDerived = RefData.GCOMPANY.getId(pigInfoMapper.getGeneticCompany());
 			if (gcompanyIdDerived > -1) {
 				pigInfoMapper.setDeriveGCompany(gcompanyIdDerived);
 			}
@@ -131,7 +136,15 @@ public class PiginfoDerivable implements Derivable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private void setPremiseId(final PigInfoMapper pigInfoMapper) {
+		try {
+			pigInfoMapper.setDerivePremiseId(premiseDao.getPremisesPK(pigInfoMapper.getFarmName(), pigInfoMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+  
 	private void setSexId(final PigInfoMapper pigInfoMapper) {
 		try {
 			Integer sexIdFromRefData = RefData.SEX.getId(pigInfoMapper.getSexTypeId());
@@ -155,7 +168,7 @@ public class PiginfoDerivable implements Derivable {
 
 	private void setGfunctionTypeId(final PigInfoMapper pigInfoMapper) {
 		try {
-			Integer gFunctionIdFromRefData = RefData.GFUNCTION.getId(pigInfoMapper.getGfunctionTypeId());
+			Integer gFunctionIdFromRefData = RefData.GFUNCTION.getId(pigInfoMapper.getGeneticFunction());
 			if (gFunctionIdFromRefData > -1) {
 				pigInfoMapper.setDeriveFfunctionTypeId(gFunctionIdFromRefData);
 			}

@@ -17,6 +17,7 @@ import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
+import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.MatingDetailsMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -47,10 +48,13 @@ public class PregnancyInfoValidator extends AbstractValidator {
 			pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
 			if (pregnancyInfoMapper.isRecovrableErrors() == null || pregnancyInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
+				
+				validateCompanyId(pregnancyInfoMapper, errList);
+				validatePremiseId(pregnancyInfoMapper, errList);
 				validatePigId(pregnancyInfoMapper, errList);
 				validatePigInfoId(pregnancyInfoMapper, errList);
 				validatePigGender(pregnancyInfoMapper, errList);
-				validateCompanyId(pregnancyInfoMapper, errList);
+				
 				validateBreedingEvent(pregnancyInfoMapper, errList);
 				//validateExamDate(pregnancyInfoMapper, errList);
 				validateResultDate(pregnancyInfoMapper, errList);
@@ -72,6 +76,14 @@ public class PregnancyInfoValidator extends AbstractValidator {
 		if(pregnancyInfoMapper.getPigId() == null) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+		}
+	}
+	
+	private void validatePremiseId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
+		if (pregnancyInfoMapper.getDerivePremiseId() == null || pregnancyInfoMapper.getDerivePremiseId() < 0) {
+			pregnancyInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	

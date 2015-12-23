@@ -11,6 +11,8 @@ public interface PigInfoDao {
 	public int insertPigInformation(PigInfo pigInfo) throws SQLException, DuplicateKeyException;
 
 	public Integer getPigInfoId(String pigId, int companyId) throws SQLException;
+	
+	public Integer getPigInfoId(String pigId, int companyId, int premiseId) throws SQLException;
 
 	public Integer getPKfromPigId(final Map<String, String> searchCriteria) throws SQLException;
 	

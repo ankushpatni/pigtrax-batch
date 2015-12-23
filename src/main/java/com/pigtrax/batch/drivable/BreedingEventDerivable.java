@@ -11,9 +11,11 @@ import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.dao.interfaces.RefDataDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.BreedingEventMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 
@@ -31,6 +33,9 @@ public class BreedingEventDerivable implements Derivable {
 	
 	@Autowired
 	RefDataDao refDataDao;
+	
+	@Autowired
+	PremisesDao premisesDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -38,6 +43,7 @@ public class BreedingEventDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;						
 				setCompanyId(breedingEventMapper);
+				setPremiseId(breedingEventMapper);
 				setPigInfoId(breedingEventMapper);
 				setBreedingServiceTypeId(breedingEventMapper);
 				setSowCondition(breedingEventMapper);
@@ -59,11 +65,19 @@ public class BreedingEventDerivable implements Derivable {
 		}
 	}
 	
+	private void setPremiseId(final BreedingEventMapper breedingEventMapper) {
+		try {
+			breedingEventMapper.setDerivePremiseId(premisesDao.getPremisesPK(breedingEventMapper.getFarmName(), breedingEventMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	
 	private void setPigInfoId(final BreedingEventMapper breedingEventMapper) {
-		if(breedingEventMapper.getPigId() != null && breedingEventMapper.getDeriveCompanyId() != null)
+		if(breedingEventMapper.getPigId() != null && breedingEventMapper.getDeriveCompanyId() != null && breedingEventMapper.getDerivePremiseId() != null)
 		{
 			try {
-				breedingEventMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(breedingEventMapper.getPigId().trim(), breedingEventMapper.getDeriveCompanyId()));  
+				breedingEventMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(breedingEventMapper.getPigId().trim(), breedingEventMapper.getDeriveCompanyId(), breedingEventMapper.getDerivePremiseId()));  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

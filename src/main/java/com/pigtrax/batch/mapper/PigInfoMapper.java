@@ -10,9 +10,9 @@ public class PigInfoMapper extends AbstractMapper {
 	private String sireId;
 	private String damId;
 	private String entryDate;
-	private String origin;
-	private String gline;
-	private String gcompany;
+	private String geneticOrigin;
+	private String geneticLine;
+	private String geneticCompany;
 	private String birthDate;
 	private String tattoo;
 	private String alternateTattoo;
@@ -22,7 +22,8 @@ public class PigInfoMapper extends AbstractMapper {
 	private String barnId;
 	private String sexTypeId;
 	private String parity;
-	private String gfunctionTypeId;
+	private String geneticFunction;
+	private String farmName;
 
 	// Derivable properties
 	private Integer deriveFfunctionTypeId;
@@ -37,6 +38,7 @@ public class PigInfoMapper extends AbstractMapper {
 	private Integer deriveGline;
 	private Integer deriveGCompany;
 	private Integer deriveOriginId;
+	private Integer derivePremiseId;
 	
 	public Integer getDeriveGline() {
 		return deriveGline;
@@ -158,30 +160,6 @@ public class PigInfoMapper extends AbstractMapper {
 		this.entryDate = entryDate;
 	}
 
-	public String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public String getGline() {
-		return gline;
-	}
-
-	public void setGline(String gline) {
-		this.gline = gline;
-	}
-
-	public String getGcompany() {
-		return gcompany;
-	}
-
-	public void setGcompany(String gcompany) {
-		this.gcompany = gcompany;
-	}
-
 	public String getBirthDate() {
 		return birthDate;
 	}
@@ -254,12 +232,38 @@ public class PigInfoMapper extends AbstractMapper {
 		this.parity = parity;
 	}
 
-	public String getGfunctionTypeId() {
-		return gfunctionTypeId;
+	
+	
+	public String getGeneticOrigin() {
+		return geneticOrigin;
 	}
 
-	public void setGfunctionTypeId(String gfunctionTypeId) {
-		this.gfunctionTypeId = gfunctionTypeId;
+	public void setGeneticOrigin(String geneticOrigin) {
+		this.geneticOrigin = geneticOrigin;
+	}
+
+	public String getGeneticLine() {
+		return geneticLine;
+	}
+
+	public void setGeneticLine(String geneticLine) {
+		this.geneticLine = geneticLine;
+	}
+
+	public String getGeneticCompany() {
+		return geneticCompany;
+	}
+
+	public void setGeneticCompany(String geneticCompany) {
+		this.geneticCompany = geneticCompany;
+	}
+
+	public String getGeneticFunction() {
+		return geneticFunction;
+	}
+
+	public void setGeneticFunction(String geneticFunction) {
+		this.geneticFunction = geneticFunction;
 	}
 
 	@Override
@@ -278,6 +282,23 @@ public class PigInfoMapper extends AbstractMapper {
 	public void setDeriveOriginId(Integer deriveOriginId) {
 		this.deriveOriginId = deriveOriginId;
 	}
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+
 	
 	
 }

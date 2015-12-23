@@ -35,7 +35,7 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 	public int insertPregnancyInfo(final PregnancyInfo pregnancyInfo) throws SQLException, DuplicateKeyException {
 		final String Qry = "insert into pigtrax.\"PregnancyEvent\"(\"id_PigInfo\", \"id_BreedingEvent\", "
 				+ "\"id_EmployeeGroup\", \"id_PregnancyEventType\", \"id_PregnancyExamResultType\", \"examDate\", \"resultDate\", "
-				+ "\"sowCondition\", \"lastUpdated\", \"userUpdated\") " + "values(?,?,?,?,?,?,?,?,current_timestamp,?)";
+				+ "\"sowCondition\", \"lastUpdated\", \"userUpdated\",\"id_Premise\") " + "values(?,?,?,?,?,?,?,?,current_timestamp,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -49,6 +49,7 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 				ps.setDate(7, new java.sql.Date(pregnancyInfo.getResultDate().getTime()));
 				ps.setInt(8, pregnancyInfo.getSowCondition());
 				ps.setString(9, pregnancyInfo.getUserUpdated());
+				ps.setObject(10, pregnancyInfo.getPremiseId(), java.sql.Types.INTEGER);
 				return ps;
 			}
 		}, holder);

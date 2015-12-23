@@ -22,7 +22,9 @@ public class FarrowEventMapper extends AbstractMapper {
 	private String sowCondition;
 	private String teats;
 	private String companyId;
-
+	private String farmName;
+	private String weakBorns;
+	
 	private Integer derivePigInfoId;
 	private Date deriveServiceDate;
 	private Integer derivePenId;
@@ -38,6 +40,8 @@ public class FarrowEventMapper extends AbstractMapper {
 	private Integer deriveTeasts;
 	private Integer deriveCompanyId;
 	private Integer pragnancyEventId;
+	private Integer derivePremiseId;
+	private Integer deriveWeakBorns;
 
 	public Integer getPragnancyEventId() {
 		return pragnancyEventId;
@@ -283,5 +287,39 @@ public class FarrowEventMapper extends AbstractMapper {
 	public String getId() {		
 		return "["+getPigId()+", "+getCompanyId()+", "+getFarrowDate()+"]";
 	}
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+
+	public String getWeakBorns() {
+		return weakBorns;
+	}
+
+	public void setWeakBorns(String weakBorns) {
+		this.weakBorns = weakBorns;
+	}
+
+	public Integer getDeriveWeakBorns() {
+		return deriveWeakBorns;
+	}
+
+	public void setDeriveWeakBorns(Integer deriveWeakBorns) {
+		this.deriveWeakBorns = deriveWeakBorns;
+	}
+	
+	
 
 }

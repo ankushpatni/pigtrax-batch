@@ -1,7 +1,6 @@
 package com.pigtrax.batch.drivable;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -15,12 +14,12 @@ import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
+import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
-import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.DateUtil;
-import com.pigtrax.batch.util.ErrorBeanUtil;
 
 @Component
 public class PregnancyInfoDerivable implements Derivable {
@@ -36,6 +35,9 @@ public class PregnancyInfoDerivable implements Derivable {
 	
 	@Autowired
 	EmployeeGroupDao employeeGroupDao;
+	
+	@Autowired
+	PremisesDao premisesDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -43,8 +45,9 @@ public class PregnancyInfoDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				PregnancyInfoMapper pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
 				//setExamDate(pregnancyInfoMapper);
-				setResultDate(pregnancyInfoMapper);				
 				setCompanyId(pregnancyInfoMapper);
+				setPremiseId(pregnancyInfoMapper);
+				setResultDate(pregnancyInfoMapper);
 				setPregnancyEventTypeId(pregnancyInfoMapper);
 				setPregnancyExamResultTypeId(pregnancyInfoMapper); 
 				setPigInfoId(pregnancyInfoMapper);
@@ -57,8 +60,16 @@ public class PregnancyInfoDerivable implements Derivable {
 
 	private void setExamDate(final PregnancyInfoMapper pregnancyInfoMapper) {
 		try {
-			pregnancyInfoMapper.setDeriveExamDate(DateUtil.getDateFromString(pregnancyInfoMapper.getExamDate()));
+			pregnancyInfoMapper.setDeriveExamDate(DateUtil.getDateFromString(pregnancyInfoMapper.getResultDate()));
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setPremiseId(final PregnancyInfoMapper pregnancyInfoMapper) {
+		try {
+			pregnancyInfoMapper.setDerivePremiseId(premisesDao.getPremisesPK(pregnancyInfoMapper.getFarmName(), pregnancyInfoMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}
@@ -80,10 +91,13 @@ public class PregnancyInfoDerivable implements Derivable {
 	}
 	
 	private void setPigInfoId(final PregnancyInfoMapper pregnancyInfoMapper) {
-		try {
-			pregnancyInfoMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(pregnancyInfoMapper.getPigId(), pregnancyInfoMapper.getDeriveCompanyId()));  
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(pregnancyInfoMapper.getPigId() != null && pregnancyInfoMapper.getDeriveCompanyId() != null && pregnancyInfoMapper.getDerivePremiseId() != null)
+		{
+			try {
+				pregnancyInfoMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(pregnancyInfoMapper.getPigId(), pregnancyInfoMapper.getDeriveCompanyId(), pregnancyInfoMapper.getDerivePremiseId()));  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

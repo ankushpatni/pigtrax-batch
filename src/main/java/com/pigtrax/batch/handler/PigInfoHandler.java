@@ -48,10 +48,20 @@ public class PigInfoHandler implements Handler {
 					try {
 						PigInfo pigInfo = populatePigIfnfo(errorMap, pigInfoMaper, processDTO);
 						if (pigInfo != null) {
-							int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
-							PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+							
+							Integer pigInfoId = pigInfoDaoImpl.getPigInfoId(pigInfoMaper.getPigId(), pigInfoMaper.getDeriveCompanyId(), pigInfoMaper.getDerivePremiseId());
+							if(pigInfoId == null)
+							{
+								int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
+								PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
+							else
+							{
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_DUPLICATE_PIGID_CODE, Constants.ENTRY_EVENT_DUPLICATE_PIGID_MSG , "pigId", false));
+								isErrorOccured = true;
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -76,18 +86,17 @@ public class PigInfoHandler implements Handler {
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
 			pigInfo = new PigInfo();
+			pigInfo.setPremiseId(pigInfoMaper.getDerivePremiseId());
 			pigInfo.setAlternateTattoo(pigInfoMaper.getAlternateTattoo());
-			pigInfo.setBarnId(pigInfoMaper.getDeriveBarnId());
 			pigInfo.setBirthDate(pigInfoMaper.getDeriveBirthDate());
-			pigInfo.setCompanyId(pigInfoMaper.getDeriveCompanyId());
-			pigInfo.setCurrentFarrowEventDate(pigInfoMaper.getDeriveFarrowEventDate());
+			pigInfo.setCompanyId(pigInfoMaper.getDeriveCompanyId());			
 			pigInfo.setDamId(pigInfoMaper.getDamId());
 			pigInfo.setEntryDate(pigInfoMaper.getDeriveEntryDate());
 			pigInfo.setGcompany(pigInfoMaper.getDeriveGCompany());
 			pigInfo.setGfunctionTypeId(pigInfoMaper.getDeriveFfunctionTypeId());
 			pigInfo.setGline(pigInfoMaper.getDeriveGline());
 			pigInfo.setPigId(pigInfoMaper.getPigId());
-			pigInfo.setOrigin(pigInfoMaper.getOrigin());
+			pigInfo.setOriginId(pigInfoMaper.getDeriveOriginId());
 			pigInfo.setParity(pigInfoMaper.getDeriveParity());
 			pigInfo.setPenId(pigInfoMaper.getDerivePenId());
 			pigInfo.setRemarks(pigInfoMaper.getRemarks());

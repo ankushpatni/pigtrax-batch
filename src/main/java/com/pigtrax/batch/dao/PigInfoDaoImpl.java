@@ -36,7 +36,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 	public int insertPigInformation(final PigInfo pigInfo) throws SQLException, DuplicateKeyException {
 		final String Qry = "insert into pigtrax.\"PigInfo\"(\"pigId\", \"sireId\", \"damId\", \"entryDate\", \"origin\", \"gline\", \"gcompany\", "
 				+ "\"birthDate\", \"tattoo\", \"alternateTattoo\", \"remarks\", \"lastUpdated\", \"userUpdated\", \"id_Company\", \"id_Pen\", "
-				+ "\"id_Barn\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\") "
+				+ "\"id_Premise\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\") "
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -64,7 +64,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				} else {
 					ps.setNull(14, java.sql.Types.INTEGER);
 				}
-				ps.setObject(15, pigInfo.getBarnId(), java.sql.Types.INTEGER);
+				ps.setObject(15, pigInfo.getPremiseId(), java.sql.Types.INTEGER);
 				ps.setObject(16, pigInfo.getSexTypeId(), java.sql.Types.INTEGER);
 				if(pigInfo.getParity() != null)
 					ps.setInt(17, pigInfo.getParity());
@@ -110,6 +110,40 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public Integer getPigInfoId(String pigId, int companyId, int premiseId) throws SQLException {
+		logger.debug("Pig Id/company Ids are :" + pigId + "/" + companyId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"PigInfo\" where lower(\"pigId\") = ? and \"id_Company\" = ? and \"id_Premise\" = ?");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (pigId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, pigId.trim().toLowerCase());
+					ps.setInt(2, companyId);
+					ps.setInt(3, premiseId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("pigInfoId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+		return null;
+	}
+	
+	
 	
 	@Override
 	public Integer getActivePigInfoId(String pigId, int companyId) throws SQLException {

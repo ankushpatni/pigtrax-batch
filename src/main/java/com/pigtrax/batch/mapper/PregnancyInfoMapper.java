@@ -16,7 +16,7 @@ public class PregnancyInfoMapper extends AbstractMapper {
 	private String resultDate;
 	private String sowCondition;
 	private String companyId;
-	
+	private String farmName;
 
 
 	// Derivable properties
@@ -29,7 +29,7 @@ public class PregnancyInfoMapper extends AbstractMapper {
 	private Date deriveResultDate;
 	private Integer deriveSowCondition;
 	private Integer deriveCompanyId;
-	
+	private Integer derivePremiseId;
 	
 	
 	public String getPigId() {
@@ -180,6 +180,24 @@ public class PregnancyInfoMapper extends AbstractMapper {
 
 	public void setDerivePigInfoId(Integer derivePigInfoId) {
 		this.derivePigInfoId = derivePigInfoId;
+	}
+
+	
+	
+	public String getFarmName() {
+		return farmName;
+	}
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
 	}
 
 	@Override

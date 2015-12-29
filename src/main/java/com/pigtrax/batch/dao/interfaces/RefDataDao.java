@@ -29,5 +29,7 @@ public interface RefDataDao {
 	List<RefDataTranslation> getGlineTypes();
 	
 	List<RefDataTranslation> getSaleTypes();
+	
+	List<RefDataTranslation> getFeedEventTypes();
 
 }

@@ -3,7 +3,6 @@ package com.pigtrax.batch.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pigtrax.batch.dao.interfaces.RoomDao;
+import com.pigtrax.batch.dao.interfaces.SiloDao;
 
 @Repository
 @Transactional
-public class RoomDaoImpl implements RoomDao {
+public class SiloDaoImpl implements SiloDao {
 
-	private static final Logger logger = Logger.getLogger(RoomDaoImpl.class);
+	private static final Logger logger = Logger.getLogger(SiloDaoImpl.class);
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -31,50 +29,19 @@ public class RoomDaoImpl implements RoomDao {
 	}
 
 	@Override
-	public Integer getRoomPkId(final String roomId) throws SQLException {
-		
-		logger.debug("penId is :" + roomId);
-		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select id from pigtrax.\"Room\" where \"roomId\" = ?");
-		final String qry = qryBuffer.toString();
-		Long retValList1 = null;
-		if (roomId != null) {
-			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
-				@Override
-				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setString(1, roomId);
-				}
-			}, new ResultSetExtractor<Long>() {
-				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-					if (resultSet.next()) {
-						return resultSet.getLong(1);
-					}
-					return null;
-				}
-			});
-			logger.debug("penId retVal is :" + retValList1);
-			if (retValList1 != null) {
-				return Integer.decode(retValList1.toString());
-			}
-		}
-		return null;
-	}
-	
-	
-	@Override
-	public Integer getRoomPkId(String roomId, Integer companyId, Integer premiseId)
+	public Integer getSiloPKId(String silo, Integer premiseId)
 			throws SQLException {
-		logger.debug("roomId is :" + roomId);
+		logger.debug("silo is :" + silo);
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select id from pigtrax.\"Room\" where \"roomId\" = ? and  \"id_Barn\" in "
+		qryBuffer.append("select id from pigtrax.\"Silo\" where \"siloId\" = ? and  \"id_Barn\" in "
 				+ "(select \"id\" from pigtrax.\"Barn\" where \"id_Premise\" = ? )");
 		final String qry = qryBuffer.toString();
 		Long retValList1 = null;
-		if (roomId != null) {
+		if (silo != null) {
 			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
-					ps.setString(1, roomId);
+					ps.setString(1, silo);
 					ps.setObject(2, premiseId, java.sql.Types.INTEGER);
 				}
 			}, new ResultSetExtractor<Long>() {
@@ -85,7 +52,7 @@ public class RoomDaoImpl implements RoomDao {
 					return null;
 				}
 			});
-			logger.debug("roomId retVal is :" + retValList1);
+			logger.debug("silo retVal is :" + retValList1);
 			if (retValList1 != null) {
 				return Integer.decode(retValList1.toString());
 			}
@@ -93,6 +60,5 @@ public class RoomDaoImpl implements RoomDao {
 
 		return null;
 	}
-	
-	
+
 }

@@ -95,13 +95,13 @@ public class FeedEventValidator extends AbstractValidator {
 
 	}
 	
-	private void validateTransportJourneyId(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
+	/*private void validateTransportJourneyId(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
 		if (feedEventMapper.getDeriveTransPortJourneyId() == null) {
 			feedEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_TRNS_JRNY_ID,
 					Constants.FEED_EVNT_ERR_TRNS_JRNY_ID_MSG, "transportJourneyDate", false));
 		}
 
-	}
+	}*/
 
 }

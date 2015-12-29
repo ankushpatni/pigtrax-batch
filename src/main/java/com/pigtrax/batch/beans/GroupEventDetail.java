@@ -14,8 +14,10 @@ public class GroupEventDetail {
 	private String userUpdated;
 	private Integer roomId;
 	private Integer employeeGroupId;
-	private int groupId;
-	private int companyId;
+	private Integer groupId;
+	private Integer companyId;
+	private Integer premiseId;
+	private Integer sowSourceId;
 	
 	public Integer getBarnId() {
 		return barnId;
@@ -88,6 +90,27 @@ public class GroupEventDetail {
 	}
 	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
+	}
+	public int getPremiseId() {
+		return premiseId;
+	}
+	public void setPremiseId(int premiseId) {
+		this.premiseId = premiseId;
+	}
+	public Integer getSowSourceId() {
+		return sowSourceId;
+	}
+	public void setSowSourceId(Integer sowSourceId) {
+		this.sowSourceId = sowSourceId;
+	}
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
 	}
 	
 }

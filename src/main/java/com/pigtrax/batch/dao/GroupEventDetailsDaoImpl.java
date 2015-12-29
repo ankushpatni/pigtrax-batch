@@ -36,8 +36,8 @@ private static final Logger logger = Logger.getLogger(GroupEventDetailsDaoImpl.c
 	@Override
 	public int addGroupEventDetails(final GroupEventDetail groupEventDetails) throws SQLException {
 		final String Qry = "insert into pigtrax.\"GroupEventDetails\"(\"id_GroupEvent\", \"id_Barn\", \"dateOfEntry\", \"id_Room\", \"id_EmployeeGroup\", \"numberOfPigs\","
-					+"\"weightInKgs\", \"indeventoryAdjustment\", \"remarks\", \"lastUpdated\", \"userUpdated\") "
-				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?)";
+					+"\"weightInKgs\", \"indeventoryAdjustment\", \"remarks\", \"lastUpdated\", \"userUpdated\",\"id_SowSource\", \"id_Premise\") "
+				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -75,6 +75,8 @@ private static final Logger logger = Logger.getLogger(GroupEventDetailsDaoImpl.c
 	    	            
 	    	            ps.setString(9, groupEventDetails.getRemarks());
 	    	            ps.setString(10, groupEventDetails.getUserUpdated());
+	    	            ps.setObject(11, groupEventDetails.getSowSourceId());
+	    	            ps.setObject(12, groupEventDetails.getPremiseId());
 	    	           
 	    	            return ps;
 	    	        }

@@ -85,4 +85,38 @@ public class PenDaoImpl implements PenDao {
 
 		return null;
 	}
+	
+	@Override
+	public Integer getPenPKId(String penId, Integer companyId, Integer premiseId)
+			throws SQLException {
+		logger.debug("penId is :" + penId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"Pen\" where \"penId\" = ? and \"id_Room\" in "
+				+ "(select \"id\" from pigtrax.\"Room\" where \"id_Barn\" in "
+				+ "(select \"id\" from pigtrax.\"Barn\" where \"id_Premise\" = ? ))");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (penId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, penId);
+					ps.setObject(2, premiseId, java.sql.Types.INTEGER);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("penId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+
+		return null;
+	}
 }

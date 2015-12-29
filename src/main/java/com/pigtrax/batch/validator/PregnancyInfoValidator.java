@@ -54,11 +54,11 @@ public class PregnancyInfoValidator extends AbstractValidator {
 				validatePigId(pregnancyInfoMapper, errList);
 				validatePigInfoId(pregnancyInfoMapper, errList);
 				validatePigGender(pregnancyInfoMapper, errList);
-				
+				validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
 				validateBreedingEvent(pregnancyInfoMapper, errList);
 				//validateExamDate(pregnancyInfoMapper, errList);
 				validateResultDate(pregnancyInfoMapper, errList);
-				validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
+				
 				validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);
 				validatePregnancyEventEntryExist(pregnancyInfoMapper, errList);				
 				validateSowCondition(pregnancyInfoMapper, errList);
@@ -155,14 +155,14 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	private void validatePregnacyEventTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDerivePregnancyEventTypeId() == null || pregnancyInfoMapper.getDerivePregnancyEventTypeId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pregnancyEventType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE, Constants.REF_DATA_NOT_FOUND_MSG, "pregnancyEventType", false));
 		}
 	}
 	
 	private void validatePregnacyExamResultTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDerivePregnancyEventTypeId() != null && pregnancyInfoMapper.getDerivePregnancyEventTypeId() == 1 && (pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0)) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pregnancyExamResultType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE, Constants.REF_DATA_NOT_FOUND_MSG, "pregnancyExamResultType", false));
 		}
 	}
 	

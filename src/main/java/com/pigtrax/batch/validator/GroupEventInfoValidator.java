@@ -38,7 +38,7 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 				validateEntryDate(groupEventInfoMapper, errList);				
 				validateCompanyId(groupEventInfoMapper, errList);
 				validateGroupId(groupEventInfoMapper, errList);	
-				validatePhaseOfProduction(groupEventInfoMapper, errList);
+				validatePhaseOfProduction(groupEventInfoMapper, errList); 
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -65,7 +65,7 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 		if (groupEventInfoMapper.getGroupId() == null || PrimitiveDataUtil.validateAlphaNumeric(groupEventInfoMapper.getGroupId())) {
 			groupEventInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "groupId", false));
-		}
+		}		
 	}
 	
 	private void validatePhaseOfProduction(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {

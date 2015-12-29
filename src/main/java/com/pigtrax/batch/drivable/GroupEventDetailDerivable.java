@@ -13,9 +13,11 @@ import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.dao.interfaces.RoomDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 
@@ -43,6 +45,9 @@ public class GroupEventDetailDerivable implements Derivable {
 	@Autowired
 	GroupEventDao groupEventDao;
 	
+	@Autowired
+	private PremisesDao premiseDao;
+	
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
@@ -51,23 +56,42 @@ public class GroupEventDetailDerivable implements Derivable {
 				
 				setCompanyId(groupEventDetailMapper);
 				setGroupId(groupEventDetailMapper);
+				setPremiseId(groupEventDetailMapper);				
+				setRoomId(groupEventDetailMapper);
+				setSowSourceId(groupEventDetailMapper);
 				setBarnId(groupEventDetailMapper);
 				setDateOfEntry(groupEventDetailMapper);
 				setNumberOfPigs(groupEventDetailMapper);
-				setWeightInKgs(groupEventDetailMapper);
-				setRoomId(groupEventDetailMapper);
+				setWeightInKgs(groupEventDetailMapper);				
 				setEmployeeGroupId(groupEventDetailMapper);				
-				setIndeventoryAdjustment(groupEventDetailMapper);
+				//setIndeventoryAdjustment(groupEventDetailMapper);
 				
 			}
 		}
 	}
 	
+	
+	private void setPremiseId(final GroupEventDetailMapper groupEventDetailMapper) {
+		try {
+			groupEventDetailMapper.setDerivePremiseId(premiseDao.getPremisesPK(groupEventDetailMapper.getFarmName(), groupEventDetailMapper.getDerivecompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	 
+	private void setSowSourceId(final GroupEventDetailMapper groupEventDetailMapper) {
+		try {
+			groupEventDetailMapper.setDeriveSowSourceId(premiseDao.getSowSourcePK(groupEventDetailMapper.getSowSource(), groupEventDetailMapper.getDerivecompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	
+	
 	private void setBarnId(final GroupEventDetailMapper groupEventDetailMapper) {
-		if (groupEventDetailMapper.getBarnId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getBarnId()) &&
-				groupEventDetailMapper.getBarnId().equalsIgnoreCase("null")) {
+		if (groupEventDetailMapper.getDeriveRoomId() != null) {
 			try {
-				groupEventDetailMapper.setDeriveBarnId(barnDao.getBarnPKId(groupEventDetailMapper.getBarnId()));
+				groupEventDetailMapper.setDeriveBarnId(barnDao.getBarnIdByRoom(groupEventDetailMapper.getDeriveRoomId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -100,9 +124,8 @@ public class GroupEventDetailDerivable implements Derivable {
 	
 	private void setRoomId(final GroupEventDetailMapper groupEventDetailMapper){
 		try {
-			if (groupEventDetailMapper.getRoomId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getRoomId()) &&
-					groupEventDetailMapper.getRoomId().equalsIgnoreCase("null")) {
-			groupEventDetailMapper.setDeriveRoomId(roomDao.getRoomPkId(groupEventDetailMapper.getRoomId()));
+			if (groupEventDetailMapper.getRoomId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getRoomId()) ) {
+			groupEventDetailMapper.setDeriveRoomId(roomDao.getRoomPkId(groupEventDetailMapper.getRoomId(),groupEventDetailMapper.getDerivecompanyId(), groupEventDetailMapper.getDerivePremiseId() ));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,8 +134,7 @@ public class GroupEventDetailDerivable implements Derivable {
 	
 	private void setEmployeeGroupId(final GroupEventDetailMapper groupEventDetailMapper) {
 		try {
-			if (groupEventDetailMapper.getEmployeeGroupId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getEmployeeGroupId()) &&
-					groupEventDetailMapper.getEmployeeGroupId().equalsIgnoreCase("null")) {
+			if (groupEventDetailMapper.getEmployeeGroupId() != null && !StringUtils.isEmpty(groupEventDetailMapper.getEmployeeGroupId())) {
 			groupEventDetailMapper.setDeriveEmployeeGroupId(employeeGroupDao.getEmployeeGroupPKId(groupEventDetailMapper.getDerivecompanyId(), groupEventDetailMapper.getEmployeeGroupId()));
 			}
 		} catch (Exception e) {

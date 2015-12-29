@@ -40,8 +40,8 @@ public class PigletStatusInfoDaoImpl implements PigletStatusInfoDao {
     	final String Qry = "insert into pigtrax.\"PigletStatus\"(\"id_PigInfo\", \"id_PigletStatusEventType\", "
 				+ "\"eventDateTime\", \"numberOfPigs\", \"weightInKgs\", \"eventReason\", \"remarks\", \"sowCondition\", "
 				+ "\"weanGroupId\", \"lastUpdated\", \"userUpdated\", \"fosterFrom\", \"fosterTo\", "
-				+ "\"id_FarrowEvent\", \"id_fosterFarrowEvent\", \"id_GroupEvent\", \"id_MortalityReasonType\") "
-				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?, ?,?,?)";
+				+ "\"id_FarrowEvent\", \"id_fosterFarrowEvent\", \"id_GroupEvent\", \"id_MortalityReasonType\", \"id_Premise\", \"id_Pen\") "
+				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?, ?,?,?,?,?)";
 		 
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(
@@ -65,6 +65,8 @@ public class PigletStatusInfoDaoImpl implements PigletStatusInfoDao {
 	    	            ps.setObject(14,  pigletStatusInfo.getFosterFarrowEventId(), java.sql.Types.INTEGER);
 	    	            ps.setObject(15,  pigletStatusInfo.getGroupEventId(), java.sql.Types.INTEGER);
 	    	            ps.setObject(16,  pigletStatusInfo.getMortalityReasonTypeId(), java.sql.Types.INTEGER);
+	    	            ps.setObject(17,  pigletStatusInfo.getPremiseId(), java.sql.Types.INTEGER);
+	    	            ps.setObject(18,  pigletStatusInfo.getPenId(), java.sql.Types.INTEGER);
 	    	            return ps;
 	    	        }
 	    	    },

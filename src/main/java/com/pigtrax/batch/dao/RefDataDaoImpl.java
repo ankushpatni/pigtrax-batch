@@ -105,5 +105,11 @@ public class RefDataDaoImpl implements RefDataDao {
 		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_SalesType\" FROM pigtraxrefdata.\"SalesTypeTranslation\" order by \"fieldLanguage\", \"fieldValue\"; ";
 		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
 	}
+	
+	@Override
+	public List<RefDataTranslation> getFeedEventTypes() {
+		String query = "SELECT \"fieldValue\", \"fieldLanguage\", \"id_FeedEventType\" FROM pigtraxrefdata.\"FeedEventTypeTranslation\" order by \"fieldLanguage\", \"id_FeedEventType\"; ";
+		return jdbcTemplate.query(query, new CacheRefDataRowMaper());
+	}
 
 }

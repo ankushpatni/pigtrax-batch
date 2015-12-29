@@ -16,7 +16,8 @@ public class GroupEvent {
 	private Integer currentInventory;
 	private String previousGroupId;
 	private Integer phaseOfProductionTypeId;
-
+	
+	
 	
 	public Integer getCompanyId() {
 		return companyId;

@@ -9,45 +9,39 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 	
 	private String pigId;
 	private String companyId;
+	private String farmName;
+	private String eventType;
 	private String farrowDate;
-	private String numberOfPigsWeaned;
-	private String weightOfPigsWeaned;
-	private String weaningDate;
+	private String numberOfPigs;
+	private String weightOfPigs;
+	private String eventDate;
 	private String weanGroupEventId;
-	private String numberOfPigsTransferred;
-	private String weightOfPigsTransferred;
-	private String transferredDate;	
 	private String transferredToPig;
-	private String numberOfPigsMortality;
-	private String weightOfPigsMortality;
-	private String mortalityEventDate;
 	private String mortalityReason;
 	private String weanGroupId;
+	private String pen;
 	private String remarks;
 	private String sowCondition;
 	
 	// Derivable properties
 	private Integer deriveCompanyId;
+	private Integer derivePremiseId;
 	private Integer derivePigInfoId;	
 	private Date deriveFarrowDate;
 	private Integer deriveFarrowEventId;
-	private Integer deriveWeanPigNum;
-	private Double deriveWeanPigWt;
-	private Date deriveWeanDate;
+	private Integer derivePigNum;
+	private Double derivePigWt;
+	private Date deriveEventDate;
+	private Integer derivePigletStatusEventTypeId;
 	private Integer deriveGroupEventId;
-	private Integer deriveTransferPigNum;
-	private Double deriveTransferPigWt;
-	private Date deriveTransferDate;
 	private Integer deriveTransferredPigInfoId;
-	private Integer deriveMortalityPigNum;
-	private Double deriveMortalityPigWt;
-	private Date deriveMortalityEventDate;
 	private Integer deriveMortalityReasonId;
 	private Integer deriveSowCondition;	
 	private Integer deriveFosterFarrowEventId;
 	private boolean isWeanType;
 	private boolean isTransferType;
 	private boolean isDeathType;
+	private Integer derivePenId;
 
 	public String getPigId() {
 		return pigId;
@@ -73,41 +67,6 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 
 
 
-	public String getNumberOfPigsWeaned() {
-		return numberOfPigsWeaned;
-	}
-
-
-
-	public void setNumberOfPigsWeaned(String numberOfPigsWeaned) {
-		this.numberOfPigsWeaned = numberOfPigsWeaned;
-	}
-
-
-
-	public String getWeightOfPigsWeaned() {
-		return weightOfPigsWeaned;
-	}
-
-
-
-	public void setWeightOfPigsWeaned(String weightOfPigsWeaned) {
-		this.weightOfPigsWeaned = weightOfPigsWeaned;
-	}
-
-
-
-	public String getWeaningDate() {
-		return weaningDate;
-	}
-
-
-
-	public void setWeaningDate(String weaningDate) {
-		this.weaningDate = weaningDate;
-	}
-
-
 
 	public String getWeanGroupEventId() {
 		return weanGroupEventId;
@@ -117,45 +76,7 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 
 	public void setWeanGroupEventId(String weanGroupEventId) {
 		this.weanGroupEventId = weanGroupEventId;
-	}
-
-
-
-	public String getNumberOfPigsTransferred() {
-		return numberOfPigsTransferred;
-	}
-
-
-
-	public void setNumberOfPigsTransferred(String numberOfPigsTransferred) {
-		this.numberOfPigsTransferred = numberOfPigsTransferred;
-	}
-
-
-
-	public String getWeightOfPigsTransferred() {
-		return weightOfPigsTransferred;
-	}
-
-
-
-	public void setWeightOfPigsTransferred(String weightOfPigsTransferred) {
-		this.weightOfPigsTransferred = weightOfPigsTransferred;
-	}
-
-
-
-	public String getTransferredDate() {
-		return transferredDate;
-	}
-
-
-
-	public void setTransferredDate(String transferredDate) {
-		this.transferredDate = transferredDate;
-	}
-
-
+	}	
 
 	public String getTransferredToPig() {
 		return transferredToPig;
@@ -169,41 +90,7 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 
 
 
-	public String getNumberOfPigsMortality() {
-		return numberOfPigsMortality;
-	}
-
-
-
-	public void setNumberOfPigsMortality(String numberOfPigsMortality) {
-		this.numberOfPigsMortality = numberOfPigsMortality;
-	}
-
-
-
-	public String getWeightOfPigsMortality() {
-		return weightOfPigsMortality;
-	}
-
-
-
-	public void setWeightOfPigsMortality(String weightOfPigsMortality) {
-		this.weightOfPigsMortality = weightOfPigsMortality;
-	}
-
-
-
-	public String getMortalityEventDate() {
-		return mortalityEventDate;
-	}
-
-
-
-	public void setMortalityEventDate(String mortalityEventDate) {
-		this.mortalityEventDate = mortalityEventDate;
-	}
-
-
+	
 
 	public String getMortalityReason() {
 		return mortalityReason;
@@ -289,89 +176,7 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 
 
 
-	public Integer getDeriveWeanPigNum() {
-		return deriveWeanPigNum;
-	}
-
-
-
-	public void setDeriveWeanPigNum(Integer deriveWeanPigNum) {
-		this.deriveWeanPigNum = deriveWeanPigNum;
-	}
-
-
-
-	public Double getDeriveWeanPigWt() {
-		return deriveWeanPigWt;
-	}
-
-
-
-	public void setDeriveWeanPigWt(Double deriveWeanPigWt) {
-		this.deriveWeanPigWt = deriveWeanPigWt;
-	}
-
-
-
-	public Date getDeriveWeanDate() {
-		return deriveWeanDate;
-	}
-
-
-
-	public void setDeriveWeanDate(Date deriveWeanDate) {
-		this.deriveWeanDate = deriveWeanDate;
-	}
-
-
-
-	public Integer getDeriveGroupEventId() {
-		return deriveGroupEventId;
-	}
-
-
-
-	public void setDeriveGroupEventId(Integer deriveGroupEventId) {
-		this.deriveGroupEventId = deriveGroupEventId;
-	}
-
-
-
-	public Integer getDeriveTransferPigNum() {
-		return deriveTransferPigNum;
-	}
-
-
-
-	public void setDeriveTransferPigNum(Integer deriveTransferPigNum) {
-		this.deriveTransferPigNum = deriveTransferPigNum;
-	}
-
-
-
-	public Double getDeriveTransferPigWt() {
-		return deriveTransferPigWt;
-	}
-
-
-
-	public void setDeriveTransferPigWt(Double deriveTransferPigWt) {
-		this.deriveTransferPigWt = deriveTransferPigWt;
-	}
-
-
-
-	public Date getDeriveTransferDate() {
-		return deriveTransferDate;
-	}
-
-
-
-	public void setDeriveTransferDate(Date deriveTransferDate) {
-		this.deriveTransferDate = deriveTransferDate;
-	}
-
-
+	
 
 	public Integer getDeriveTransferredPigInfoId() {
 		return deriveTransferredPigInfoId;
@@ -382,43 +187,6 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 	public void setDeriveTransferredPigInfoId(Integer deriveTransferredPigInfoId) {
 		this.deriveTransferredPigInfoId = deriveTransferredPigInfoId;
 	}
-
-
-
-	public Integer getDeriveMortalityPigNum() {
-		return deriveMortalityPigNum;
-	}
-
-
-
-	public void setDeriveMortalityPigNum(Integer deriveMortalityPigNum) {
-		this.deriveMortalityPigNum = deriveMortalityPigNum;
-	}
-
-
-
-	public Double getDeriveMortalityPigWt() {
-		return deriveMortalityPigWt;
-	}
-
-
-
-	public void setDeriveMortalityPigWt(Double deriveMortalityPigWt) {
-		this.deriveMortalityPigWt = deriveMortalityPigWt;
-	}
-
-
-
-	public Date getDeriveMortalityEventDate() {
-		return deriveMortalityEventDate;
-	}
-
-
-
-	public void setDeriveMortalityEventDate(Date deriveMortalityEventDate) {
-		this.deriveMortalityEventDate = deriveMortalityEventDate;
-	}
-
 
 
 	public Integer getDeriveMortalityReasonId() {
@@ -520,10 +288,167 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 
 
 
+	public String getFarmName() {
+		return farmName;
+	}
+
+
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+
+
+	public String getEventType() {
+		return eventType;
+	}
+
+
+
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
+	}
+
+
+
+	public String getNumberOfPigs() {
+		return numberOfPigs;
+	}
+
+
+
+	public void setNumberOfPigs(String numberOfPigs) {
+		this.numberOfPigs = numberOfPigs;
+	}
+
+
+
+	public String getWeightOfPigs() {
+		return weightOfPigs;
+	}
+
+
+
+	public void setWeightOfPigs(String weightOfPigs) {
+		this.weightOfPigs = weightOfPigs;
+	}
+
+
+
+	public String getEventDate() {
+		return eventDate;
+	}
+
+
+
+	public void setEventDate(String eventDate) {
+		this.eventDate = eventDate;
+	}
+
+
+
+	public String getPen() {
+		return pen;
+	}
+
+
+
+	public void setPen(String pen) {
+		this.pen = pen;
+	}
+
+
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+
+
+
+	public Integer getDerivePigNum() {
+		return derivePigNum;
+	}
+
+
+
+	public void setDerivePigNum(Integer derivePigNum) {
+		this.derivePigNum = derivePigNum;
+	}
+
+
+
+	public Double getDerivePigWt() {
+		return derivePigWt;
+	}
+
+
+
+	public void setDerivePigWt(Double derivePigWt) {
+		this.derivePigWt = derivePigWt;
+	}
+
+
+
+	public Date getDeriveEventDate() {
+		return deriveEventDate;
+	}
+
+
+
+	public void setDeriveEventDate(Date deriveEventDate) {
+		this.deriveEventDate = deriveEventDate;
+	}
+
+
+
+	public Integer getDerivePigletStatusEventTypeId() {
+		return derivePigletStatusEventTypeId;
+	}
+
+
+
+	public void setDerivePigletStatusEventTypeId(
+			Integer derivePigletStatusEventTypeId) {
+		this.derivePigletStatusEventTypeId = derivePigletStatusEventTypeId;
+	}
+
+
+
+	public Integer getDeriveGroupEventId() {
+		return deriveGroupEventId;
+	}
+
+
+
+	public void setDeriveGroupEventId(Integer deriveGroupEventId) {
+		this.deriveGroupEventId = deriveGroupEventId;
+	}
+
+
+
+	public Integer getDerivePenId() {
+		return derivePenId;
+	}
+
+
+
+	public void setDerivePenId(Integer derivePenId) {
+		this.derivePenId = derivePenId;
+	}
+
+
+
 	@Override
 	public String getId() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("[ Pig Id :"+getPigId()+", Company Id: "+getCompanyId()+", Wean Date : "+getWeaningDate()+", Transferred Date :"+getTransferredDate()+", Mortality Date:"+getMortalityEventDate()+"]");
+		buffer.append("[ Pig Id :"+getPigId()+", Company Id: "+getCompanyId()+", Wean Date : "+getDeriveEventDate()+", Event Type"+getEventType()+"]");
 		return buffer.toString();
 	}
 }

@@ -80,6 +80,12 @@ public enum RefData {
 		public Integer getId(String value) {
 			return RefDataCache.getInstance().getRefDataId(value,  Constants.REF_DATA_SALETYPE);
 		}
+	}	,
+	FEEDEVENTTYPE {
+		@Override
+		public Integer getId(String value) {
+			return RefDataCache.getInstance().getRefDataId(value,  Constants.REF_DATA_FEEDEVENTTYPE);
+		}
 	}	
 	;
 	

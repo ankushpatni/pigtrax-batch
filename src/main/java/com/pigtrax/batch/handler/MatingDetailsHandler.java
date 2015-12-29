@@ -83,6 +83,7 @@ public class MatingDetailsHandler implements Handler {
 			matingDetails.setMatingDate(matingDetailsMapper.getDeriveMatingDate());
 			matingDetails.setMatingQuality(matingDetailsMapper.getDeriveMateQuality());
 			matingDetails.setUserUpdated(processDTO.getUserName());
+			matingDetails.setSemenDate(matingDetailsMapper.getDeriveSemenDate());
 			
 		} catch (Exception e) {
 			logger.error("Exception in MatingDetailsHandler.populateMatingDetails" + e.getMessage());

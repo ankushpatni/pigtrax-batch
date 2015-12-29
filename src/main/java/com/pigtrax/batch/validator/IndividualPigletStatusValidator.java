@@ -14,6 +14,7 @@ import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.IndividualPigletDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.IndividualPigletStatusMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -38,14 +39,19 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 			individualPigletStatusMapper = (IndividualPigletStatusMapper) mapper;
 			if (individualPigletStatusMapper.isRecovrableErrors() == null || individualPigletStatusMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validatePigId(individualPigletStatusMapper, errList);
-				validatePigInfoId(individualPigletStatusMapper, errList);
 				validateCompanyId(individualPigletStatusMapper, errList);
-				validateFarrowDate(individualPigletStatusMapper, errList);
-				validateFarrowEvent(individualPigletStatusMapper, errList);
+				validatePremiseId(individualPigletStatusMapper, errList);
+				validatePigId(individualPigletStatusMapper, errList);
+				validateLitterId(individualPigletStatusMapper, errList);
 				validateWtAtBirth(individualPigletStatusMapper, errList);
 				validateWtAtWeaning(individualPigletStatusMapper, errList);
 				validateTattooId(individualPigletStatusMapper, errList);
+				validateWtAtFirstMonth(individualPigletStatusMapper, errList);
+				validateWtAtSecondMonth(individualPigletStatusMapper, errList);
+				validateWtAtThirdMonth(individualPigletStatusMapper, errList);
+				validateWtAtFourthMonth(individualPigletStatusMapper, errList);
+				validateWtAtFifthMonth(individualPigletStatusMapper, errList);
+				validateWtAtSixthMonth(individualPigletStatusMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -61,36 +67,30 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
 		}
 	}
-	
-	private void validatePigInfoId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(individualPigletStatusMapper.getPigId() != null && individualPigletStatusMapper.getPigId().trim().length() > 0 && (individualPigletStatusMapper.getDerivePigInfoId() == null || individualPigletStatusMapper.getDerivePigInfoId() < 0)) {
-			individualPigletStatusMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_PIGID_CODE, Constants.BREED_NG_EVNT_INVALID_PIGID_MSG, "pigId", false));
-		}
-	}
-	
+
 	private void validateCompanyId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {
 		if (individualPigletStatusMapper.getDeriveCompanyId() == null || individualPigletStatusMapper.getDeriveCompanyId() < 0) {
 			individualPigletStatusMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "companyId", false));
 		}
 	}
-
-	private void validateFarrowDate(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(!(individualPigletStatusMapper.getFarrowDate() != null &&  0<individualPigletStatusMapper.getFarrowDate().trim().length()))
-		{
+	
+	private void validatePremiseId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {
+		if (individualPigletStatusMapper.getDerivePremiseId() == null || individualPigletStatusMapper.getDerivePremiseId() < 0) {
 			individualPigletStatusMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_FARROW_DATE_CODE, Constants.IND_PIGLET_ERR_FARROW_DATE_MSG, "farrowDate", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}	
+
+	
+	private void validateLitterId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getLitterId() != null && individualPigletStatusMapper.getLitterId().trim().length() > 0 && (individualPigletStatusMapper.getDeriveLitterId() == null)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_LITTERID_CODE, Constants.IND_PIGLET_ERR_LITTERID_MSG, "litterId", false));
 		}
 	}
 	
-	private void validateFarrowEvent(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		if(individualPigletStatusMapper.getFarrowDate() != null &&  0<individualPigletStatusMapper.getFarrowDate().trim().length() && (individualPigletStatusMapper.getDeriveFarrowEventId() == null || individualPigletStatusMapper.getDeriveFarrowEventId() < 0)) {
-			individualPigletStatusMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_FARROW_EVENT_CODE, Constants.IND_PIGLET_ERR_FARROW_EVENT_MSG, "farrowEvent", false));
-		}
-	}
-
 	private void validateWtAtBirth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
 		if(individualPigletStatusMapper.getDeriveWtAtBirth() == null || individualPigletStatusMapper.getDeriveWtAtBirth() < 0) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
@@ -104,6 +104,50 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_WEANING_CODE, Constants.IND_PIGLET_ERR_WT_WEANING_MSG, "wtAtWeaning", false));
 		}
 	}
+	
+	private void validateWtAtFirstMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtFirstMonth() != null && individualPigletStatusMapper.getWtAtFirstMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtFirstMonth() == null || individualPigletStatusMapper.getDeriveWtAtFirstMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtFirstMonth", false));
+		}
+	}
+	
+	
+	private void validateWtAtSecondMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtSecondMonth() != null && individualPigletStatusMapper.getWtAtSecondMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtSecondMonth() == null || individualPigletStatusMapper.getDeriveWtAtSecondMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtSecondMonth", false));
+		}
+	}
+	
+	private void validateWtAtThirdMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtThirdMonth() != null && individualPigletStatusMapper.getWtAtThirdMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtThirdMonth() == null || individualPigletStatusMapper.getDeriveWtAtThirdMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtThirdMonth", false));
+		}
+	}
+	
+	private void validateWtAtFourthMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtFourthMonth() != null && individualPigletStatusMapper.getWtAtFourthMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtFourthMonth() == null || individualPigletStatusMapper.getDeriveWtAtFourthMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtFourthMonth", false));
+		}
+	}
+	
+	private void validateWtAtFifthMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtFifthMonth() != null  && individualPigletStatusMapper.getWtAtFifthMonth().length() > 0&& (individualPigletStatusMapper.getDeriveWtAtFifthMonth() == null || individualPigletStatusMapper.getDeriveWtAtFifthMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtFifthMonth", false));
+		}
+	}
+	
+	private void validateWtAtSixthMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtSixthMonth() != null  && individualPigletStatusMapper.getWtAtSixthMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtSixthMonth() == null || individualPigletStatusMapper.getDeriveWtAtSixthMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtSixthMonth", false));
+		}
+	}
+	
 	
 	private void validateTattooId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
 		boolean flag = individualPigletDao.checkIfExists(individualPigletStatusMapper.getTattooId(), individualPigletStatusMapper.getDeriveCompanyId());

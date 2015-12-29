@@ -17,6 +17,7 @@ public class FeedEvent implements Serializable {
 	private Date intialFeedEntryDate;
 	private Integer transPortJourneyId;
 	private String userUpdated;
+	private Integer premiseId;
 	
 	public String getUserUpdated() {
 		return userUpdated;
@@ -88,6 +89,14 @@ public class FeedEvent implements Serializable {
 
 	public void setTransPortJourneyId(Integer transPortJourneyId) {
 		this.transPortJourneyId = transPortJourneyId;
+	}
+		
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
 	}
 
 	@Override

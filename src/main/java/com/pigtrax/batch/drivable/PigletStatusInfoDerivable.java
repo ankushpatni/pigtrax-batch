@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.FarrowEvent;
+import com.pigtrax.batch.config.PigletStatusEventType;
 import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.FarrowEventDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
+import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -34,6 +37,12 @@ public class PigletStatusInfoDerivable implements Derivable {
 	@Autowired
 	GroupEventDao groupEventDao;
 	
+	@Autowired
+	PremisesDao premisesDao;
+	
+	@Autowired
+	PenDao penDao;
+	
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -41,36 +50,42 @@ public class PigletStatusInfoDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				PigletStatusInfoMapper pigletStatusInfoMapper = (PigletStatusInfoMapper) mapper;
 				setCompanyId(pigletStatusInfoMapper); 
+				setPremiseId(pigletStatusInfoMapper);
 				setPigInfoId(pigletStatusInfoMapper);
+				setDerivePigletStatusType(pigletStatusInfoMapper);
 				setSowCondition(pigletStatusInfoMapper);
-				setDeriveWeanPigNum(pigletStatusInfoMapper);
-				setDeriveWeanPigWt(pigletStatusInfoMapper);
-				setDeriveWeanDate(pigletStatusInfoMapper);
-				setDeriveGroupEventId(pigletStatusInfoMapper);
-				setDeriveTransferPigNum(pigletStatusInfoMapper);
-				setDeriveTransferPigWt(pigletStatusInfoMapper);
-				setDeriveTransferDate(pigletStatusInfoMapper);
-				setDeriveTransferToPigInfoId(pigletStatusInfoMapper);
-				setDeriveMortalityPigNum(pigletStatusInfoMapper);
-				setDeriveMortalityPigWt(pigletStatusInfoMapper);
-				setDeriveMortalityDate(pigletStatusInfoMapper);
+				setDerivePigNum(pigletStatusInfoMapper);
+				setDerivePigWt(pigletStatusInfoMapper);
+				setDeriveEventDate(pigletStatusInfoMapper);
+				setDeriveGroupEventId(pigletStatusInfoMapper);				
+				setDeriveTransferToPigInfoId(pigletStatusInfoMapper);				
 				setDeriveMortalityReasonId(pigletStatusInfoMapper);
-				setDeriveFosterFarrowEventId(pigletStatusInfoMapper);
-				//setDerivePigletStatusType(pigletStatusInfoMapper);
+				setDeriveFosterFarrowEventId(pigletStatusInfoMapper);				
 				setDeriveFarrowEventId(pigletStatusInfoMapper);
-				
+				setDerivePenId(pigletStatusInfoMapper);
 			}
 		}
 	}
 
 	
+	private void setPremiseId(final PigletStatusInfoMapper pigletStatusInfoMapper) {
+		try {
+			pigletStatusInfoMapper.setDerivePremiseId(premisesDao.getPremisesPK(pigletStatusInfoMapper.getFarmName(), pigletStatusInfoMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	
 	private void setDerivePigletStatusType(final PigletStatusInfoMapper pigletStatusInfoMapper) {
-		if(pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum() > 0)
-			pigletStatusInfoMapper.setWeanType(true);
-		if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0)
-			pigletStatusInfoMapper.setTransferType(true);
-		if(pigletStatusInfoMapper.getDeriveMortalityPigNum() != null && pigletStatusInfoMapper.getDeriveMortalityPigNum() > 0)
-			pigletStatusInfoMapper.setDeathType(true);
+		if(pigletStatusInfoMapper.getEventType() != null)
+		{
+		  if("Wean".equalsIgnoreCase(pigletStatusInfoMapper.getEventType().trim()))
+		  	pigletStatusInfoMapper.setDerivePigletStatusEventTypeId(PigletStatusEventType.Wean.getTypeCode());
+		  else if("Transfer".equalsIgnoreCase(pigletStatusInfoMapper.getEventType().trim()))
+			  	pigletStatusInfoMapper.setDerivePigletStatusEventTypeId(PigletStatusEventType.FosterOut.getTypeCode());
+		  else if("Piglet Mortality".equalsIgnoreCase(pigletStatusInfoMapper.getEventType().trim()))
+			  	pigletStatusInfoMapper.setDerivePigletStatusEventTypeId(PigletStatusEventType.Death.getTypeCode());
+		}		
 	}
 	
 	
@@ -84,7 +99,7 @@ public class PigletStatusInfoDerivable implements Derivable {
 	
 	private void setPigInfoId(final PigletStatusInfoMapper pigletStatusInfoMapper) {
 		try {
-			pigletStatusInfoMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(pigletStatusInfoMapper.getPigId(), pigletStatusInfoMapper.getDeriveCompanyId()));  
+			pigletStatusInfoMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(pigletStatusInfoMapper.getPigId(), pigletStatusInfoMapper.getDeriveCompanyId(), pigletStatusInfoMapper.getDerivePremiseId()));  
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,9 +133,10 @@ public class PigletStatusInfoDerivable implements Derivable {
 			 for(FarrowEvent farrowEvent :  farrowEvents)
 			 {
 				 DateTime farrowDate = new DateTime(farrowEvent.getFarrowDateTime());
-				 if(pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum() > 0)
+				 if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode() && 
+						 pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 				 {
-					 DateTime weanDate = new DateTime(pigletStatusInfoMapper.getDeriveWeanDate());
+					 DateTime weanDate = new DateTime(pigletStatusInfoMapper.getDeriveEventDate());
 					 int duration = Days.daysBetween(farrowDate, weanDate).getDays();
 					 if(duration >= 0 && duration <= 60)
 					 {
@@ -132,9 +148,10 @@ public class PigletStatusInfoDerivable implements Derivable {
 						 pigletStatusInfoMapper.setWeanType(false);
 					 }
 				 }
-				 if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0)
+				 if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode() && 
+						 pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 				 {
-					 DateTime transferDate = new DateTime(pigletStatusInfoMapper.getDeriveTransferDate());
+					 DateTime transferDate = new DateTime(pigletStatusInfoMapper.getDeriveEventDate());
 					 int duration = Days.daysBetween(farrowDate, transferDate).getDays();
 					 if(duration >= 0 && duration <= 50 )
 					 {
@@ -146,9 +163,10 @@ public class PigletStatusInfoDerivable implements Derivable {
 						 pigletStatusInfoMapper.setTransferType(false);
 					 }
 				 }
-				 if(pigletStatusInfoMapper.getDeriveMortalityPigNum() != null && pigletStatusInfoMapper.getDeriveMortalityPigNum() > 0)
+				 if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && 
+						 pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 				 {
-					 DateTime deathDate = new DateTime(pigletStatusInfoMapper.getDeriveMortalityEventDate());
+					 DateTime deathDate = new DateTime(pigletStatusInfoMapper.getDeriveEventDate());
 					 int duration = Days.daysBetween(farrowDate, deathDate).getDays();
 					 if(duration >= 0 && duration <= 50 )
 					 {
@@ -165,20 +183,20 @@ public class PigletStatusInfoDerivable implements Derivable {
 		}
 	}
 	
-	private void setDeriveWeanPigNum(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
+	private void setDerivePigNum(final PigletStatusInfoMapper pigletStatusInfoMapper)
+	{		
 		try{
-			pigletStatusInfoMapper.setDeriveWeanPigNum(Integer.parseInt(pigletStatusInfoMapper.getNumberOfPigsWeaned()));
+			pigletStatusInfoMapper.setDerivePigNum(Integer.parseInt(pigletStatusInfoMapper.getNumberOfPigs()));
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
 	
-	private void setDeriveWeanPigWt(final PigletStatusInfoMapper pigletStatusInfoMapper)
+	private void setDerivePigWt(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
 		try{
-			pigletStatusInfoMapper.setDeriveWeanPigWt(Double.parseDouble(pigletStatusInfoMapper.getWeightOfPigsWeaned()));
+			pigletStatusInfoMapper.setDerivePigWt(Double.parseDouble(pigletStatusInfoMapper.getWeightOfPigs()));
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -186,10 +204,10 @@ public class PigletStatusInfoDerivable implements Derivable {
 	}
 	
 	
-	private void setDeriveWeanDate(final PigletStatusInfoMapper pigletStatusInfoMapper)
+	private void setDeriveEventDate(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
 		try {
-			pigletStatusInfoMapper.setDeriveWeanDate(DateUtil.getDateFromString(pigletStatusInfoMapper.getWeaningDate()));
+			pigletStatusInfoMapper.setDeriveEventDate(DateUtil.getDateFromString(pigletStatusInfoMapper.getEventDate()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -197,101 +215,74 @@ public class PigletStatusInfoDerivable implements Derivable {
 	
 	private void setDeriveGroupEventId(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
-		try { 
-			if(pigletStatusInfoMapper.getWeanGroupId() != null)
-				pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupId(), pigletStatusInfoMapper.getDeriveCompanyId()));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode())
+		{		
+			try { 
+				if(pigletStatusInfoMapper.getWeanGroupId() != null)
+					pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupId(), pigletStatusInfoMapper.getDeriveCompanyId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	private void setDeriveTransferPigNum(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try{
-			pigletStatusInfoMapper.setDeriveTransferPigNum(Integer.parseInt(pigletStatusInfoMapper.getNumberOfPigsTransferred()));
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	private void setDeriveTransferPigWt(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try{
-			pigletStatusInfoMapper.setDeriveTransferPigWt(Double.parseDouble(pigletStatusInfoMapper.getWeightOfPigsTransferred()));
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	private void setDeriveTransferDate(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try {
-			pigletStatusInfoMapper.setDeriveTransferDate(DateUtil.getDateFromString(pigletStatusInfoMapper.getTransferredDate()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	private void setDeriveTransferToPigInfoId(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
-		try {
-			pigletStatusInfoMapper.setDeriveTransferredPigInfoId(pigInfoDao.getPigInfoId(pigletStatusInfoMapper.getTransferredToPig(), pigletStatusInfoMapper.getDeriveCompanyId()));  
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void setDeriveMortalityPigNum(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try{
-			pigletStatusInfoMapper.setDeriveMortalityPigNum(Integer.parseInt(pigletStatusInfoMapper.getNumberOfPigsMortality()));
-		}catch(Exception e)
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode())
 		{
-			e.printStackTrace();
+			try {
+				pigletStatusInfoMapper.setDeriveTransferredPigInfoId(pigInfoDao.getPigInfoId(pigletStatusInfoMapper.getTransferredToPig(), pigletStatusInfoMapper.getDeriveCompanyId()));  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	private void setDeriveMortalityPigWt(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try{
-			pigletStatusInfoMapper.setDeriveMortalityPigWt(Double.parseDouble(pigletStatusInfoMapper.getWeightOfPigsMortality()));
-		}catch(Exception e)
-		{
-			
-			e.printStackTrace();
-		}
-	}
 	
-	private void setDeriveMortalityDate(final PigletStatusInfoMapper pigletStatusInfoMapper)
-	{
-		try {
-			pigletStatusInfoMapper.setDeriveMortalityEventDate(DateUtil.getDateFromString(pigletStatusInfoMapper.getMortalityEventDate()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void setDeriveMortalityReasonId(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
-		try {
-			Integer mortalityReasonTypeId = RefData.MORTALITYREASONTYPE.getId(pigletStatusInfoMapper.getMortalityReason());
-			if (mortalityReasonTypeId > -1) {
-				pigletStatusInfoMapper.setDeriveMortalityReasonId(mortalityReasonTypeId);
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode())
+		{
+		
+			try {
+				Integer mortalityReasonTypeId = RefData.MORTALITYREASONTYPE.getId(pigletStatusInfoMapper.getMortalityReason());
+				if (mortalityReasonTypeId > -1) {
+					pigletStatusInfoMapper.setDeriveMortalityReasonId(mortalityReasonTypeId);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
 	
 	private void setDeriveFosterFarrowEventId(final PigletStatusInfoMapper pigletStatusInfoMapper)
 	{
-		try {
-			pigletStatusInfoMapper.setDeriveFosterFarrowEventId(farrowEventDao.getFarrowEventId(pigletStatusInfoMapper.getDeriveTransferredPigInfoId()));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode())
+		{
+		
+			try {
+				pigletStatusInfoMapper.setDeriveFosterFarrowEventId(farrowEventDao.getFarrowEventId(pigletStatusInfoMapper.getDeriveTransferredPigInfoId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	private void setDerivePenId(final PigletStatusInfoMapper pigletStatusInfoMapper)
+	{
+		if(pigletStatusInfoMapper.getPen() != null && pigletStatusInfoMapper.getPen().length() > 0 && pigletStatusInfoMapper.getDerivePremiseId() != null)
+		{
+		
+			try {
+				pigletStatusInfoMapper.setDerivePenId(penDao.getPenPKId(pigletStatusInfoMapper.getPen(), pigletStatusInfoMapper.getDeriveCompanyId(), pigletStatusInfoMapper.getDerivePremiseId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

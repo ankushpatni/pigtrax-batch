@@ -1,17 +1,20 @@
 package com.pigtrax.batch.drivable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.MasterRationDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
+import com.pigtrax.batch.dao.interfaces.TransportTrailerDao;
+import com.pigtrax.batch.dao.interfaces.TransportTruckDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FeedEventMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 @Component
@@ -22,18 +25,49 @@ public class FeedEventDerivable implements Derivable {
 	
 	@Autowired
 	MasterRationDao rationDao;
+	
+	@Autowired
+	private PremisesDao premiseDao;
+	
+	@Autowired
+	TransportTruckDao transportTruckDao;
+	
+	@Autowired
+	TransportTrailerDao transportTrailerDao;
 
+	@Autowired
+	CompanyDao companyDao;
+	
 	@Override
 	public void derive(List<Mapper> list, ProcessDTO processDTO) {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				FeedEventMapper feedEventMapper = (FeedEventMapper) mapper;
+				setCompanyId(feedEventMapper);
+				setPremiseId(feedEventMapper);
+				setRationId(feedEventMapper);
 				setFeedquantitykgs(feedEventMapper);
 				setFeedCost(feedEventMapper);
 				setInitialFeedEntryDate(feedEventMapper);
-				setTransportJourneyId(feedEventMapper);
-				setRationId(feedEventMapper);
+				setTransportTruck(feedEventMapper);
+				setTransportTrailer(feedEventMapper);	
 			}
+		}
+	}
+	
+	
+	private void setCompanyId(final FeedEventMapper feedEventMapper) {
+		try {
+			feedEventMapper.setDeriveCompanyId(companyDao.getCompanyId(feedEventMapper.getCompanyId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	private void setPremiseId(final FeedEventMapper feedEventMapper) {
+		try {
+			feedEventMapper.setDerivePremiseId(premiseDao.getPremisesPK(feedEventMapper.getFarmName(), feedEventMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
 		}
 	}
 
@@ -70,12 +104,19 @@ public class FeedEventDerivable implements Derivable {
 		}
 	}
 
-	private void setTransportJourneyId(final FeedEventMapper feedEventMapper) {
+	private void setTransportTruck(final FeedEventMapper feedEventMapper) {
 		try {
-			Map<String, Object> criteriaMap = new HashMap<String, Object>();
-			criteriaMap.put("jrnyStartDate", feedEventMapper.getDeriveIntialFeedEntryDate());
 			feedEventMapper
-					.setDeriveTransPortJourneyId(transportJourneyDao.getTranportJrnyIdByStartDat(criteriaMap));
+					.setDeriveTransportTruck(transportTruckDao.findByTransportTruckByTruckNumber(feedEventMapper.getTransportTruck()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setTransportTrailer(final FeedEventMapper feedEventMapper) {
+		try {
+			feedEventMapper
+					.setDeriveTransportTrailer(transportTrailerDao.findByTransportTrailerByTrailerNumberPlate(feedEventMapper.getTransportTrailer()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

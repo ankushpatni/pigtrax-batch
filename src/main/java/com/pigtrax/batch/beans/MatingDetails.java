@@ -11,6 +11,7 @@ public class MatingDetails {
 	private Integer employeeGroupId;
 	private Date lastUpdated;
 	private String userUpdated;
+	private Date semenDate;
 	public Integer getId() {
 		return id;
 	}
@@ -58,6 +59,12 @@ public class MatingDetails {
 	}
 	public void setUserUpdated(String userUpdated) {
 		this.userUpdated = userUpdated;
+	}
+	public Date getSemenDate() {
+		return semenDate;
+	}
+	public void setSemenDate(Date semenDate) {
+		this.semenDate = semenDate;
 	}
 	
 	

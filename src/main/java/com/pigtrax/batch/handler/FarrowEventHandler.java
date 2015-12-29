@@ -59,6 +59,7 @@ public class FarrowEventHandler implements Handler {
 							else
 							{							
 								int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
+								farrowEventDao.updateLitterId(id, farrowEvent.getCompanyId());
 								PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
 								eventMasterDao.insertEventMaster(eventMaster);
 								totalRecordsProcessed = totalRecordsProcessed + 1;
@@ -98,7 +99,7 @@ public class FarrowEventHandler implements Handler {
 			farrowEvent.setMaleBorns(farrowEventfoMaper.getDeriveMaleBorns());
 			farrowEvent.setFemaleBorns(farrowEventfoMaper.getDeriveFemaleBorns());
 			farrowEvent.setMummies(farrowEventfoMaper.getDeriveMummies());
-			farrowEvent.setLitterId(farrowEventfoMaper.getDeriveWeightInKGs());
+			farrowEvent.setWeightInKGs(farrowEventfoMaper.getDeriveWeightInKGs());
 			farrowEvent.setTeasts(farrowEventfoMaper.getDeriveTeasts());
 			farrowEvent.setSowCondition(farrowEventfoMaper.getDeriveSowCondition());
 			farrowEvent.setPremiseId(farrowEventfoMaper.getDerivePremiseId());

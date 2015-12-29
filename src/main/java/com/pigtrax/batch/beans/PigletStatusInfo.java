@@ -21,6 +21,9 @@ public class PigletStatusInfo {
     private Integer fosterFarrowEventId;
     private Integer groupEventId;
     private Integer mortalityReasonTypeId;
+    private Integer premiseId;
+    private Integer penId;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -128,6 +131,18 @@ public class PigletStatusInfo {
 	}
 	public void setMortalityReasonTypeId(Integer mortalityReasonTypeId) {
 		this.mortalityReasonTypeId = mortalityReasonTypeId;
+	}
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
+	}
+	public Integer getPenId() {
+		return penId;
+	}
+	public void setPenId(Integer penId) {
+		this.penId = penId;
 	}
     
     

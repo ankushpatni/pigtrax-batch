@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
+import com.pigtrax.batch.config.PigletStatusEventType;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
@@ -103,24 +104,26 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateWeanDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
-		if(pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum()  > 0)
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode() && 
+				pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum()  > 0)
 		{
-			if(pigletStatusInfoMapper.getWeaningDate() == null || pigletStatusInfoMapper.getDeriveWeanDate() == null)
+			if(pigletStatusInfoMapper.getEventDate() == null || pigletStatusInfoMapper.getDeriveEventDate() == null)
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE, Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "weaningDate", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE, Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "eventDate", false));
 			}			
 		}
 	}
 	
 	
 	private void validateMortalityDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
-		if( pigletStatusInfoMapper.getDeriveMortalityPigNum() != null && pigletStatusInfoMapper.getDeriveMortalityPigNum()  > 0)
+		if( pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && 
+				pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum()  > 0)
 		{
-			if(pigletStatusInfoMapper.getMortalityEventDate() == null || pigletStatusInfoMapper.getDeriveMortalityEventDate() == null)
+			if(pigletStatusInfoMapper.getEventDate() == null || pigletStatusInfoMapper.getDeriveEventDate() == null)
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_WEAN_DATE_CODE, Constants.PIGLETSTATUS_INVALID_WEAN_DATE_MSG, "weaningDate", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_MORTALITY_DATE_CODE, Constants.PIGLETSTATUS_INVALID_MORTALITY_DATE_MSG, "eventDate", false));
 			}
 			
 		}
@@ -128,9 +131,10 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	
 	
 	private void validateTransferDate(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
-		if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum()>0)
+		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode() && 
+				pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum()>0)
 		{
-			if(pigletStatusInfoMapper.getTransferredDate() == null || pigletStatusInfoMapper.getDeriveTransferDate() == null)
+			if(pigletStatusInfoMapper.getEventDate() == null || pigletStatusInfoMapper.getDeriveEventDate() == null)
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_CODE, Constants.PIGLETSTATUS_INVALID_TRANSFERDATE_MSG, "transferredDate", false));
@@ -155,28 +159,31 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateFosterPig(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
-		if (pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0 && (pigletStatusInfoMapper.getDeriveTransferredPigInfoId() == null || pigletStatusInfoMapper.getDeriveTransferredPigInfoId() < 0)) {
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode() && 
+				(pigletStatusInfoMapper.getDeriveTransferredPigInfoId() == null || pigletStatusInfoMapper.getDeriveTransferredPigInfoId() < 0)) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FOSTER_PIG_NOT_FOUND_CODE, Constants.ERR_FOSTER_PIG_NOT_FOUND_MSG, "transferredToPig", false));
 		}
 	}
 	
 	private void validateFosterFarrowEvent(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
-		if (pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0 && (pigletStatusInfoMapper.getDeriveFosterFarrowEventId() == null || pigletStatusInfoMapper.getDeriveFosterFarrowEventId() < 0)) {
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode() && 
+				(pigletStatusInfoMapper.getDeriveFosterFarrowEventId() == null || pigletStatusInfoMapper.getDeriveFosterFarrowEventId() < 0)) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FOSTER_FARROW_NOT_FOUND_CODE, Constants.ERR_FOSTER_FARROW_NOT_FOUND_MSG, "deriveFosterFarrowEventId", false));
 		}
 	}
 	
 	private void validateGroupEventId(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
-		if (pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum() > 0 && pigletStatusInfoMapper.getWeanGroupEventId() != null
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode() &&  
+				pigletStatusInfoMapper.getWeanGroupEventId() != null
 				&& pigletStatusInfoMapper.getWeanGroupEventId().trim().length()>0 && pigletStatusInfoMapper.getDeriveGroupEventId() == null ) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_WEAN_GROUPID_NOT_FOUND_CODE, Constants.ERR_WEAN_GROUPID_NOT_FOUND_MSG, "weanGroupEventId", false));
 		}
 	}
 	private void validateMortalityReason(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
-		if (pigletStatusInfoMapper.getDeriveMortalityPigNum() != null &&  pigletStatusInfoMapper.getDeriveMortalityPigNum() >0  && (pigletStatusInfoMapper.getDeriveMortalityReasonId() == null ||  pigletStatusInfoMapper.getDeriveMortalityReasonId()<0)) {
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && (pigletStatusInfoMapper.getDeriveMortalityReasonId() == null ||  pigletStatusInfoMapper.getDeriveMortalityReasonId()<0)) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_MORTALITY_CODE, Constants.PIGLETSTATUS_INVALID_MORTALITY_MSG, "mortalityReason", false));
 		}

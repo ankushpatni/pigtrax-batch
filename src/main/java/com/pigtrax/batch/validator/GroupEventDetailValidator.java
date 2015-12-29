@@ -50,15 +50,13 @@ public class GroupEventDetailValidator extends AbstractValidator {
 			groupEventDetailMapper = (GroupEventDetailMapper) mapper;
 			if (groupEventDetailMapper.isRecovrableErrors() == null || groupEventDetailMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateBarnId(groupEventDetailMapper, errList);				
+				validateCompanyId(groupEventDetailMapper, errList);
+				validatePremiseId(groupEventDetailMapper, errList);
+				validateRoomId(groupEventDetailMapper, errList);
+				validateSowSource(groupEventDetailMapper, errList);							
 				validateDateOfEntry(groupEventDetailMapper, errList);
 				validateNumberOfPigs(groupEventDetailMapper, errList);	
 				validateWeightInKg(groupEventDetailMapper, errList);
-				validateInventoryAdjustment(groupEventDetailMapper, errList);
-				/*validateRoomId(groupEventDetailMapper, errList);
-				validateEmployeeGroupId(groupEventDetailMapper, errList);
-				validateGroupId(groupEventDetailMapper, errList);
-				validateTransportDestination(groupEventDetailMapper, errList);*/	
 								
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
@@ -68,36 +66,50 @@ public class GroupEventDetailValidator extends AbstractValidator {
 		return errorMap;
 	}
 	
+	
+
+	private void validateCompanyId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
+		if (groupEventDetailMapper.getDerivecompanyId() == null || groupEventDetailMapper.getDerivecompanyId() < 0) {
+			groupEventDetailMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_COMPANYID_CODE,
+					Constants.ENTRY_EVENT_INVALID_COMPANYID_MSG, "companyId", false));
+		}
+	}
+	
+	private void validatePremiseId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
+		if (groupEventDetailMapper.getDerivePremiseId() == null || groupEventDetailMapper.getDerivePremiseId() < 0) {
+			groupEventDetailMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	
+	private void validateRoomId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
+		if (groupEventDetailMapper.getDeriveRoomId() == null || groupEventDetailMapper.getDeriveRoomId() < 0) {
+			groupEventDetailMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_ROOM_CODE,
+					Constants.GROUP_EVENT_INVALID_ROOM_MSG, "roomId", false));
+		}
+	}
+	
+	private void validateSowSource(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
+		if (groupEventDetailMapper.getDerivePremiseId() == null || groupEventDetailMapper.getDerivePremiseId() < 0) {
+			groupEventDetailMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_SOWSOURCE_CODE,
+					Constants.ENTRY_EVENT_INVALID_SOWSOURCE_MSG, "sowSource", false));
+		}
+	}
+	
+	
 	private void validateDateOfEntry(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
-		if (groupEventDetailMapper.getDateOfEntry() == null) {
+		if (groupEventDetailMapper.getDateOfEntry() == null || groupEventDetailMapper.getDateOfEntry().trim().length() == 0) {
 			groupEventDetailMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "DateOfEntry", false));
 		}
-		/*Date birthDate = groupEventDetailMapper.getDateOfEntry();
-		if (birthDate != null) {
-			long diff = pigInfoMapper.getDeriveEntryDate().getTime() - birthDate.getTime();
-			if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) <= 90) {
-				pigInfoMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE, Constants.ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG,
-						"entryDate", false));
-			}
-		}*/
+		
 	}
 	
-	private void validateBarnId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
-		if (groupEventDetailMapper.getBarnId() != null) {
-			try {
-				groupEventDetailMapper.setDeriveBarnId(barnDao.getBarnPKId(groupEventDetailMapper.getBarnId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else
-		{
-			groupEventDetailMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "DateOfEntry", false));
-		}
-	}
 	
 	private void validateNumberOfPigs(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
 		if (groupEventDetailMapper.getNumberOfPigs() != null) {
@@ -125,7 +137,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 	private void validateWeightInKg(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
 		if (groupEventDetailMapper.getNumberOfPigs() != null) {
 			try {
-				groupEventDetailMapper.setDeriveWeightInKgs(Double.parseDouble(groupEventDetailMapper.getNumberOfPigs()));
+				groupEventDetailMapper.setDeriveWeightInKgs(Double.parseDouble(groupEventDetailMapper.getWeightInKgs()));
 			} catch (Exception e) {
 				if(e instanceof NumberFormatException)
 				{

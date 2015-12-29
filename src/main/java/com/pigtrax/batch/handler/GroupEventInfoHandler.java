@@ -45,11 +45,22 @@ public class GroupEventInfoHandler implements Handler{
 					boolean isErrorOccured = false;
 					try {
 						GroupEvent groupEvent = populateGroupEvent(errorMap, groupEventInfoMapper, processDTO);
+						
 						if (groupEvent != null) {
-							Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
-							PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+							
+							Integer existingGrpId = groupEventDaoImpl.getGroupEventId(groupEvent.getGroupId(), groupEvent.getCompanyId());
+							if(existingGrpId == null)
+							{
+								Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
+								PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
+							else
+							{
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_DUPLICATE_GRP_ID_CODE, Constants.GROUP_EVENT_DUPLICATE_GRP_ID_MSG, groupEvent.getGroupId(), false));
+								isErrorOccured = true;
+							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

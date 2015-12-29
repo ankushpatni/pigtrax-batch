@@ -70,12 +70,12 @@ public class GroupEventInfoDerivable implements Derivable {
 	
 	private void setGroupCloseDate(final GroupEventInfoMapper groupEventInfoMapper) {
 		try {
-			if (null != groupEventInfoMapper.getGroupCloseDateTime() && 
-					!groupEventInfoMapper.getGroupCloseDateTime().equalsIgnoreCase("null") 
-					&& !StringUtils.isEmpty(groupEventInfoMapper.getGroupCloseDateTime())) {
+			if (null != groupEventInfoMapper.getGroupCloseDate() && 
+					!groupEventInfoMapper.getGroupCloseDate().equalsIgnoreCase("null") 
+					&& !StringUtils.isEmpty(groupEventInfoMapper.getGroupCloseDate())) {
 				groupEventInfoMapper.setDeriveGroupcloseDateTime((DateUtil
 						.getDateFromString(groupEventInfoMapper
-								.getGroupCloseDateTime())));
+								.getGroupCloseDate())));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class GroupEventInfoDerivable implements Derivable {
 						.parseInt(groupEventInfoMapper.getCurrentInventory());
 				if (currentInventory > -1) {
 					groupEventInfoMapper
-							.setDerivePhaseOfProductionTypeId(currentInventory);
+							.setDeriveCurrentInventory(currentInventory);
 				}
 			}
 		} catch (Exception e) {

@@ -60,5 +60,34 @@ public class PremisesDaoImpl implements PremisesDao{
 		return null;
 	}
 	
+	@Override
+	public Integer getSowSourcePK(String premisesId, int companyId ) {
+		logger.debug("Pig Id/company Ids are :" + premisesId + "/" + companyId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"Premise\" where lower(\"permiseId\") = ? and \"id_Company\" = ? and \"sowSource\" = 'Yes'");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (premisesId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, premisesId.trim().toLowerCase());
+					ps.setInt(2, companyId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("getPremisesPK retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+		return null;
+	}
 	
 }

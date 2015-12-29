@@ -20,6 +20,8 @@ public class GroupEventDetailMapper extends AbstractMapper{
 	private String groupId;
 	private String transportDestination;
 	private String companyId;
+	private String farmName;
+	private String sowSource;
 	
 	//deriavalbe property
 	private Integer deriveBarnId;
@@ -32,6 +34,9 @@ public class GroupEventDetailMapper extends AbstractMapper{
 	private int deriveGroupId;
 	private Integer deriveTransportDestination;
 	private Integer derivecompanyId;
+	private Integer derivePremiseId;
+	private Integer deriveSowSourceId;
+	
 	
 	public String getBarnId() {
 		return barnId;
@@ -170,6 +175,30 @@ public class GroupEventDetailMapper extends AbstractMapper{
 	}
 	public void setDerivecompanyId(Integer derivecompanyId) {
 		this.derivecompanyId = derivecompanyId;
+	}	
+	public String getFarmName() {
+		return farmName;
+	}
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+	public String getSowSource() {
+		return sowSource;
+	}
+	public void setSowSource(String sowSource) {
+		this.sowSource = sowSource;
+	}
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+	public Integer getDeriveSowSourceId() {
+		return deriveSowSourceId;
+	}
+	public void setDeriveSowSourceId(Integer deriveSowSourceId) {
+		this.deriveSowSourceId = deriveSowSourceId;
 	}
 	@Override
 	public String getId() {

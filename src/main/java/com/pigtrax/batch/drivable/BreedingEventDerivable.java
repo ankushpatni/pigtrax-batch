@@ -117,7 +117,7 @@ public class BreedingEventDerivable implements Derivable {
 		if(breedingEventMapper.getPen() != null && !Constants.BLANK_STRING.equals(breedingEventMapper.getPen().trim()))
 		{
 			try {
-				breedingEventMapper.setDerivePenId(penDao.getPenPKId(breedingEventMapper.getPen().trim(), breedingEventMapper.getDeriveCompanyId()));
+				breedingEventMapper.setDerivePenId(penDao.getPenPKId(breedingEventMapper.getPen().trim(), breedingEventMapper.getDeriveCompanyId(),  breedingEventMapper.getDerivePremiseId()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

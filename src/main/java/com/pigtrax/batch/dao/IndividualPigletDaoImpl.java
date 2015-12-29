@@ -32,16 +32,15 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	} 
 	
 	@Override
-	public boolean checkIfExists(final String tattooId, final Integer companyId) {
+	public boolean checkIfExists(final String tattooId, final Integer premiseId) {
 		String sql = "select \"id\" from pigtrax.\"IndividualPigletStatus\" where lower(\"tattooId\") = ? "
-				+ "and \"id_FarrowEvent\" in (select \"id\" from pigtrax.\"FarrowEvent\" where \"id_PigInfo\" "
-				+ "in (select \"id\" from pigtrax.\"PigInfo\" where \"id_Company\" = ?)) ";
+				+ "and \"id_Premise\" = ? ";
 		Long retValList1 = null;
 		retValList1 = jdbcTemplate.query(sql, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
 				ps.setString(1, tattooId.trim().toLowerCase());
-				ps.setInt(2, companyId);
+				ps.setInt(2, premiseId);
 			}
 		}, new ResultSetExtractor<Long>() {
 			public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
@@ -62,8 +61,8 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	public Integer insertIndividualPigletStatus(
 			final IndividualPigletStatus individualPigletStatus) throws Exception {
 		final String Qry = "insert into pigtrax.\"IndividualPigletStatus\"(\"tattooId\", \"weightAtBirth\", \"weightAtWeaning\", \"lastUpdated\","
-				+ " \"userUpdated\", \"id_FarrowEvent\") "
-				+ "values(?,?,?,current_timestamp,?,?)";
+				+ " \"userUpdated\", \"pigId\",\"litterId\",\"id_Premise\",\"weight1\",\"weight2\", \"weight3\", \"weight4\", \"weight5\",\"weight6\") "
+				+ "values(?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -76,7 +75,15 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	    	            ps.setObject(2, individualPigletStatus.getWtAtBirth(), java.sql.Types.DOUBLE);
 	    				ps.setObject(3, individualPigletStatus.getWtAtWeaning(), java.sql.Types.DOUBLE);
 	    				ps.setString(4, individualPigletStatus.getUserUpdated());
-	    				ps.setObject(5, individualPigletStatus.getFarrowEventId(), java.sql.Types.INTEGER);
+	    				ps.setObject(5, individualPigletStatus.getPigId());
+	    				ps.setObject(6, individualPigletStatus.getLitterId(), java.sql.Types.INTEGER);
+	    				ps.setObject(7, individualPigletStatus.getPremiseId(), java.sql.Types.INTEGER);
+	    				ps.setObject(8, individualPigletStatus.getWtAtFirstMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(9, individualPigletStatus.getWtAtSecondMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(10, individualPigletStatus.getWtAtThirdMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(11, individualPigletStatus.getWtAtFourthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(12, individualPigletStatus.getWtAtFifthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(13, individualPigletStatus.getWtAtSixthMonth(), java.sql.Types.DOUBLE);
 	    	            return ps;
 	    	        }
 	    	    },

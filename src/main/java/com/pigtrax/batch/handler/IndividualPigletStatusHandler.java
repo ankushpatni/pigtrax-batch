@@ -47,7 +47,7 @@ public class IndividualPigletStatusHandler implements Handler {
 						IndividualPigletStatus individualPigletStatus = populateIndividualPigletInfo(errorMap, individualPigletMapper, processDTO);
 						if (individualPigletStatus != null) {
 							
-							boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDeriveCompanyId());
+							boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDerivePremiseId());
 							if(flag)
 							{
 								individualPigletMapper.setRecovrableErrors(false); 
@@ -55,18 +55,9 @@ public class IndividualPigletStatusHandler implements Handler {
 								errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
 							}
 							else 
-							{
-								if(individualPigletDao.canAddPigletStatus(individualPigletStatus.getFarrowEventId()))							
-								{
-									individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
-									totalRecordsProcessed = totalRecordsProcessed + 1;
-								}
-								else
-								{
-									individualPigletMapper.setRecovrableErrors(false);
-									isErrorOccured = true;
-									errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_PIGLET_CNT_CODE, Constants.IND_PIGLET_ERR_PIGLET_CNT_MSG, "pigId", false));
-								}
+							{								
+								individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
+								totalRecordsProcessed = totalRecordsProcessed + 1;
 							}
 						}
 					} catch (Exception e) {
@@ -93,11 +84,19 @@ public class IndividualPigletStatusHandler implements Handler {
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
 			individualPigletStatus = new IndividualPigletStatus();
-			individualPigletStatus.setFarrowEventId(individualPigletMapper.getDeriveFarrowEventId());
+			individualPigletStatus.setPigId(individualPigletMapper.getPigId());
 			individualPigletStatus.setTattooId(individualPigletMapper.getTattooId());
+			individualPigletStatus.setLitterId(individualPigletMapper.getDeriveLitterId());
 			individualPigletStatus.setWtAtBirth(individualPigletMapper.getDeriveWtAtBirth());
 			individualPigletStatus.setWtAtWeaning(individualPigletMapper.getDeriveWtAtWeaning());
 			individualPigletStatus.setUserUpdated(processDTO.getUserName());
+			individualPigletStatus.setPremiseId(individualPigletMapper.getDerivePremiseId());
+			individualPigletStatus.setWtAtFirstMonth(individualPigletMapper.getDeriveWtAtFirstMonth());
+			individualPigletStatus.setWtAtSecondMonth(individualPigletMapper.getDeriveWtAtSecondMonth());
+			individualPigletStatus.setWtAtThirdMonth(individualPigletMapper.getDeriveWtAtThirdMonth());
+			individualPigletStatus.setWtAtFourthMonth(individualPigletMapper.getDeriveWtAtFourthMonth());
+			individualPigletStatus.setWtAtFifthMonth(individualPigletMapper.getDeriveWtAtFifthMonth());
+			individualPigletStatus.setWtAtSixthMonth(individualPigletMapper.getDeriveWtAtSixthMonth());
 		} catch (Exception e) {
 			logger.error("Exception in FarrowEventHandler.populateFarrowEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

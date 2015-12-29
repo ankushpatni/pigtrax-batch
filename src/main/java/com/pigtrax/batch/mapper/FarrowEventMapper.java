@@ -34,7 +34,7 @@ public class FarrowEventMapper extends AbstractMapper {
 	private Integer deriveMaleBorns;
 	private Integer deriveFemaleBorns;
 	private Integer deriveMummies;
-	private Integer deriveWeightInKGs;
+	private Double deriveWeightInKGs;
 	private Integer deriveEmployeeGrpId;
 	private Integer deriveSowCondition;
 	private Integer deriveTeasts;
@@ -251,11 +251,11 @@ public class FarrowEventMapper extends AbstractMapper {
 		this.deriveMummies = deriveMummies;
 	}
 
-	public Integer getDeriveWeightInKGs() {
+	public Double getDeriveWeightInKGs() {
 		return deriveWeightInKGs;
 	}
 
-	public void setDeriveWeightInKGs(Integer deriveWeightInKGs) {
+	public void setDeriveWeightInKGs(Double deriveWeightInKGs) {
 		this.deriveWeightInKGs = deriveWeightInKGs;
 	}
 

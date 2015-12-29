@@ -339,6 +339,10 @@ public interface Constants {
 	
 	public static final String ENTRY_EVENT_INVALID_PREMISEID_MSG ="Invalid farm name specified";
 	
+	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_CODE ="612";
+	
+	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_MSG ="Invalid sow source specified";
+	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM = "613";
 	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM_MSG = "Invalid count value";
@@ -358,6 +362,11 @@ public interface Constants {
 	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_CODE = "617";
 	
 	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_MSG = "Invalid wean date specified. The date should be between 0-60 days of farrow event";
+	
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_DATE_CODE = "617";
+	
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_DATE_MSG = "Invalid pre mortality date specified. The date should be between 0-50 days of farrow event";
+
 
 	public static final String PIGLETSTATUS_INVALID_MORTALITY_CODE = "618";
 	
@@ -401,7 +410,42 @@ public interface Constants {
 	
 	public static final String REMOVAL_INVALID_MORTALITY_CODE = "628";
 	
-	public static final String REMOVAL_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";
-				
+	public static final String REMOVAL_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";	
+	
+	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_CODE = "629";
+	
+	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_MSG = "Group Id already present for the company";
+	
+	
+	public static final String GROUP_EVENT_INVALID_ROOM_CODE ="630";
+	
+	public static final String GROUP_EVENT_INVALID_ROOM_MSG ="Invalid room specified";
+	
+	public static final String REF_DATA_FEEDEVENTTYPE = "REF_DATA_FEEDEVENTTYPE";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_ID_CODE = "631";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_ID_MSG = "No feed event record identified for the given ticket number";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_GRPID_CODE = "632";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_GRPID_MSG = "Invalid group event id specified";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_DATE_CODE = "633";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_DATE_MSG = "Invalid feed event date specified";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_EVT_TYPE_CODE = "634";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_EVT_TYPE_MSG = "Invalid feed event type specified";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_SILO_CODE = "635";
+	
+	public static final String FEED_EVENT_DETAIL_INVALID_SILO_MSG = "Invalid silo specified";
+
+	public static final String IND_PIGLET_ERR_LITTERID_CODE = "636";
+	
+	public static final String IND_PIGLET_ERR_LITTERID_MSG = "Invalid litterId specified";
 }
+
 

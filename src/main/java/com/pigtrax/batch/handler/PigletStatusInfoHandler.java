@@ -48,7 +48,7 @@ public class PigletStatusInfoHandler implements Handler {
 					boolean isErrorOccured = false;
 					try {
 						PigletStatusInfo pigletStatusInfo = null;
-						if(pigletStatusInfoMapper.isWeanType())
+						if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode())
 						{
 							Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Wean.getTypeCode());
 							pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Wean.getTypeCode());
@@ -62,7 +62,7 @@ public class PigletStatusInfoHandler implements Handler {
 								PigTraxEventMaster master = new PigTraxEventMaster();
 								master.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 								master.setUserUpdated(processDTO.getUserName());
-								master.setEventTime(pigletStatusInfoMapper.getDeriveWeanDate());
+								master.setEventTime(pigletStatusInfoMapper.getDeriveEventDate());
 								master.setPigletStatusId(generatedKey);
 								master.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
 								
@@ -70,7 +70,7 @@ public class PigletStatusInfoHandler implements Handler {
 							
 							}
 						}
-						if(pigletStatusInfoMapper.isTransferType())
+						if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode())
 						{
 							Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.FosterOut.getTypeCode());
 							pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.FosterOut.getTypeCode());
@@ -83,7 +83,7 @@ public class PigletStatusInfoHandler implements Handler {
 								PigTraxEventMaster master = new PigTraxEventMaster();
 								master.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 								master.setUserUpdated(processDTO.getUserName());
-								master.setEventTime(pigletStatusInfoMapper.getDeriveTransferDate());
+								master.setEventTime(pigletStatusInfoMapper.getDeriveEventDate());
 								master.setPigletStatusId(generatedKey);
 								master.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
 								
@@ -103,7 +103,7 @@ public class PigletStatusInfoHandler implements Handler {
 								PigTraxEventMaster master = new PigTraxEventMaster();
 								master.setPigInfoId(pigletStatusInfoMapper.getDeriveTransferredPigInfoId());
 								master.setUserUpdated(processDTO.getUserName());
-								master.setEventTime(pigletStatusInfoMapper.getDeriveTransferDate());
+								master.setEventTime(pigletStatusInfoMapper.getDeriveEventDate());
 								master.setPigletStatusId(generatedKey);
 								master.setFarrowEventId(pigletStatusInfoMapper.getDeriveFosterFarrowEventId());
 								
@@ -111,7 +111,7 @@ public class PigletStatusInfoHandler implements Handler {
 							}
 						}
 						
-						if(pigletStatusInfoMapper.isDeathType())
+						if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode())
 						{
 							Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
 							pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
@@ -124,7 +124,7 @@ public class PigletStatusInfoHandler implements Handler {
 								PigTraxEventMaster master = new PigTraxEventMaster();
 								master.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 								master.setUserUpdated(processDTO.getUserName());
-								master.setEventTime(pigletStatusInfoMapper.getDeriveMortalityEventDate());
+								master.setEventTime(pigletStatusInfoMapper.getDeriveEventDate());
 								master.setPigletStatusId(generatedKey);
 								master.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
 								
@@ -157,20 +157,22 @@ public class PigletStatusInfoHandler implements Handler {
 		PigletStatusInfo info = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
-			if(pigletStatusInfoMapper.getDeriveWeanPigNum() != null && pigletStatusInfoMapper.getDeriveWeanPigNum() > 0)
+			if(pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 			{
 				info = new PigletStatusInfo();
 				info.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 				info.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
-				info.setEventDateTime(pigletStatusInfoMapper.getDeriveWeanDate());
-				info.setNumberOfPigs(pigletStatusInfoMapper.getDeriveWeanPigNum());
-				info.setWeightInKgs(pigletStatusInfoMapper.getDeriveWeanPigWt());
+				info.setEventDateTime(pigletStatusInfoMapper.getDeriveEventDate());
+				info.setNumberOfPigs(pigletStatusInfoMapper.getDerivePigNum());
+				info.setWeightInKgs(pigletStatusInfoMapper.getDerivePigWt());
 				info.setRemarks(pigletStatusInfoMapper.getRemarks());
 				info.setSowCondition(pigletStatusInfoMapper.getDeriveSowCondition());
 				info.setWeanGroupId(pigletStatusInfoMapper.getWeanGroupId());
 				info.setGroupEventId(pigletStatusInfoMapper.getDeriveGroupEventId());			
 				info.setUserUpdated(processDTO.getUserName());
 				info.setPigletStatusEventType(PigletStatusEventType.Wean.getTypeCode());
+				info.setPremiseId(pigletStatusInfoMapper.getDerivePremiseId());
+				info.setPenId(pigletStatusInfoMapper.getDerivePenId());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in PigletStatusInfoHandler.populatePigletStatusWeanInfo" + e.getMessage());
@@ -188,7 +190,7 @@ public class PigletStatusInfoHandler implements Handler {
 		PigletStatusInfo info = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
-			if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0)
+			if(pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 			{
 				info = new PigletStatusInfo();
 				info.setPigInfoId(pigletStatusInfoMapper.getDeriveTransferredPigInfoId());
@@ -197,14 +199,16 @@ public class PigletStatusInfoHandler implements Handler {
 				
 				info.setFarrowEventId(pigletStatusInfoMapper.getDeriveFosterFarrowEventId());
 				info.setFosterFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
-				info.setEventDateTime(pigletStatusInfoMapper.getDeriveTransferDate());
-				info.setNumberOfPigs(pigletStatusInfoMapper.getDeriveTransferPigNum());
-				info.setWeightInKgs(pigletStatusInfoMapper.getDeriveTransferPigWt());
+				info.setEventDateTime(pigletStatusInfoMapper.getDeriveEventDate());
+				info.setNumberOfPigs(pigletStatusInfoMapper.getDerivePigNum());
+				info.setWeightInKgs(pigletStatusInfoMapper.getDerivePigWt());
 				info.setRemarks(pigletStatusInfoMapper.getRemarks());
 				info.setSowCondition(pigletStatusInfoMapper.getDeriveSowCondition());
 				info.setWeanGroupId(pigletStatusInfoMapper.getWeanGroupId());	
 				info.setUserUpdated(processDTO.getUserName());
 				info.setPigletStatusEventType(PigletStatusEventType.FosterIn.getTypeCode());
+				info.setPremiseId(pigletStatusInfoMapper.getDerivePremiseId());
+				info.setPenId(pigletStatusInfoMapper.getDerivePenId());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in PigletStatusInfoHandler.populateFosterInInfo" + e.getMessage());
@@ -221,14 +225,14 @@ public class PigletStatusInfoHandler implements Handler {
 		PigletStatusInfo info = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
-			if(pigletStatusInfoMapper.getDeriveTransferPigNum() != null && pigletStatusInfoMapper.getDeriveTransferPigNum() > 0)
+			if(pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 			{
 				info = new PigletStatusInfo();
 				info.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 				info.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
-				info.setEventDateTime(pigletStatusInfoMapper.getDeriveTransferDate());
-				info.setNumberOfPigs(pigletStatusInfoMapper.getDeriveTransferPigNum());
-				info.setWeightInKgs(pigletStatusInfoMapper.getDeriveTransferPigWt());
+				info.setEventDateTime(pigletStatusInfoMapper.getDeriveEventDate());
+				info.setNumberOfPigs(pigletStatusInfoMapper.getDerivePigNum());
+				info.setWeightInKgs(pigletStatusInfoMapper.getDerivePigWt());
 				info.setFosterFrom(pigletStatusInfoMapper.getDerivePigInfoId());
 				info.setFosterTo(pigletStatusInfoMapper.getDeriveTransferredPigInfoId());
 				info.setFosterFarrowEventId(pigletStatusInfoMapper.getDeriveFosterFarrowEventId());
@@ -237,6 +241,8 @@ public class PigletStatusInfoHandler implements Handler {
 				info.setWeanGroupId(pigletStatusInfoMapper.getWeanGroupId());	
 				info.setUserUpdated(processDTO.getUserName());
 				info.setPigletStatusEventType(PigletStatusEventType.FosterOut.getTypeCode());
+				info.setPremiseId(pigletStatusInfoMapper.getDerivePremiseId());
+				info.setPenId(pigletStatusInfoMapper.getDerivePenId());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in PigletStatusInfoHandler.populateFosterOutInfo" + e.getMessage());
@@ -253,20 +259,22 @@ public class PigletStatusInfoHandler implements Handler {
 		PigletStatusInfo info = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
-			if(pigletStatusInfoMapper.getDeriveMortalityPigNum() != null && pigletStatusInfoMapper.getDeriveMortalityPigNum() > 0)
+			if(pigletStatusInfoMapper.getDerivePigNum() != null && pigletStatusInfoMapper.getDerivePigNum() > 0)
 			{
 				info = new PigletStatusInfo();
 				info.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
 				info.setFarrowEventId(pigletStatusInfoMapper.getDeriveFarrowEventId());
-				info.setEventDateTime(pigletStatusInfoMapper.getDeriveMortalityEventDate());
-				info.setNumberOfPigs(pigletStatusInfoMapper.getDeriveMortalityPigNum());
-				info.setWeightInKgs(pigletStatusInfoMapper.getDeriveMortalityPigWt());
+				info.setEventDateTime(pigletStatusInfoMapper.getDeriveEventDate());
+				info.setNumberOfPigs(pigletStatusInfoMapper.getDerivePigNum());
+				info.setWeightInKgs(pigletStatusInfoMapper.getDerivePigWt());
 				info.setMortalityReasonTypeId(pigletStatusInfoMapper.getDeriveMortalityReasonId());
 				info.setRemarks(pigletStatusInfoMapper.getRemarks());
 				info.setSowCondition(pigletStatusInfoMapper.getDeriveSowCondition());
 				info.setWeanGroupId(pigletStatusInfoMapper.getWeanGroupId());	
 				info.setUserUpdated(processDTO.getUserName());
 				info.setPigletStatusEventType(PigletStatusEventType.Death.getTypeCode());
+				info.setPremiseId(pigletStatusInfoMapper.getDerivePremiseId());
+				info.setPenId(pigletStatusInfoMapper.getDerivePenId());
 			}
 		} catch (Exception e) {
 			logger.error("Exception in PigletStatusInfoHandler.populateFosterOutInfo" + e.getMessage());

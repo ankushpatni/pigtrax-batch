@@ -20,4 +20,6 @@ public interface FarrowEventDao {
 	boolean checkIfFarrowExists(final Integer pregnancyEventId);
 	
 	List<FarrowEvent> getFarrowEvents(Integer pigInfoId);
+	
+	void updateLitterId(final Integer farrowEventId, final Integer companyId);
 }

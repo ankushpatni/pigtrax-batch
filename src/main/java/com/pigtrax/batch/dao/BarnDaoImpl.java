@@ -52,5 +52,35 @@ public class BarnDaoImpl implements BarnDao {
 
 		return null;
 	}
+	
+	@Override
+	public Integer getBarnIdByRoom(Integer roomId) throws SQLException {
+		logger.debug("roomId is :" + roomId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select \"id_Barn\" from pigtrax.\"Room\" where \"id\" = ?");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (roomId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setInt(1, roomId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("barnId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+
+		return null;
+	}
 
 }

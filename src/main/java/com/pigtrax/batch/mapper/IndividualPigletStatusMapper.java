@@ -9,24 +9,37 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	
 	private String pigId;
 	private String companyId;
-	private String farrowDate;
 	private String tattooId;
 	private String wtAtBirth;
 	private String wtAtWeaning;
+	private String litterId;
+	private String wtAtFirstMonth;
+	private String wtAtSecondMonth;
+	private String wtAtThirdMonth;
+	private String wtAtFourthMonth;
+	private String wtAtFifthMonth;
+	private String wtAtSixthMonth;
+	private String farmName;
 
-	// Derivable properties
-	private Integer derivePigInfoId;
 	private Integer deriveCompanyId;
-	private Date farrowEventDate;
-	private Integer deriveFarrowEventId;
+	private Integer derivePremiseId;
+	private Integer deriveLitterId;
 	private Double deriveWtAtBirth;
 	private Double deriveWtAtWeaning;
+	private Double deriveWtAtFirstMonth;
+	private Double deriveWtAtSecondMonth;
+	private Double deriveWtAtThirdMonth;
+	private Double deriveWtAtFourthMonth;
+	private Double deriveWtAtFifthMonth;
+	private Double deriveWtAtSixthMonth;
 	
 	
 	
+
 	public String getPigId() {
 		return pigId;
 	}
+
 
 
 
@@ -36,9 +49,11 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public String getCompanyId() {
 		return companyId;
 	}
+
 
 
 
@@ -48,21 +63,11 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
-	public String getFarrowDate() {
-		return farrowDate;
-	}
-
-
-
-	public void setFarrowDate(String farrowDate) {
-		this.farrowDate = farrowDate;
-	}
-
-
 
 	public String getTattooId() {
 		return tattooId;
 	}
+
 
 
 
@@ -72,9 +77,11 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public String getWtAtBirth() {
 		return wtAtBirth;
 	}
+
 
 
 
@@ -84,9 +91,11 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public String getWtAtWeaning() {
 		return wtAtWeaning;
 	}
+
 
 
 
@@ -96,15 +105,116 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
-	public Integer getDerivePigInfoId() {
-		return derivePigInfoId;
+
+	public String getLitterId() {
+		return litterId;
 	}
 
 
 
-	public void setDerivePigInfoId(Integer derivePigInfoId) {
-		this.derivePigInfoId = derivePigInfoId;
+
+	public void setLitterId(String litterId) {
+		this.litterId = litterId;
 	}
+
+
+
+
+	public String getWtAtFirstMonth() {
+		return wtAtFirstMonth;
+	}
+
+
+
+
+	public void setWtAtFirstMonth(String wtAtFirstMonth) {
+		this.wtAtFirstMonth = wtAtFirstMonth;
+	}
+
+
+
+
+	public String getWtAtSecondMonth() {
+		return wtAtSecondMonth;
+	}
+
+
+
+
+	public void setWtAtSecondMonth(String wtAtSecondMonth) {
+		this.wtAtSecondMonth = wtAtSecondMonth;
+	}
+
+
+
+
+	public String getWtAtThirdMonth() {
+		return wtAtThirdMonth;
+	}
+
+
+
+
+	public void setWtAtThirdMonth(String wtAtThirdMonth) {
+		this.wtAtThirdMonth = wtAtThirdMonth;
+	}
+
+
+
+
+	public String getWtAtFourthMonth() {
+		return wtAtFourthMonth;
+	}
+
+
+
+
+	public void setWtAtFourthMonth(String wtAtFourthMonth) {
+		this.wtAtFourthMonth = wtAtFourthMonth;
+	}
+
+
+
+
+	public String getWtAtFifthMonth() {
+		return wtAtFifthMonth;
+	}
+
+
+
+
+	public void setWtAtFifthMonth(String wtAtFifthMonth) {
+		this.wtAtFifthMonth = wtAtFifthMonth;
+	}
+
+
+
+
+	public String getWtAtSixthMonth() {
+		return wtAtSixthMonth;
+	}
+
+
+
+
+	public void setWtAtSixthMonth(String wtAtSixthMonth) {
+		this.wtAtSixthMonth = wtAtSixthMonth;
+	}
+
+
+
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+
+
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
 
 
 
@@ -114,21 +224,39 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public void setDeriveCompanyId(Integer deriveCompanyId) {
 		this.deriveCompanyId = deriveCompanyId;
 	}
 
 
 
-	public Integer getDeriveFarrowEventId() {
-		return deriveFarrowEventId;
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
 	}
 
 
 
-	public void setDeriveFarrowEventId(Integer deriveFarrowEventId) {
-		this.deriveFarrowEventId = deriveFarrowEventId;
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
 	}
+
+
+
+
+	public Integer getDeriveLitterId() {
+		return deriveLitterId;
+	}
+
+
+
+
+	public void setDeriveLitterId(Integer deriveLitterId) {
+		this.deriveLitterId = deriveLitterId;
+	}
+
 
 
 
@@ -138,9 +266,11 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public void setDeriveWtAtBirth(Double deriveWtAtBirth) {
 		this.deriveWtAtBirth = deriveWtAtBirth;
 	}
+
 
 
 
@@ -150,21 +280,95 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
+
 	public void setDeriveWtAtWeaning(Double deriveWtAtWeaning) {
 		this.deriveWtAtWeaning = deriveWtAtWeaning;
 	}
 
-    
 
-	public Date getFarrowEventDate() {
-		return farrowEventDate;
+
+
+	public Double getDeriveWtAtFirstMonth() {
+		return deriveWtAtFirstMonth;
 	}
 
 
 
-	public void setFarrowEventDate(Date farrowEventDate) {
-		this.farrowEventDate = farrowEventDate;
+
+	public void setDeriveWtAtFirstMonth(Double deriveWtAtFirstMonth) {
+		this.deriveWtAtFirstMonth = deriveWtAtFirstMonth;
 	}
+
+
+
+
+	public Double getDeriveWtAtSecondMonth() {
+		return deriveWtAtSecondMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtSecondMonth(Double deriveWtAtSecondMonth) {
+		this.deriveWtAtSecondMonth = deriveWtAtSecondMonth;
+	}
+
+
+
+
+	public Double getDeriveWtAtThirdMonth() {
+		return deriveWtAtThirdMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtThirdMonth(Double deriveWtAtThirdMonth) {
+		this.deriveWtAtThirdMonth = deriveWtAtThirdMonth;
+	}
+
+
+
+
+	public Double getDeriveWtAtFourthMonth() {
+		return deriveWtAtFourthMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtFourthMonth(Double deriveWtAtFourthMonth) {
+		this.deriveWtAtFourthMonth = deriveWtAtFourthMonth;
+	}
+
+
+
+
+	public Double getDeriveWtAtFifthMonth() {
+		return deriveWtAtFifthMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtFifthMonth(Double deriveWtAtFifthMonth) {
+		this.deriveWtAtFifthMonth = deriveWtAtFifthMonth;
+	}
+
+
+
+
+	public Double getDeriveWtAtSixthMonth() {
+		return deriveWtAtSixthMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtSixthMonth(Double deriveWtAtSixthMonth) {
+		this.deriveWtAtSixthMonth = deriveWtAtSixthMonth;
+	}
+
 
 
 

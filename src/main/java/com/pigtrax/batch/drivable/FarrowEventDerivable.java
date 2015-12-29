@@ -178,7 +178,7 @@ public class FarrowEventDerivable implements Derivable {
 
 	private void setweightInKGs(final FarrowEventMapper farrowEventMapper) {
 		try {
-			farrowEventMapper.setDeriveWeightInKGs(Integer.parseInt(farrowEventMapper.getWeightInKGs()));
+			farrowEventMapper.setDeriveWeightInKGs(Double.parseDouble(farrowEventMapper.getWeightInKGs())); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

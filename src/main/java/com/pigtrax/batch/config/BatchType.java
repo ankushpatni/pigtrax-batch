@@ -2,6 +2,7 @@ package com.pigtrax.batch.config;
 
 import com.pigtrax.batch.drivable.BreedingEventDerivable;
 import com.pigtrax.batch.drivable.FarrowEventDerivable;
+import com.pigtrax.batch.drivable.FeedDetailEventDerivable;
 import com.pigtrax.batch.drivable.FeedEventDerivable;
 import com.pigtrax.batch.drivable.GroupEventDetailDerivable;
 import com.pigtrax.batch.drivable.GroupEventInfoDerivable;
@@ -14,6 +15,7 @@ import com.pigtrax.batch.drivable.RemovalEventExceptSalesDetailsDerivable;
 import com.pigtrax.batch.drivable.SalesEventDetailsDrivable;
 import com.pigtrax.batch.handler.BreedingEventHandler;
 import com.pigtrax.batch.handler.FarrowEventHandler;
+import com.pigtrax.batch.handler.FeedDetailEventHandler;
 import com.pigtrax.batch.handler.FeedEventHandler;
 import com.pigtrax.batch.handler.GroupEventDetailHandler;
 import com.pigtrax.batch.handler.GroupEventInfoHandler;
@@ -26,6 +28,7 @@ import com.pigtrax.batch.handler.RemovalEventExceptSalesDetailsHandler;
 import com.pigtrax.batch.handler.SalesEventDetailsHandler;
 import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.FarrowEventMapper;
+import com.pigtrax.batch.mapper.FeedDetailEventMapper;
 import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
@@ -38,6 +41,7 @@ import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.validator.BreedingEventValidator;
 import com.pigtrax.batch.validator.FarrowEventValidator;
+import com.pigtrax.batch.validator.FeedDetailEventValidator;
 import com.pigtrax.batch.validator.FeedEventValidator;
 import com.pigtrax.batch.validator.GroupEventDetailValidator;
 import com.pigtrax.batch.validator.GroupEventInfoValidator;
@@ -176,6 +180,27 @@ public enum BatchType {
 		@Override
 		public Class<?> getDriveClass() {
 			return FeedEventDerivable.class;
+		}
+	},
+	FEEDDETAILEVENT{
+		@Override
+		public Class<?> getMapperClass() {
+			return FeedDetailEventMapper.class;
+		}
+
+		@Override
+		public Class<?> getValidatorClass() {
+			return FeedDetailEventValidator.class;
+		}
+
+		@Override
+		public Class<?> getHandlerClass() {
+			return FeedDetailEventHandler.class;
+		}
+
+		@Override
+		public Class<?> getDriveClass() {
+			return FeedDetailEventDerivable.class;
 		}
 	},
 	GROUPEVENTDETAILEVENT{

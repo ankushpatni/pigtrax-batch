@@ -239,4 +239,20 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 				return farrowEvent;
 			}
 		}
+		
+		
+		@Override
+		   public void updateLitterId(final Integer farrowEventId, final Integer companyId) { 
+			   final String qry = "update pigtrax.\"FarrowEvent\"  set \"litterId\" = (SELECT \"litterId\"+1 as litterId "
+			   		+ "from pigtrax.\"Company\"  WHERE \"id\"=?) where id = ?";
+				
+				this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
+					@Override
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setInt(1, companyId);
+						ps.setInt(2, farrowEventId);
+					}
+				});		
+		   }
+		   
 }

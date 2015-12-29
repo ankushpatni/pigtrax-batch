@@ -87,6 +87,8 @@ public class GroupEventDetailHandler implements Handler{
 			groupEventDetail = new GroupEventDetail();
 						
 			groupEventDetail.setGroupId(groupEventDetailMapper.getDeriveGroupId());
+			groupEventDetail.setPremiseId(groupEventDetailMapper.getDerivePremiseId());
+			groupEventDetail.setSowSourceId(groupEventDetailMapper.getDeriveSowSourceId());
 			groupEventDetail.setBarnId(groupEventDetailMapper.getDeriveBarnId());
 			groupEventDetail.setDateOfEntry(groupEventDetailMapper.getDeriveDateOfEntry());
 			groupEventDetail.setNumberOfPigs(groupEventDetailMapper.getDeriveNumberOfPigs());

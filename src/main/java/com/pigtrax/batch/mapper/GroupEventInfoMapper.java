@@ -9,10 +9,10 @@ public class GroupEventInfoMapper extends AbstractMapper{
 	
 	private String groupId;
 	private String companyId;
-	private String groupStartDateTime;
+	private String groupStartDate;
 	private String phaseOfProductionType;
 	private String remarks;
-	private String groupCloseDateTime;
+	private String groupCloseDate;
 	private boolean isActive;
 	private String userUpdated;
 	private String currentInventory;
@@ -67,11 +67,11 @@ public class GroupEventInfoMapper extends AbstractMapper{
 	}
 
 	public String getGroupStartDateTime() {
-		return groupStartDateTime;
+		return groupStartDate;
 	}
 
-	public void setGroupStartDateTime(String groupStartDateTime) {
-		this.groupStartDateTime = groupStartDateTime;
+	public void setGroupStartDate(String groupStartDate) {
+		this.groupStartDate = groupStartDate;
 	}
 
 	public Date getDeriveGroupStartDateTime() {
@@ -91,12 +91,12 @@ public class GroupEventInfoMapper extends AbstractMapper{
 		this.derivePhaseOfProductionTypeId = derivePhaseOfProductionTypeId;
 	}
 
-	public String getGroupCloseDateTime() {
-		return groupCloseDateTime;
+	public String getGroupCloseDate() {
+		return groupCloseDate;
 	}
 
-	public void setGroupCloseDateTime(String groupCloseDateTime) {
-		this.groupCloseDateTime = groupCloseDateTime;
+	public void setGroupCloseDate(String groupCloseDate) {
+		this.groupCloseDate = groupCloseDate;
 	}
 
 	public boolean isActive() {

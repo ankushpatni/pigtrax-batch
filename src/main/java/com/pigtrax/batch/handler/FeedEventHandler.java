@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.FeedEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.FeedEventDaoImpl;
 import com.pigtrax.batch.dao.interfaces.FeedEventDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.FeedEventMapper;
@@ -31,6 +33,9 @@ public class FeedEventHandler implements Handler {
 
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	TransportJourneyDao transportJourneyDao;
 
 	private static final Logger logger = Logger.getLogger(FeedEventHandler.class);
 
@@ -39,6 +44,7 @@ public class FeedEventHandler implements Handler {
 		Map<String, Object> output = new HashMap<String, Object>();
 		int totalRecordsInInput = list != null ? list.size() : 0;
 		int totalRecordsProcessed = 0;
+		int journeyId = 0;
 		if (list != null) {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
@@ -47,7 +53,17 @@ public class FeedEventHandler implements Handler {
 					boolean isErrorOccured = false;
 					try {
 						FeedEvent feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
-						boolean flag = feedEventDaoImpl.checkIfTicketNumberExists(feedEvent.getTicketNumber());
+						if(feedEventMapper.getDeriveTransportTrailer() != null || feedEventMapper.getDeriveTransportTruck() != null)
+						{
+							TransportJourney journey = new TransportJourney();
+							journey.setTransportTrailerId(feedEventMapper.getDeriveTransportTrailer());
+							journey.setTransportTruckId(feedEventMapper.getDeriveTransportTruck());
+							journey.setUserUpdated(processDTO.getUserName());
+							journeyId = transportJourneyDao.addTransportJourney(journey);
+							if(journeyId > 0)
+								feedEvent.setTransPortJourneyId(journeyId);
+						}
+						boolean flag = feedEventDaoImpl.checkIfTicketNumberExists(feedEvent.getTicketNumber(), feedEvent.getPremiseId());
 						if(flag)
 						{
 							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FEED_DUPLICATE_TKTNUM, Constants.ERR_FEED_DUPLICATE_TKTNUM_MSG, "ticketNumber", false));
@@ -55,7 +71,7 @@ public class FeedEventHandler implements Handler {
 						}
 						else
 						{
-							if (feedEvent != null) {
+							if (feedEvent != null) {								
 								int id = feedEventDaoImpl.addFeedEvent(feedEvent);
 								PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, id, processDTO);
 								eventMasterDao.insertEventMaster(eventMaster);
@@ -92,8 +108,9 @@ public class FeedEventHandler implements Handler {
 			feedEvent.setIntialFeedEntryDate(feedEventMapper.getDeriveIntialFeedEntryDate());
 			feedEvent.setRationId(feedEventMapper.getDeriveRationId());
 			feedEvent.setTicketNumber(feedEventMapper.getTicketNumber());
-			feedEvent.setTransPortJourneyId(feedEventMapper.getDeriveTransPortJourneyId());
+			//feedEvent.setTransPortJourneyId(feedEventMapper.getDeriveTransPortJourneyId());
 			feedEvent.setUserUpdated(processDTO.getUserName());
+			feedEvent.setPremiseId(feedEventMapper.getDerivePremiseId());
 		} catch (Exception e) {
 			logger.error("Exception in FeedEventHandler.populateFeedEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

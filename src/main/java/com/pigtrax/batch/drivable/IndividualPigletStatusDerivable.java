@@ -5,17 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
-import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.FarrowEventDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
+import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.IndividualPigletStatusMapper;
-import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
-import com.pigtrax.batch.mapper.PregnancyInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 
@@ -30,6 +26,9 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	
 	@Autowired
 	FarrowEventDao farrowEventDao;
+	
+	@Autowired
+	PremisesDao premiseDao;
 
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
@@ -37,11 +36,17 @@ public class IndividualPigletStatusDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				IndividualPigletStatusMapper individualPigletMapper = (IndividualPigletStatusMapper) mapper;						
 				setCompanyId(individualPigletMapper);
-				setPigInfoId(individualPigletMapper);
-				setFarrowEventDate(individualPigletMapper);
-				setFarrowEventId(individualPigletMapper);
+				setPremiseId(individualPigletMapper);
+				setLitterId(individualPigletMapper);
 				setWtAtBirth(individualPigletMapper);
 				setWtAtWeaning(individualPigletMapper);
+				setWtAtFirstMonth(individualPigletMapper);
+				setWtAtSecondMonth(individualPigletMapper);
+				setWtAtThirdMonth(individualPigletMapper);
+				setWtAtFourthMonth(individualPigletMapper);
+				setWtAtFifthMonth(individualPigletMapper);
+				setWtAtSixthMonth(individualPigletMapper);
+				
 			}
 		}
 	}
@@ -55,34 +60,22 @@ public class IndividualPigletStatusDerivable implements Derivable {
 		}
 	}
 	
-	private void setPigInfoId(final IndividualPigletStatusMapper individualPigletMapper) {
+	private void setPremiseId(final IndividualPigletStatusMapper individualPigletMapper) {
 		try {
-			individualPigletMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(individualPigletMapper.getPigId(), individualPigletMapper.getDeriveCompanyId()));  
-		} catch (Exception e) {
+			individualPigletMapper.setDerivePremiseId(premiseDao.getPremisesPK(individualPigletMapper.getFarmName(), individualPigletMapper.getDeriveCompanyId())); 
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}
 	
-	private void setFarrowEventDate(final IndividualPigletStatusMapper individualPigletMapper) {
+	private void setLitterId(final IndividualPigletStatusMapper individualPigletMapper) {
 		try {
-			individualPigletMapper.setFarrowEventDate(DateUtil.getDateFromString(individualPigletMapper.getFarrowDate()));  
-		} catch (Exception e) {
+			individualPigletMapper.setDeriveLitterId(Integer.parseInt(individualPigletMapper.getLitterId())); 
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}
-	
-	private void setFarrowEventId(final IndividualPigletStatusMapper individualPigletMapper)
-	{
-		try {
-			if(individualPigletMapper.getDerivePigInfoId() != null && individualPigletMapper.getFarrowEventDate() != null)
-			{
-				individualPigletMapper.setDeriveFarrowEventId(farrowEventDao.getFarrowEventId(individualPigletMapper.getDerivePigInfoId(), individualPigletMapper.getFarrowEventDate()));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 	private void setWtAtBirth(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
@@ -100,5 +93,59 @@ public class IndividualPigletStatusDerivable implements Derivable {
 			e.printStackTrace();
 		}
 	}
+	
+	private void setWtAtFirstMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtFirstMonth(Double.parseDouble(individualPigletMapper.getWtAtFifthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setWtAtSecondMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtSecondMonth(Double.parseDouble(individualPigletMapper.getWtAtSecondMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setWtAtThirdMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtThirdMonth(Double.parseDouble(individualPigletMapper.getWtAtThirdMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
+	private void setWtAtFourthMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtFourthMonth(Double.parseDouble(individualPigletMapper.getWtAtFourthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setWtAtFifthMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtFifthMonth(Double.parseDouble(individualPigletMapper.getWtAtFifthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	private void setWtAtSixthMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtSixthMonth(Double.parseDouble(individualPigletMapper.getWtAtSixthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

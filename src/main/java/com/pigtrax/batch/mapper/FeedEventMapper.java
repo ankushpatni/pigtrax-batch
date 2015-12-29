@@ -15,6 +15,7 @@ public class FeedEventMapper  extends AbstractMapper	{
 			return getTicketNumber();
 		}
 	}
+	private String farmName;	
 	private String rationId;
 	private String feedQuantityKGs;
 	private String feedCost;
@@ -22,14 +23,18 @@ public class FeedEventMapper  extends AbstractMapper	{
 	private String ticketNumber;
 	private String feedContentId;
 	private String feedEntryDate;
-	private String transPortJourneyId;
+	private String transportTruck;
+	private String transportTrailer;
+	private String companyId;
 	
 	private Double deriveFeedQuantityKGs;
 	private Double deriveFeedCost;
 	private Date deriveIntialFeedEntryDate;
-	private Integer deriveTransPortJourneyId;
+	private Integer derivePremiseId;
 	private Integer deriveRationId;
-	
+	private Integer deriveTransportTruck;
+	private Integer deriveTransportTrailer;
+	private Integer deriveCompanyId;
 	
 	public Integer getDeriveRationId() {
 		return deriveRationId;
@@ -55,12 +60,7 @@ public class FeedEventMapper  extends AbstractMapper	{
 	public void setDeriveIntialFeedEntryDate(Date deriveIntialFeedEntryDate) {
 		this.deriveIntialFeedEntryDate = deriveIntialFeedEntryDate;
 	}
-	public Integer getDeriveTransPortJourneyId() {
-		return deriveTransPortJourneyId;
-	}
-	public void setDeriveTransPortJourneyId(Integer deriveTransPortJourneyId) {
-		this.deriveTransPortJourneyId = deriveTransPortJourneyId;
-	}
+	
 	public String getRationId() {
 		return rationId;
 	}
@@ -96,18 +96,61 @@ public class FeedEventMapper  extends AbstractMapper	{
 	}
 	public void setFeedContentId(String feedContentId) {
 		this.feedContentId = feedContentId;
-	}	
-	public String getTransPortJourneyId() {
-		return transPortJourneyId;
 	}
-	public void setTransPortJourneyId(String transPortJourneyId) {
-		this.transPortJourneyId = transPortJourneyId;
-	}
+	
 	public String getFeedEntryDate() {
 		return feedEntryDate;
 	}
 	public void setFeedEntryDate(String feedEntryDate) {
 		this.feedEntryDate = feedEntryDate;
+	}
+	public String getFarmName() {
+		return farmName;
+	}
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+	public String getTransportTruck() {
+		return transportTruck;
+	}
+	public void setTransportTruck(String transportTruck) {
+		this.transportTruck = transportTruck;
+	}
+	public String getTransportTrailer() {
+		return transportTrailer;
+	}
+	public void setTransportTrailer(String transportTrailer) {
+		this.transportTrailer = transportTrailer;
+	}
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+	public Integer getDeriveTransportTruck() {
+		return deriveTransportTruck;
+	}
+	public void setDeriveTransportTruck(Integer deriveTransportTruck) {
+		this.deriveTransportTruck = deriveTransportTruck;
+	}
+	public Integer getDeriveTransportTrailer() {
+		return deriveTransportTrailer;
+	}
+	public void setDeriveTransportTrailer(Integer deriveTransportTrailer) {
+		this.deriveTransportTrailer = deriveTransportTrailer;
+	}
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+	public Integer getDeriveCompanyId() {
+		return deriveCompanyId;
+	}
+	public void setDeriveCompanyId(Integer deriveCompanyId) {
+		this.deriveCompanyId = deriveCompanyId;
 	}
 	
 	

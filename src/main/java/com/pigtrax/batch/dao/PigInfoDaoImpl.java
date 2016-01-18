@@ -37,7 +37,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		final String Qry = "insert into pigtrax.\"PigInfo\"(\"pigId\", \"sireId\", \"damId\", \"entryDate\", \"origin\", \"gline\", \"gcompany\", "
 				+ "\"birthDate\", \"tattoo\", \"alternateTattoo\", \"remarks\", \"lastUpdated\", \"userUpdated\", \"id_Company\",  "
 				+ "\"id_Premise\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\",\"id_Room\") "
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?)";
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -249,7 +249,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select \"id\", \"pigId\",\"sireId\",\"damId\",\"origin\",\"gline\","
 				+ "\"gcompany\",\"birthDate\",\"tattoo\",\"alternateTattoo\",\"remarks\",\"id_Company\","
-				+ "\"id_Barn\",\"id_Pen\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\" "
+				+ "\"id_Barn\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\" "
 				+ "from pigtrax.\"PigInfo\" where \"id\" = ?");
 		final String qry = qryBuffer.toString();
 		List<PigInfo> pigInfoList = null;
@@ -282,8 +282,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 			pigInfo.setAlternateTattoo(rs.getString("alternateTattoo"));
 			pigInfo.setRemarks(rs.getString("remarks"));
 			pigInfo.setCompanyId(rs.getInt("id_Company"));
-			pigInfo.setBarnId((rs.getObject("id_Barn")!=null)?(Integer)rs.getObject("id_Barn") : null);
-			pigInfo.setPenId((rs.getObject("id_Pen")!=null)?(Integer)rs.getObject("id_Pen") : null);
+			pigInfo.setBarnId((rs.getObject("id_Barn")!=null)?(Integer)rs.getObject("id_Barn") : null);			
 			pigInfo.setSexTypeId(rs.getInt("id_SexType")); 
 			pigInfo.setEntryDate(rs.getDate("entryDate"));
 			pigInfo.setActive(rs.getBoolean("isActive"));

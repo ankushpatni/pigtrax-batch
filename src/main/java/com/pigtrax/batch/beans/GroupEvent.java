@@ -1,6 +1,7 @@
 package com.pigtrax.batch.beans;
 
 import java.util.Date;
+import java.util.List;
 
 public class GroupEvent {
 	
@@ -16,6 +17,9 @@ public class GroupEvent {
 	private Integer currentInventory;
 	private String previousGroupId;
 	private Integer phaseOfProductionTypeId;
+	private Integer premiseId;
+
+	private List<RoomPK> roomIds;
 	
 	
 	
@@ -91,4 +95,18 @@ public class GroupEvent {
 	public void setPhaseOfProductionTypeId(Integer phaseOfProductionTypeId) {
 		this.phaseOfProductionTypeId = phaseOfProductionTypeId;
 	}
+	public List<RoomPK> getRoomIds() {
+		return roomIds;
+	}
+	public void setRoomIds(List<RoomPK> roomIds) {
+		this.roomIds = roomIds;
+	}
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
+	}
+	
+	
 }

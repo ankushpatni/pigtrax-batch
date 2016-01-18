@@ -27,7 +27,9 @@ public class PigInfo {
 	private Integer gfunctionTypeId;
 	private Integer premiseId;
 	private Integer originId;
-
+	private Integer roomId;
+	
+	
 	public Integer getFarrowId() {
 		return farrowId;
 	}
@@ -222,6 +224,17 @@ public class PigInfo {
 
 	public void setOriginId(Integer originId) {
 		this.originId = originId;
+	}
+
+	
+	
+	
+	public Integer getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(Integer roomId) {
+		this.roomId = roomId;
 	}
 
 	@Override

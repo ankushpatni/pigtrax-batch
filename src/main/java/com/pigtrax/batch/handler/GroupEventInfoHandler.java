@@ -10,14 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.GroupEventPhaseChange;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.GroupEventPhaseChangeDao;
+import com.pigtrax.batch.dao.interfaces.GroupEventRoomDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
-import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -29,6 +31,13 @@ public class GroupEventInfoHandler implements Handler{
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	private GroupEventRoomDao groupEventRoomDao;
+	
+	@Autowired
+	private GroupEventPhaseChangeDao groupPhaseChangeDao;
+	
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
@@ -52,12 +61,16 @@ public class GroupEventInfoHandler implements Handler{
 							if(existingGrpId == null)
 							{
 								Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
+								groupEvent.setId(id);
+								
+								groupEventRoomDao.addGroupEventRooms(groupEvent);
+								
 								PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
 								eventMasterDao.insertEventMaster(eventMaster);
 								totalRecordsProcessed = totalRecordsProcessed + 1;
 							}
 							else
-							{
+							{	
 								errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_DUPLICATE_GRP_ID_CODE, Constants.GROUP_EVENT_DUPLICATE_GRP_ID_MSG, groupEvent.getGroupId(), false));
 								isErrorOccured = true;
 							}
@@ -95,6 +108,8 @@ public class GroupEventInfoHandler implements Handler{
 			groupEvent.setRemarks(groupEventInfoMapper.getRemarks());
 			groupEvent.setCurrentInventory(groupEventInfoMapper.getDeriveCurrentInventory());
 			groupEvent.setPreviousGroupId(groupEventInfoMapper.getPreviousGroupId());
+			groupEvent.setRoomIds(groupEventInfoMapper.getDeriveRoomIds());
+			groupEvent.setPremiseId(groupEventInfoMapper.getDerivePremiseId());
 		
 		} catch (Exception e) {
 			logger.error("Exception in PigInfoHandler.populatePigIfnfo" + e.getMessage());

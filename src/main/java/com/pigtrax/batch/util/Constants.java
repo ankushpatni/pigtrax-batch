@@ -446,6 +446,14 @@ public interface Constants {
 	public static final String IND_PIGLET_ERR_LITTERID_CODE = "636";
 	
 	public static final String IND_PIGLET_ERR_LITTERID_MSG = "Invalid litterId specified";
+	
+	public static final String ENTRY_EVENT_INVALID_ROOMIDS_CODE = "637";
+	
+	public static final String ENTRY_EVENT_INVALID_ROOMIDS_MSG = "Invalid room Ids specified";
+	
+	public static final String ENTRY_EVENT_INVALID_ROOMID_CODE = "638";
+	
+	public static final String ENTRY_EVENT_INVALID_ROOMID_MSG = "Invalid room specified for the premise";
 }
 
 

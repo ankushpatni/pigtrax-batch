@@ -98,7 +98,7 @@ public class PigInfoHandler implements Handler {
 			pigInfo.setPigId(pigInfoMaper.getPigId());
 			pigInfo.setOriginId(pigInfoMaper.getDeriveOriginId());
 			pigInfo.setParity(pigInfoMaper.getDeriveParity());
-			pigInfo.setPenId(pigInfoMaper.getDerivePenId());
+			pigInfo.setRoomId(pigInfoMaper.getDeriveRoomId());
 			pigInfo.setRemarks(pigInfoMaper.getRemarks());
 			pigInfo.setSexTypeId((pigInfoMaper.getDeriveSexId()));
 			pigInfo.setSireId(pigInfoMaper.getSireId());

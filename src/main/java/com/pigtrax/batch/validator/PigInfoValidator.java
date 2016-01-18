@@ -44,6 +44,7 @@ public class PigInfoValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				validateCompanyId(pigInfoMapper, errList);
 				validatePremiseId(pigInfoMapper, errList);
+				validateRoomId(pigInfoMapper, errList);
 				validateUniquePigId(pigInfoMapper, errList);
 				validateEntryDate(pigInfoMapper, errList);
 				validateBirthdate(pigInfoMapper, errList);
@@ -108,6 +109,14 @@ public class PigInfoValidator extends AbstractValidator {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
 					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	private void validateRoomId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
+		if (pigInfoMapper.getDeriveRoomId() == null || pigInfoMapper.getDeriveRoomId() < 0) {
+			pigInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_ROOMID_CODE,
+					Constants.ENTRY_EVENT_INVALID_ROOMID_MSG, "roomId", false));
 		}
 	}
 	

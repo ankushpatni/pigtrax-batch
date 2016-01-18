@@ -18,7 +18,7 @@ public class PigInfoMapper extends AbstractMapper {
 	private String alternateTattoo;
 	private String remarks;
 	private String companyId;
-	private String penId;
+	private String roomId;
 	private String barnId;
 	private String sexTypeId;
 	private String parity;
@@ -28,7 +28,7 @@ public class PigInfoMapper extends AbstractMapper {
 	// Derivable properties
 	private Integer deriveFfunctionTypeId;
 	private Integer deriveSexId;
-	private Integer derivePenId;
+	private Integer deriveRoomId;
 	private Integer deriveBarnId;
 	private Integer deriveParity;
 	private Integer deriveCompanyId;
@@ -71,15 +71,6 @@ public class PigInfoMapper extends AbstractMapper {
 	public void setDeriveSexId(Integer deriveSexId) {
 		this.deriveSexId = deriveSexId;
 	}
-
-	public Integer getDerivePenId() {
-		return derivePenId;
-	}
-
-	public void setDerivePenId(Integer derivePenId) {
-		this.derivePenId = derivePenId;
-	}
-
 	public Integer getDeriveBarnId() {
 		return deriveBarnId;
 	}
@@ -199,15 +190,7 @@ public class PigInfoMapper extends AbstractMapper {
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
 	}
-
-	public String getPenId() {
-		return penId;
-	}
-
-	public void setPenId(String penId) {
-		this.penId = penId;
-	}
-
+	
 	public String getBarnId() {
 		return barnId;
 	}
@@ -297,6 +280,22 @@ public class PigInfoMapper extends AbstractMapper {
 
 	public void setDerivePremiseId(Integer derivePremiseId) {
 		this.derivePremiseId = derivePremiseId;
+	}
+
+	public String getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
+
+	public Integer getDeriveRoomId() {
+		return deriveRoomId;
+	}
+
+	public void setDeriveRoomId(Integer deriveRoomId) {
+		this.deriveRoomId = deriveRoomId;
 	}
 
 	

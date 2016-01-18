@@ -12,6 +12,7 @@ import com.pigtrax.batch.dao.interfaces.CompanyDao;
 import com.pigtrax.batch.dao.interfaces.OriginDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.dao.interfaces.PremisesDao;
+import com.pigtrax.batch.dao.interfaces.RoomDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -35,6 +36,9 @@ public class PiginfoDerivable implements Derivable {
 	@Autowired
 	PremisesDao premiseDao;
 
+	@Autowired
+	RoomDao roomDao;
+	
 	@Override
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
@@ -49,7 +53,7 @@ public class PiginfoDerivable implements Derivable {
 				setGfunctionTypeId(pigInfoMapper);
 				setFarrowEventDate(pigInfoMapper);
 				setBarnId(pigInfoMapper);
-				setPenId(pigInfoMapper);
+				setRoomId(pigInfoMapper);
 				setGline(pigInfoMapper);
 				setGCompany(pigInfoMapper);
 				setOrigin(pigInfoMapper);
@@ -156,10 +160,10 @@ public class PiginfoDerivable implements Derivable {
 		}
 	}
 
-	private void setPenId(final PigInfoMapper pigInfoMapper) {
-		if (pigInfoMapper.getPenId() != null) {
+	private void setRoomId(final PigInfoMapper pigInfoMapper) {
+		if (pigInfoMapper.getRoomId() != null) {
 			try {
-				pigInfoMapper.setDerivePenId(penDao.getPenPKId(pigInfoMapper.getPenId()));
+				pigInfoMapper.setDeriveRoomId(roomDao.getRoomPkId(pigInfoMapper.getRoomId(), pigInfoMapper.getDeriveCompanyId(), pigInfoMapper.getDerivePremiseId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

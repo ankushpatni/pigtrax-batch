@@ -13,6 +13,7 @@ import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
+import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -37,6 +38,8 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				validateEntryDate(groupEventInfoMapper, errList);				
 				validateCompanyId(groupEventInfoMapper, errList);
+				validatePremiseId(groupEventInfoMapper, errList);
+				validateRoomIds(groupEventInfoMapper, errList);
 				validateGroupId(groupEventInfoMapper, errList);	
 				validatePhaseOfProduction(groupEventInfoMapper, errList); 
 				if (errList.size() > 0) {
@@ -45,6 +48,23 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 			}
 		}
 		return errorMap;
+	}
+	
+	
+	private void validatePremiseId(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
+		if (groupEventInfoMapper.getDerivePremiseId() == null || groupEventInfoMapper.getDerivePremiseId() < 0) {
+			groupEventInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	private void validateRoomIds(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
+		if (groupEventInfoMapper.getDeriveRoomIds() == null || groupEventInfoMapper.getDeriveRoomIds().size() == 0) {
+			groupEventInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_ROOMIDS_CODE,
+					Constants.ENTRY_EVENT_INVALID_ROOMIDS_MSG, "roomIds", false));
+		}
 	}
 	
 	private void validateEntryDate(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {

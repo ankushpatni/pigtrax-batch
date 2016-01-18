@@ -4,7 +4,7 @@
 		<dataInfo>
 			<col key="companyId" order="1" isEmpty="false" />
 			<col key="farmName" order="2" isEmpty="false" />
-			<col key="penId" order="3" isEmpty="true" />
+			<col key="roomId" order="3" isEmpty="true" />
 			<col key="pigId" order="4" isEmpty="false" />
 			<col key="tattoo" order="5" isEmpty="true" />
 			<col key="alternateTattoo" order="6" isEmpty="true" />
@@ -53,14 +53,15 @@
 	</event>
 	<event id="GROUPEVENT">
 		<dataInfo>
-			<col key="companyId" order="1" isEmpty="false" />
-			<col key="groupId" order="2" isEmpty="false" />			
-			<col key="groupStartDate" order="3" isEmpty="false" />
-			<col key="phaseOfProductionType" order="4" isEmpty="false" />
-			<col key="groupCloseDate" order="6" isEmpty="true" />
-			<col key="remarks" order="5" isEmpty="true" />			
-			<col key="currentInventory" order="7" isEmpty="true" />
-			<col key="previousGroupId" order="8" isEmpty="true" />
+			<col key="companyId" order="1" isEmpty="false" />			
+			<col key="farmName" order="2" isEmpty="false" />
+			<col key="rooms" order="3" isEmpty="false" />
+			<col key="groupId" order="4" isEmpty="false" />			
+			<col key="groupStartDate" order="5" isEmpty="false" />
+			<col key="phaseOfProductionType" order="6" isEmpty="false" />
+			<col key="groupCloseDate" order="7" isEmpty="true" />
+			<col key="remarks" order="8" isEmpty="true" />			
+			<col key="currentInventory" order="9" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="FARROWEVENT">

@@ -1,8 +1,10 @@
 package com.pigtrax.batch.mapper;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import com.pigtrax.batch.beans.RoomPK;
 import com.pigtrax.batch.mapper.interfaces.AbstractMapper;
 
 public class GroupEventInfoMapper extends AbstractMapper{
@@ -17,14 +19,18 @@ public class GroupEventInfoMapper extends AbstractMapper{
 	private String userUpdated;
 	private String currentInventory;
 	private String previousGroupId;
+	private String rooms;
+	private String farmName;
 		
 	//derived field
+	private Integer derivePremiseId;
 	private Integer derivePhaseOfProductionTypeId;
 	private Integer deriveCompanyId;
 	private Date deriveGroupStartDateTime;
 	private Date deriveGroupcloseDateTime;
 	private Integer deriveCurrentInventory;
 	private Integer derivePreviousGroupId;
+	private List<RoomPK> deriveRoomIds;
 
 	public String getGroupId() {
 		return groupId;
@@ -163,4 +169,43 @@ public class GroupEventInfoMapper extends AbstractMapper{
 	public void setDerivePreviousGroupId(Integer derivePreviousGroupId) {
 		this.derivePreviousGroupId = derivePreviousGroupId;
 	}
+
+	public String getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(String rooms) {
+		this.rooms = rooms;
+	}
+
+	public List<RoomPK> getDeriveRoomIds() {
+		return deriveRoomIds;
+	}
+
+	public void setDeriveRoomIds(List<RoomPK> deriveRoomIds) {
+		this.deriveRoomIds = deriveRoomIds;
+	}
+
+	public String getGroupStartDate() {
+		return groupStartDate;
+	}
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
+	}
+
+	public Integer getDerivePremiseId() {
+		return derivePremiseId;
+	}
+
+	public void setDerivePremiseId(Integer derivePremiseId) {
+		this.derivePremiseId = derivePremiseId;
+	}
+
+	
+	
 }

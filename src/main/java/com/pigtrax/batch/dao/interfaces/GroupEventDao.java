@@ -11,4 +11,6 @@ public interface GroupEventDao {
 	int addGroupEvent(GroupEvent groupEvent) throws SQLException;
 
 	GroupEvent getGroupEventByGeneratedGroupId(int groupId, int companyId);
+	
+	int updateGroupEvent(final GroupEvent groupEvent) throws SQLException;
 }

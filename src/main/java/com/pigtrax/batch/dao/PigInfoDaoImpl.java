@@ -35,9 +35,9 @@ public class PigInfoDaoImpl implements PigInfoDao {
 	@Override
 	public int insertPigInformation(final PigInfo pigInfo) throws SQLException, DuplicateKeyException {
 		final String Qry = "insert into pigtrax.\"PigInfo\"(\"pigId\", \"sireId\", \"damId\", \"entryDate\", \"origin\", \"gline\", \"gcompany\", "
-				+ "\"birthDate\", \"tattoo\", \"alternateTattoo\", \"remarks\", \"lastUpdated\", \"userUpdated\", \"id_Company\", \"id_Pen\", "
-				+ "\"id_Premise\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\") "
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?)";
+				+ "\"birthDate\", \"tattoo\", \"alternateTattoo\", \"remarks\", \"lastUpdated\", \"userUpdated\", \"id_Company\",  "
+				+ "\"id_Premise\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\",\"id_Room\") "
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -59,19 +59,15 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				ps.setString(11, pigInfo.getRemarks());
 				ps.setString(12, pigInfo.getUserUpdated());
 				ps.setInt(13, pigInfo.getCompanyId());
-				if (pigInfo.getPenId() != null && pigInfo.getPenId() != 0) {
-					ps.setObject(14, pigInfo.getPenId());
-				} else {
-					ps.setNull(14, java.sql.Types.INTEGER);
-				}
-				ps.setObject(15, pigInfo.getPremiseId(), java.sql.Types.INTEGER);
-				ps.setObject(16, pigInfo.getSexTypeId(), java.sql.Types.INTEGER);
+				ps.setObject(14, pigInfo.getPremiseId(), java.sql.Types.INTEGER);
+				ps.setObject(15, pigInfo.getSexTypeId(), java.sql.Types.INTEGER);
 				if(pigInfo.getParity() != null)
-					ps.setInt(17, pigInfo.getParity());
+					ps.setInt(16, pigInfo.getParity());
 				else
-					ps.setInt(17,0);
-				ps.setBoolean(18, pigInfo.isActive());
-				ps.setObject(19, pigInfo.getGfunctionTypeId(), java.sql.Types.INTEGER);
+					ps.setInt(16,0);
+				ps.setBoolean(17, pigInfo.isActive());
+				ps.setObject(18, pigInfo.getGfunctionTypeId(), java.sql.Types.INTEGER);
+				ps.setObject(19, pigInfo.getRoomId(), java.sql.Types.INTEGER);
 				return ps;
 			}
 		}, holder);

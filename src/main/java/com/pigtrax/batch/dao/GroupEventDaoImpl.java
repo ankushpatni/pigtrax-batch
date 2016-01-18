@@ -86,8 +86,8 @@ public class GroupEventDaoImpl implements GroupEventDao {
 	public int addGroupEvent(final com.pigtrax.batch.beans.GroupEvent groupEvent) throws SQLException {
 
 		final String Qry = "insert into pigtrax.\"GroupEvent\"(\"groupId\", \"groupStartDateTime\", \"groupCloseDateTime\", \"isActive\","
-				+ " \"remarks\", \"lastUpdated\",\"userUpdated\", \"id_Company\" ,\"currentInventory\"  , \"previousGroupId\", \"id_PhaseOfProductionType\") "
-				+ "values(?,?,?,?,?,current_timestamp,?,?,?,?,?)";
+				+ " \"remarks\", \"lastUpdated\",\"userUpdated\", \"id_Company\" ,\"currentInventory\"  , \"previousGroupId\", \"id_PhaseOfProductionType\",\"id_Premise\") "
+				+ "values(?,?,?,?,?,current_timestamp,?,?,?,?,?,?)";
 
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -129,6 +129,16 @@ public class GroupEventDaoImpl implements GroupEventDao {
 				{
 					ps.setNull(10, java.sql.Types.INTEGER);
 				}
+				
+				if(null != groupEvent.getPremiseId())
+				{
+					ps.setInt(11, groupEvent.getPremiseId());
+				}
+				else
+				{
+					ps.setNull(11, java.sql.Types.INTEGER);
+				}
+				
 				
 				return ps;
 			}
@@ -189,4 +199,70 @@ public int updateGroupEventCurrentInventory(final GroupEvent groupEvent) throws 
 			return groupEvent;
 		}
 	}
+	
+	
+	@Override
+	public int updateGroupEvent(final GroupEvent groupEvent) throws SQLException
+	{
+		String query = "update pigtrax.\"GroupEvent\" SET \"groupStartDateTime\"=?, \"groupCloseDateTime\"=?, \"isActive\"=?, \"remarks\"=?, \"lastUpdated\"=?,"+
+				" \"userUpdated\"=? , \"currentInventory\"=? ,\"previousGroupId\" =? , \"id_PhaseOfProductionType\" = ?, \"id_Premise\"=?  where \"id\" = ? ";
+			return this.jdbcTemplate.update(query, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					if( null != groupEvent.getGroupStartDateTime())
+					{
+						ps.setDate(1, new java.sql.Date(groupEvent
+							.getGroupStartDateTime().getTime()));
+					}
+					else
+					{
+						ps.setNull(1, java.sql.Types.DATE);
+					}
+					if( null != groupEvent.getGroupCloseDateTime())
+					{
+					ps.setDate(2, new java.sql.Date(groupEvent
+							.getGroupCloseDateTime().getTime()));
+					}
+					else
+					{
+						ps.setNull(2, java.sql.Types.DATE);
+					}
+					
+					ps.setBoolean(3, groupEvent.isActive());
+					ps.setString(4, groupEvent.getRemarks());
+					ps.setDate(5, new java.sql.Date(System.currentTimeMillis()));
+					ps.setString(6, groupEvent.getUserUpdated());
+					
+					if(null != groupEvent.getCurrentInventory())
+					{
+						ps.setInt(7, groupEvent.getCurrentInventory());
+					}
+					else
+					{
+						ps.setNull(7, java.sql.Types.INTEGER);
+					}
+					ps.setString(8, groupEvent.getPreviousGroupId());
+					if(null != groupEvent.getPhaseOfProductionTypeId())
+					{
+						ps.setInt(9, groupEvent.getPhaseOfProductionTypeId());
+					}
+					else
+					{
+						ps.setNull(9, java.sql.Types.INTEGER);
+					}
+					
+					if(null != groupEvent.getPremiseId() && groupEvent.getPremiseId() != 0)
+					{
+						ps.setInt(10, groupEvent.getPremiseId());
+					}
+					else
+					{
+						ps.setNull(10, java.sql.Types.INTEGER);
+					}
+					
+					ps.setInt(11, groupEvent.getId());
+				}
+			});	
+	}
+
 }

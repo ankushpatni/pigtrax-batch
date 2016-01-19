@@ -219,7 +219,7 @@ public class PigletStatusInfoDerivable implements Derivable {
 		{		
 			try { 
 				if(pigletStatusInfoMapper.getWeanGroupId() != null)
-					pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupId(), pigletStatusInfoMapper.getDeriveCompanyId()));
+					pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupId(), pigletStatusInfoMapper.getDeriveCompanyId(), pigletStatusInfoMapper.getDerivePremiseId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

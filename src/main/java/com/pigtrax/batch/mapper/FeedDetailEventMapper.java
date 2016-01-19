@@ -25,6 +25,7 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	private String weightInKgs;
 	private String silo;
 	private String remarks;
+	private String feedCost;
 	
 	
 	private Integer derivePremiseId;
@@ -35,6 +36,7 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	private Double deriveWeightInKgs;
 	private Integer deriveSilo;
 	private Integer deriveFeedEventId;
+	private Double deriveFeedCost;
 	
 	public String getFarmName() {
 		return farmName;
@@ -144,5 +146,18 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	public void setDeriveFeedEventId(Integer deriveFeedEventId) {
 		this.deriveFeedEventId = deriveFeedEventId;
 	}
+	public String getFeedCost() {
+		return feedCost;
+	}
+	public void setFeedCost(String feedCost) {
+		this.feedCost = feedCost;
+	}
+	public Double getDeriveFeedCost() {
+		return deriveFeedCost;
+	}
+	public void setDeriveFeedCost(Double deriveFeedCost) {
+		this.deriveFeedCost = deriveFeedCost;
+	}
+	
 	
 }

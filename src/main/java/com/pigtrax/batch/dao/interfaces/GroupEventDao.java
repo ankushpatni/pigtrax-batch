@@ -7,6 +7,8 @@ import com.pigtrax.batch.beans.GroupEvent;
 public interface GroupEventDao {
 	
 	public Integer getGroupEventId(String groupId, int companyId) throws  SQLException;
+	
+	public Integer getGroupEventId(String groupId, int companyId, Integer premiseId) throws  SQLException;
 
 	int addGroupEvent(GroupEvent groupEvent) throws SQLException;
 

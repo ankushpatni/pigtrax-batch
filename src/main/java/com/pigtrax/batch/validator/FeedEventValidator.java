@@ -11,6 +11,7 @@ import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.exception.ErrorBean;
+import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
@@ -35,18 +36,36 @@ public class FeedEventValidator extends AbstractValidator {
 			feedEventMapper = (FeedEventMapper) mapper;
 			if (feedEventMapper.isRecovrableErrors() == null || feedEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
+				validateCompanyId(feedEventMapper, errList);
+				validatePremiseId(feedEventMapper, errList);
 				validateRationId(feedEventMapper, errList);
 				validateTicketNumber(feedEventMapper, errList);
-				validateInitialFeedEntryDate(feedEventMapper, errList);
+				//validateInitialFeedEntryDate(feedEventMapper, errList);
 				//validateTransportJourneyId(feedEventMapper, errList);
-				validateFeedCost(feedEventMapper, errList);
-				validateFeedQuantity(feedEventMapper, errList);
+				//validateFeedCost(feedEventMapper, errList);
+				//validateFeedQuantity(feedEventMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
 			}
 		}
 		return errorMap;
+	}
+	
+	private void validatePremiseId(final FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getDerivePremiseId() == null || feedEventMapper.getDerivePremiseId() < 0) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
+					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	
+	private void validateCompanyId(final FeedEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getDeriveCompanyId() == null || feedEventMapper.getDeriveCompanyId() < 0) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_COMPANY_CODE, Constants.BREED_NG_EVNT_INVALID_COMPANY_MSG, "companyId", false));
+		}
 	}
 
 	private void validateFeedCost(FeedEventMapper feedEventMapper, List<ErrorBean> errList) {

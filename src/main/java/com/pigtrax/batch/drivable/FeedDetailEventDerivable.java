@@ -14,6 +14,7 @@ import com.pigtrax.batch.dao.interfaces.PremisesDao;
 import com.pigtrax.batch.dao.interfaces.SiloDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.FeedDetailEventMapper;
+import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 @Component
@@ -47,6 +48,7 @@ public class FeedDetailEventDerivable implements Derivable {
 				setWeightInKgs(feedEventMapper);
 				setSilo(feedEventMapper);
 				setFeedEventId(feedEventMapper);
+				setFeedCost(feedEventMapper);
 			}
 		}
 	}
@@ -69,7 +71,7 @@ public class FeedDetailEventDerivable implements Derivable {
 	
 	private void setGroupEventId(final FeedDetailEventMapper feedEventMapper) {
 		try {
-			feedEventMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(feedEventMapper.getGroupEventId(), feedEventMapper.getDeriveCompanyId())); 
+			feedEventMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(feedEventMapper.getGroupEventId(), feedEventMapper.getDeriveCompanyId(), feedEventMapper.getDerivePremiseId())); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
@@ -109,6 +111,14 @@ public class FeedDetailEventDerivable implements Derivable {
 		try {
 			feedEventMapper.setDeriveFeedEventId(feedEventDao.getFeedEventPKId(feedEventMapper.getTicketNumber(), feedEventMapper.getDerivePremiseId())); 
 		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+	
+	private void setFeedCost(FeedDetailEventMapper feedEventMapper) {
+		try {
+			feedEventMapper.setDeriveFeedCost(Double.parseDouble(feedEventMapper.getFeedCost()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

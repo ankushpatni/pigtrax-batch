@@ -31,8 +31,8 @@ private static final Logger logger = Logger.getLogger(FeedEventDetailDaoImpl.cla
 	public Integer addFeedEventDetail(final FeedEventDetail feedEventDetail)
 			throws SQLException {
 		final String Qry = "insert into pigtrax.\"FeedEventDetails\"(\"feedEventDate\", \"weightInKgs\", \"remarks\", \"id_FeedEvent\", "
-		   		+ "\"id_Silo\", \"id_GroupEvent\", \"id_FeedEventType\",\"lastUpdated\", \"userUpdated\",\"feedMill\") "
-				+ "values(?,?,?,?,?,?,?,current_timestamp,?,?)";	
+		   		+ "\"id_Silo\", \"id_GroupEvent\", \"id_FeedEventType\",\"lastUpdated\", \"userUpdated\",\"feedMill\", \"feedCost\") "
+				+ "values(?,?,?,?,?,?,?,current_timestamp,?,?,?)";	
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -72,6 +72,7 @@ private static final Logger logger = Logger.getLogger(FeedEventDetailDaoImpl.cla
 				ps.setInt(7, feedEventDetail.getFeedEventTypeId());
 				ps.setString(8, feedEventDetail.getUserUpdated());
 				ps.setString(9,  feedEventDetail.getFeedMill());
+				ps.setObject(10, feedEventDetail.getFeedCost(), java.sql.Types.DOUBLE);
 				return ps;
 			}
 		}, holder);

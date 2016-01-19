@@ -90,6 +90,7 @@ public class FeedDetailEventHandler implements Handler {
 			feedEvent.setFeedEventTypeId(feedEventMapper.getDeriveFeedEventType());
 			feedEvent.setUserUpdated(processDTO.getUserName());
 			feedEvent.setFeedMill(feedEventMapper.getFeedMill());
+			feedEvent.setFeedCost(feedEventMapper.getDeriveFeedCost());
 		} catch (Exception e) {
 			logger.error("Exception in FeedDetailEventHandler.populateFeedEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

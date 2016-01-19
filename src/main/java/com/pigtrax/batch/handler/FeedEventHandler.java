@@ -1,6 +1,7 @@
 package com.pigtrax.batch.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,6 @@ import com.pigtrax.batch.beans.FeedEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.FeedEventDaoImpl;
 import com.pigtrax.batch.dao.interfaces.FeedEventDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
@@ -126,7 +126,7 @@ public class FeedEventHandler implements Handler {
 		PigTraxEventMaster eventMaster = null;
 		if (generatedKey != null && generatedKey > 0) {
 			eventMaster = new PigTraxEventMaster();
-			eventMaster.setEventTime(mapper.getDeriveIntialFeedEntryDate());
+			eventMaster.setEventTime(new Date());
 			eventMaster.setFeedEventId(generatedKey);
 			eventMaster.setUserUpdated(processDTO.getUserName());
 		}

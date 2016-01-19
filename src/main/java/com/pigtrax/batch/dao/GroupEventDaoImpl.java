@@ -62,6 +62,40 @@ public class GroupEventDaoImpl implements GroupEventDao {
 
 	}
 	
+	
+	@Override
+	public Integer getGroupEventId(String groupId, int companyId, Integer premiseId) throws SQLException { 
+		logger.debug("groupId/company Ids are :" + groupId+"/"+companyId+"/"+premiseId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"GroupEvent\" where lower(\"groupId\") = ? and \"id_Company\" = ? and \"id_Premise\" = ?");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (groupId != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, groupId.trim().toLowerCase());
+					ps.setInt(2, companyId);
+					ps.setInt(3, premiseId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("groupId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+
+		return null;
+
+	}
+	
 	@Override
 	public GroupEvent getGroupEventByGeneratedGroupId(final int groupId, final int companyId)
 	{

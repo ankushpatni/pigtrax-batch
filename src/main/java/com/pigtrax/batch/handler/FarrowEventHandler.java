@@ -50,7 +50,7 @@ public class FarrowEventHandler implements Handler {
 						FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
 						if (farrowEvent != null) {
 							
-							boolean flag = farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
+							boolean flag = false;//farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
 							if (flag) {
 								
 								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FARROW_DUPLICATE_CODE, Constants.ERR_FARROW_DUPLICATE_CODE_MSG, "serviceDate", false));
@@ -91,7 +91,8 @@ public class FarrowEventHandler implements Handler {
 			farrowEvent = new FarrowEvent();
 			farrowEvent.setPigInfoId(farrowEventfoMaper.getDerivePigInfoId());
 			farrowEvent.setCompanyId(farrowEventfoMaper.getDeriveCompanyId());
-			farrowEvent.setPragnancyEventId(farrowEventfoMaper.getPragnancyEventId());
+			//farrowEvent.setPragnancyEventId(farrowEventfoMaper.getPragnancyEventId());
+			farrowEvent.setBreedingEventId(farrowEventfoMaper.getBreedingEventId());
 			farrowEvent.setPenId(farrowEventfoMaper.getDerivePenId());
 			farrowEvent.setFarrowDateTime(farrowEventfoMaper.getDeriveFarrowDate());
 			farrowEvent.setLiveBorns(farrowEventfoMaper.getDeriveLiveBorns());

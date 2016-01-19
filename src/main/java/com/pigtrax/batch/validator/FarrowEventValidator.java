@@ -163,7 +163,7 @@ public class FarrowEventValidator extends AbstractValidator {
 
 	
 	private void validatePragnancyTest(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if ( farrowEventMapper.getPragnancyEventId() == null) {
+		if ( farrowEventMapper.getBreedingEventId() == null || farrowEventMapper.getBreedingEventId() == 0) {
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PRG_TEST, Constants.FRW_EVNT_ERR_PRG_TEST_MSG, "resultDate", false));
 		}

@@ -42,6 +42,7 @@ public class FarrowEventMapper extends AbstractMapper {
 	private Integer pragnancyEventId;
 	private Integer derivePremiseId;
 	private Integer deriveWeakBorns;
+	private Integer breedingEventId;
 
 	public Integer getPragnancyEventId() {
 		return pragnancyEventId;
@@ -318,6 +319,14 @@ public class FarrowEventMapper extends AbstractMapper {
 
 	public void setDeriveWeakBorns(Integer deriveWeakBorns) {
 		this.deriveWeakBorns = deriveWeakBorns;
+	}
+
+	public Integer getBreedingEventId() {
+		return breedingEventId;
+	}
+
+	public void setBreedingEventId(Integer breedingEventId) {
+		this.breedingEventId = breedingEventId;
 	}
 	
 	

@@ -114,7 +114,7 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_PRG_TEST = "606";
 
-	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No positive pregnancy records found for the given result date";
+	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No matching service records found for the given result date";
 
 	public static final String FRW_EVNT_ERR_PEN_ID = "607";
 

@@ -95,7 +95,7 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 		final String Qry = "insert into pigtrax.\"FarrowEvent\"(\"farrowDateTime\", \"id_Pen\", \"liveBorns\", "
 				+ "\"stillBorns\", \"mummies\", \"maleBorns\", \"femaleBorns\", \"weightInKgs\", \"inducedBirth\", "
 				+ "\"assistedBirth\", \"remarks\", \"sowCondition\", \"lastUpdated\", \"userUpdated\", \"id_EmployeeGroup\", "
-				+ "\"id_PigInfo\", \"id_PregnancyEvent\",\"teats\",\"id_Premise\",\"weakBorns\" ) values(?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?)";
+				+ "\"id_PigInfo\", \"id_PregnancyEvent\",\"teats\",\"id_Premise\",\"weakBorns\",\"id_BreedingEvent\" ) values(?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -144,6 +144,11 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 				ps.setInt(17, farrowEvent.getTeasts());
 				ps.setObject(18, farrowEvent.getPremiseId(), java.sql.Types.INTEGER);
 				ps.setObject(19, farrowEvent.getWeakBorns(), java.sql.Types.INTEGER); 
+				if (farrowEvent.getBreedingEventId() != null) {
+					ps.setInt(20, farrowEvent.getBreedingEventId());
+				} else {
+					ps.setNull(20, java.sql.Types.INTEGER);
+				}
 				return ps;
 			}
 		}, holder);

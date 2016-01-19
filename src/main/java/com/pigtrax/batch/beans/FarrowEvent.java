@@ -30,6 +30,7 @@ public class FarrowEvent implements Serializable {
 	private String userUpdated;
 	private Integer premiseId;
 	private Integer weakBorns;
+	private Integer breedingEventId;
 
 	public Integer getCompanyId() {
 		return companyId;
@@ -231,6 +232,14 @@ public class FarrowEvent implements Serializable {
 
 	public void setWeakBorns(Integer weakBorns) {
 		this.weakBorns = weakBorns;
+	}
+
+	public Integer getBreedingEventId() {
+		return breedingEventId;
+	}
+
+	public void setBreedingEventId(Integer breedingEventId) {
+		this.breedingEventId = breedingEventId;
 	}
 	
 	

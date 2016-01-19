@@ -25,4 +25,6 @@ public interface BreedingEventDao {
 	void resetServiceStartDate(Integer breedingEventId);
 	
 	List<BreedingEvent> getOpenServiceRecords(Integer pigInfoId);
+	
+	List<BreedingEvent> getPendingFarrowServiceRecords(final Integer pigInfoId);
 }

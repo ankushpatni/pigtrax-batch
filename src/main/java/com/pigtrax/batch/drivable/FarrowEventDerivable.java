@@ -1,14 +1,13 @@
 package com.pigtrax.batch.drivable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.BreedingEvent;
 import com.pigtrax.batch.beans.PregnancyInfo;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
@@ -65,7 +64,8 @@ public class FarrowEventDerivable implements Derivable {
 				setEmployeeGroupId(farrowEventMapper);
 				setTeats(farrowEventMapper);
 				setSowCondition(farrowEventMapper);
-				setPregnancyEventId(farrowEventMapper);
+				//setPregnancyEventId(farrowEventMapper);
+				setBreedingEventId(farrowEventMapper);
 			}
 		}
 
@@ -216,6 +216,35 @@ public class FarrowEventDerivable implements Derivable {
 					}
 				}
 			}
+		}
+	}
+	
+	
+	
+	private void setBreedingEventId(final FarrowEventMapper farrowEventMapper)
+	{
+		if(farrowEventMapper.getDerivePigInfoId() != null && farrowEventMapper.getDeriveFarrowDate() != null)
+		{
+			//List<PregnancyEvent> pregnancyList = pregnancyEventDao.getOpenPregnancyRecords(farrowEventDto.getPigInfoId());
+			List<BreedingEvent> breedingEventList = breedingEventDao.getPendingFarrowServiceRecords(farrowEventMapper.getDerivePigInfoId());
+			if(breedingEventList != null && 0 <breedingEventList.size())
+			{
+				for(BreedingEvent breedingEventDetails :  breedingEventList)
+				{
+					if(breedingEventDetails != null) 
+					{
+						DateTime serviceDate = new DateTime(breedingEventDetails.getServiceStartDate());
+						DateTime farrowDate = new DateTime(farrowEventMapper.getDeriveFarrowDate());
+						int duration = Days.daysBetween(serviceDate, farrowDate).getDays();
+						if(duration >= 105 && duration <= 130)
+						{
+							farrowEventMapper.setBreedingEventId(breedingEventDetails.getId());
+							break;
+						}
+					}
+				}
+			}
+			
 		}
 	}
 

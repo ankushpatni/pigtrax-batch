@@ -34,7 +34,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 
 	@Override
 	public int insertPigInformation(final PigInfo pigInfo) throws SQLException, DuplicateKeyException {
-		final String Qry = "insert into pigtrax.\"PigInfo\"(\"pigId\", \"sireId\", \"damId\", \"entryDate\", \"origin\", \"gline\", \"gcompany\", "
+		final String Qry = "insert into pigtrax.\"PigInfo\"(\"pigId\", \"sireId\", \"damId\", \"entryDate\", \"id_Origin\", \"gline\", \"gcompany\", "
 				+ "\"birthDate\", \"tattoo\", \"alternateTattoo\", \"remarks\", \"lastUpdated\", \"userUpdated\", \"id_Company\",  "
 				+ "\"id_Premise\", \"id_SexType\", \"parity\",\"isActive\",\"id_GfunctionType\",\"id_Room\") "
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?)";
@@ -46,7 +46,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 				ps.setString(2, pigInfo.getSireId());
 				ps.setString(3, pigInfo.getDamId());
 				ps.setDate(4, new java.sql.Date(pigInfo.getEntryDate().getTime()));
-				ps.setString(5, pigInfo.getOrigin());
+				ps.setObject(5, pigInfo.getOriginId(), java.sql.Types.INTEGER);
 				ps.setObject(6, pigInfo.getGline(), java.sql.Types.INTEGER);
 				ps.setObject(7, pigInfo.getGcompany(), java.sql.Types.INTEGER);
 				if (pigInfo.getBirthDate() != null) {
@@ -247,7 +247,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 	public PigInfo getPigDetails(final Integer pigInfoId)
 	{
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select \"id\", \"pigId\",\"sireId\",\"damId\",\"origin\",\"gline\","
+		qryBuffer.append("select \"id\", \"pigId\",\"sireId\",\"damId\",\"id_Origin\",\"gline\","
 				+ "\"gcompany\",\"birthDate\",\"tattoo\",\"alternateTattoo\",\"remarks\",\"id_Company\","
 				+ "\"id_Barn\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\" "
 				+ "from pigtrax.\"PigInfo\" where \"id\" = ?");
@@ -274,7 +274,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 			pigInfo.setPigId(rs.getString("pigId"));
 			pigInfo.setSireId(rs.getString("sireId"));
 			pigInfo.setDamId(rs.getString("damId"));
-			pigInfo.setOrigin(rs.getString("origin"));
+			pigInfo.setOriginId(rs.getInt("id_Origin"));
 			pigInfo.setGline(rs.getObject("gline") != null ? rs.getInt("gline") : null);
 			pigInfo.setGcompany((rs.getObject("gcompany") != null) ? rs.getInt("gcompany") : 0);
 			pigInfo.setBirthDate(rs.getDate("birthDate"));

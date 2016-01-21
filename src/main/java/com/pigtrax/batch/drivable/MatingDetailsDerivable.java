@@ -39,8 +39,8 @@ public class MatingDetailsDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				MatingDetailsMapper matingDetailsMapper = (MatingDetailsMapper) mapper;						
-				setCompanyId(matingDetailsMapper);
-				setPremiseId(matingDetailsMapper);
+				setCompanyId(matingDetailsMapper, processDTO);
+				setPremiseId(matingDetailsMapper, processDTO);
 				setPigInfoId(matingDetailsMapper);
 				setMatingDate(matingDetailsMapper);
 				setSemenDate(matingDetailsMapper);
@@ -52,20 +52,17 @@ public class MatingDetailsDerivable implements Derivable {
 	}
 
 	
-	private void setCompanyId(final MatingDetailsMapper matingDetailsMapper) {
-		if(matingDetailsMapper.getCompanyId() != null)
-		{
+	private void setCompanyId(final MatingDetailsMapper matingDetailsMapper, ProcessDTO processDTO) {
 			try {
-				matingDetailsMapper.setDeriveCompanyId(companyDao.getCompanyId(matingDetailsMapper.getCompanyId().trim()));
+				matingDetailsMapper.setDeriveCompanyId(processDTO.getCompanyId());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
 	}
 	
-	private void setPremiseId(final MatingDetailsMapper matingDetailsMapper) {
+	private void setPremiseId(final MatingDetailsMapper matingDetailsMapper, ProcessDTO processDto) {
 		try {
-			matingDetailsMapper.setDerivePremiseId(premisesDao.getPremisesPK(matingDetailsMapper.getFarmName(), matingDetailsMapper.getDeriveCompanyId())); 
+			matingDetailsMapper.setDerivePremiseId(processDto.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}

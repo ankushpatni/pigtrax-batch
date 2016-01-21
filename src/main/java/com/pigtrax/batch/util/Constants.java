@@ -15,6 +15,10 @@ public interface Constants {
 	public static final String USER_NAME = "userName";
 
 	public static final char DEFAULT_SEPRATOR = ',';
+	
+	public static final String COMPANY_ID = "companyId";
+	
+	public static final String PREMISE_ID = "premiseId";
 
 	public static final String REF_DATA_SEX = "SEX";
 
@@ -454,6 +458,10 @@ public interface Constants {
 	public static final String ENTRY_EVENT_INVALID_ROOMID_CODE = "638";
 	
 	public static final String ENTRY_EVENT_INVALID_ROOMID_MSG = "Invalid room specified for the premise";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_CODE = "639";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_MSG = "Pig already exists in the farm with the given tattoo";
 }
 
 

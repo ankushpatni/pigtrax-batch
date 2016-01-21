@@ -16,6 +16,10 @@ public class ProcessDTO {
 
 	private String userName;
 
+	private Integer companyId;
+	
+	private Integer premiseId;
+	
 	public boolean hasHeaders() {
 		return hasHeaders;
 	}
@@ -67,5 +71,23 @@ public class ProcessDTO {
 	public boolean isHasHeaders() {
 		return hasHeaders;
 	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
+	}
+	
+	
 
 }

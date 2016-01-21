@@ -46,10 +46,9 @@ public class PigInfoValidator extends AbstractValidator {
 				validatePremiseId(pigInfoMapper, errList);
 				validateRoomId(pigInfoMapper, errList);
 				validateUniquePigId(pigInfoMapper, errList);
+				validateUniqueTattoo(pigInfoMapper, errList);
 				validateEntryDate(pigInfoMapper, errList);
 				validateBirthdate(pigInfoMapper, errList);
-				validateParity(pigInfoMapper, errList);
-				
 				validateSexId(pigInfoMapper, errList);
 				validateOrigin(pigInfoMapper, errList);
 				validateGfunctionTypeId(pigInfoMapper, errList);
@@ -86,16 +85,6 @@ public class PigInfoValidator extends AbstractValidator {
 					Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "birthDate", false));
 		}
 	}
-
-	private void validateParity(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getParity() != null && (pigInfoMapper.getDeriveParity() == null || pigInfoMapper.getDeriveParity() < 0)) {
-			pigInfoMapper.setDeriveParity(0);
-			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH,
-					Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "parity", false));
-		}
-	}
-
 	private void validateCompanyId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDeriveCompanyId() == null || pigInfoMapper.getDeriveCompanyId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
@@ -113,7 +102,7 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateRoomId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getDeriveRoomId() == null || pigInfoMapper.getDeriveRoomId() < 0) {
+		if (pigInfoMapper.getRoomId() != null && pigInfoMapper.getRoomId().trim().length() > 0 && (pigInfoMapper.getDeriveRoomId() == null || pigInfoMapper.getDeriveRoomId() < 0)) {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_ROOMID_CODE,
 					Constants.ENTRY_EVENT_INVALID_ROOMID_MSG, "roomId", false));
@@ -137,6 +126,26 @@ public class PigInfoValidator extends AbstractValidator {
 				pigInfoMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_DUPLICATE_PIGID_CODE,
 						Constants.ENTRY_EVENT_DUPLICATE_PIGID_MSG, "pigId", false));
+			}
+		}
+	}
+	
+	private void validateUniqueTattoo(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) { 
+		if (pigInfoMapper.getTattoo() != null && pigInfoMapper.getDeriveCompanyId() != null && pigInfoMapper.getDeriveCompanyId() > 0 
+				&& pigInfoMapper.getDerivePremiseId() != null && pigInfoMapper.getDerivePremiseId() > 0) {
+			Integer existingPifgId = null;
+			try {
+				 existingPifgId = pigInfoDao.getPigInfoIdForTattoo(pigInfoMapper.getTattoo() , pigInfoMapper.getDeriveCompanyId(), pigInfoMapper.getDerivePremiseId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(existingPifgId != null && 0 < existingPifgId)
+			{
+				pigInfoMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_DUPLICATE_TATTOO_CODE,
+						Constants.ENTRY_EVENT_DUPLICATE_TATTOO_MSG, "tattoo", false));
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class CSVLoader implements DataLoader<List<Mapper>> {
 			ColumnPositionMappingStrategy colMapping = getColumns(processDTO, reader);
 			List<Mapper> list = csv.parse(colMapping, reader);
 			if (processDTO.hasHeaders()) {
-				//list.remove(0);
+				list.remove(0);
 			}
 			return list;
 		} catch (Exception e) {
@@ -48,7 +48,8 @@ public class CSVLoader implements DataLoader<List<Mapper>> {
 		ColumnPositionMappingStrategy strategy = new ColumnPositionMappingStrategy();
 		strategy.setType(processDTO.getBatchType().getMapperClass());
 		String[] columns = null;
-		if (processDTO.hasHeaders()) {
+		boolean isHeader = false;
+		if (isHeader) {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				columns = nextLine;

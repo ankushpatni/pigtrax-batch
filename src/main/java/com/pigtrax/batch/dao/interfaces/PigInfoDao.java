@@ -23,4 +23,6 @@ public interface PigInfoDao {
 	int updatePigInfoStatus(Integer id, Boolean pigStatus);
 	
 	Integer getActivePigInfoId(String pigId, int companyId) throws SQLException;
+	
+	Integer getPigInfoIdForTattoo(String tattoo, int companyId, int premiseId) throws SQLException;
 }

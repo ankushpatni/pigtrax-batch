@@ -68,14 +68,17 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void validateTeats(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getDeriveTeasts() == null) {
-			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS, Constants.FRW_EVNT_ERR_EMP_TEATS_MSG, "Teats", false));
-		} else if (farrowEventMapper.getDeriveTeasts() < 1 || farrowEventMapper.getDeriveTeasts() > 30) {
-
-			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS_VAL, Constants.FRW_EVNT_ERR_TEATS_VAL_MSG, "Teats", false));
-
+		if(farrowEventMapper.getTeats() != null && farrowEventMapper.getTeats().trim().length() > 0)
+		{
+			if (farrowEventMapper.getDeriveTeasts() == null || farrowEventMapper.getDeriveTeasts() < 0 ) {
+				farrowEventMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS, Constants.FRW_EVNT_ERR_EMP_TEATS_MSG, "Teats", false));
+			} else if (farrowEventMapper.getDeriveTeasts() < 1 || farrowEventMapper.getDeriveTeasts() > 30) {
+	
+				farrowEventMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_TEATS_VAL, Constants.FRW_EVNT_ERR_TEATS_VAL_MSG, "Teats", false));
+	
+			}
 		}
 
 	}

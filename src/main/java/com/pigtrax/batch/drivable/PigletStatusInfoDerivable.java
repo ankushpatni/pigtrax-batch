@@ -49,8 +49,8 @@ public class PigletStatusInfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PigletStatusInfoMapper pigletStatusInfoMapper = (PigletStatusInfoMapper) mapper;
-				setCompanyId(pigletStatusInfoMapper); 
-				setPremiseId(pigletStatusInfoMapper);
+				setCompanyId(pigletStatusInfoMapper, processDTO); 
+				setPremiseId(pigletStatusInfoMapper, processDTO);
 				setPigInfoId(pigletStatusInfoMapper);
 				setDerivePigletStatusType(pigletStatusInfoMapper);
 				setSowCondition(pigletStatusInfoMapper);
@@ -68,9 +68,9 @@ public class PigletStatusInfoDerivable implements Derivable {
 	}
 
 	
-	private void setPremiseId(final PigletStatusInfoMapper pigletStatusInfoMapper) {
+	private void setPremiseId(final PigletStatusInfoMapper pigletStatusInfoMapper, ProcessDTO processDTO) {
 		try {
-			pigletStatusInfoMapper.setDerivePremiseId(premisesDao.getPremisesPK(pigletStatusInfoMapper.getFarmName(), pigletStatusInfoMapper.getDeriveCompanyId())); 
+			pigletStatusInfoMapper.setDerivePremiseId(processDTO.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
@@ -89,9 +89,9 @@ public class PigletStatusInfoDerivable implements Derivable {
 	}
 	
 	
-	private void setCompanyId(final PigletStatusInfoMapper pigletStatusInfoMapper) {
+	private void setCompanyId(final PigletStatusInfoMapper pigletStatusInfoMapper, ProcessDTO processDTO) {
 		try {
-			pigletStatusInfoMapper.setDeriveCompanyId(companyDao.getCompanyId(pigletStatusInfoMapper.getCompanyId()));
+			pigletStatusInfoMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

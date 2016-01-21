@@ -44,8 +44,8 @@ public class PiginfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PigInfoMapper pigInfoMapper = (PigInfoMapper) mapper;
-				setCompanyId(pigInfoMapper);
-				setPremiseId(pigInfoMapper);
+				setCompanyId(pigInfoMapper, processDTO);
+				setPremiseId(pigInfoMapper, processDTO);
 				setEntryDate(pigInfoMapper);
 				setBirthdate(pigInfoMapper);
 				setParity(pigInfoMapper);				
@@ -113,7 +113,7 @@ public class PiginfoDerivable implements Derivable {
 
 	private void setParity(final PigInfoMapper pigInfoMapper) {
 		try {
-			pigInfoMapper.setDeriveParity(Integer.parseInt(pigInfoMapper.getParity()));
+			pigInfoMapper.setDeriveParity(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,17 +133,17 @@ public class PiginfoDerivable implements Derivable {
 		}
 	}
 
-	private void setCompanyId(final PigInfoMapper pigInfoMapper) {
+	private void setCompanyId(final PigInfoMapper pigInfoMapper, ProcessDTO processDTO) {
 		try {
-			pigInfoMapper.setDeriveCompanyId(companyDao.getCompanyId(pigInfoMapper.getCompanyId()));
+			pigInfoMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void setPremiseId(final PigInfoMapper pigInfoMapper) {
+	private void setPremiseId(final PigInfoMapper pigInfoMapper, ProcessDTO processDTO) {
 		try {
-			pigInfoMapper.setDerivePremiseId(premiseDao.getPremisesPK(pigInfoMapper.getFarmName(), pigInfoMapper.getDeriveCompanyId())); 
+			pigInfoMapper.setDerivePremiseId(processDTO.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}

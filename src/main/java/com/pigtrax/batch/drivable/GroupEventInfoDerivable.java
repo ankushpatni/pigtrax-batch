@@ -39,8 +39,8 @@ public class GroupEventInfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				GroupEventInfoMapper groupEventInfoMapper = (GroupEventInfoMapper) mapper;
-				setCompanyId(groupEventInfoMapper);
-				setPremiseId(groupEventInfoMapper);
+				setCompanyId(groupEventInfoMapper, processDTO);
+				setPremiseId(groupEventInfoMapper, processDTO);
 				setDeriveRoomIds(groupEventInfoMapper);
 				setGroupEntryDate(groupEventInfoMapper);				
 				setPhaseOfProductionType(groupEventInfoMapper);
@@ -52,9 +52,9 @@ public class GroupEventInfoDerivable implements Derivable {
 		}
 	}
 	
-	private void setPremiseId(GroupEventInfoMapper groupEventInfoMapper) {
+	private void setPremiseId(GroupEventInfoMapper groupEventInfoMapper, ProcessDTO processDTO) {
 		try {
-			groupEventInfoMapper.setDerivePremiseId(premiseDao.getPremisesPK(groupEventInfoMapper.getFarmName(), groupEventInfoMapper.getDeriveCompanyId())); 
+			groupEventInfoMapper.setDerivePremiseId(processDTO.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
@@ -100,9 +100,9 @@ public class GroupEventInfoDerivable implements Derivable {
 	}
 
 	
-	private void setCompanyId(final GroupEventInfoMapper groupEventInfoMapper) {
+	private void setCompanyId(final GroupEventInfoMapper groupEventInfoMapper, ProcessDTO processDTO) {
 		try {
-			groupEventInfoMapper.setDeriveCompanyId(companyDao.getCompanyId(groupEventInfoMapper.getCompanyId()));
+			groupEventInfoMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

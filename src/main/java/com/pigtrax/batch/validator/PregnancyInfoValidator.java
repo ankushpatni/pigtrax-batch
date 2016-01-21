@@ -167,7 +167,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateSowCondition(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
-		if (pregnancyInfoMapper.getSowCondition() != null && (pregnancyInfoMapper.getDeriveSowCondition() == null || pregnancyInfoMapper.getDeriveSowCondition() < 0 || pregnancyInfoMapper.getDeriveSowCondition() > 5)) {
+		if (pregnancyInfoMapper.getSowCondition() != null && pregnancyInfoMapper.getSowCondition().trim().length() > 0 && (pregnancyInfoMapper.getDeriveSowCondition() == null || pregnancyInfoMapper.getDeriveSowCondition() < 0 || pregnancyInfoMapper.getDeriveSowCondition() > 5)) {
 			pregnancyInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "sowCondition", false));
 		}

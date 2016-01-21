@@ -37,7 +37,7 @@ public class ProcessEngine implements Process {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	public void execute(final Map<String, Object> inputMap) {
+	public void execute(final Map<String, Object> inputMap) {		
 		try {
 			long startTime = DateUtil.getCurrentDate().getTime();
 			ProcessDTO processDTO = getProcessDTO(inputMap);
@@ -51,6 +51,7 @@ public class ProcessEngine implements Process {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
+		
 	}
 
 	private void execute(final ProcessDTO processDTO) {
@@ -77,6 +78,8 @@ public class ProcessEngine implements Process {
 			processDTO.setSeperator(inputMap.get(Constants.SEPERATOR).toString());
 			processDTO.setFileType(inputMap.get(Constants.FILE_TYPE).toString());
 			processDTO.setUserName(inputMap.get(Constants.USER_NAME).toString());
+			processDTO.setCompanyId(Integer.parseInt(inputMap.get(Constants.COMPANY_ID).toString()));
+			processDTO.setPremiseId(Integer.parseInt(inputMap.get(Constants.PREMISE_ID).toString()));
 		} catch (Exception e) {
 			logger.error("excption in ProcessEngine.getProcessDTO" + e);
 			e.printStackTrace();
@@ -99,7 +102,7 @@ public class ProcessEngine implements Process {
 
 	// Refactor will do it later..
 	@SuppressWarnings("unchecked")
-	private void sendReport(final Map<String, Object> output, final ProcessDTO processDTO) {
+	private void sendReport(final Map<String, Object> output, final ProcessDTO processDTO) {		
 		final Map<Mapper, List<ErrorBean>> errorMap = (Map<Mapper, List<ErrorBean>>) output.get("errors");
 		final int totalProcessedRecords = (int) output.get("success");
 		final int totalRecordsInInput = (int) output.get("size");
@@ -124,7 +127,9 @@ public class ProcessEngine implements Process {
 			Iterator<Mapper> itr = errorMap.keySet().iterator();
 			List<ErrorBean> lst = null;
 			Mapper mapper = null;
+			int i = 0;
 			while (itr.hasNext()) {
+				i++;
 				mapper = (itr.next());
 				bufferedWriter.write("----Pig Id is: " + mapper.getId());
 				bufferedWriter.newLine();
@@ -185,7 +190,7 @@ public class ProcessEngine implements Process {
 				}
 			}
 			ex.printStackTrace();
-		}
+		}		
 	}
 
 	private String getFileName(final String originalFileName) {

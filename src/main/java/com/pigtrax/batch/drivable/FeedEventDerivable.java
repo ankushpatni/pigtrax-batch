@@ -43,8 +43,8 @@ public class FeedEventDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				FeedEventMapper feedEventMapper = (FeedEventMapper) mapper;
-				setCompanyId(feedEventMapper);
-				setPremiseId(feedEventMapper);
+				setCompanyId(feedEventMapper, processDTO);
+				setPremiseId(feedEventMapper, processDTO);
 				setRationId(feedEventMapper);
 				setFeedquantitykgs(feedEventMapper);
 				setFeedCost(feedEventMapper);
@@ -56,16 +56,16 @@ public class FeedEventDerivable implements Derivable {
 	}
 	
 	
-	private void setCompanyId(final FeedEventMapper feedEventMapper) {
+	private void setCompanyId(final FeedEventMapper feedEventMapper, ProcessDTO processDTO) {
 		try {
-			feedEventMapper.setDeriveCompanyId(companyDao.getCompanyId(feedEventMapper.getCompanyId()));
+			feedEventMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
-	private void setPremiseId(final FeedEventMapper feedEventMapper) {
+	private void setPremiseId(final FeedEventMapper feedEventMapper, ProcessDTO processDTO) {
 		try {
-			feedEventMapper.setDerivePremiseId(premiseDao.getPremisesPK(feedEventMapper.getFarmName(), feedEventMapper.getDeriveCompanyId())); 
+			feedEventMapper.setDerivePremiseId(processDTO.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}

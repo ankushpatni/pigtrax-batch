@@ -42,8 +42,8 @@ public class BreedingEventDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;						
-				setCompanyId(breedingEventMapper);
-				setPremiseId(breedingEventMapper);
+				setCompanyId(breedingEventMapper, processDTO);
+				setPremiseId(breedingEventMapper, processDTO);
 				setPigInfoId(breedingEventMapper);
 				setBreedingServiceTypeId(breedingEventMapper);
 				setSowCondition(breedingEventMapper);
@@ -54,20 +54,19 @@ public class BreedingEventDerivable implements Derivable {
 	}
 
 	
-	private void setCompanyId(final BreedingEventMapper breedingEventMapper) {
-		if(breedingEventMapper.getCompanyId() != null)
-		{
-			try {
-				breedingEventMapper.setDeriveCompanyId(companyDao.getCompanyId(breedingEventMapper.getCompanyId().trim()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	private void setCompanyId(final BreedingEventMapper breedingEventMapper, ProcessDTO processDto) {
+	
+		try {
+			breedingEventMapper.setDeriveCompanyId(processDto.getCompanyId());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	
 	}
 	
-	private void setPremiseId(final BreedingEventMapper breedingEventMapper) {
+	private void setPremiseId(final BreedingEventMapper breedingEventMapper, ProcessDTO processDto) {
 		try {
-			breedingEventMapper.setDerivePremiseId(premisesDao.getPremisesPK(breedingEventMapper.getFarmName(), breedingEventMapper.getDeriveCompanyId())); 
+			breedingEventMapper.setDerivePremiseId(processDto.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}

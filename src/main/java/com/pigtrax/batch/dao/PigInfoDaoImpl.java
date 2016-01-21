@@ -140,6 +140,37 @@ public class PigInfoDaoImpl implements PigInfoDao {
 	}
 	
 	
+	@Override
+	public Integer getPigInfoIdForTattoo(String tattoo, int companyId, int premiseId) throws SQLException {
+		logger.debug("Pig Id/company Ids are :" + tattoo + "/" + companyId);
+		StringBuffer qryBuffer = new StringBuffer();
+		qryBuffer.append("select id from pigtrax.\"PigInfo\" where lower(\"tattoo\") = ? and \"id_Company\" = ? and \"id_Premise\" = ?");
+		final String qry = qryBuffer.toString();
+		Long retValList1 = null;
+		if (tattoo != null) {
+			retValList1 = jdbcTemplate.query(qry, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, tattoo.trim().toLowerCase());
+					ps.setInt(2, companyId);
+					ps.setInt(3, premiseId);
+				}
+			}, new ResultSetExtractor<Long>() {
+				public Long extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+					if (resultSet.next()) {
+						return resultSet.getLong(1);
+					}
+					return null;
+				}
+			});
+			logger.debug("pigInfoId retVal is :" + retValList1);
+			if (retValList1 != null) {
+				return Integer.decode(retValList1.toString());
+			}
+		}
+		return null;
+	}
+	
 	
 	@Override
 	public Integer getActivePigInfoId(String pigId, int companyId) throws SQLException {

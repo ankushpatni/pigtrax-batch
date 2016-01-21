@@ -45,8 +45,8 @@ public class PregnancyInfoDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				PregnancyInfoMapper pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
 				//setExamDate(pregnancyInfoMapper);
-				setCompanyId(pregnancyInfoMapper);
-				setPremiseId(pregnancyInfoMapper);
+				setCompanyId(pregnancyInfoMapper, processDTO);
+				setPremiseId(pregnancyInfoMapper, processDTO);
 				setResultDate(pregnancyInfoMapper);
 				setPregnancyEventTypeId(pregnancyInfoMapper);
 				setPregnancyExamResultTypeId(pregnancyInfoMapper); 
@@ -66,9 +66,9 @@ public class PregnancyInfoDerivable implements Derivable {
 		}
 	}
 	
-	private void setPremiseId(final PregnancyInfoMapper pregnancyInfoMapper) {
+	private void setPremiseId(final PregnancyInfoMapper pregnancyInfoMapper, ProcessDTO processDTO) {
 		try {
-			pregnancyInfoMapper.setDerivePremiseId(premisesDao.getPremisesPK(pregnancyInfoMapper.getFarmName(), pregnancyInfoMapper.getDeriveCompanyId())); 
+			pregnancyInfoMapper.setDerivePremiseId(processDTO.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
@@ -82,9 +82,9 @@ public class PregnancyInfoDerivable implements Derivable {
 		}
 	}	
 
-	private void setCompanyId(final PregnancyInfoMapper pregnancyInfoMapper) {
+	private void setCompanyId(final PregnancyInfoMapper pregnancyInfoMapper, ProcessDTO processDTO) {
 		try {
-			pregnancyInfoMapper.setDeriveCompanyId(companyDao.getCompanyId(pregnancyInfoMapper.getCompanyId()));
+			pregnancyInfoMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

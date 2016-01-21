@@ -160,6 +160,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	
 	private void validateFosterPig(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
 		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.FosterOut.getTypeCode() && 
+				pigletStatusInfoMapper.getTransferredToPig() != null && pigletStatusInfoMapper.getTransferredToPig().trim().length() > 0 && 
 				(pigletStatusInfoMapper.getDeriveTransferredPigInfoId() == null || pigletStatusInfoMapper.getDeriveTransferredPigInfoId() < 0)) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FOSTER_PIG_NOT_FOUND_CODE, Constants.ERR_FOSTER_PIG_NOT_FOUND_MSG, "transferredToPig", false));
@@ -183,7 +184,9 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 		}
 	}
 	private void validateMortalityReason(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
-		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && (pigletStatusInfoMapper.getDeriveMortalityReasonId() == null ||  pigletStatusInfoMapper.getDeriveMortalityReasonId()<0)) {
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && 
+				pigletStatusInfoMapper.getMortalityReason() != null && pigletStatusInfoMapper.getMortalityReason().trim().length() > 0  && 
+				(pigletStatusInfoMapper.getDeriveMortalityReasonId() == null ||  pigletStatusInfoMapper.getDeriveMortalityReasonId()<0)) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIGLETSTATUS_INVALID_MORTALITY_CODE, Constants.PIGLETSTATUS_INVALID_MORTALITY_MSG, "mortalityReason", false));
 		}

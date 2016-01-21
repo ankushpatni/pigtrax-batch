@@ -35,8 +35,8 @@ public class IndividualPigletStatusDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				IndividualPigletStatusMapper individualPigletMapper = (IndividualPigletStatusMapper) mapper;						
-				setCompanyId(individualPigletMapper);
-				setPremiseId(individualPigletMapper);
+				setCompanyId(individualPigletMapper, processDTO);
+				setPremiseId(individualPigletMapper, processDTO);
 				setLitterId(individualPigletMapper);
 				setWtAtBirth(individualPigletMapper);
 				setWtAtWeaning(individualPigletMapper);
@@ -52,17 +52,17 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	}
 
 	
-	private void setCompanyId(final IndividualPigletStatusMapper individualPigletMapper) {
+	private void setCompanyId(final IndividualPigletStatusMapper individualPigletMapper, ProcessDTO processDto) {
 		try {
-			individualPigletMapper.setDeriveCompanyId(companyDao.getCompanyId(individualPigletMapper.getCompanyId()));
+			individualPigletMapper.setDeriveCompanyId(processDto.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void setPremiseId(final IndividualPigletStatusMapper individualPigletMapper) {
+	private void setPremiseId(final IndividualPigletStatusMapper individualPigletMapper, ProcessDTO processDto) {
 		try {
-			individualPigletMapper.setDerivePremiseId(premiseDao.getPremisesPK(individualPigletMapper.getFarmName(), individualPigletMapper.getDeriveCompanyId())); 
+			individualPigletMapper.setDerivePremiseId(processDto.getPremiseId()); 
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}

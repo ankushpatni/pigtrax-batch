@@ -1,15 +1,21 @@
 package com.pigtrax.batch.core;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -39,7 +45,7 @@ public class BatchServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+		ServletOutputStream out = response.getOutputStream();
 		String resonse = "";
 		try {
 			Map<String, Object> inputMap = new HashMap<String, Object>();
@@ -49,12 +55,15 @@ public class BatchServlet extends HttpServlet {
 			inputMap.put(Constants.FILE_TYPE.toString(), request.getParameter(Constants.FILE_TYPE.toString()));
 			inputMap.put(Constants.USER_NAME.toString(), request.getParameter(Constants.USER_NAME.toString()));
 			inputMap.put(Constants.DATA.toString(), request.getParameter(Constants.DATA.toString()));
+			inputMap.put(Constants.COMPANY_ID.toString(), request.getParameter(Constants.COMPANY_ID.toString()));
+			inputMap.put(Constants.PREMISE_ID.toString(), request.getParameter(Constants.PREMISE_ID.toString())); 
 			processEngine.execute(inputMap);
 			resonse = "SUCCESS";
 		} catch (Exception e) {
+			e.printStackTrace();
 			resonse = "FAILURE";
 		}
-		out.print(resonse);
+		
 	}
 
 	// for testing

@@ -50,7 +50,7 @@ public class FarrowEventDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				FarrowEventMapper farrowEventMapper = (FarrowEventMapper) mapper;
-				setPigIDPK(farrowEventMapper);
+				setPigIDPK(farrowEventMapper, processDTO);
 				setServiceDate(farrowEventMapper);
 				setPenId(farrowEventMapper);
 				setFarrowDate(farrowEventMapper);
@@ -87,12 +87,12 @@ public class FarrowEventDerivable implements Derivable {
 		}
 	}
 
-	private void setPigIDPK(final FarrowEventMapper farrowEventMapper) {
+	private void setPigIDPK(final FarrowEventMapper farrowEventMapper, ProcessDTO processDTO) {
 		try {
-			Integer derivedCompanyId = companyDao.getCompanyId(farrowEventMapper.getCompanyId());
+			Integer derivedCompanyId = processDTO.getCompanyId();
 			farrowEventMapper.setDeriveCompanyId(derivedCompanyId);
 			
-			Integer derivedPremiseId = premiseDao.getPremisesPK(farrowEventMapper.getFarmName(), farrowEventMapper.getDeriveCompanyId());
+			Integer derivedPremiseId = processDTO.getPremiseId();
 			farrowEventMapper.setDerivePremiseId(derivedPremiseId);			
 		
 			farrowEventMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(farrowEventMapper.getPigId(), farrowEventMapper.getDeriveCompanyId(), farrowEventMapper.getDerivePremiseId()));

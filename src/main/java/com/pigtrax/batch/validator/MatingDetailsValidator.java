@@ -197,7 +197,9 @@ public class MatingDetailsValidator extends AbstractValidator {
 				{
 					if(pigInfoBean != null)
 					{
-						DateTime birthDate = new DateTime(pigInfoBean.getBirthDate());
+						DateTime birthDate = null;
+						if(pigInfoBean.getBirthDate() != null)
+							birthDate = new DateTime(pigInfoBean.getBirthDate());
 						DateTime entryDate = new DateTime(pigInfoBean.getEntryDate());
 						
 						if(birthDate != null && recordMatingDate.toLocalDate().compareTo(birthDate.toLocalDate()) != 1)

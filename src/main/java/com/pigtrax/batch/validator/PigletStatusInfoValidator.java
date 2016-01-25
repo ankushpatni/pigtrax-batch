@@ -147,7 +147,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	private void validateFarrowEvent(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
 		if(pigletStatusInfoMapper.getDeriveFarrowEventId() == null || pigletStatusInfoMapper.getDeriveFarrowEventId() < 0) {
 			pigletStatusInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE, Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG, "farrowEvent", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FRW_EVENT_SERVICE_NOT_FOUND_CODE, Constants.ERR_FRW_EVENT_SERVICE_NOT_FOUND_MSG, "farrowEvent", false));
 		}
 	}
 	

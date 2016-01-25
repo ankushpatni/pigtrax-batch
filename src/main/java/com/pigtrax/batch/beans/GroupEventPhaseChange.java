@@ -1,6 +1,7 @@
 package com.pigtrax.batch.beans;
 
 import java.util.Date;
+import java.util.List;
 
 public class GroupEventPhaseChange {
     private Integer id;
@@ -15,6 +16,7 @@ public class GroupEventPhaseChange {
     private String userUpdated;
     private Date lastUpdated; 
     private String premise;
+    private List<RoomPK> roomIds;
     
 	public Integer getId() {
 		return id;
@@ -87,6 +89,12 @@ public class GroupEventPhaseChange {
 	}
 	public void setPhaseEndTimeStr(String phaseEndTimeStr) {
 		this.phaseEndTimeStr = phaseEndTimeStr;
+	}
+	public List<RoomPK> getRoomIds() {
+		return roomIds;
+	}
+	public void setRoomIds(List<RoomPK> roomIds) {
+		this.roomIds = roomIds;
 	}
 	
 	

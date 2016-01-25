@@ -81,6 +81,10 @@ public interface Constants {
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "705";
 
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Matching Service record not found for the pig";
+	
+	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_CODE = "705";
+
+	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_MSG = "Matching farrow event record not found for the pig";
 
 	public static final String ERR_FOSTER_PIG_NOT_FOUND_CODE = "801";
 

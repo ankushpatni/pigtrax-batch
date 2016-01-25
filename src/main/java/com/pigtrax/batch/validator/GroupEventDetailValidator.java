@@ -52,7 +52,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				validateCompanyId(groupEventDetailMapper, errList);
 				validatePremiseId(groupEventDetailMapper, errList);
-				validateRoomId(groupEventDetailMapper, errList);
+				//validateRoomId(groupEventDetailMapper, errList);
 				validateSowSource(groupEventDetailMapper, errList);							
 				validateDateOfEntry(groupEventDetailMapper, errList);
 				validateNumberOfPigs(groupEventDetailMapper, errList);	

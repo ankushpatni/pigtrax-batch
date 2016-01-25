@@ -66,7 +66,7 @@ public class GroupEventInfoDerivable implements Derivable {
 		try {
 			if(groupEventInfoMapper.getRooms() != null && groupEventInfoMapper.getRooms().trim().length() > 0)
 			{
-				StringTokenizer tokens = new StringTokenizer(groupEventInfoMapper.getRooms(), ",");
+				StringTokenizer tokens = new StringTokenizer(groupEventInfoMapper.getRooms(), "|");
 				if(tokens != null)
 				{
 					roomIds = new ArrayList<RoomPK>();
@@ -77,8 +77,9 @@ public class GroupEventInfoDerivable implements Derivable {
 						if(token != null)
 						{
 							Integer roomId = roomDao.getRoomPkId(token, groupEventInfoMapper.getDeriveCompanyId(), groupEventInfoMapper.getDerivePremiseId());
-							RoomPK roomPk = new RoomPK();
-							roomPk.setId(token.trim());
+							RoomPK roomPk = new RoomPK();	
+							if(roomId != null )
+								roomPk.setId(roomId.toString());
 							if(roomId != null && !roomIds.contains(roomPk))
 								roomIds.add(roomPk);
 						}

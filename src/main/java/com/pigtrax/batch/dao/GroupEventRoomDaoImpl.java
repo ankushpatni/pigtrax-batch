@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.GroupEventPhaseChange;
 import com.pigtrax.batch.beans.RoomPK;
 import com.pigtrax.batch.dao.interfaces.GroupEventRoomDao;
 
@@ -33,9 +33,9 @@ public class GroupEventRoomDaoImpl implements GroupEventRoomDao {
 	}
 	
 	@Override
-	public void addGroupEventRooms(final GroupEvent event) {
+	public void addGroupEventRooms(final GroupEventPhaseChange event) {  
 		
-		final String sql = "Insert into pigtrax.\"GroupEventRoom\"(\"id_GroupEvent\", \"id_Room\") values (?,?)";
+		final String sql = "Insert into pigtrax.\"GroupEventRoom\"(\"id_GroupEventPhaseChange\", \"id_Room\") values (?,?)";
 		if(event != null && event.getRoomIds() != null)
 		{
 			List<RoomPK> rooms = event.getRoomIds();
@@ -53,6 +53,7 @@ public class GroupEventRoomDaoImpl implements GroupEventRoomDao {
 			}
 		}
 	}
+	
 	
 	
 	@Override

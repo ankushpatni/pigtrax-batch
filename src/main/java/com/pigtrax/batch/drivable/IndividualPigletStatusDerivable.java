@@ -97,7 +97,7 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	private void setWtAtFirstMonth(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
-			individualPigletMapper.setDeriveWtAtFirstMonth(Double.parseDouble(individualPigletMapper.getWtAtFifthMonth()));
+			individualPigletMapper.setDeriveWtAtFirstMonth(Double.parseDouble(individualPigletMapper.getWtAtFirstMonth()));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

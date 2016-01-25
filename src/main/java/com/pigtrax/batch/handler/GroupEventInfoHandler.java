@@ -1,6 +1,7 @@
 package com.pigtrax.batch.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.GroupEventDetail;
 import com.pigtrax.batch.beans.GroupEventPhaseChange;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.GroupEventDetailsDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventPhaseChangeDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventRoomDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
@@ -37,6 +40,9 @@ public class GroupEventInfoHandler implements Handler{
 	
 	@Autowired
 	private GroupEventPhaseChangeDao groupPhaseChangeDao;
+	
+	@Autowired
+	private GroupEventDetailsDao groupEventDetailsDao;
 	
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
@@ -63,7 +69,31 @@ public class GroupEventInfoHandler implements Handler{
 								Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
 								groupEvent.setId(id);
 								
-								groupEventRoomDao.addGroupEventRooms(groupEvent);
+								
+								GroupEventPhaseChange eventPhaseChange = new GroupEventPhaseChange();
+								eventPhaseChange.setPhaseStartDate(groupEvent.getGroupStartDateTime());
+								eventPhaseChange.setGroupEventId(id);
+								eventPhaseChange.setPhaseOfProductionTypeId(groupEvent.getPhaseOfProductionTypeId());
+								eventPhaseChange.setPremiseId(groupEvent.getPremiseId());
+								eventPhaseChange.setRoomIds(groupEvent.getRoomIds());
+								Integer phaseId = groupPhaseChangeDao.addGroupPhaseChange(eventPhaseChange);
+								eventPhaseChange.setId(phaseId);
+								
+								groupEventRoomDao.addGroupEventRooms(eventPhaseChange);
+								
+								GroupEventDetail details = new GroupEventDetail();
+								details.setSowSourceId(groupEvent.getPremiseId());
+								details.setDateOfEntry(groupEvent.getGroupStartDateTime());
+								details.setEmployeeGroupId(null);
+								details.setNumberOfPigs(groupEvent.getCurrentInventory());
+								details.setWeightInKgs(0D);
+								details.setRemarks("Entered through mass upload");
+								details.setGroupId(groupEvent.getId());
+								details.setLastUpdated(new Date());
+								details.setUserUpdated(groupEvent.getUserUpdated());
+								details.setPremiseId(groupEvent.getPremiseId());
+								groupEventDetailsDao.addGroupEventDetails(details);
+								
 								
 								PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
 								eventMasterDao.insertEventMaster(eventMaster);

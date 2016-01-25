@@ -200,7 +200,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 						DateTime birthDate = new DateTime(pigInfoBean.getBirthDate());
 						DateTime entryDate = new DateTime(pigInfoBean.getEntryDate());
 						
-						if(recordMatingDate.toLocalDate().compareTo(birthDate.toLocalDate()) != 1)
+						if(birthDate != null && recordMatingDate.toLocalDate().compareTo(birthDate.toLocalDate()) != 1)
 						{
 							matingDetailsMapper.setRecovrableErrors(false);
 							errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE, Constants.MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG, "pigId", true));

@@ -149,7 +149,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void validateCompanyId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getCompanyId() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getCompanyId())) {
+		if (farrowEventMapper.getDeriveCompanyId() == null || farrowEventMapper.getDeriveCompanyId() < 0 ) {
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_CMPNY_ID, Constants.FRW_EVNT_ERR_CMPNY_ID_MSG, "companyId", false));
 		}

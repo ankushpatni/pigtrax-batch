@@ -12,7 +12,7 @@
 			<col key="geneticCompany" order="8" isEmpty="false" />			
 			<col key="geneticLine" order="9" isEmpty="false" />
 			<col key="geneticFunction" order="10" isEmpty="false" />
-			<col key="birthDate" order="11" isEmpty="false" />			
+			<col key="birthDate" order="11" isEmpty="true" />			
 			<col key="sireId" order="12" isEmpty="true" />
 			<col key="damId" order="13" isEmpty="true" />
 			<col key="remarks" order="14" isEmpty="true" />			

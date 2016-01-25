@@ -52,6 +52,8 @@ public class PigInfoValidator extends AbstractValidator {
 				validateSexId(pigInfoMapper, errList);
 				validateOrigin(pigInfoMapper, errList);
 				validateGfunctionTypeId(pigInfoMapper, errList);
+				validateGCompany(pigInfoMapper, errList);
+				validateGLine(pigInfoMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -79,7 +81,7 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 
 	private void validateBirthdate(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getDeriveBirthDate() == null) {
+		if (pigInfoMapper.getBirthDate() != null && pigInfoMapper.getBirthDate().trim().length() > 0 && pigInfoMapper.getDeriveBirthDate() == null) {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH,
 					Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "birthDate", false));
@@ -131,7 +133,7 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 	
 	private void validateUniqueTattoo(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) { 
-		if (pigInfoMapper.getTattoo() != null && pigInfoMapper.getDeriveCompanyId() != null && pigInfoMapper.getDeriveCompanyId() > 0 
+		if (pigInfoMapper.getTattoo() != null &&pigInfoMapper.getTattoo().trim().length() > 0 && pigInfoMapper.getDeriveCompanyId() != null && pigInfoMapper.getDeriveCompanyId() > 0 
 				&& pigInfoMapper.getDerivePremiseId() != null && pigInfoMapper.getDerivePremiseId() > 0) {
 			Integer existingPifgId = null;
 			try {
@@ -168,11 +170,29 @@ public class PigInfoValidator extends AbstractValidator {
 	}
 
 	private void validateGfunctionTypeId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
-		if (pigInfoMapper.getGeneticFunction() != null && 0<pigInfoMapper.getGeneticFunction().trim().length() && (pigInfoMapper.getDeriveFfunctionTypeId() == null || pigInfoMapper.getDeriveFfunctionTypeId() < 0)) {
+		if (pigInfoMapper.getDeriveFfunctionTypeId() == null || pigInfoMapper.getDeriveFfunctionTypeId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
-					Constants.REF_DATA_NOT_FOUND_MSG, "gfunctionTypeId", false));
+					Constants.REF_DATA_NOT_FOUND_MSG, "geneticFunction", false));
 		}
 	}
+	
+	private void validateGCompany(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
+		if (pigInfoMapper.getDeriveGCompany() == null || pigInfoMapper.getDeriveGCompany() < 0) {
+			pigInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
+					Constants.REF_DATA_NOT_FOUND_MSG, "geneticCompany", false));
+		}
+	}
+
+	
+	private void validateGLine(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
+		if(pigInfoMapper.getDeriveGline() == null || pigInfoMapper.getDeriveGline() < 0) {
+			pigInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
+					Constants.REF_DATA_NOT_FOUND_MSG, "geneticLine", false));
+		}
+	}
+
 
 }

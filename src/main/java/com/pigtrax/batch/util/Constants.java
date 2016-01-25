@@ -50,7 +50,7 @@ public interface Constants {
 
 	public static final String REF_DATA_NOT_FOUND_CODE = "200";
 
-	public static final String REF_DATA_NOT_FOUND_MSG = "REF_DATA_NOT_FOUND";
+	public static final String REF_DATA_NOT_FOUND_MSG = "Invalid data found";
 
 	public static final String CUSTOM_VAL_ERR = "CUSTOM_VALIDATION_ERROR";
 

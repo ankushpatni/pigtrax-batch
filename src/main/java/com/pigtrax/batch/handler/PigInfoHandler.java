@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
+import com.pigtrax.batch.beans.SowMovement;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PigInfoDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.dao.interfaces.SowMovementDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.PigInfoMapper;
@@ -31,6 +33,9 @@ public class PigInfoHandler implements Handler {
 
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	SowMovementDao sowMovementDao;
 
 	private static final Logger logger = Logger.getLogger(PigInfoHandler.class);
 
@@ -53,6 +58,15 @@ public class PigInfoHandler implements Handler {
 							if(pigInfoId == null)
 							{
 								int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
+								
+							   SowMovement sowMovement = new SowMovement();
+							   sowMovement.setPigInfoId(id);
+							   sowMovement.setPremiseId(pigInfo.getPremiseId());
+							   sowMovement.setRoomId(pigInfo.getRoomId());
+							   sowMovement.setUserUpdated(pigInfo.getUserUpdated());
+							   sowMovement.setCompanyId(pigInfo.getCompanyId());
+							   sowMovementDao.addSowMovement(sowMovement);
+								
 								PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
 								eventMasterDao.insertEventMaster(eventMaster);
 								totalRecordsProcessed = totalRecordsProcessed + 1;

@@ -141,7 +141,7 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 				} else {
 					ps.setNull(16, java.sql.Types.INTEGER);
 				}
-				ps.setInt(17, farrowEvent.getTeasts());
+				ps.setObject(17, farrowEvent.getTeasts(), java.sql.Types.INTEGER);
 				ps.setObject(18, farrowEvent.getPremiseId(), java.sql.Types.INTEGER);
 				ps.setObject(19, farrowEvent.getWeakBorns(), java.sql.Types.INTEGER); 
 				if (farrowEvent.getBreedingEventId() != null) {

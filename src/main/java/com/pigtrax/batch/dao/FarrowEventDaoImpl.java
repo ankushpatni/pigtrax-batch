@@ -116,8 +116,8 @@ public class FarrowEventDaoImpl implements FarrowEventDao {
 				ps.setObject(6, farrowEvent.getMaleBorns(), java.sql.Types.INTEGER);
 				ps.setObject(7, farrowEvent.getFemaleBorns(), java.sql.Types.INTEGER);
 				ps.setObject(8, farrowEvent.getWeightInKGs(), java.sql.Types.DOUBLE);
-				ps.setBoolean(9, farrowEvent.getInducedBirth());
-				ps.setBoolean(10, farrowEvent.getAssistedBirth());
+				ps.setObject(9, farrowEvent.getInducedBirth(), java.sql.Types.BOOLEAN);
+				ps.setObject(10, farrowEvent.getAssistedBirth(),  java.sql.Types.BOOLEAN);
 				ps.setString(11, farrowEvent.getRemarks());
 				if (farrowEvent.getSowCondition() != null) {
 					ps.setInt(12, farrowEvent.getSowCondition());

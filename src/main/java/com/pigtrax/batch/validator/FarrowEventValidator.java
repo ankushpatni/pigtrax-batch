@@ -46,21 +46,24 @@ public class FarrowEventValidator extends AbstractValidator {
 			farrowEventMapper = (FarrowEventMapper) mapper;
 			if (farrowEventMapper.isRecovrableErrors() == null || farrowEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(farrowEventMapper, errList);
-				validatePremiseId(farrowEventMapper, errList);
-				validatePigId(farrowEventMapper, errList);				
-				validatePigPKId(farrowEventMapper, errList);
-				validatePragnancyTest(farrowEventMapper, errList);
-				validatePenId(farrowEventMapper, errList);
-				validateFarrowDate(farrowEventMapper, errList);
-				ValidateBornsMummies(farrowEventMapper, errList);
-				validateLitterBirthWeight(farrowEventMapper, errList);
-				validateLBirthType(farrowEventMapper, errList);
-				validateLEmployeeGrp(farrowEventMapper, errList);
-				validateTeats(farrowEventMapper, errList);
-				validateSowCondition(farrowEventMapper, errList);
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!farrowEventMapper.isEmpty())
+				{
+					validateCompanyId(farrowEventMapper, errList);
+					validatePremiseId(farrowEventMapper, errList);
+					validatePigId(farrowEventMapper, errList);				
+					validatePigPKId(farrowEventMapper, errList);
+					validatePragnancyTest(farrowEventMapper, errList);
+					validatePenId(farrowEventMapper, errList);
+					validateFarrowDate(farrowEventMapper, errList);
+					ValidateBornsMummies(farrowEventMapper, errList);
+					validateLitterBirthWeight(farrowEventMapper, errList);
+					validateLBirthType(farrowEventMapper, errList);
+					validateLEmployeeGrp(farrowEventMapper, errList);
+					validateTeats(farrowEventMapper, errList);
+					validateSowCondition(farrowEventMapper, errList);
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}
@@ -113,11 +116,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	}
 
 	private void validateLBirthType(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getTypeOfBirth() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getTypeOfBirth())) {
-			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_BIRTH_TYPE, Constants.FRW_EVNT_ERR_BIRTH_TYPE_MSG, "typeOfBirth", false));
-		}
-		else if(farrowEventMapper.getTypeOfBirth() != null && !("induced".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim()) || "assisted".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim())))
+		if(farrowEventMapper.getTypeOfBirth() != null && farrowEventMapper.getTypeOfBirth().trim().length() > 0  && !("induced".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim()) || "assisted".equalsIgnoreCase(farrowEventMapper.getTypeOfBirth().trim())))
 		{
 			farrowEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_INVALID_BIRTH_TYPE, Constants.FRW_EVNT_INVALID_BIRTH_TYPE_MSG, "typeOfBirth", false));

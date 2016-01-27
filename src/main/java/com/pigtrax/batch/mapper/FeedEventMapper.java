@@ -153,6 +153,17 @@ public class FeedEventMapper  extends AbstractMapper	{
 		this.deriveCompanyId = deriveCompanyId;
 	}
 	
-	
+	public boolean isEmpty()
+	{	
+		if((this.ticketNumber==null || this.ticketNumber.trim().length() == 0)
+				&& (this.rationId==null || this.rationId.trim().length() == 0)
+				&& (this.feedMadication == null || this.feedMadication.trim().length() == 0)
+				&& (this.transportTruck == null || this.transportTruck.trim().length() == 0)
+				&& (this.transportTrailer == null || this.transportTrailer.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 
 }

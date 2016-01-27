@@ -36,14 +36,17 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 			groupEventInfoMapper = (GroupEventInfoMapper) mapper;
 			if (groupEventInfoMapper.isRecovrableErrors() == null || groupEventInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateEntryDate(groupEventInfoMapper, errList);				
-				validateCompanyId(groupEventInfoMapper, errList);
-				validatePremiseId(groupEventInfoMapper, errList);
-				validateRoomIds(groupEventInfoMapper, errList);
-				validateGroupId(groupEventInfoMapper, errList);	
-				validatePhaseOfProduction(groupEventInfoMapper, errList); 
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!groupEventInfoMapper.isEmpty())
+				{
+					validateEntryDate(groupEventInfoMapper, errList);				
+					validateCompanyId(groupEventInfoMapper, errList);
+					validatePremiseId(groupEventInfoMapper, errList);
+					validateRoomIds(groupEventInfoMapper, errList);
+					validateGroupId(groupEventInfoMapper, errList);	
+					validatePhaseOfProduction(groupEventInfoMapper, errList); 
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

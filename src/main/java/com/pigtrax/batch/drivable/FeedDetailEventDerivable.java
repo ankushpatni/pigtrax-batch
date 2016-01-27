@@ -40,15 +40,18 @@ public class FeedDetailEventDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				FeedDetailEventMapper feedEventMapper = (FeedDetailEventMapper) mapper;
-				setCompanyId(feedEventMapper, processDTO);
-				setPremiseId(feedEventMapper, processDTO);
-				setGroupEventId(feedEventMapper);
-				setFeedEventDate(feedEventMapper);
-				setFeedEventType(feedEventMapper);
-				setWeightInKgs(feedEventMapper);
-				setSilo(feedEventMapper);
-				setFeedEventId(feedEventMapper);
-				setFeedCost(feedEventMapper);
+				if(!feedEventMapper.isEmpty())
+				{
+					setCompanyId(feedEventMapper, processDTO);
+					setPremiseId(feedEventMapper, processDTO);
+					setGroupEventId(feedEventMapper);
+					setFeedEventDate(feedEventMapper);
+					setFeedEventType(feedEventMapper);
+					setWeightInKgs(feedEventMapper);
+					setSilo(feedEventMapper);
+					setFeedEventId(feedEventMapper);
+					setFeedCost(feedEventMapper);
+				}
 			}
 		}
 	}

@@ -380,4 +380,23 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 			return getPigId().toString();
 		}
 	}
+	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.litterId==null || this.litterId.trim().length() == 0)
+				&& (this.tattooId == null || this.tattooId.trim().length() == 0)
+				&& (this.wtAtBirth == null || this.wtAtBirth.trim().length() == 0)
+				&& (this.wtAtWeaning == null || this.wtAtWeaning.trim().length() == 0)
+				&& (this.wtAtFirstMonth == null || this.wtAtFirstMonth.trim().length() == 0)
+				&& (this.wtAtSecondMonth == null || this.wtAtSecondMonth.trim().length() == 0)
+				&& (this.wtAtThirdMonth == null || this.wtAtThirdMonth.trim().length() == 0)
+				&& (this.wtAtFourthMonth == null || this.wtAtFourthMonth.trim().length() == 0)
+				&& (this.wtAtFifthMonth == null || this.wtAtFifthMonth.trim().length() == 0)
+				&& (this.wtAtSixthMonth == null || this.wtAtSixthMonth.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 }

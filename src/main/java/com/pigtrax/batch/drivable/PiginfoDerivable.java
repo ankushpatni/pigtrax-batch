@@ -44,19 +44,22 @@ public class PiginfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PigInfoMapper pigInfoMapper = (PigInfoMapper) mapper;
-				setCompanyId(pigInfoMapper, processDTO);
-				setPremiseId(pigInfoMapper, processDTO);
-				setEntryDate(pigInfoMapper);
-				setBirthdate(pigInfoMapper);
-				setParity(pigInfoMapper);				
-				setSexId(pigInfoMapper);
-				setGfunctionTypeId(pigInfoMapper);
-				setFarrowEventDate(pigInfoMapper);
-				setBarnId(pigInfoMapper);
-				setRoomId(pigInfoMapper);
-				setGline(pigInfoMapper);
-				setGCompany(pigInfoMapper);
-				setOrigin(pigInfoMapper);
+				if(!pigInfoMapper.isEmpty())
+				{
+					setCompanyId(pigInfoMapper, processDTO);
+					setPremiseId(pigInfoMapper, processDTO);
+					setEntryDate(pigInfoMapper);
+					setBirthdate(pigInfoMapper);
+					setParity(pigInfoMapper);				
+					setSexId(pigInfoMapper);
+					setGfunctionTypeId(pigInfoMapper);
+					setFarrowEventDate(pigInfoMapper);
+					setBarnId(pigInfoMapper);
+					setRoomId(pigInfoMapper);
+					setGline(pigInfoMapper);
+					setGCompany(pigInfoMapper);
+					setOrigin(pigInfoMapper);
+				}
 			}
 		}
 	}

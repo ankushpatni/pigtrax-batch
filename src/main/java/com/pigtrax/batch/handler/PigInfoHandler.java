@@ -48,43 +48,46 @@ public class PigInfoHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				PigInfoMapper pigInfoMaper = (PigInfoMapper) mapper;
-				if (pigInfoMaper.isRecovrableErrors() == null || pigInfoMaper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						PigInfo pigInfo = populatePigIfnfo(errorMap, pigInfoMaper, processDTO);
-						if (pigInfo != null) {
-							
-							Integer pigInfoId = pigInfoDaoImpl.getPigInfoId(pigInfoMaper.getPigId(), pigInfoMaper.getDeriveCompanyId(), pigInfoMaper.getDerivePremiseId());
-							if(pigInfoId == null)
-							{
-								int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
+				if(!pigInfoMaper.isEmpty())
+				{
+					if (pigInfoMaper.isRecovrableErrors() == null || pigInfoMaper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							PigInfo pigInfo = populatePigIfnfo(errorMap, pigInfoMaper, processDTO);
+							if (pigInfo != null) {
 								
-							   SowMovement sowMovement = new SowMovement();
-							   sowMovement.setPigInfoId(id);
-							   sowMovement.setPremiseId(pigInfo.getPremiseId());
-							   sowMovement.setRoomId(pigInfo.getRoomId());
-							   sowMovement.setUserUpdated(pigInfo.getUserUpdated());
-							   sowMovement.setCompanyId(pigInfo.getCompanyId());
-							   sowMovementDao.addSowMovement(sowMovement);
-								
-								PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
-								eventMasterDao.insertEventMaster(eventMaster);
-								totalRecordsProcessed = totalRecordsProcessed + 1;
+								Integer pigInfoId = pigInfoDaoImpl.getPigInfoId(pigInfoMaper.getPigId(), pigInfoMaper.getDeriveCompanyId(), pigInfoMaper.getDerivePremiseId());
+								if(pigInfoId == null)
+								{
+									int id = pigInfoDaoImpl.insertPigInformation(pigInfo);
+									
+								   SowMovement sowMovement = new SowMovement();
+								   sowMovement.setPigInfoId(id);
+								   sowMovement.setPremiseId(pigInfo.getPremiseId());
+								   sowMovement.setRoomId(pigInfo.getRoomId());
+								   sowMovement.setUserUpdated(pigInfo.getUserUpdated());
+								   sowMovement.setCompanyId(pigInfo.getCompanyId());
+								   sowMovementDao.addSowMovement(sowMovement);
+									
+									PigTraxEventMaster eventMaster = populateEventMaster(pigInfoMaper, id, processDTO);
+									eventMasterDao.insertEventMaster(eventMaster);
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
+								else
+								{
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_DUPLICATE_PIGID_CODE, Constants.ENTRY_EVENT_DUPLICATE_PIGID_MSG , "pigId", false));
+									isErrorOccured = true;
+								}
 							}
-							else
-							{
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_DUPLICATE_PIGID_CODE, Constants.ENTRY_EVENT_DUPLICATE_PIGID_MSG , "pigId", false));
-								isErrorOccured = true;
-							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

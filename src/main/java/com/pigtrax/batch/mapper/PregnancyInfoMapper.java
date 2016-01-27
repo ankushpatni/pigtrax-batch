@@ -208,4 +208,18 @@ public class PregnancyInfoMapper extends AbstractMapper {
 			return "["+getPigId().toString()+", "+getCompanyId()+", "+getResultDate()+"]";
 		}
 	}
+	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.resultDate==null || this.resultDate.trim().length() == 0)
+				&& (this.pregnancyEventType == null || this.pregnancyEventType.trim().length() == 0)
+				&& (this.PregnancyExamResultType == null || this.PregnancyExamResultType.trim().length() == 0)
+				&& (this.employeeGroup == null || this.employeeGroup.trim().length() == 0)
+				&& (this.sowCondition == null || this.sowCondition.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}
 }

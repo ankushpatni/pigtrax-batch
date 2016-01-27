@@ -47,29 +47,32 @@ public class GroupEventDetailHandler implements Handler{
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				GroupEventDetailMapper groupEventDetailMapper = (GroupEventDetailMapper) mapper;
-				if (groupEventDetailMapper.isRecovrableErrors() == null || groupEventDetailMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						GroupEventDetail groupEventDetail = populateGroupEventDetails(errorMap, groupEventDetailMapper, processDTO);
-						if (groupEventDetail != null) {
-							groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetail);
-							GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(groupEventDetail.getGroupId(),groupEventDetail.getCompanyId());
-							groupEvent.setCurrentInventory(groupEvent.getCurrentInventory()+groupEventDetail.getNumberOfPigs());
-							groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
-							
-							PigTraxEventMaster eventMaster = populateEventMaster(groupEventDetailMapper, groupEventDetailMapper.getDeriveGroupId(), processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
-							totalRecordsProcessed = totalRecordsProcessed + 1;
+				if(!groupEventDetailMapper.isEmpty())
+				{
+					if (groupEventDetailMapper.isRecovrableErrors() == null || groupEventDetailMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							GroupEventDetail groupEventDetail = populateGroupEventDetails(errorMap, groupEventDetailMapper, processDTO);
+							if (groupEventDetail != null) {
+								groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetail);
+								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(groupEventDetail.getGroupId(),groupEventDetail.getCompanyId());
+								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory()+groupEventDetail.getNumberOfPigs());
+								groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+								
+								PigTraxEventMaster eventMaster = populateEventMaster(groupEventDetailMapper, groupEventDetailMapper.getDeriveGroupId(), processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+								totalRecordsProcessed = totalRecordsProcessed + 1;
+							}
+						} 
+						catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in GroupEventInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} 
-					catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in GroupEventInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

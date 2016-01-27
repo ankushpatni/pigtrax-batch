@@ -209,4 +209,18 @@ public class GroupEventDetailMapper extends AbstractMapper{
 		}
 	}
 	
+	public boolean isEmpty()
+	{	
+		if((this.groupId==null || this.groupId.trim().length() == 0)
+				&& (this.sowSource==null || this.sowSource.trim().length() == 0)
+				&& (this.dateOfEntry == null || this.dateOfEntry.trim().length() == 0)
+				&& (this.numberOfPigs == null || this.numberOfPigs.trim().length() == 0)
+				&& (this.weightInKgs == null || this.weightInKgs.trim().length() == 0)
+				&& (this.employeeGroupId == null || this.employeeGroupId.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
+	
 }

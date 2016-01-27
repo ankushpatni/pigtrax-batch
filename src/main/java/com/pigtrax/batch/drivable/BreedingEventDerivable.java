@@ -41,14 +41,17 @@ public class BreedingEventDerivable implements Derivable {
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
 			for (Mapper mapper : list) {
-				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;						
-				setCompanyId(breedingEventMapper, processDTO);
-				setPremiseId(breedingEventMapper, processDTO);
-				setPigInfoId(breedingEventMapper);
-				setBreedingServiceTypeId(breedingEventMapper);
-				setSowCondition(breedingEventMapper);
-				setPenId(breedingEventMapper);
-				setWtInKgs(breedingEventMapper);
+				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;		
+				if(!breedingEventMapper.isEmpty())
+				{
+					setCompanyId(breedingEventMapper, processDTO);
+					setPremiseId(breedingEventMapper, processDTO);
+					setPigInfoId(breedingEventMapper);
+					setBreedingServiceTypeId(breedingEventMapper);
+					setSowCondition(breedingEventMapper);
+					setPenId(breedingEventMapper);
+					setWtInKgs(breedingEventMapper);
+				}
 			}
 		}
 	}

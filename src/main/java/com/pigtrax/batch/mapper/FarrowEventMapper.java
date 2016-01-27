@@ -329,6 +329,26 @@ public class FarrowEventMapper extends AbstractMapper {
 		this.breedingEventId = breedingEventId;
 	}
 	
-	
+	public boolean isEmpty()
+	{	
+		if((this.penId==null || this.penId.trim().length() == 0)
+				&& (this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.farrowDate == null || this.farrowDate.trim().length() == 0)
+				&& (this.liveBorns == null || this.liveBorns.trim().length() == 0)
+				&& (this.stillBorns == null || this.stillBorns.trim().length() == 0)
+				&& (this.mummies == null || this.mummies.trim().length() == 0)
+				&& (this.weakBorns == null || this.weakBorns.trim().length() == 0)
+				&& (this.maleBorns == null || this.maleBorns.trim().length() == 0)
+				&& (this.femaleBorns == null || this.femaleBorns.trim().length() == 0)
+				&& (this.weightInKGs == null || this.weightInKGs.trim().length() == 0)
+				&& (this.typeOfBirth == null || this.typeOfBirth.trim().length() == 0)
+				&& (this.employeeGrpId == null || this.employeeGrpId.trim().length() == 0)
+				&& (this.sowCondition == null || this.sowCondition.trim().length() == 0)
+				&& (this.teats == null || this.teats.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 
 }

@@ -38,15 +38,18 @@ public class MatingDetailsDerivable implements Derivable {
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
 			for (Mapper mapper : list) {
-				MatingDetailsMapper matingDetailsMapper = (MatingDetailsMapper) mapper;						
-				setCompanyId(matingDetailsMapper, processDTO);
-				setPremiseId(matingDetailsMapper, processDTO);
-				setPigInfoId(matingDetailsMapper);
-				setMatingDate(matingDetailsMapper);
-				setSemenDate(matingDetailsMapper);
-				setEmployeeGroupId(matingDetailsMapper);
-				setMateQuality(matingDetailsMapper);
-				setBreedingEventId(matingDetailsMapper);
+				MatingDetailsMapper matingDetailsMapper = (MatingDetailsMapper) mapper;	
+				if(!matingDetailsMapper.isEmpty())
+				{
+					setCompanyId(matingDetailsMapper, processDTO);
+					setPremiseId(matingDetailsMapper, processDTO);
+					setPigInfoId(matingDetailsMapper);
+					setMatingDate(matingDetailsMapper);
+					setSemenDate(matingDetailsMapper);
+					setEmployeeGroupId(matingDetailsMapper);
+					setMateQuality(matingDetailsMapper);
+					setBreedingEventId(matingDetailsMapper);
+				}
 			}
 		}
 	}
@@ -132,7 +135,8 @@ public class MatingDetailsDerivable implements Derivable {
 	}
 	
 	private void setBreedingEventId(final MatingDetailsMapper matingDetailsMapper) {
-		matingDetailsMapper.setDeriveBreedingEventId(breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId()));
+		if(matingDetailsMapper.getDerivePigInfoId() != null)
+			matingDetailsMapper.setDeriveBreedingEventId(breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId()));
 	}
 
 }

@@ -42,20 +42,23 @@ public class PigInfoValidator extends AbstractValidator {
 			pigInfoMapper = (PigInfoMapper) mapper;
 			if (pigInfoMapper.isRecovrableErrors() == null || pigInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(pigInfoMapper, errList);
-				validatePremiseId(pigInfoMapper, errList);
-				validateRoomId(pigInfoMapper, errList);
-				validateUniquePigId(pigInfoMapper, errList);
-				validateUniqueTattoo(pigInfoMapper, errList);
-				validateEntryDate(pigInfoMapper, errList);
-				validateBirthdate(pigInfoMapper, errList);
-				validateSexId(pigInfoMapper, errList);
-				validateOrigin(pigInfoMapper, errList);
-				validateGfunctionTypeId(pigInfoMapper, errList);
-				validateGCompany(pigInfoMapper, errList);
-				validateGLine(pigInfoMapper, errList);
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!pigInfoMapper.isEmpty())
+				{
+					validateCompanyId(pigInfoMapper, errList);
+					validatePremiseId(pigInfoMapper, errList);
+					validateRoomId(pigInfoMapper, errList);
+					validateUniquePigId(pigInfoMapper, errList);
+					validateUniqueTattoo(pigInfoMapper, errList);
+					validateEntryDate(pigInfoMapper, errList);
+					validateBirthdate(pigInfoMapper, errList);
+					validateSexId(pigInfoMapper, errList);
+					validateOrigin(pigInfoMapper, errList);
+					validateGfunctionTypeId(pigInfoMapper, errList);
+					validateGCompany(pigInfoMapper, errList);
+					validateGLine(pigInfoMapper, errList);
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

@@ -50,22 +50,25 @@ public class FarrowEventDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				FarrowEventMapper farrowEventMapper = (FarrowEventMapper) mapper;
-				setPigIDPK(farrowEventMapper, processDTO);
-				setServiceDate(farrowEventMapper);
-				setPenId(farrowEventMapper);
-				setFarrowDate(farrowEventMapper);
-				setStillBorns(farrowEventMapper);
-				setLiveBorns(farrowEventMapper);
-				setMaleBorns(farrowEventMapper);
-				setFemaleBorns(farrowEventMapper);
-				setMummies(farrowEventMapper);
-				setWeakBorns(farrowEventMapper);
-				setweightInKGs(farrowEventMapper);
-				setEmployeeGroupId(farrowEventMapper);
-				setTeats(farrowEventMapper);
-				setSowCondition(farrowEventMapper);
-				//setPregnancyEventId(farrowEventMapper);
-				setBreedingEventId(farrowEventMapper);
+				if(!farrowEventMapper.isEmpty())
+				{
+					setPigIDPK(farrowEventMapper, processDTO);
+					setServiceDate(farrowEventMapper);
+					setPenId(farrowEventMapper);
+					setFarrowDate(farrowEventMapper);
+					setStillBorns(farrowEventMapper);
+					setLiveBorns(farrowEventMapper);
+					setMaleBorns(farrowEventMapper);
+					setFemaleBorns(farrowEventMapper);
+					setMummies(farrowEventMapper);
+					setWeakBorns(farrowEventMapper);
+					setweightInKGs(farrowEventMapper);
+					setEmployeeGroupId(farrowEventMapper);
+					setTeats(farrowEventMapper);
+					setSowCondition(farrowEventMapper);
+					//setPregnancyEventId(farrowEventMapper);
+					setBreedingEventId(farrowEventMapper);
+				}
 			}
 		}
 

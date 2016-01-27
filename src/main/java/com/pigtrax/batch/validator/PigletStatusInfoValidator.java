@@ -40,22 +40,25 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 			pigletStatusInfoMapper = (PigletStatusInfoMapper) mapper;
 			if (pigletStatusInfoMapper.isRecovrableErrors() == null || pigletStatusInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validatePigId(pigletStatusInfoMapper, errList);
-				validatePigInfoId(pigletStatusInfoMapper, errList);
-				validatePigGender(pigletStatusInfoMapper, errList);
-				validateCompanyId(pigletStatusInfoMapper, errList);
-				validateWeanDate(pigletStatusInfoMapper, errList);	
-				validateTransferDate(pigletStatusInfoMapper, errList);
-				validateMortalityDate(pigletStatusInfoMapper, errList);
-				//validateFarrowDate(pigletStatusInfoMapper, errList);
-				validateFarrowEvent(pigletStatusInfoMapper, errList);
-				validateSowCondition(pigletStatusInfoMapper, errList);
-				validateFosterPig(pigletStatusInfoMapper, errList);
-				validateFosterFarrowEvent(pigletStatusInfoMapper, errList);
-				validateGroupEventId(pigletStatusInfoMapper, errList);
-				validateMortalityReason(pigletStatusInfoMapper, errList);
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!pigletStatusInfoMapper.isEmpty())
+				{
+					validatePigId(pigletStatusInfoMapper, errList);
+					validatePigInfoId(pigletStatusInfoMapper, errList);
+					validatePigGender(pigletStatusInfoMapper, errList);
+					validateCompanyId(pigletStatusInfoMapper, errList);
+					validateWeanDate(pigletStatusInfoMapper, errList);	
+					validateTransferDate(pigletStatusInfoMapper, errList);
+					validateMortalityDate(pigletStatusInfoMapper, errList);
+					//validateFarrowDate(pigletStatusInfoMapper, errList);
+					validateFarrowEvent(pigletStatusInfoMapper, errList);
+					validateSowCondition(pigletStatusInfoMapper, errList);
+					validateFosterPig(pigletStatusInfoMapper, errList);
+					validateFosterFarrowEvent(pigletStatusInfoMapper, errList);
+					validateGroupEventId(pigletStatusInfoMapper, errList);
+					validateMortalityReason(pigletStatusInfoMapper, errList);
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

@@ -34,19 +34,21 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	public void derive(final List<Mapper> list, final ProcessDTO processDTO) {
 		if (list != null) {
 			for (Mapper mapper : list) {
-				IndividualPigletStatusMapper individualPigletMapper = (IndividualPigletStatusMapper) mapper;						
-				setCompanyId(individualPigletMapper, processDTO);
-				setPremiseId(individualPigletMapper, processDTO);
-				setLitterId(individualPigletMapper);
-				setWtAtBirth(individualPigletMapper);
-				setWtAtWeaning(individualPigletMapper);
-				setWtAtFirstMonth(individualPigletMapper);
-				setWtAtSecondMonth(individualPigletMapper);
-				setWtAtThirdMonth(individualPigletMapper);
-				setWtAtFourthMonth(individualPigletMapper);
-				setWtAtFifthMonth(individualPigletMapper);
-				setWtAtSixthMonth(individualPigletMapper);
-				
+				IndividualPigletStatusMapper individualPigletMapper = (IndividualPigletStatusMapper) mapper;
+				if(!individualPigletMapper.isEmpty())
+				{
+					setCompanyId(individualPigletMapper, processDTO);
+					setPremiseId(individualPigletMapper, processDTO);
+					setLitterId(individualPigletMapper);
+					setWtAtBirth(individualPigletMapper);
+					setWtAtWeaning(individualPigletMapper);
+					setWtAtFirstMonth(individualPigletMapper);
+					setWtAtSecondMonth(individualPigletMapper);
+					setWtAtThirdMonth(individualPigletMapper);
+					setWtAtFourthMonth(individualPigletMapper);
+					setWtAtFifthMonth(individualPigletMapper);
+					setWtAtSixthMonth(individualPigletMapper);
+				}
 			}
 		}
 	}

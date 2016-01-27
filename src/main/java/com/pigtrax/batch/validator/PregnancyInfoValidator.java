@@ -48,23 +48,26 @@ public class PregnancyInfoValidator extends AbstractValidator {
 			pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
 			if (pregnancyInfoMapper.isRecovrableErrors() == null || pregnancyInfoMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
+				if(!pregnancyInfoMapper.isEmpty())
+				{
 				
-				validateCompanyId(pregnancyInfoMapper, errList);
-				validatePremiseId(pregnancyInfoMapper, errList);
-				validatePigId(pregnancyInfoMapper, errList);
-				validatePigInfoId(pregnancyInfoMapper, errList);
-				validatePigGender(pregnancyInfoMapper, errList);
-				validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
-				validateBreedingEvent(pregnancyInfoMapper, errList);
-				//validateExamDate(pregnancyInfoMapper, errList);
-				validateResultDate(pregnancyInfoMapper, errList);
-				
-				validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);
-				validatePregnancyEventEntryExist(pregnancyInfoMapper, errList);				
-				validateSowCondition(pregnancyInfoMapper, errList);
-				
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+					validateCompanyId(pregnancyInfoMapper, errList);
+					validatePremiseId(pregnancyInfoMapper, errList);
+					validatePigId(pregnancyInfoMapper, errList);
+					validatePigInfoId(pregnancyInfoMapper, errList);
+					validatePigGender(pregnancyInfoMapper, errList);
+					validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
+					validateBreedingEvent(pregnancyInfoMapper, errList);
+					//validateExamDate(pregnancyInfoMapper, errList);
+					validateResultDate(pregnancyInfoMapper, errList);
+					
+					validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);
+					validatePregnancyEventEntryExist(pregnancyInfoMapper, errList);				
+					validateSowCondition(pregnancyInfoMapper, errList);
+					
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

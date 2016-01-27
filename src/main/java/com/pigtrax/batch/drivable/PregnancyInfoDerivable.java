@@ -44,16 +44,19 @@ public class PregnancyInfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PregnancyInfoMapper pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
-				//setExamDate(pregnancyInfoMapper);
-				setCompanyId(pregnancyInfoMapper, processDTO);
-				setPremiseId(pregnancyInfoMapper, processDTO);
-				setResultDate(pregnancyInfoMapper);
-				setPregnancyEventTypeId(pregnancyInfoMapper);
-				setPregnancyExamResultTypeId(pregnancyInfoMapper); 
-				setPigInfoId(pregnancyInfoMapper);
-				setBreedingEventId(pregnancyInfoMapper);
-				setEmployeeGroupId(pregnancyInfoMapper);
-				setSowCondition(pregnancyInfoMapper);
+				if(!pregnancyInfoMapper.isEmpty())
+				{
+					//setExamDate(pregnancyInfoMapper);
+					setCompanyId(pregnancyInfoMapper, processDTO);
+					setPremiseId(pregnancyInfoMapper, processDTO);
+					setResultDate(pregnancyInfoMapper);
+					setPregnancyEventTypeId(pregnancyInfoMapper);
+					setPregnancyExamResultTypeId(pregnancyInfoMapper); 
+					setPigInfoId(pregnancyInfoMapper);
+					setBreedingEventId(pregnancyInfoMapper);
+					setEmployeeGroupId(pregnancyInfoMapper);
+					setSowCondition(pregnancyInfoMapper);
+				}
 			}
 		}
 	}

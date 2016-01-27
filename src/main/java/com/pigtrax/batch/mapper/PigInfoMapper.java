@@ -298,6 +298,26 @@ public class PigInfoMapper extends AbstractMapper {
 		this.deriveRoomId = deriveRoomId;
 	}
 
-	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.roomId==null || this.roomId.trim().length() == 0)
+				&& (this.tattoo == null || this.tattoo.trim().length() == 0)
+				&& (this.alternateTattoo == null || this.alternateTattoo.trim().length() == 0)
+				&& (this.entryDate == null || this.entryDate.trim().length() == 0)
+				&& (this.sexTypeId == null || this.sexTypeId.trim().length() == 0)
+				&& (this.geneticOrigin == null || this.geneticOrigin.trim().length() == 0)
+				&& (this.geneticCompany == null || this.geneticCompany.trim().length() == 0)
+				&& (this.geneticLine == null || this.geneticLine.trim().length() == 0)
+				&& (this.geneticFunction == null || this.geneticFunction.trim().length() == 0)
+				&& (this.birthDate == null || this.birthDate.trim().length() == 0)
+				&& (this.sireId == null || this.sireId.trim().length() == 0)
+				&& (this.damId == null || this.damId.trim().length() == 0)
+				&& (this.remarks == null || this.remarks.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}
 	
 }

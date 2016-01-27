@@ -42,25 +42,28 @@ public class MatingDetailsHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				MatingDetailsMapper matingDetailsMapper = (MatingDetailsMapper) mapper;
-				if (matingDetailsMapper.isRecovrableErrors() == null || matingDetailsMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						MatingDetails matingDetails = populateMatingDetails(errorMap, matingDetailsMapper, processDTO);
-						if (matingDetails != null) {
-							matingDetailsDao.insertMatingDetails(matingDetails);
-							
-							breedingEventDao.resetServiceStartDate(matingDetails.getBreedingEventId());
-							
-							totalRecordsProcessed+=1;
+				if(!matingDetailsMapper.isEmpty())
+				{
+					if (matingDetailsMapper.isRecovrableErrors() == null || matingDetailsMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							MatingDetails matingDetails = populateMatingDetails(errorMap, matingDetailsMapper, processDTO);
+							if (matingDetails != null) {
+								matingDetailsDao.insertMatingDetails(matingDetails);
+								
+								breedingEventDao.resetServiceStartDate(matingDetails.getBreedingEventId());
+								
+								totalRecordsProcessed+=1;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in MatingDetailsHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in MatingDetailsHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

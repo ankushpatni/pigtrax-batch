@@ -39,21 +39,24 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 			individualPigletStatusMapper = (IndividualPigletStatusMapper) mapper;
 			if (individualPigletStatusMapper.isRecovrableErrors() == null || individualPigletStatusMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(individualPigletStatusMapper, errList);
-				validatePremiseId(individualPigletStatusMapper, errList);
-				validatePigId(individualPigletStatusMapper, errList);
-				validateLitterId(individualPigletStatusMapper, errList);
-				validateWtAtBirth(individualPigletStatusMapper, errList);
-				validateWtAtWeaning(individualPigletStatusMapper, errList);
-				validateTattooId(individualPigletStatusMapper, errList);
-				validateWtAtFirstMonth(individualPigletStatusMapper, errList);
-				validateWtAtSecondMonth(individualPigletStatusMapper, errList);
-				validateWtAtThirdMonth(individualPigletStatusMapper, errList);
-				validateWtAtFourthMonth(individualPigletStatusMapper, errList);
-				validateWtAtFifthMonth(individualPigletStatusMapper, errList);
-				validateWtAtSixthMonth(individualPigletStatusMapper, errList);
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!individualPigletStatusMapper.isEmpty())
+				{
+					validateCompanyId(individualPigletStatusMapper, errList);
+					validatePremiseId(individualPigletStatusMapper, errList);
+					validatePigId(individualPigletStatusMapper, errList);
+					validateLitterId(individualPigletStatusMapper, errList);
+					validateWtAtBirth(individualPigletStatusMapper, errList);
+					validateWtAtWeaning(individualPigletStatusMapper, errList);
+					validateTattooId(individualPigletStatusMapper, errList);
+					validateWtAtFirstMonth(individualPigletStatusMapper, errList);
+					validateWtAtSecondMonth(individualPigletStatusMapper, errList);
+					validateWtAtThirdMonth(individualPigletStatusMapper, errList);
+					validateWtAtFourthMonth(individualPigletStatusMapper, errList);
+					validateWtAtFifthMonth(individualPigletStatusMapper, errList);
+					validateWtAtSixthMonth(individualPigletStatusMapper, errList);
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

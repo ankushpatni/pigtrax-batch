@@ -206,6 +206,21 @@ public class GroupEventInfoMapper extends AbstractMapper{
 		this.derivePremiseId = derivePremiseId;
 	}
 
+
 	
+	public boolean isEmpty()
+	{	
+		if((this.rooms==null || this.rooms.trim().length() == 0)
+				&& (this.groupId==null || this.groupId.trim().length() == 0)
+				&& (this.groupStartDate == null || this.groupStartDate.trim().length() == 0)
+				&& (this.phaseOfProductionType == null || this.phaseOfProductionType.trim().length() == 0)
+				&& (this.groupCloseDate == null || this.groupCloseDate.trim().length() == 0)
+				&& (this.remarks == null || this.remarks.trim().length() == 0)
+				&& (this.currentInventory == null || this.currentInventory.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 	
 }

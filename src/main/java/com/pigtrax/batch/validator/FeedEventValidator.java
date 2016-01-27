@@ -36,16 +36,19 @@ public class FeedEventValidator extends AbstractValidator {
 			feedEventMapper = (FeedEventMapper) mapper;
 			if (feedEventMapper.isRecovrableErrors() == null || feedEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(feedEventMapper, errList);
-				validatePremiseId(feedEventMapper, errList);
-				validateRationId(feedEventMapper, errList);
-				validateTicketNumber(feedEventMapper, errList);
-				//validateInitialFeedEntryDate(feedEventMapper, errList);
-				//validateTransportJourneyId(feedEventMapper, errList);
-				//validateFeedCost(feedEventMapper, errList);
-				//validateFeedQuantity(feedEventMapper, errList);
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!feedEventMapper.isEmpty())
+				{
+					validateCompanyId(feedEventMapper, errList);
+					validatePremiseId(feedEventMapper, errList);
+					validateRationId(feedEventMapper, errList);
+					validateTicketNumber(feedEventMapper, errList);
+					//validateInitialFeedEntryDate(feedEventMapper, errList);
+					//validateTransportJourneyId(feedEventMapper, errList);
+					//validateFeedCost(feedEventMapper, errList);
+					//validateFeedQuantity(feedEventMapper, errList);
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

@@ -54,17 +54,20 @@ public class GroupEventDetailDerivable implements Derivable {
 			for (Mapper mapper : list) {
 				GroupEventDetailMapper groupEventDetailMapper = (GroupEventDetailMapper) mapper;
 				
-				setCompanyId(groupEventDetailMapper, processDTO);
-				setGroupId(groupEventDetailMapper);
-				setPremiseId(groupEventDetailMapper, processDTO);				
-				setRoomId(groupEventDetailMapper);
-				setSowSourceId(groupEventDetailMapper);
-				setBarnId(groupEventDetailMapper);
-				setDateOfEntry(groupEventDetailMapper);
-				setNumberOfPigs(groupEventDetailMapper);
-				setWeightInKgs(groupEventDetailMapper);				
-				setEmployeeGroupId(groupEventDetailMapper);				
-				//setIndeventoryAdjustment(groupEventDetailMapper);
+				if(!groupEventDetailMapper.isEmpty())
+				{
+					setCompanyId(groupEventDetailMapper, processDTO);
+					setGroupId(groupEventDetailMapper);
+					setPremiseId(groupEventDetailMapper, processDTO);				
+					setRoomId(groupEventDetailMapper);
+					setSowSourceId(groupEventDetailMapper);
+					setBarnId(groupEventDetailMapper);
+					setDateOfEntry(groupEventDetailMapper);
+					setNumberOfPigs(groupEventDetailMapper);
+					setWeightInKgs(groupEventDetailMapper);				
+					setEmployeeGroupId(groupEventDetailMapper);				
+					//setIndeventoryAdjustment(groupEventDetailMapper);
+				}
 				
 			}
 		}

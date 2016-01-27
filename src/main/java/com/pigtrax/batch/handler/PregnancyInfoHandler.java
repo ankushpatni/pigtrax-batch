@@ -43,36 +43,39 @@ public class PregnancyInfoHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				PregnancyInfoMapper pregnancyInfoMapper = (PregnancyInfoMapper) mapper;
-				if (pregnancyInfoMapper.isRecovrableErrors() == null || pregnancyInfoMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						PregnancyInfo pregnancyInfo = populatePregnancyInfo(errorMap, pregnancyInfoMapper, processDTO);
-						if (pregnancyInfoMapper != null) {
-							
-							boolean flag = pregnancyInfoDao.checkIfPregnancyEventExist(pregnancyInfoMapper.getDeriveBreedingEventId(),
-									pregnancyInfoMapper.getDerivePregnancyEventTypeId(), pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
-							if (flag) {
-								pregnancyInfoMapper.setRecovrableErrors(false);
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DUPLICATE_CODE, Constants.ERR_PREGNANCY_EVENT_DUPLICATE_MSG, "pigId", false));
-								isErrorOccured = true;
-							} 
-							else
-							{
-								int generatedKey = pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);							
-								PigTraxEventMaster eventMaster = populateEventMaster(pregnancyInfoMapper, generatedKey, processDTO);
-								eventMasterDao.insertEventMaster(eventMaster);
+				if(!pregnancyInfoMapper.isEmpty())
+				{
+					if (pregnancyInfoMapper.isRecovrableErrors() == null || pregnancyInfoMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							PregnancyInfo pregnancyInfo = populatePregnancyInfo(errorMap, pregnancyInfoMapper, processDTO);
+							if (pregnancyInfoMapper != null) {
 								
-								totalRecordsProcessed = totalRecordsProcessed + 1;
+								boolean flag = pregnancyInfoDao.checkIfPregnancyEventExist(pregnancyInfoMapper.getDeriveBreedingEventId(),
+										pregnancyInfoMapper.getDerivePregnancyEventTypeId(), pregnancyInfoMapper.getDerivePregnancyExamResultTypeId());
+								if (flag) {
+									pregnancyInfoMapper.setRecovrableErrors(false);
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREGNANCY_EVENT_DUPLICATE_CODE, Constants.ERR_PREGNANCY_EVENT_DUPLICATE_MSG, "pigId", false));
+									isErrorOccured = true;
+								} 
+								else
+								{
+									int generatedKey = pregnancyInfoDao.insertPregnancyInfo(pregnancyInfo);							
+									PigTraxEventMaster eventMaster = populateEventMaster(pregnancyInfoMapper, generatedKey, processDTO);
+									eventMasterDao.insertEventMaster(eventMaster);
+									
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
 							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

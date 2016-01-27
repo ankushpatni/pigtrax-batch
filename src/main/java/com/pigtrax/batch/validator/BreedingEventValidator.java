@@ -39,19 +39,22 @@ public class BreedingEventValidator extends AbstractValidator {
 			breedingEventMapper = (BreedingEventMapper) mapper;
 			if (breedingEventMapper.isRecovrableErrors() == null || breedingEventMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(breedingEventMapper, errList);
-				validatePremiseId(breedingEventMapper, errList);
-				validatePigId(breedingEventMapper, errList);
-				validatePigInfoId(breedingEventMapper, errList);
-				validatePigGender(breedingEventMapper, errList);				
-				validateSeriveTypeId(breedingEventMapper, errList);
-				validatePenId(breedingEventMapper, errList);
-				validateSowCondition(breedingEventMapper, errList);
-				validateWeight(breedingEventMapper, errList);
-				
-				
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!breedingEventMapper.isEmpty())
+				{
+					validateCompanyId(breedingEventMapper, errList);
+					validatePremiseId(breedingEventMapper, errList);
+					validatePigId(breedingEventMapper, errList);
+					validatePigInfoId(breedingEventMapper, errList);
+					validatePigGender(breedingEventMapper, errList);				
+					validateSeriveTypeId(breedingEventMapper, errList);
+					validatePenId(breedingEventMapper, errList);
+					validateSowCondition(breedingEventMapper, errList);
+					validateWeight(breedingEventMapper, errList);
+					
+					
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

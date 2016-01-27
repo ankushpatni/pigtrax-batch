@@ -159,5 +159,21 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 		this.deriveFeedCost = deriveFeedCost;
 	}
 	
+	public boolean isEmpty()
+	{	
+		if((this.ticketNumber==null || this.ticketNumber.trim().length() == 0)
+				&& (this.groupEventId==null || this.groupEventId.trim().length() == 0)
+				&& (this.feedEventDate == null || this.feedEventDate.trim().length() == 0)
+				&& (this.feedMill == null || this.feedMill.trim().length() == 0)
+				&& (this.feedEventType == null || this.feedEventType.trim().length() == 0)
+				&& (this.weightInKgs == null || this.weightInKgs.trim().length() == 0)
+				&& (this.feedCost == null || this.feedCost.trim().length() == 0)
+				&& (this.silo == null || this.silo.trim().length() == 0)
+				&& (this.remarks == null || this.remarks.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 	
 }

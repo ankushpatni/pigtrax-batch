@@ -41,33 +41,36 @@ public class IndividualPigletStatusHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				IndividualPigletStatusMapper individualPigletMapper = (IndividualPigletStatusMapper) mapper;
-				if (individualPigletMapper.isRecovrableErrors() == null || individualPigletMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						IndividualPigletStatus individualPigletStatus = populateIndividualPigletInfo(errorMap, individualPigletMapper, processDTO);
-						if (individualPigletStatus != null) {
-							
-							boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDerivePremiseId());
-							if(flag)
-							{
-								individualPigletMapper.setRecovrableErrors(false); 
-								isErrorOccured = true;
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
+				if(!individualPigletMapper.isEmpty())
+				{
+					if (individualPigletMapper.isRecovrableErrors() == null || individualPigletMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							IndividualPigletStatus individualPigletStatus = populateIndividualPigletInfo(errorMap, individualPigletMapper, processDTO);
+							if (individualPigletStatus != null) {
+								
+								boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDerivePremiseId());
+								if(flag)
+								{
+									individualPigletMapper.setRecovrableErrors(false); 
+									isErrorOccured = true;
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
+								}
+								else 
+								{								
+									individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
 							}
-							else 
-							{								
-								individualPigletDao.insertIndividualPigletStatus(individualPigletStatus); 
-								totalRecordsProcessed = totalRecordsProcessed + 1;
-							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

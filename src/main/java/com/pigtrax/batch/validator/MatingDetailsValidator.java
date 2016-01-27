@@ -50,17 +50,19 @@ public class MatingDetailsValidator extends AbstractValidator {
 			matingDetailsMapper = (MatingDetailsMapper) mapper;
 			if (matingDetailsMapper.isRecovrableErrors() == null || matingDetailsMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				
-				validatePigId(matingDetailsMapper, errList);
-				validatePigInfoId(matingDetailsMapper, errList);
-				validatePigGender(matingDetailsMapper, errList);
-				validateCompanyId(matingDetailsMapper, errList);				
-				validateEmployeeGroupId(matingDetailsMapper, errList);
-				validateMateQuality(matingDetailsMapper, errList);
-				validateMatingRecord(matingDetailsMapper, errList);
-				
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!matingDetailsMapper.isEmpty())
+				{
+					validatePigId(matingDetailsMapper, errList);
+					validatePigInfoId(matingDetailsMapper, errList);
+					validatePigGender(matingDetailsMapper, errList);
+					validateCompanyId(matingDetailsMapper, errList);				
+					validateEmployeeGroupId(matingDetailsMapper, errList);
+					validateMateQuality(matingDetailsMapper, errList);
+					validateMatingRecord(matingDetailsMapper, errList);
+					
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}
@@ -129,7 +131,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	}
 	
 	private void validateMatingRecord(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
-		if (matingDetailsMapper.getDeriveMatingDate() != null) {
+		if (matingDetailsMapper.getDeriveMatingDate() != null && matingDetailsMapper.getDerivePigInfoId() != null) {
 			
 			PigInfo pigInfoBean = pigInfoDao.getPigDetails(matingDetailsMapper.getDerivePigInfoId());
 			

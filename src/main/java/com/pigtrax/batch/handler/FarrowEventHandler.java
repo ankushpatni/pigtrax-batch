@@ -44,35 +44,38 @@ public class FarrowEventHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				FarrowEventMapper farrowEventMapper = (FarrowEventMapper) mapper;
-				if (farrowEventMapper.isRecovrableErrors() == null || farrowEventMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
-						if (farrowEvent != null) {
-							
-							boolean flag = false;//farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
-							if (flag) {
+				if(!farrowEventMapper.isEmpty())
+				{
+					if (farrowEventMapper.isRecovrableErrors() == null || farrowEventMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
+							if (farrowEvent != null) {
 								
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FARROW_DUPLICATE_CODE, Constants.ERR_FARROW_DUPLICATE_CODE_MSG, "serviceDate", false));
-								isErrorOccured = true;
-							} 
-							else
-							{							
-								int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
-								farrowEventDao.updateLitterId(id, farrowEvent.getCompanyId());
-								PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
-								eventMasterDao.insertEventMaster(eventMaster);
-								totalRecordsProcessed = totalRecordsProcessed + 1;
+								boolean flag = false;//farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
+								if (flag) {
+									
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FARROW_DUPLICATE_CODE, Constants.ERR_FARROW_DUPLICATE_CODE_MSG, "serviceDate", false));
+									isErrorOccured = true;
+								} 
+								else
+								{							
+									int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
+									farrowEventDao.updateLitterId(id, farrowEvent.getCompanyId());
+									PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
+									eventMasterDao.insertEventMaster(eventMaster);
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
 							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

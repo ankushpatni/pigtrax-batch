@@ -56,63 +56,66 @@ public class GroupEventInfoHandler implements Handler{
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				GroupEventInfoMapper groupEventInfoMapper = (GroupEventInfoMapper) mapper;
-				if (groupEventInfoMapper.isRecovrableErrors() == null || groupEventInfoMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						GroupEvent groupEvent = populateGroupEvent(errorMap, groupEventInfoMapper, processDTO);
-						
-						if (groupEvent != null) {
+				if(!groupEventInfoMapper.isEmpty())
+				{
+					if (groupEventInfoMapper.isRecovrableErrors() == null || groupEventInfoMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							GroupEvent groupEvent = populateGroupEvent(errorMap, groupEventInfoMapper, processDTO);
 							
-							Integer existingGrpId = groupEventDaoImpl.getGroupEventId(groupEvent.getGroupId(), groupEvent.getCompanyId());
-							if(existingGrpId == null)
-							{
-								Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
-								groupEvent.setId(id);
+							if (groupEvent != null) {
 								
-								
-								GroupEventPhaseChange eventPhaseChange = new GroupEventPhaseChange();
-								eventPhaseChange.setPhaseStartDate(groupEvent.getGroupStartDateTime());
-								eventPhaseChange.setGroupEventId(id);
-								eventPhaseChange.setPhaseOfProductionTypeId(groupEvent.getPhaseOfProductionTypeId());
-								eventPhaseChange.setPremiseId(groupEvent.getPremiseId());
-								eventPhaseChange.setRoomIds(groupEvent.getRoomIds());
-								Integer phaseId = groupPhaseChangeDao.addGroupPhaseChange(eventPhaseChange);
-								eventPhaseChange.setId(phaseId);
-								
-								groupEventRoomDao.addGroupEventRooms(eventPhaseChange);
-								
-								GroupEventDetail details = new GroupEventDetail();
-								details.setSowSourceId(groupEvent.getPremiseId());
-								details.setDateOfEntry(groupEvent.getGroupStartDateTime());
-								details.setEmployeeGroupId(null);
-								details.setNumberOfPigs(groupEvent.getCurrentInventory());
-								details.setWeightInKgs(0D);
-								details.setRemarks("Entered through mass upload");
-								details.setGroupId(groupEvent.getId());
-								details.setLastUpdated(new Date());
-								details.setUserUpdated(groupEvent.getUserUpdated());
-								details.setPremiseId(groupEvent.getPremiseId());
-								groupEventDetailsDao.addGroupEventDetails(details);
-								
-								
-								PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
-								eventMasterDao.insertEventMaster(eventMaster);
-								totalRecordsProcessed = totalRecordsProcessed + 1;
+								Integer existingGrpId = groupEventDaoImpl.getGroupEventId(groupEvent.getGroupId(), groupEvent.getCompanyId());
+								if(existingGrpId == null)
+								{
+									Integer id = groupEventDaoImpl.addGroupEvent(groupEvent);
+									groupEvent.setId(id);
+									
+									
+									GroupEventPhaseChange eventPhaseChange = new GroupEventPhaseChange();
+									eventPhaseChange.setPhaseStartDate(groupEvent.getGroupStartDateTime());
+									eventPhaseChange.setGroupEventId(id);
+									eventPhaseChange.setPhaseOfProductionTypeId(groupEvent.getPhaseOfProductionTypeId());
+									eventPhaseChange.setPremiseId(groupEvent.getPremiseId());
+									eventPhaseChange.setRoomIds(groupEvent.getRoomIds());
+									Integer phaseId = groupPhaseChangeDao.addGroupPhaseChange(eventPhaseChange);
+									eventPhaseChange.setId(phaseId);
+									
+									groupEventRoomDao.addGroupEventRooms(eventPhaseChange);
+									
+									GroupEventDetail details = new GroupEventDetail();
+									details.setSowSourceId(groupEvent.getPremiseId());
+									details.setDateOfEntry(groupEvent.getGroupStartDateTime());
+									details.setEmployeeGroupId(null);
+									details.setNumberOfPigs(groupEvent.getCurrentInventory());
+									details.setWeightInKgs(0D);
+									details.setRemarks("Entered through mass upload");
+									details.setGroupId(groupEvent.getId());
+									details.setLastUpdated(new Date());
+									details.setUserUpdated(groupEvent.getUserUpdated());
+									details.setPremiseId(groupEvent.getPremiseId());
+									groupEventDetailsDao.addGroupEventDetails(details);
+									
+									
+									PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);
+									eventMasterDao.insertEventMaster(eventMaster);
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
+								else
+								{	
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_DUPLICATE_GRP_ID_CODE, Constants.GROUP_EVENT_DUPLICATE_GRP_ID_MSG, groupEvent.getGroupId(), false));
+									isErrorOccured = true;
+								}
 							}
-							else
-							{	
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_DUPLICATE_GRP_ID_CODE, Constants.GROUP_EVENT_DUPLICATE_GRP_ID_MSG, groupEvent.getGroupId(), false));
-								isErrorOccured = true;
-							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in GroupEventInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in GroupEventInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}
@@ -136,7 +139,7 @@ public class GroupEventInfoHandler implements Handler{
 			groupEvent.setPhaseOfProductionTypeId(groupEventInfoMapper.getDerivePhaseOfProductionTypeId());
 			groupEvent.setGroupCloseDateTime(groupEventInfoMapper.getDeriveGroupcloseDateTime());
 			groupEvent.setRemarks(groupEventInfoMapper.getRemarks());
-			groupEvent.setCurrentInventory(groupEventInfoMapper.getDeriveCurrentInventory());
+			groupEvent.setCurrentInventory((groupEventInfoMapper.getDeriveCurrentInventory() != null)? groupEventInfoMapper.getDeriveCurrentInventory() : 0);
 			groupEvent.setPreviousGroupId(groupEventInfoMapper.getPreviousGroupId());
 			groupEvent.setRoomIds(groupEventInfoMapper.getDeriveRoomIds());
 			groupEvent.setPremiseId(groupEventInfoMapper.getDerivePremiseId());

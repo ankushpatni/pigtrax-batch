@@ -49,20 +49,23 @@ public class PigletStatusInfoDerivable implements Derivable {
 		if (list != null) {
 			for (Mapper mapper : list) {
 				PigletStatusInfoMapper pigletStatusInfoMapper = (PigletStatusInfoMapper) mapper;
-				setCompanyId(pigletStatusInfoMapper, processDTO); 
-				setPremiseId(pigletStatusInfoMapper, processDTO);
-				setPigInfoId(pigletStatusInfoMapper);
-				setDerivePigletStatusType(pigletStatusInfoMapper);
-				setSowCondition(pigletStatusInfoMapper);
-				setDerivePigNum(pigletStatusInfoMapper);
-				setDerivePigWt(pigletStatusInfoMapper);
-				setDeriveEventDate(pigletStatusInfoMapper);
-				setDeriveGroupEventId(pigletStatusInfoMapper);				
-				setDeriveTransferToPigInfoId(pigletStatusInfoMapper);				
-				setDeriveMortalityReasonId(pigletStatusInfoMapper);
-				setDeriveFosterFarrowEventId(pigletStatusInfoMapper);				
-				setDeriveFarrowEventId(pigletStatusInfoMapper);
-				setDerivePenId(pigletStatusInfoMapper);
+				if(!pigletStatusInfoMapper.isEmpty())
+				{
+					setCompanyId(pigletStatusInfoMapper, processDTO); 
+					setPremiseId(pigletStatusInfoMapper, processDTO);
+					setPigInfoId(pigletStatusInfoMapper);
+					setDerivePigletStatusType(pigletStatusInfoMapper);
+					setSowCondition(pigletStatusInfoMapper);
+					setDerivePigNum(pigletStatusInfoMapper);
+					setDerivePigWt(pigletStatusInfoMapper);
+					setDeriveEventDate(pigletStatusInfoMapper);
+					setDeriveGroupEventId(pigletStatusInfoMapper);				
+					setDeriveTransferToPigInfoId(pigletStatusInfoMapper);				
+					setDeriveMortalityReasonId(pigletStatusInfoMapper);
+					setDeriveFosterFarrowEventId(pigletStatusInfoMapper);				
+					setDeriveFarrowEventId(pigletStatusInfoMapper);
+					setDerivePenId(pigletStatusInfoMapper);
+					}
 			}
 		}
 	}

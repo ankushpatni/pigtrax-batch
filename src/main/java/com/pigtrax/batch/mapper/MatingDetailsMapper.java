@@ -242,4 +242,17 @@ public class MatingDetailsMapper extends AbstractMapper {
 			return getPigId().toString();
 		}
 	}
+	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.matingDate==null || this.matingDate.trim().length() == 0)
+				&& (this.employeeGroup == null || this.employeeGroup.trim().length() == 0)
+				&& (this.semenId == null || this.semenId.trim().length() == 0)
+				&& (this.mateQuality == null || this.mateQuality.trim().length() == 0)
+				&& (this.semenDate == null || this.semenDate.trim().length() == 0))
+			return true;
+		else
+			return false;
+	}
 }

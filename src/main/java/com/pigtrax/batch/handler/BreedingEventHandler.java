@@ -39,31 +39,34 @@ public class BreedingEventHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				BreedingEventMapper breedingEventMapper = (BreedingEventMapper) mapper;
-				if (breedingEventMapper.isRecovrableErrors() == null || breedingEventMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						BreedingEvent breedingEvent = populateBreedingEvent(errorMap, breedingEventMapper, processDTO);
-						if (breedingEvent != null) {
-							if(breedingEventDao.checkIfPreviousCycleCompleted(breedingEvent.getPigInfoId()))
-							{
-								breedingEventDao.insertBreedingEventInfo(breedingEvent);
-								totalRecordsProcessed+=1;
+				if(!breedingEventMapper.isEmpty())
+				{
+					if (breedingEventMapper.isRecovrableErrors() == null || breedingEventMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							BreedingEvent breedingEvent = populateBreedingEvent(errorMap, breedingEventMapper, processDTO);
+							if (breedingEvent != null) {
+								if(breedingEventDao.checkIfPreviousCycleCompleted(breedingEvent.getPigInfoId()))
+								{
+									breedingEventDao.insertBreedingEventInfo(breedingEvent);
+									totalRecordsProcessed+=1;
+								}
+								else
+								{
+									breedingEventMapper.setRecovrableErrors(false);
+									isErrorOccured = true;
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE, Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG, "pigId", false));
+								}
 							}
-							else
-							{
-								breedingEventMapper.setRecovrableErrors(false);
-								isErrorOccured = true;
-								errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE, Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG, "pigId", false));
-							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+							isErrorOccured = true;
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
+						}
 					}
 				}
 			}

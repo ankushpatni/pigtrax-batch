@@ -213,4 +213,19 @@ public class BreedingEventMapper extends AbstractMapper {
 			return getPigId().toString();
 		}
 	}
+	
+	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.serviceType==null || this.serviceType.trim().length() == 0)
+				&& (this.serviceGroupId == null || this.serviceGroupId.trim().length() == 0)
+				&& (this.pen == null || this.pen.trim().length() == 0)
+				&& (this.sowCondition == null || this.sowCondition.trim().length() == 0)
+				&& (this.weightInKgs == null || this.weightInKgs.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}
 }

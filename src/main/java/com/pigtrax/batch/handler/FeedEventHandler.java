@@ -49,43 +49,46 @@ public class FeedEventHandler implements Handler {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				FeedEventMapper feedEventMapper = (FeedEventMapper) mapper;
-				if (feedEventMapper.isRecovrableErrors() == null || feedEventMapper.isRecovrableErrors()) {
-					boolean isErrorOccured = false;
-					try {
-						FeedEvent feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
-						if(feedEventMapper.getDeriveTransportTrailer() != null || feedEventMapper.getDeriveTransportTruck() != null)
-						{
-							TransportJourney journey = new TransportJourney();
-							journey.setTransportTrailerId(feedEventMapper.getDeriveTransportTrailer());
-							journey.setTransportTruckId(feedEventMapper.getDeriveTransportTruck());
-							journey.setUserUpdated(processDTO.getUserName());
-							journeyId = transportJourneyDao.addTransportJourney(journey);
-							if(journeyId > 0)
-								feedEvent.setTransPortJourneyId(journeyId);
-						}
-						boolean flag = feedEventDaoImpl.checkIfTicketNumberExists(feedEvent.getTicketNumber(), feedEvent.getPremiseId());
-						if(flag)
-						{
-							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FEED_DUPLICATE_TKTNUM, Constants.ERR_FEED_DUPLICATE_TKTNUM_MSG, "ticketNumber", false));
+				if(!feedEventMapper.isEmpty())
+				{
+					if (feedEventMapper.isRecovrableErrors() == null || feedEventMapper.isRecovrableErrors()) {
+						boolean isErrorOccured = false;
+						try {
+							FeedEvent feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
+							if(feedEventMapper.getDeriveTransportTrailer() != null || feedEventMapper.getDeriveTransportTruck() != null)
+							{
+								TransportJourney journey = new TransportJourney();
+								journey.setTransportTrailerId(feedEventMapper.getDeriveTransportTrailer());
+								journey.setTransportTruckId(feedEventMapper.getDeriveTransportTruck());
+								journey.setUserUpdated(processDTO.getUserName());
+								journeyId = transportJourneyDao.addTransportJourney(journey);
+								if(journeyId > 0)
+									feedEvent.setTransPortJourneyId(journeyId);
+							}
+							boolean flag = feedEventDaoImpl.checkIfTicketNumberExists(feedEvent.getTicketNumber(), feedEvent.getPremiseId());
+							if(flag)
+							{
+								errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FEED_DUPLICATE_TKTNUM, Constants.ERR_FEED_DUPLICATE_TKTNUM_MSG, "ticketNumber", false));
+								isErrorOccured = true;
+							}
+							else
+							{
+								if (feedEvent != null) {								
+									int id = feedEventDaoImpl.addFeedEvent(feedEvent);
+									PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, id, processDTO);
+									eventMasterDao.insertEventMaster(eventMaster);
+									totalRecordsProcessed = totalRecordsProcessed + 1;
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							logger.error("Exception in PigInfoHandler.execute : " + e);
+							errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
 							isErrorOccured = true;
 						}
-						else
-						{
-							if (feedEvent != null) {								
-								int id = feedEventDaoImpl.addFeedEvent(feedEvent);
-								PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, id, processDTO);
-								eventMasterDao.insertEventMaster(eventMaster);
-								totalRecordsProcessed = totalRecordsProcessed + 1;
-							}
+						if (errList != null && errList.size() > 0 && isErrorOccured) {
+							errorMap.put(mapper, errList);
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error("Exception in PigInfoHandler.execute : " + e);
-						errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
-						isErrorOccured = true;
-					}
-					if (errList != null && errList.size() > 0 && isErrorOccured) {
-						errorMap.put(mapper, errList);
 					}
 				}
 			}

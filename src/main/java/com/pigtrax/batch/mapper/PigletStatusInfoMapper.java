@@ -451,4 +451,23 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 		buffer.append("[ Pig Id :"+getPigId()+", Company Id: "+getCompanyId()+", Wean Date : "+getDeriveEventDate()+", Event Type"+getEventType()+"]");
 		return buffer.toString();
 	}
+	
+	public boolean isEmpty()
+	{	
+		if((this.pigId==null || this.pigId.trim().length() == 0)
+				&& (this.eventType==null || this.eventType.trim().length() == 0)
+				&& (this.numberOfPigs == null || this.numberOfPigs.trim().length() == 0)
+				&& (this.weightOfPigs == null || this.weightOfPigs.trim().length() == 0)
+				&& (this.eventDate == null || this.eventDate.trim().length() == 0)
+				&& (this.weanGroupEventId == null || this.weanGroupEventId.trim().length() == 0)
+				&& (this.transferredToPig == null || this.transferredToPig.trim().length() == 0)
+				&& (this.mortalityReason == null || this.mortalityReason.trim().length() == 0)
+				&& (this.pen == null || this.pen.trim().length() == 0)
+				&& (this.remarks == null || this.remarks.trim().length() == 0)
+				&& (this.sowCondition == null || this.sowCondition.trim().length() == 0)
+				)
+			return true;
+		else
+			return false;
+	}	
 }

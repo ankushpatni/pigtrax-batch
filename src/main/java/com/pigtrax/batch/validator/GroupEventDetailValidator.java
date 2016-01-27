@@ -50,16 +50,19 @@ public class GroupEventDetailValidator extends AbstractValidator {
 			groupEventDetailMapper = (GroupEventDetailMapper) mapper;
 			if (groupEventDetailMapper.isRecovrableErrors() == null || groupEventDetailMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
-				validateCompanyId(groupEventDetailMapper, errList);
-				validatePremiseId(groupEventDetailMapper, errList);
-				//validateRoomId(groupEventDetailMapper, errList);
-				validateSowSource(groupEventDetailMapper, errList);							
-				validateDateOfEntry(groupEventDetailMapper, errList);
-				validateNumberOfPigs(groupEventDetailMapper, errList);	
-				validateWeightInKg(groupEventDetailMapper, errList);
-								
-				if (errList.size() > 0) {
-					errorMap.put(mapper, errList);
+				if(!groupEventDetailMapper.isEmpty())
+				{
+					validateCompanyId(groupEventDetailMapper, errList);
+					validatePremiseId(groupEventDetailMapper, errList);
+					//validateRoomId(groupEventDetailMapper, errList);
+					validateSowSource(groupEventDetailMapper, errList);							
+					validateDateOfEntry(groupEventDetailMapper, errList);
+					validateNumberOfPigs(groupEventDetailMapper, errList);	
+					validateWeightInKg(groupEventDetailMapper, errList);
+									
+					if (errList.size() > 0) {
+						errorMap.put(mapper, errList);
+					}
 				}
 			}
 		}

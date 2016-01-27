@@ -65,7 +65,7 @@ public class FeedEventDaoImpl implements FeedEventDao {
 	@Override
 	public boolean checkIfTicketNumberExists(final String ticketNumber, final Integer premiseId) {
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select count(*) from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ? and \"id_Premise\" = ?");
+		qryBuffer.append("select count(*) from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ?");
 		final String qry = qryBuffer.toString();
 		if (ticketNumber != null) {
 			Long id = jdbcTemplate.query(qry, new PreparedStatementSetter() {
@@ -73,7 +73,6 @@ public class FeedEventDaoImpl implements FeedEventDao {
 				public void setValues(PreparedStatement ps) throws SQLException {
 					if (ticketNumber != null) {
 						ps.setString(1, ticketNumber.trim().toLowerCase());
-						ps.setInt(2, premiseId);
 					} 
 				} 
 			}, new ResultSetExtractor<Long>() {

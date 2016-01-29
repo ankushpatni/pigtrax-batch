@@ -49,8 +49,11 @@ private static final Logger logger = Logger.getLogger(BreedingEventDaoImpl.class
 	    				ps.setObject(3, matingDetails.getMatingQuality(), java.sql.Types.INTEGER);
 	    				ps.setObject(4, matingDetails.getBreedingEventId(), java.sql.Types.INTEGER);
 	    				ps.setObject(5, matingDetails.getEmployeeGroupId(), java.sql.Types.INTEGER);
-	    				ps.setString(6, matingDetails.getUserUpdated());	    
-	    				ps.setObject(7,  new java.sql.Date(matingDetails.getSemenDate().getTime()), java.sql.Types.DATE);
+	    				ps.setString(6, matingDetails.getUserUpdated());	
+	    				if(matingDetails.getSemenDate() != null)
+	    					ps.setObject(7,  new java.sql.Date(matingDetails.getSemenDate().getTime()), java.sql.Types.DATE);
+	    				else
+	    					ps.setNull(7,  java.sql.Types.DATE);
 	    	            return ps;
 	    	        }
 	    	    },

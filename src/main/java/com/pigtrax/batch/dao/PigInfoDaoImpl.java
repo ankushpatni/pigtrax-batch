@@ -339,6 +339,69 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		});
 	
 	}
+	@Override
+	public int updatePigInformation(final PigInfo pigInfo) throws SQLException, DuplicateKeyException {
+		String Qry = "update pigtrax.\"PigInfo\" set \"pigId\"=?, \"sireId\" = ?, \"damId\" = ?, \"origin\"= ?, \"gline\"= ?, "
+				+ "\"gcompany\" = ?, \"birthDate\" = ?, \"tattoo\" = ?, \"alternateTattoo\" = ?, "
+				+ "\"remarks\" = ?, \"lastUpdated\" = current_timestamp, \"userUpdated\" = ?, \"id_Company\" = ?,"
+				+ " \"id_Room\" = ?, \"id_Barn\" = ?, \"id_SexType\" =?, \"entryDate\" = ?, \"isActive\" = ?,\"id_GfunctionType\"=?,\"id_Origin\"=?,"
+				+ " \"id_Premise\" = ? where \"id\" = ? ";
+		
+		return this.jdbcTemplate.update(Qry, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				
+				logger.info("company id in dao impl = "+pigInfo.getCompanyId());
+				
+				ps.setString(1, pigInfo.getPigId());
+				ps.setString(2, pigInfo.getSireId());
+				ps.setString(3, pigInfo.getDamId());
+				ps.setString(4, pigInfo.getOrigin());
+				if(pigInfo.getGline() != null  && pigInfo.getGline() != 0)
+					ps.setObject(5, pigInfo.getGline(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(5, java.sql.Types.INTEGER);
+				if(pigInfo.getGcompany() != null  && pigInfo.getGcompany() != 0)
+					ps.setObject(6, pigInfo.getGcompany(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(6, java.sql.Types.INTEGER);
+				if(pigInfo.getBirthDate() != null)
+					ps.setDate(7,  new java.sql.Date(pigInfo.getBirthDate().getTime()));
+				else
+					ps.setNull(7, java.sql.Types.DATE);
+				ps.setString(8, pigInfo.getTattoo());
+				ps.setString(9, pigInfo.getAlternateTattoo());
+				ps.setString(10, pigInfo.getRemarks());				
+				ps.setString(11, pigInfo.getUserUpdated());
+				ps.setInt(12, pigInfo.getCompanyId());
+				if(pigInfo.getRoomId() != null && pigInfo.getRoomId() != 0)
+					ps.setObject(13, pigInfo.getRoomId());
+				else
+					ps.setNull(13, java.sql.Types.INTEGER);
+				if(pigInfo.getBarnId() != null  && pigInfo.getBarnId() != 0)
+					ps.setObject(14, pigInfo.getBarnId(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(14, java.sql.Types.INTEGER);
+				ps.setObject(15, pigInfo.getSexTypeId(), java.sql.Types.INTEGER);		
+				ps.setDate(16,  new java.sql.Date(pigInfo.getEntryDate().getTime()));
+				ps.setBoolean(17,pigInfo.isActive());
+				if(pigInfo.getGfunctionTypeId() != null  && pigInfo.getGfunctionTypeId() != 0)
+					ps.setObject(18, pigInfo.getGfunctionTypeId(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(18, java.sql.Types.INTEGER);
+				if(pigInfo.getOriginId() != null  && pigInfo.getOriginId() != 0)
+					ps.setObject(19, pigInfo.getOriginId(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(19, java.sql.Types.INTEGER);
+				if(pigInfo.getPremiseId() != null  && pigInfo.getPremiseId() != 0)
+					ps.setObject(20, pigInfo.getPremiseId(), java.sql.Types.INTEGER);
+				else
+					ps.setNull(20, java.sql.Types.INTEGER);
+				ps.setInt(21, pigInfo.getId());
+			}
+		});
+		
+	}
 	
 
 }

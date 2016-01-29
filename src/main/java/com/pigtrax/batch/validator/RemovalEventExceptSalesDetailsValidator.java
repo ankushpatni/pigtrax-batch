@@ -42,29 +42,20 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 	private Map<Mapper, List<ErrorBean>> runCustomValidation(final List<Mapper> list, Map<Mapper, List<ErrorBean>> errorMap) {
 		RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper = null;
 		
-		/*"numberOfPigs" smallint NOT NULL,
-		"removalDateTime" timestamp NOT NULL,
-		"id_PigInfo" integer,
-		"id_GroupEvent" integer,
-		"weightInKgs" numeric(20,2) NOT NULL,
-		"id_RemovalEvent" integer NOT NULL,
-		"id_Premise" integer,
-		"id_DestPremise" integer,
-		"id_TransportJourney" integer,
-		"id_MortalityReason" integer,*/
 		for (Mapper mapper : list) {
 			removalEventExceptSalesDetailsMapper = (RemovalEventExceptSalesDetailsMapper) mapper;
 			if (removalEventExceptSalesDetailsMapper.isRecovrableErrors() == null || removalEventExceptSalesDetailsMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				
 				validateCompanyId( removalEventExceptSalesDetailsMapper, errList);
-				validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);
+				//validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);
 				validateRemovalDateTime(removalEventExceptSalesDetailsMapper, errList);
 				validatePigInfoAndGroupEvent(removalEventExceptSalesDetailsMapper, errList);
 				validateWeightInKg(removalEventExceptSalesDetailsMapper, errList);
 				validateRemovalEventType(removalEventExceptSalesDetailsMapper, errList);
 				validateRevenue(removalEventExceptSalesDetailsMapper, errList);
 				validateMortalityReason(removalEventExceptSalesDetailsMapper, errList);
+				validatePremises(removalEventExceptSalesDetailsMapper, errList);
 				
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
@@ -73,6 +64,36 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 		}
 		return errorMap;
 	}
+	
+	private void validatePremises(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
+		if (removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId() != null && ! StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId()) &&
+				removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId().intValue() == 9) {
+			if(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()) || 
+					removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId().intValue() == 0)
+			{
+				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE, Constants.REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_MSG, "destPremiseId", false));
+			}
+			
+			if(removalEventExceptSalesDetailsMapper.getDeriveRoomId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveRoomId()) || 
+					removalEventExceptSalesDetailsMapper.getDeriveRoomId().intValue() == 0)
+			{
+				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_CODE, Constants.REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_MSG, "roomId", false));
+			}
+			
+			
+			/*if(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()) && 
+					removalEventExceptSalesDetailsMapper.getDerivePremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDerivePremiseId()) && 
+					removalEventExceptSalesDetailsMapper.getDerivePremiseId().intValue() == removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId().intValue() )
+			{
+				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE, Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG, "destPremiseId", false));
+			}*/
+		}
+	}
+
+	
 	
 	private void validateCompanyId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
 		if (removalEventExceptSalesDetailsMapper.getDeriveCompanyId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveCompanyId()) ||

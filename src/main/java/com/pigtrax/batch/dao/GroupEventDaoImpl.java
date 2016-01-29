@@ -100,7 +100,7 @@ public class GroupEventDaoImpl implements GroupEventDao {
 	public GroupEvent getGroupEventByGeneratedGroupId(final int groupId, final int companyId)
 	{
 		String qry = "select \"id\", \"groupId\", \"groupStartDateTime\", \"groupCloseDateTime\", \"isActive\", "
-		   		+ "\"remarks\", \"lastUpdated\", \"userUpdated\",\"id_Company\",  \"currentInventory\",\"previousGroupId\", \"id_PhaseOfProductionType\" "+
+		   		+ "\"remarks\", \"lastUpdated\", \"userUpdated\",\"id_Company\",  \"currentInventory\",\"previousGroupId\", \"id_PhaseOfProductionType\", \"id_Premise\" "+
 				"from pigtrax.\"GroupEvent\" where  \"id\" = ? and \"id_Company\" = ?";
 			
 			List<GroupEvent> groupEventList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
@@ -230,6 +230,7 @@ public int updateGroupEventCurrentInventory(final GroupEvent groupEvent) throws 
 			groupEvent.setCurrentInventory(rs.getInt("currentInventory"));
 			groupEvent.setPreviousGroupId(rs.getString("previousGroupId"));
 			groupEvent.setPhaseOfProductionTypeId(rs.getInt("id_PhaseOfProductionType"));
+			groupEvent.setPremiseId(rs.getInt("id_Premise"));
 			return groupEvent;
 		}
 	}

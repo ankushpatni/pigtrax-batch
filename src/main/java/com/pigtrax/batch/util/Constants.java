@@ -466,6 +466,18 @@ public interface Constants {
 	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_CODE = "639";
 	
 	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_MSG = "Pig already exists in the farm with the given tattoo";
+	
+	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE = "640";
+	
+	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_MSG = "For Given Removal Event Transfer Destination Premises is required";
+	
+	public static final String REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_CODE = "641";
+	
+	public static final String REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_MSG = "For Given Removal Event Transfer For Group Transfer Room is required";
+	
+	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE = "642";
+	
+	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG = "For Given Removal Event Transfer Current and Destination Premises is same";
 }
 
 

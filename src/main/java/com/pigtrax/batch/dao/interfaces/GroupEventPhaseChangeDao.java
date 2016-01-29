@@ -12,4 +12,9 @@ public interface GroupEventPhaseChangeDao {
    void endDateGroupEventPhase(Integer groupEventId) throws SQLException;
    
    Integer getCurrentPhase(Integer groupEventId);
+
+GroupEventPhaseChange getCurrentPhaseObject(Integer groupEventId)
+		throws SQLException;
+
+void updatePhaseDetails(GroupEventPhaseChange currentPhase);
 }

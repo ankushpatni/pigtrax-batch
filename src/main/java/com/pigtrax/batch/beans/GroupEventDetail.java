@@ -91,7 +91,7 @@ public class GroupEventDetail {
 	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
-	public int getPremiseId() {
+	public Integer getPremiseId() {
 		return premiseId;
 	}
 	public void setPremiseId(int premiseId) {

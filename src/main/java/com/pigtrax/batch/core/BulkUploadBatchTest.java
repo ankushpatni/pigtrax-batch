@@ -24,6 +24,10 @@ public class BulkUploadBatchTest {
 		inputMap.put(Constants.SEPERATOR, ",");
 		inputMap.put(Constants.FILE_TYPE, "csv");
 		inputMap.put(Constants.USER_NAME, "pigtraxsuperadmin");
+		
+		inputMap.put(Constants.COMPANY_ID, 3);
+		inputMap.put(Constants.PREMISE_ID,3);
+		
 		processEngine.execute(inputMap);
 	}
 }

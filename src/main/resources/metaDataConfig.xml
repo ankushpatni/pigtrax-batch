@@ -133,18 +133,19 @@
 	</event>	
 	<event id="REMOVALEVENTEXCEPTSALESEVENT">
 		<dataInfo>
-			<col key="companyId" order="1" isEmpty="false" />
-			<col key="groupEventId" order="2" isEmpty="true" />			
-			<col key="pigInfoId" order="3" isEmpty="true" />
-			<col key="removalDateTime" order="4" isEmpty="false" />
+			<col key="groupEventId" order="1" isEmpty="true" />			
+			<col key="pigInfoId" order="2" isEmpty="true" />
+			<!-- <col key="numberOfPigs" order="3" isEmpty="false" />-->
+			<col key="removalDateTime" order="3" isEmpty="false" />
+			<col key="weightInKgs" order="4" isEmpty="false" />
 			<col key="removalEventTypeId" order="5" isEmpty="false" />
-			<col key="mortalityReasonId" order="6" isEmpty="true" />
-			<col key="numberOfPigs" order="7" isEmpty="false" />			
-			<col key="weightInKgs" order="8" isEmpty="false" />			
-			<col key="premiseId" order="9" isEmpty="true" />
-			<col key="destPremiseId" order="10" isEmpty="true" />
-			<col key="revenue" order="11" isEmpty="true" />
-			<col key="remarks" order="12" isEmpty="true" />	
+			<!--  <col key="premiseId" order="7" isEmpty="true" />-->
+			<col key="destPremiseId" order="6" isEmpty="true" />
+			<col key="roomId" order="7" isEmpty="true" />
+			<col key="remarks" order="8" isEmpty="true" />	
+			<col key="mortalityReasonId" order="9" isEmpty="true" />		
+			<col key="revenue" order="10" isEmpty="true" />
+			
 		</dataInfo>
 	</event>
 	<event id="SALESEVENTDETAILS">

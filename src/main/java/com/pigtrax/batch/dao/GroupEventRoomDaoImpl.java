@@ -58,7 +58,7 @@ public class GroupEventRoomDaoImpl implements GroupEventRoomDao {
 	
 	@Override
 	public void deleteGroupEventRooms(final Integer groupEventId) {
-		final String qry = "delete from pigtrax.\"GroupEventRoom\" where \"id_GroupEvent\" = ?";
+		final String qry = "delete from pigtrax.\"GroupEventRoom\" where \"id_GroupEventPhaseChange\" = ?";
 		
 		this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
 			@Override
@@ -73,7 +73,7 @@ public class GroupEventRoomDaoImpl implements GroupEventRoomDao {
 	public List<RoomPK> getGroupEventRooms(final Integer groupEventId)
 			throws SQLException {
 		
-		String qry = "select \"id_Room\" FROM pigtrax.\"GroupEventRoom\" where \"id_GroupEvent\" = ?";
+		String qry = "select \"id_Room\" FROM pigtrax.\"GroupEventRoom\" where \"id_GroupEventPhaseChange\" = ?";
 			
 		List<RoomPK> roomIds = jdbcTemplate.query(qry, new PreparedStatementSetter(){
 			@Override

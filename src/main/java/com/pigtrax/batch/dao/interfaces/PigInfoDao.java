@@ -25,4 +25,7 @@ public interface PigInfoDao {
 	Integer getActivePigInfoId(String pigId, int companyId) throws SQLException;
 	
 	Integer getPigInfoIdForTattoo(String tattoo, int companyId, int premiseId) throws SQLException;
+
+	int updatePigInformation(PigInfo pigInfo) throws SQLException,
+			DuplicateKeyException;
 }

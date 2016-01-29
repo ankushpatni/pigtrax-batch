@@ -29,8 +29,8 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private String destPremiseId;
 	private String remarks;
 	private String mortalityReasonId;
-	private String companyId;
 	private String revenue;
+	private String roomId;
 	
 	
 /*	private Integer transportJourneyId;
@@ -48,6 +48,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private Integer deriveMortalityReasonId;
 	private Integer deriveCompanyId;
 	private Double  deriveRevenue;
+	private Integer deriveRoomId;
 	
 	public String getNumberOfPigs() {
 		return numberOfPigs;
@@ -163,12 +164,6 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	public void setDeriveMortalityReasonId(Integer deriveMortalityReasonId) {
 		this.deriveMortalityReasonId = deriveMortalityReasonId;
 	}
-	public String getCompanyId() {
-		return companyId;
-	}
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
 	public Integer getDeriveCompanyId() {
 		return deriveCompanyId;
 	}
@@ -181,7 +176,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	}
 	@Override
 	public String getId() {
-		return "["+getPigInfoId()+","+getGroupEventId()+", "+getCompanyId()+"]";
+		return "["+getPigInfoId()+","+getGroupEventId()+"]";
 	}
 	public String getRevenue() {
 		return revenue;
@@ -195,6 +190,17 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	public void setDeriveRevenue(Double deriveRevenue) {
 		this.deriveRevenue = deriveRevenue;
 	}
-	
+	public String getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
+	}
+	public Integer getDeriveRoomId() {
+		return deriveRoomId;
+	}
+	public void setDeriveRoomId(Integer deriveRoomId) {
+		this.deriveRoomId = deriveRoomId;
+	}
 	
 }

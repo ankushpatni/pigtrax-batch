@@ -1,5 +1,6 @@
 package com.pigtrax.batch.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,5 +51,16 @@ public class DateUtil {
 			return null;
 		}
 	}
+	
+	 public  static String getTimePart(Date dateVal)
+	 {
+		 String retVal = "";
+		 DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
+		 if(dateVal != null)
+		 {
+			 retVal=dateFormat.format(dateVal);
+		 }
+		 return retVal;
+	 }
 
 }

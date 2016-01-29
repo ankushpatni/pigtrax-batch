@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.config.RefData;
 import com.pigtrax.batch.core.ProcessDTO;
@@ -66,24 +67,25 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 			for (Mapper mapper : list) {
 				RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper = (RemovalEventExceptSalesDetailsMapper) mapper;
 				
-				setCompanyId(removalEventExceptSalesDetailsMapper);				
-				setNumberOfPigs(removalEventExceptSalesDetailsMapper);
+				setCompanyId(removalEventExceptSalesDetailsMapper, processDTO);				
+				//setNumberOfPigs(removalEventExceptSalesDetailsMapper);
 				setRemovalDateTime(removalEventExceptSalesDetailsMapper);
 				setWeightInKgs(removalEventExceptSalesDetailsMapper);
 				setRemovalEventType(removalEventExceptSalesDetailsMapper);
 				setPigInfoId(removalEventExceptSalesDetailsMapper);
 				setGroupEventId(removalEventExceptSalesDetailsMapper);
-				setPremiseId(removalEventExceptSalesDetailsMapper);
+				//setPremiseId(removalEventExceptSalesDetailsMapper);
 				setDestPremiseId(removalEventExceptSalesDetailsMapper);
 				setMortalityReason(removalEventExceptSalesDetailsMapper);
 				setRevenue(removalEventExceptSalesDetailsMapper);
+				setRoomId(removalEventExceptSalesDetailsMapper);
 			}
 		}
 	}
 	
-	private void setCompanyId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
+	private void setCompanyId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, ProcessDTO processDTO) {
 		try {
-			removalEventExceptSalesDetailsMapper.setDeriveCompanyId(companyDao.getCompanyId(removalEventExceptSalesDetailsMapper.getCompanyId()));
+			removalEventExceptSalesDetailsMapper.setDeriveCompanyId(processDTO.getCompanyId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,6 +93,7 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 	
 	private void setRevenue(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
 		try {
+			if(removalEventExceptSalesDetailsMapper.getRevenue()!= null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getRevenue()))
 			removalEventExceptSalesDetailsMapper.setDeriveRevenue(Double.parseDouble(removalEventExceptSalesDetailsMapper.getRevenue()));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -179,6 +182,18 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void setRoomId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
+		if(removalEventExceptSalesDetailsMapper.getRoomId() != null && removalEventExceptSalesDetailsMapper.getRoomId().trim().length() > 0)
+		{
+			try {
+				removalEventExceptSalesDetailsMapper.setDeriveRoomId(roomDao.getRoomPkId(removalEventExceptSalesDetailsMapper.getRoomId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId(), 
+						removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

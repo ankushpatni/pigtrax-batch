@@ -141,18 +141,24 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 									{
 										pigInfo.setActive(false);
 									}
+									else
+									{
+										pigInfo.setPremiseId(removalEventExceptSalesDetails.getDestPremiseId());
+										pigInfo.setRoomId(removalEventExceptSalesDetails.getRoomId());
+									}
 									
-									pigInfo.setPremiseId(removalEventExceptSalesDetails.getDestPremiseId());
-									pigInfo.setRoomId(removalEventExceptSalesDetails.getRoomId());					
 									pigInfoDao.updatePigInformation(pigInfo);
 									
-								   SowMovement sowMovement = new SowMovement();
-								   sowMovement.setPigInfoId(pigInfo.getId());
-								   sowMovement.setPremiseId(pigInfo.getPremiseId());
-								   sowMovement.setRoomId(pigInfo.getRoomId());
-								   sowMovement.setUserUpdated(pigInfo.getUserUpdated());
-								   sowMovement.setCompanyId(pigInfo.getCompanyId());
-								   sowMovementDao.addSowMovement(sowMovement);
+									if(removalEventExceptSalesDetails.getRemovalEventId() == 9)
+									{
+									   SowMovement sowMovement = new SowMovement();
+									   sowMovement.setPigInfoId(pigInfo.getId());
+									   sowMovement.setPremiseId(pigInfo.getPremiseId());
+									   sowMovement.setRoomId(pigInfo.getRoomId());
+									   sowMovement.setUserUpdated(pigInfo.getUserUpdated());
+									   sowMovement.setCompanyId(pigInfo.getCompanyId());
+									   sowMovementDao.addSowMovement(sowMovement);
+									}
 									
 								}
 							}

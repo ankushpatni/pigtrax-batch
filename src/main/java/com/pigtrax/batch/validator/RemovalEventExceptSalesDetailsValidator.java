@@ -10,10 +10,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
@@ -30,7 +33,13 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 	PregnancyInfoDao pregnancyInfoDao;
 	
 	@Autowired
-	GroupEventDao groupEventDao;	
+	GroupEventDao groupEventDao;
+	
+	@Autowired
+	private GroupEventDaoImpl groupEventDaoImpl;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -75,21 +84,38 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE, Constants.REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_MSG, "destPremiseId", false));
 			}
 			
-			if(removalEventExceptSalesDetailsMapper.getDeriveRoomId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveRoomId()) || 
-					removalEventExceptSalesDetailsMapper.getDeriveRoomId().intValue() == 0)
+			if(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null && (removalEventExceptSalesDetailsMapper.getDeriveRoomId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveRoomId()) || 
+					removalEventExceptSalesDetailsMapper.getDeriveRoomId().intValue() == 0))
 			{
 				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_CODE, Constants.REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_MSG, "roomId", false));
 			}
 			
-			
-			/*if(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()) && 
-					removalEventExceptSalesDetailsMapper.getDerivePremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDerivePremiseId()) && 
-					removalEventExceptSalesDetailsMapper.getDerivePremiseId().intValue() == removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId().intValue() )
+			if(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId()) )
 			{
-				removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE, Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG, "destPremiseId", false));
-			}*/
+				GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId());
+				if(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()) && 
+						groupEvent.getPremiseId().intValue() == removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId().intValue() )
+				{
+					removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+					errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE, Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG, "destPremiseId", false));
+				}
+				
+			}
+			
+			if(removalEventExceptSalesDetailsMapper.getDerivePigInfoId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDerivePigInfoId()) )
+			{
+				PigInfo pigInfo = pigInfoDao.getPigDetails(removalEventExceptSalesDetailsMapper.getDerivePigInfoId());
+				if(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()) && 
+						pigInfo.getPremiseId().intValue() == removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId().intValue() )
+				{
+					removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+					errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE, Constants.REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG, "destPremiseId", false));
+				}
+				
+			}
+		
+			
 		}
 	}
 

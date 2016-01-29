@@ -280,7 +280,7 @@ public class PigInfoDaoImpl implements PigInfoDao {
 		StringBuffer qryBuffer = new StringBuffer();
 		qryBuffer.append("select \"id\", \"pigId\",\"sireId\",\"damId\",\"id_Origin\",\"gline\","
 				+ "\"gcompany\",\"birthDate\",\"tattoo\",\"alternateTattoo\",\"remarks\",\"id_Company\","
-				+ "\"id_Barn\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\" "
+				+ "\"id_Barn\",\"id_SexType\",\"entryDate\",\"isActive\",\"id_GfunctionType\", \"userUpdated\", \"id_Premise\" "
 				+ "from pigtrax.\"PigInfo\" where \"id\" = ?");
 		final String qry = qryBuffer.toString();
 		List<PigInfo> pigInfoList = null;
@@ -317,6 +317,9 @@ public class PigInfoDaoImpl implements PigInfoDao {
 			pigInfo.setSexTypeId(rs.getInt("id_SexType")); 
 			pigInfo.setEntryDate(rs.getDate("entryDate"));
 			pigInfo.setActive(rs.getBoolean("isActive"));
+			pigInfo.setUserUpdated(rs.getString("userUpdated"));
+			pigInfo.setPremiseId(rs.getInt("id_Premise"));
+			
 			pigInfo.setGfunctionTypeId((rs.getObject("id_GfunctionType")!=null)?(Integer)rs.getObject("id_GfunctionType") : null);
 			return pigInfo;
 		}

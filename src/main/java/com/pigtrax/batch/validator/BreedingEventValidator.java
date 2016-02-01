@@ -47,7 +47,7 @@ public class BreedingEventValidator extends AbstractValidator {
 					validatePigInfoId(breedingEventMapper, errList);
 					validatePigGender(breedingEventMapper, errList);				
 					validateSeriveTypeId(breedingEventMapper, errList);
-					validatePenId(breedingEventMapper, errList);
+					//validatePenId(breedingEventMapper, errList);
 					validateSowCondition(breedingEventMapper, errList);
 					validateWeight(breedingEventMapper, errList);
 					

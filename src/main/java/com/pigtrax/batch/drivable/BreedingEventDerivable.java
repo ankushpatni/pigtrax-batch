@@ -49,7 +49,7 @@ public class BreedingEventDerivable implements Derivable {
 					setPigInfoId(breedingEventMapper);
 					setBreedingServiceTypeId(breedingEventMapper);
 					setSowCondition(breedingEventMapper);
-					setPenId(breedingEventMapper);
+					//setPenId(breedingEventMapper);
 					setWtInKgs(breedingEventMapper);
 				}
 			}

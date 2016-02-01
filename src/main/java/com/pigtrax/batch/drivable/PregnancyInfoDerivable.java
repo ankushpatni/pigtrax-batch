@@ -105,10 +105,13 @@ public class PregnancyInfoDerivable implements Derivable {
 	}
 	
 	private void setEmployeeGroupId(final PregnancyInfoMapper pregnancyInfoMapper) {
-		try {
-			pregnancyInfoMapper.setDeriveEmployeeGroupId(employeeGroupDao.getEmployeeGroupPKId(pregnancyInfoMapper.getDeriveCompanyId(), pregnancyInfoMapper.getEmployeeGroup()));  
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(pregnancyInfoMapper.getEmployeeGroup() != null && pregnancyInfoMapper.getEmployeeGroup().trim().length() > 0)
+		{
+			try {
+				pregnancyInfoMapper.setDeriveEmployeeGroupId(employeeGroupDao.getEmployeeGroupPKId(pregnancyInfoMapper.getDeriveCompanyId(), pregnancyInfoMapper.getEmployeeGroup()));  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -173,10 +176,13 @@ public class PregnancyInfoDerivable implements Derivable {
 	}
 	
 	private void setSowCondition(final PregnancyInfoMapper pregnancyInfoMapper) {
-		try {
-			pregnancyInfoMapper.setDeriveSowCondition(Integer.parseInt(pregnancyInfoMapper.getSowCondition()));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(pregnancyInfoMapper.getSowCondition() != null && pregnancyInfoMapper.getSowCondition().trim().length() > 0)
+		{
+			try {
+				pregnancyInfoMapper.setDeriveSowCondition(Integer.parseInt(pregnancyInfoMapper.getSowCondition()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.pigtrax.batch.handler;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.GroupEventDetail;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.PigletStatusInfo;
 import com.pigtrax.batch.config.PigletStatusEventType;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
+import com.pigtrax.batch.dao.interfaces.GroupEventDao;
+import com.pigtrax.batch.dao.interfaces.GroupEventDetailsDao;
+import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.PigletStatusInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
@@ -32,6 +39,15 @@ public class PigletStatusInfoHandler implements Handler {
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	GroupEventDao groupEventDao;
+	
+	@Autowired
+	PenDao penDao;
+	
+	@Autowired
+	GroupEventDetailsDao groupEventDetailsDao;
 
 	private static final Logger logger = Logger.getLogger(PigletStatusInfoHandler.class);
 
@@ -60,6 +76,10 @@ public class PigletStatusInfoHandler implements Handler {
 								pigletStatusInfo = populatePigletStatusWeanInfo(errorMap, pigletStatusInfoMapper, processDTO);
 								if (pigletStatusInfo != null) {
 									int generatedKey = pigletStatusInfoDao.insertPigletStatusInfo(pigletStatusInfo);
+									
+									
+									//update Group Event details
+									updateGroupEventDetails(pigletStatusInfo, generatedKey, processDTO);
 									
 									PigTraxEventMaster master = new PigTraxEventMaster();
 									master.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());
@@ -156,6 +176,36 @@ public class PigletStatusInfoHandler implements Handler {
 		return output;
 	}
 
+	
+	private void updateGroupEventDetails(PigletStatusInfo pigletStatusInfo, Integer pigletStatusEventId, ProcessDTO processDTO) throws SQLException
+	 {
+		 	GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(pigletStatusInfo.getGroupEventId(), processDTO.getCompanyId());
+			if(groupEvent != null)
+			{
+				Integer inventoryValue = groupEvent.getCurrentInventory();
+				inventoryValue = inventoryValue+pigletStatusInfo.getNumberOfPigs();
+				groupEvent.setCurrentInventory(inventoryValue);
+				groupEventDao.updateGroupEventCurrentInventory(groupEvent);
+				
+				//add to group event details							
+				GroupEventDetail groupEventDetails = new GroupEventDetail();
+				groupEventDetails.setRoomId(null);
+				groupEventDetails.setBarnId(null);
+				
+				groupEventDetails.setPigletStatusEventId(pigletStatusEventId);
+				groupEventDetails.setPremiseId(pigletStatusInfo.getPremiseId());
+				groupEventDetails.setDateOfEntry(pigletStatusInfo.getEventDateTime());
+				groupEventDetails.setNumberOfPigs(pigletStatusInfo.getNumberOfPigs());
+				groupEventDetails.setWeightInKgs(pigletStatusInfo.getWeightInKgs());
+				groupEventDetails.setGroupId(pigletStatusInfo.getGroupEventId());
+				groupEventDetails.setUserUpdated(pigletStatusInfo.getUserUpdated());
+				groupEventDetails.setRemarks("From piglet wean");
+				groupEventDetailsDao.addGroupEventDetails(groupEventDetails);
+				
+				groupEventDao.updateGroupEventCurrentInventory(groupEvent);
+			}
+	 }
+	
 	private PigletStatusInfo populatePigletStatusWeanInfo(final Map<Mapper, List<ErrorBean>> errorMap, final PigletStatusInfoMapper pigletStatusInfoMapper, final ProcessDTO processDTO) {
 		PigletStatusInfo info = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();

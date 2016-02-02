@@ -47,7 +47,7 @@ public class PregnancyInfoDaoImpl implements PregnancyInfoDao {
 				ps.setObject(5, pregnancyInfo.getPregnancyExamResultTypeId(), java.sql.Types.INTEGER);
 				ps.setObject(6, new java.sql.Date(pregnancyInfo.getExamDate().getTime()), java.sql.Types.DATE);
 				ps.setDate(7, new java.sql.Date(pregnancyInfo.getResultDate().getTime()));
-				ps.setInt(8, pregnancyInfo.getSowCondition());
+				ps.setObject(8, pregnancyInfo.getSowCondition(), java.sql.Types.INTEGER);
 				ps.setString(9, pregnancyInfo.getUserUpdated());
 				ps.setObject(10, pregnancyInfo.getPremiseId(), java.sql.Types.INTEGER);
 				return ps;

@@ -163,7 +163,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	}
 	
 	private void validatePregnacyExamResultTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
-		if(pregnancyInfoMapper.getDerivePregnancyEventTypeId() != null && pregnancyInfoMapper.getDerivePregnancyEventTypeId() == 1 && (pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0)) {
+		if(pregnancyInfoMapper.getPregnancyExamResultType() != null && pregnancyInfoMapper.getPregnancyExamResultType().trim().length() >0 &&  (pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0)) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE, Constants.REF_DATA_NOT_FOUND_MSG, "pregnancyExamResultType", false));
 		}

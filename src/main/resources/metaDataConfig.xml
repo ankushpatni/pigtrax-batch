@@ -126,9 +126,8 @@
 			<col key="pigId" order="1" isEmpty="false" />			
 			<col key="serviceType" order="2" isEmpty="true" />
 			<col key="serviceGroupId" order="3" isEmpty="true" />
-			<col key="pen" order="4" isEmpty="true" />
-			<col key="sowCondition" order="5" isEmpty="true" />
-			<col key="weightInKgs" order="6" isEmpty="true" />
+			<col key="sowCondition" order="4" isEmpty="true" />
+			<col key="weightInKgs" order="5" isEmpty="true" />
 		</dataInfo>
 	</event>	
 	<event id="REMOVALEVENTEXCEPTSALESEVENT">

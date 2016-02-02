@@ -18,6 +18,7 @@ public class GroupEventDetail {
 	private Integer companyId;
 	private Integer premiseId;
 	private Integer sowSourceId;
+	private Integer pigletStatusEventId;
 	
 	public Integer getBarnId() {
 		return barnId;
@@ -112,5 +113,13 @@ public class GroupEventDetail {
 	public void setPremiseId(Integer premiseId) {
 		this.premiseId = premiseId;
 	}
+	public Integer getPigletStatusEventId() {
+		return pigletStatusEventId;
+	}
+	public void setPigletStatusEventId(Integer pigletStatusEventId) {
+		this.pigletStatusEventId = pigletStatusEventId;
+	}
+	
+	
 	
 }

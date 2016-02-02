@@ -183,7 +183,8 @@ public class GroupEventDaoImpl implements GroupEventDao {
 		return keyVal;
 	}
 	
-public int updateGroupEventCurrentInventory(final GroupEvent groupEvent) throws SQLException{
+	@Override
+	public int updateGroupEventCurrentInventory(final GroupEvent groupEvent) throws SQLException{
 		
 		String query = "update pigtrax.\"GroupEvent\" SET \"currentInventory\"=?  where \"id\" = ? and \"id_Company\" = ?";
 

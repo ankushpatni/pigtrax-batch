@@ -79,7 +79,8 @@ public class PigletStatusInfoHandler implements Handler {
 									
 									
 									//update Group Event details
-									updateGroupEventDetails(pigletStatusInfo, generatedKey, processDTO);
+									if(pigletStatusInfo.getGroupEventId() != null && pigletStatusInfo.getGroupEventId() > 0)
+										updateGroupEventDetails(pigletStatusInfo, generatedKey, processDTO);
 									
 									PigTraxEventMaster master = new PigTraxEventMaster();
 									master.setPigInfoId(pigletStatusInfoMapper.getDerivePigInfoId());

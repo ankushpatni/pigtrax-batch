@@ -20,6 +20,9 @@ public class SalesEventDetails {
 	private String userUpdated;
 	private Integer companyId;
 	private String remarks;
+	private Integer removalType;
+	private String salesTypesAsString;
+	private String salesReasonAsString;
 	
 	public Integer getId() {
 		return id;
@@ -112,7 +115,23 @@ public class SalesEventDetails {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	
-	
+	public Integer getRemovalType() {
+		return removalType;
+	}
+	public void setRemovalType(Integer removalType) {
+		this.removalType = removalType;
+	}
+	public String getSalesTypesAsString() {
+		return salesTypesAsString;
+	}
+	public void setSalesTypesAsString(String salesTypesAsString) {
+		this.salesTypesAsString = salesTypesAsString;
+	}
+	public String getSalesReasonAsString() {
+		return salesReasonAsString;
+	}
+	public void setSalesReasonAsString(String salesReasonAsString) {
+		this.salesReasonAsString = salesReasonAsString;
+	}	
 	
 }

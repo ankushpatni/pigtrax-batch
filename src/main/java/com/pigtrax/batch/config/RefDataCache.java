@@ -38,6 +38,8 @@ public class RefDataCache {
 	
 	private Map<String, Map<Integer, String>> saleTypesMap = null;
 	
+	private Map<String, Map<Integer, String>> saleReasonMap = null;
+	
 	private Map<String, Map<Integer, String>> feedEventMap = null;
 
 	private RefDataCache() {
@@ -59,6 +61,7 @@ public class RefDataCache {
 		gcompanyMap =  Collections.unmodifiableMap(convertToMap(refDataDao.getGcompanyType()));
 		glineMap = Collections.unmodifiableMap(convertToMap(refDataDao.getGlineTypes()));
 		saleTypesMap = Collections.unmodifiableMap(convertToMap(refDataDao.getSaleTypes()));
+		saleReasonMap = Collections.unmodifiableMap(convertToMap(refDataDao.getSaleResons()));
 		feedEventMap = Collections.unmodifiableMap(convertToMap(refDataDao.getFeedEventTypes()));
 	}
 
@@ -125,6 +128,9 @@ public class RefDataCache {
 			break;
 		case Constants.REF_DATA_SALETYPE :
 			retVal = retRefdDataValue(saleTypesMap,value);
+			break;
+		case Constants.REF_DATA_SALEREASON :
+			retVal = retRefdDataValue(saleReasonMap,value);
 			break;
 		case Constants.REF_DATA_FEEDEVENTTYPE :
 			retVal = retRefdDataValue(feedEventMap,value);

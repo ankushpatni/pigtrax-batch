@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.config.RefData;
-import com.pigtrax.batch.config.RefDataCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.PenDaoImpl;
 import com.pigtrax.batch.dao.interfaces.BarnDao;
@@ -15,6 +15,7 @@ import com.pigtrax.batch.dao.interfaces.EmployeeGroupDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.RoomDao;
+import com.pigtrax.batch.dao.interfaces.TransportDestinationDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -43,6 +44,9 @@ public class SalesEventDetailsDrivable implements Derivable{
 	@Autowired
 	GroupEventDao groupEventDao;
 	
+	@Autowired
+	TransportDestinationDao transportDestinationDao;
+	
 	//SalesEventDetailsMapper
 
 	@Override
@@ -51,21 +55,52 @@ public class SalesEventDetailsDrivable implements Derivable{
 			for (Mapper mapper : list) {
 				SalesEventDetailsMapper salesEventDetailsMapper = (SalesEventDetailsMapper) mapper;
 				
-				setCompanyId(salesEventDetailsMapper);				
+				salesEventDetailsMapper.setDeriveCompanyId(processDTO.getCompanyId());
+				setPigInfoId(salesEventDetailsMapper, processDTO);
+				setGroupEventId(salesEventDetailsMapper, processDTO);				
 				setNumberOfPigs(salesEventDetailsMapper);
-				setSalesDateTime(salesEventDetailsMapper);
+				setRemovalEventType(salesEventDetailsMapper);
 				setWeightInKgs(salesEventDetailsMapper);
-				setPigInfoId(salesEventDetailsMapper);
-				setGroupEventId(salesEventDetailsMapper);
 				setSalesTypes(salesEventDetailsMapper);
+				setSalesDateTime(salesEventDetailsMapper);
+				setSoldTo(salesEventDetailsMapper);
+				setSalesReason(salesEventDetailsMapper);
 				
 			}
 		}
 	}
 	
-	private void setCompanyId(final SalesEventDetailsMapper salesEventDetailsMapper) {
+	private void setSoldTo(final SalesEventDetailsMapper salesEventDetailsMapper) {
 		try {
-			salesEventDetailsMapper.setDeriveCompanyId(companyDao.getCompanyId(salesEventDetailsMapper.getCompanyId()));
+			if(salesEventDetailsMapper.getSoldTo() != null && !StringUtils.isEmpty(salesEventDetailsMapper.getSoldTo()))
+			salesEventDetailsMapper.setDeriveSoldTo(transportDestinationDao.findByTransportDestinationName(salesEventDetailsMapper.getSoldTo()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setSalesReason(final SalesEventDetailsMapper salesEventDetailsMapper) {
+		String salesReason = salesEventDetailsMapper.getSalesReason();
+		StringBuffer buffer = new StringBuffer();
+		try {
+			if(salesReason != null && salesReason.trim().length() > 0)
+			{
+				String[]  types = StringUtils.split(salesReason, "|");
+				if(types != null && types.length > 0)
+				{
+					int i= 0;
+					for(String type : types)
+					{
+						i++;
+						Integer salesTypeId = RefData.SALESREASON.getId((type !=null)?type.trim():"");
+						if(salesTypeId != null)
+							buffer.append(salesTypeId);
+						if(i<types.length)
+							buffer.append(",");
+					}
+				}
+			}
+			salesEventDetailsMapper.setDeriveSalesReason(buffer.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +112,7 @@ public class SalesEventDetailsDrivable implements Derivable{
 		try {
 			if(salesType != null && salesType.trim().length() > 0)
 			{
-				String[]  types = salesType.split(",");
+				String[]  types = StringUtils.split(salesType, "|");
 				if(types != null && types.length > 0)
 				{
 					int i= 0;
@@ -123,20 +158,37 @@ public class SalesEventDetailsDrivable implements Derivable{
 	}
 
 	
-	private void setPigInfoId(final SalesEventDetailsMapper salesEventDetailsMapper){
+	private void setPigInfoId(final SalesEventDetailsMapper salesEventDetailsMapper, final ProcessDTO processDTO){
 		try {
-			salesEventDetailsMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(salesEventDetailsMapper.getPigInfoId(), salesEventDetailsMapper.getDeriveCompanyId()));
+			if(salesEventDetailsMapper.getPigInfoId() != null && !StringUtils.isEmpty(salesEventDetailsMapper.getPigInfoId()))
+			{
+			salesEventDetailsMapper.setDerivePigInfoId(pigInfoDao.getPigInfoId(salesEventDetailsMapper.getPigInfoId(), processDTO.getCompanyId(), processDTO.getPremiseId()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void setGroupEventId(final SalesEventDetailsMapper salesEventDetailsMapper){
+	private void setGroupEventId(final SalesEventDetailsMapper salesEventDetailsMapper, final ProcessDTO processDTO){
 		try {
-			salesEventDetailsMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(salesEventDetailsMapper.getGroupEventId(),salesEventDetailsMapper.getDeriveCompanyId()));
+			if(salesEventDetailsMapper.getGroupEventId() != null && !StringUtils.isEmpty(salesEventDetailsMapper.getGroupEventId()))
+			{
+			salesEventDetailsMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(salesEventDetailsMapper.getGroupEventId(), processDTO.getCompanyId(), processDTO.getPremiseId()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void setRemovalEventType(final SalesEventDetailsMapper salesEventDetailsMapper){
+		try {
+				Integer phaseOfProductionTypeIdFromRefData = RefData.REMOVALEVENTTYPE.getId(salesEventDetailsMapper.getRemovalType());
+				if (phaseOfProductionTypeIdFromRefData > -1) {
+					salesEventDetailsMapper.setDeriveRemovalType(phaseOfProductionTypeIdFromRefData);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 }

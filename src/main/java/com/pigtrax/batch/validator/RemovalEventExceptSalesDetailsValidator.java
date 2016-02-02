@@ -57,7 +57,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				
 				validateCompanyId( removalEventExceptSalesDetailsMapper, errList);
-				//validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);
+				validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);
 				validateRemovalDateTime(removalEventExceptSalesDetailsMapper, errList);
 				validatePigInfoAndGroupEvent(removalEventExceptSalesDetailsMapper, errList);
 				validateWeightInKg(removalEventExceptSalesDetailsMapper, errList);

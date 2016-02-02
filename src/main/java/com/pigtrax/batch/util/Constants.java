@@ -330,6 +330,8 @@ public interface Constants {
 	public static final String REF_DATA_GLINE = "REF_DATA_GLINE";
 	
 	public static final String REF_DATA_SALETYPE = "REF_DATA_SALETYPE";
+	
+	public static final String REF_DATA_SALEREASON = "REF_DATA_SALEREASON";
 
 	public static final String ENTRY_EVENT_INVALID_ORIGIN_CODE = "610";
 	
@@ -478,6 +480,11 @@ public interface Constants {
 	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE = "642";
 	
 	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG = "For Given Removal Event Transfer Current and Destination Premises is same";
+	
+	public static final String REM_REMOVAL_TICKET_NUMBER_CODE = "643";
+	
+	public static final String REM_REMOVAL_TICKET_NUMBER_MSG = "Ticket Number is missing";
+	
 }
 
 

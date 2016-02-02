@@ -106,6 +106,8 @@ public class SalesEventDetailsHandler implements Handler{
 			salesEventDetails.setSoldTo(salesEventDetailsMapper.getSoldTo());
 			salesEventDetails.setTicketNumber(salesEventDetailsMapper.getTicketNumber());
 			salesEventDetails.setUserUpdated(processDTO.getUserName());
+			salesEventDetails.setSalesTypesAsString(salesEventDetailsMapper.getDeriveSalesTypes());
+			salesEventDetails.setSalesReasonAsString(salesEventDetailsMapper.getDeriveSalesReason());
 		} catch (Exception e) {
 			logger.error("Exception in RemovalEventExceptSalesDetailsHandler.salesEventDetails" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

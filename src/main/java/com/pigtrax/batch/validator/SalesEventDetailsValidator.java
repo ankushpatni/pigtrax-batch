@@ -43,13 +43,12 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 			if (salesEventDetailsMapper.isRecovrableErrors() == null || salesEventDetailsMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				
-				validateCompanyId( salesEventDetailsMapper, errList);
-				validateNumberOfPigs(salesEventDetailsMapper, errList);
-				validateRemovalDateTime(salesEventDetailsMapper, errList);
-				validatePigInfoAndGroupEvent(salesEventDetailsMapper, errList);
-				validateWeightInKg(salesEventDetailsMapper, errList);
+				validateNumberOfPigs(salesEventDetailsMapper, errList);//
+				validateRemovalDateTime(salesEventDetailsMapper, errList);//
+				validatePigInfoAndGroupEvent(salesEventDetailsMapper, errList);//
+				validateWeightInKg(salesEventDetailsMapper, errList);//
 				validateRevenus(salesEventDetailsMapper,errList);
-				
+				validateTicketNumber(salesEventDetailsMapper,errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -58,14 +57,13 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 		return errorMap;
 	}
 	
-	private void validateCompanyId(final SalesEventDetailsMapper salesEventDetailsMapper, List<ErrorBean> errList) {
-		if (salesEventDetailsMapper.getDeriveCompanyId() == null || StringUtils.isEmpty(salesEventDetailsMapper.getDeriveCompanyId()) ||
-				salesEventDetailsMapper.getDeriveCompanyId() <1) {
+	private void validateTicketNumber(final SalesEventDetailsMapper salesEventDetailsMapper, List<ErrorBean> errList) {
+		if (salesEventDetailsMapper.getTicketNumber() == null || StringUtils.isEmpty(salesEventDetailsMapper.getTicketNumber())) {
 			salesEventDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_COMPANY_PRESENT_CODE, Constants.REM_COMPANY_PRESENT_MSG, "CompanyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TICKET_NUMBER_CODE, Constants.REM_REMOVAL_TICKET_NUMBER_MSG, "TicketNumber", false));
 		}
 	}
-
+	
 	private void validateRemovalDateTime(final SalesEventDetailsMapper salesEventDetailsMapper, List<ErrorBean> errList) {
 		if (salesEventDetailsMapper.getDeriveSalesDateTime() == null) {
 			salesEventDetailsMapper.setRecovrableErrors(false);

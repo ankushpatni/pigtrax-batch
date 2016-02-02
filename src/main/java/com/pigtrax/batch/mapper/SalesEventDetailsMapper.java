@@ -18,8 +18,9 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	private String soldTo;
 	private String companyId;//done
 	private String remarks;
-	private String salesType;
-	
+	private String salesType;	
+	private String removalType;
+	private String salesReason;
 	
 	
 	private Integer deriveNumberOfPigs;	
@@ -30,6 +31,10 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	private Double deriveWeightInKgs;
 	private Integer deriveCompanyId;
 	private String deriveSalesTypes;
+	private Integer deriveRemovalType;
+	private Integer deriveSoldTo;
+	private String deriveSalesReason;
+	
 	
 	public String getTicketNumber() {
 		return ticketNumber;
@@ -157,6 +162,36 @@ public class SalesEventDetailsMapper extends AbstractMapper  {
 	@Override
 	public String getId() {
 		return "["+getPigInfoId()+","+getGroupEventId()+", "+getCompanyId()+"]";
+	}
+	public String getRemovalType() {
+		return removalType;
+	}
+	public void setRemovalType(String removalType) {
+		this.removalType = removalType;
+	}
+	public Integer getDeriveRemovalType() {
+		return deriveRemovalType;
+	}
+	public void setDeriveRemovalType(Integer deriveRemovalType) {
+		this.deriveRemovalType = deriveRemovalType;
+	}
+	public Integer getDeriveSoldTo() {
+		return deriveSoldTo;
+	}
+	public void setDeriveSoldTo(Integer deriveSoldTo) {
+		this.deriveSoldTo = deriveSoldTo;
+	}
+	public String getSalesReason() {
+		return salesReason;
+	}
+	public void setSalesReason(String salesReason) {
+		this.salesReason = salesReason;
+	}
+	public String getDeriveSalesReason() {
+		return deriveSalesReason;
+	}
+	public void setDeriveSalesReason(String deriveSalesReason) {
+		this.deriveSalesReason = deriveSalesReason;
 	}
 	
 }

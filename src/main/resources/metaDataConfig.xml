@@ -134,33 +134,34 @@
 		<dataInfo>
 			<col key="groupEventId" order="1" isEmpty="true" />			
 			<col key="pigInfoId" order="2" isEmpty="true" />
-			<!-- <col key="numberOfPigs" order="3" isEmpty="false" />-->
-			<col key="removalDateTime" order="3" isEmpty="false" />
-			<col key="weightInKgs" order="4" isEmpty="false" />
-			<col key="removalEventTypeId" order="5" isEmpty="false" />
+			 <col key="numberOfPigs" order="3" isEmpty="false" />
+			<col key="removalDateTime" order="4" isEmpty="false" />
+			<col key="weightInKgs" order="5" isEmpty="false" />
+			<col key="removalEventTypeId" order="6" isEmpty="false" />
 			<!--  <col key="premiseId" order="7" isEmpty="true" />-->
-			<col key="destPremiseId" order="6" isEmpty="true" />
-			<col key="roomId" order="7" isEmpty="true" />
-			<col key="remarks" order="8" isEmpty="true" />	
-			<col key="mortalityReasonId" order="9" isEmpty="true" />		
-			<col key="revenue" order="10" isEmpty="true" />
+			<col key="destPremiseId" order="7" isEmpty="true" />
+			<col key="roomId" order="8" isEmpty="true" />
+			<col key="remarks" order="9" isEmpty="true" />	
+			<col key="mortalityReasonId" order="10" isEmpty="true" />		
+			<col key="revenue" order="11" isEmpty="true" />
 			
 		</dataInfo>
 	</event>
 	<event id="SALESEVENTDETAILS">
 		<dataInfo>
-			<col key="companyId" order="1" isEmpty="false" />
-			<col key="groupEventId" order="2" isEmpty="true" />
-			<col key="pigInfoId" order="3" isEmpty="true" />
-			<col key="salesType" order="4" isEmpty="true" />
-			<col key="ticketNumber" order="5" isEmpty="false" />
-			<col key="invoiceNumber" order="6" isEmpty="true" />			
-			<col key="numberOfPigs" order="7" isEmpty="false" />
-			<col key="revenueUsd" order="8" isEmpty="true" />
-			<col key="soldTo" order="9" isEmpty="true" />
-			<col key="salesDateTime" order="10" isEmpty="false" />			
-			<col key="weightInKgs" order="11" isEmpty="false" />			
+			<col key="groupEventId" order="1" isEmpty="true" />
+			<col key="pigInfoId" order="2" isEmpty="true" />
+			<col key="numberOfPigs" order="3" isEmpty="false" />
+			<col key="weightInKgs" order="4" isEmpty="false" />
+			<col key="ticketNumber" order="5" isEmpty="false" />	
+			<col key="removalType" order="6" isEmpty="true" />			
+			<col key="salesType" order="7" isEmpty="true" />	
+			<col key="invoiceNumber" order="8" isEmpty="true" />
+			<col key="revenueUsd" order="9" isEmpty="true" />			
+			<col key="salesDateTime" order="10" isEmpty="false" />	
+			<col key="soldTo" order="11" isEmpty="true" />		
 			<col key="remarks" order="12" isEmpty="true" />
+			<col key="salesReason" order="13" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="MATINGDETAILS">

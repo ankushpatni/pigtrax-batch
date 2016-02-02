@@ -68,7 +68,7 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 				RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper = (RemovalEventExceptSalesDetailsMapper) mapper;
 				
 				setCompanyId(removalEventExceptSalesDetailsMapper, processDTO);				
-				//setNumberOfPigs(removalEventExceptSalesDetailsMapper);
+				setNumberOfPigs(removalEventExceptSalesDetailsMapper);
 				setRemovalDateTime(removalEventExceptSalesDetailsMapper);
 				setWeightInKgs(removalEventExceptSalesDetailsMapper);
 				setRemovalEventType(removalEventExceptSalesDetailsMapper);

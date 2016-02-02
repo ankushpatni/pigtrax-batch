@@ -32,4 +32,6 @@ public interface RefDataDao {
 	
 	List<RefDataTranslation> getFeedEventTypes();
 
+	List<RefDataTranslation> getSaleResons();
+
 }

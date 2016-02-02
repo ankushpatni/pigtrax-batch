@@ -87,7 +87,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 							{
 								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
 								removalEventExceptSalesDetails.setPremiseId(groupEvent.getPremiseId());
-								removalEventExceptSalesDetails.setNumberOfPigs(groupEvent.getCurrentInventory());
+								//removalEventExceptSalesDetails.setNumberOfPigs(groupEvent.getCurrentInventory());
 								if(groupEvent != null)
 								{
 									if(removalEventExceptSalesDetails.getRemovalEventId().intValue() == 9)
@@ -130,7 +130,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 								
 								PigInfo pigInfo = pigInfoDao.getPigDetails(removalEventExceptSalesDetails.getPigInfoId());
 								removalEventExceptSalesDetails.setPremiseId(pigInfo.getPremiseId());
-								removalEventExceptSalesDetails.setNumberOfPigs(1);
+								//removalEventExceptSalesDetails.setNumberOfPigs(1);
 								if(null != pigInfo)
 								{
 									//No need to change the pig status on transfer

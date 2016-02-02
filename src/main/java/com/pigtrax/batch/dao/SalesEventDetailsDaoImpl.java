@@ -45,8 +45,8 @@ public class SalesEventDetailsDaoImpl implements SalesEventDetailsDao
 */
 		final String Qry = "insert into pigtrax.\"SalesEventDetails\"(\"invoiceId\", \"ticketNumber\", \"numberOfPigs\", \"revenueUsd\","+ 
 			       "\"weightInKgs\", \"salesDateTime\", \"id_PigInfo\", \"id_GroupEvent\","+ 
-			       "\"soldTo\", \"id_RemovalEvent\", \"lastUpdated\", \"userUpdated\",\"remarks\") " + 
-			       "values(?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?)";		
+			       "\"soldTo\", \"id_RemovalEvent\", \"lastUpdated\", \"userUpdated\",\"remarks\",\"salesTypes\",\"salesReasons\") " + 
+			       "values(?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?)";		
 
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -137,6 +137,17 @@ public class SalesEventDetailsDaoImpl implements SalesEventDetailsDao
 				}*/
 				
 				ps.setString(12, salesEventDetails.getRemarks());
+				
+				if((salesEventDetails.getSalesTypesAsString()) != null )
+				{
+					ps.setString(13, salesEventDetails.getSalesTypesAsString());
+				}
+				
+				if((salesEventDetails.getSalesReasonAsString()) != null )
+				{
+					ps.setString(14, salesEventDetails.getSalesReasonAsString());
+				}
+				
 				return ps;
 			}
 		}, holder);

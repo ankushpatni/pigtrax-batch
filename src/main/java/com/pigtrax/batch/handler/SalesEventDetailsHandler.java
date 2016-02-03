@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.SalesEventDetails;
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.SalesEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
@@ -38,6 +40,9 @@ public class SalesEventDetailsHandler implements Handler{
 	
 	@Autowired
 	PigInfoDao pigInfoDao;
+	
+	@Autowired
+	TransportJourneyDao transportJourneyDao;
 
 	private static final Logger logger = Logger.getLogger(SalesEventDetailsHandler.class);
 
@@ -46,6 +51,7 @@ public class SalesEventDetailsHandler implements Handler{
 
 		int totalRecordsInInput = list != null ? list.size() : 0;
 		int totalRecordsProcessed = 0;
+		int journeyId = 0;
 		if (list != null) {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
@@ -55,6 +61,16 @@ public class SalesEventDetailsHandler implements Handler{
 					try {
 						SalesEventDetails salesEventDetails = populateSalesEventDetails(errorMap, salesEventDetailsMapper, processDTO);
 						if (salesEventDetails != null) {
+							if(salesEventDetailsMapper.getDeriveTransportTrailer() != null || salesEventDetailsMapper.getDeriveTransportTruck() != null)
+							{
+								TransportJourney journey = new TransportJourney();
+								journey.setTransportTrailerId(salesEventDetailsMapper.getDeriveTransportTrailer());
+								journey.setTransportTruckId(salesEventDetailsMapper.getDeriveTransportTruck());
+								journey.setUserUpdated(processDTO.getUserName());
+								journeyId = transportJourneyDao.addTransportJourney(journey);
+								if(journeyId > 0)
+									salesEventDetails.setTransPortJourneyId(journeyId);
+							}
 							int id =salesEventDetailsDaoImpl.addSalesEventDetails(salesEventDetails);
 							if(salesEventDetails.getGroupEventId() != null)
 							{

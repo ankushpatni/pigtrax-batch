@@ -22,6 +22,7 @@ import com.pigtrax.batch.dao.interfaces.TransportTrailerDao;
 import com.pigtrax.batch.dao.interfaces.TransportTruckDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
+import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
 
@@ -79,7 +80,33 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 				setMortalityReason(removalEventExceptSalesDetailsMapper);
 				setRevenue(removalEventExceptSalesDetailsMapper);
 				setRoomId(removalEventExceptSalesDetailsMapper);
+				setTransportTruck(removalEventExceptSalesDetailsMapper);
+				setTransportTrailer(removalEventExceptSalesDetailsMapper);
 			}
+		}
+	}
+	
+	private void setTransportTruck(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
+		try {
+			if(removalEventExceptSalesDetailsMapper.getTransportTruck() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getTransportTruck()))
+			{
+				removalEventExceptSalesDetailsMapper
+					.setDeriveTransportTruck(transportTruckDao.findByTransportTruckByTruckNumber(removalEventExceptSalesDetailsMapper.getTransportTruck()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setTransportTrailer(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper) {
+		try {
+			if(removalEventExceptSalesDetailsMapper.getTransportTrailer() != null && !StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getTransportTrailer()))
+			{
+				removalEventExceptSalesDetailsMapper
+					.setDeriveTransportTrailer(transportTrailerDao.findByTransportTrailerByTrailerNumberPlate(removalEventExceptSalesDetailsMapper.getTransportTrailer()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -23,6 +23,7 @@ public class SalesEventDetails {
 	private Integer removalType;
 	private String salesTypesAsString;
 	private String salesReasonAsString;
+	private Integer transPortJourneyId;
 	
 	public Integer getId() {
 		return id;
@@ -132,6 +133,12 @@ public class SalesEventDetails {
 	}
 	public void setSalesReasonAsString(String salesReasonAsString) {
 		this.salesReasonAsString = salesReasonAsString;
+	}
+	public Integer getTransPortJourneyId() {
+		return transPortJourneyId;
+	}
+	public void setTransPortJourneyId(Integer transPortJourneyId) {
+		this.transPortJourneyId = transPortJourneyId;
 	}	
 	
 }

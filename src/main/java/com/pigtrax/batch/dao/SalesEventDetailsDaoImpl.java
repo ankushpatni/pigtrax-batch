@@ -45,8 +45,8 @@ public class SalesEventDetailsDaoImpl implements SalesEventDetailsDao
 */
 		final String Qry = "insert into pigtrax.\"SalesEventDetails\"(\"invoiceId\", \"ticketNumber\", \"numberOfPigs\", \"revenueUsd\","+ 
 			       "\"weightInKgs\", \"salesDateTime\", \"id_PigInfo\", \"id_GroupEvent\","+ 
-			       "\"soldTo\", \"id_RemovalEvent\", \"lastUpdated\", \"userUpdated\",\"remarks\",\"salesTypes\",\"salesReasons\") " + 
-			       "values(?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?)";		
+			       "\"soldTo\", \"id_RemovalEvent\", \"lastUpdated\", \"userUpdated\",\"remarks\",\"salesTypes\",\"salesReasons\",\"id_TransportJourney\") " + 
+			       "values(?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?)";		
 
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -146,6 +146,14 @@ public class SalesEventDetailsDaoImpl implements SalesEventDetailsDao
 				if((salesEventDetails.getSalesReasonAsString()) != null )
 				{
 					ps.setString(14, salesEventDetails.getSalesReasonAsString());
+				}
+				
+				if((salesEventDetails.getTransPortJourneyId()) != null )
+				{
+					ps.setInt(15, salesEventDetails.getTransPortJourneyId());
+				}else
+				{
+					ps.setNull(15, java.sql.Types.INTEGER);
 				}
 				
 				return ps;

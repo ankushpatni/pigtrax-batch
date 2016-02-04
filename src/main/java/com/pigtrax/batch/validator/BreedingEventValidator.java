@@ -120,7 +120,7 @@ public class BreedingEventValidator extends AbstractValidator {
 	
 	private void validateSowCondition(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
 		if (breedingEventMapper.getSowCondition() != null && !Constants.BLANK_STRING.equals(breedingEventMapper.getSowCondition()) && 
-				(breedingEventMapper.getDeriveSowCondition() == null || (breedingEventMapper.getDeriveSowCondition() != null&& breedingEventMapper.getDeriveSowCondition() < 0)  ||( breedingEventMapper.getDeriveSowCondition() != null && breedingEventMapper.getDeriveSowCondition() > 5))) {
+				(breedingEventMapper.getDeriveSowCondition() == null ||  breedingEventMapper.getDeriveSowCondition() < 0  || breedingEventMapper.getDeriveSowCondition() > 5)) {
 			breedingEventMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_INVALID_SOW_CONDITION_CODE, Constants.BREED_EVNT_INVALID_SOW_CONDITION_MSG, "sowCondition", false));
 		}

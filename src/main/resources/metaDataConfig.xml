@@ -144,6 +144,8 @@
 			<col key="remarks" order="9" isEmpty="true" />	
 			<col key="mortalityReasonId" order="10" isEmpty="true" />		
 			<col key="revenue" order="11" isEmpty="true" />
+			<col key="transportTruck" order="12" isEmpty="true" />
+			<col key="transportTrailer" order="13" isEmpty="true" />
 			
 		</dataInfo>
 	</event>
@@ -162,6 +164,8 @@
 			<col key="soldTo" order="11" isEmpty="true" />		
 			<col key="remarks" order="12" isEmpty="true" />
 			<col key="salesReason" order="13" isEmpty="true" />
+			<col key="transportTruck" order="14" isEmpty="true" />
+			<col key="transportTrailer" order="15" isEmpty="true" /> 
 		</dataInfo>
 	</event>
 	<event id="MATINGDETAILS">

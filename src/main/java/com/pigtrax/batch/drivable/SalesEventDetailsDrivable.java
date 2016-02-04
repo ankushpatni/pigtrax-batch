@@ -16,7 +16,10 @@ import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.RoomDao;
 import com.pigtrax.batch.dao.interfaces.TransportDestinationDao;
+import com.pigtrax.batch.dao.interfaces.TransportTrailerDao;
+import com.pigtrax.batch.dao.interfaces.TransportTruckDao;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
+import com.pigtrax.batch.mapper.FeedEventMapper;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.DateUtil;
@@ -47,6 +50,12 @@ public class SalesEventDetailsDrivable implements Derivable{
 	@Autowired
 	TransportDestinationDao transportDestinationDao;
 	
+	@Autowired
+	TransportTruckDao transportTruckDao;
+	
+	@Autowired
+	TransportTrailerDao transportTrailerDao;
+	
 	//SalesEventDetailsMapper
 
 	@Override
@@ -65,10 +74,14 @@ public class SalesEventDetailsDrivable implements Derivable{
 				setSalesDateTime(salesEventDetailsMapper);
 				setSoldTo(salesEventDetailsMapper);
 				setSalesReason(salesEventDetailsMapper);
+				setTransportTruck(salesEventDetailsMapper);
+				setTransportTrailer(salesEventDetailsMapper);
 				
 			}
 		}
 	}
+	
+	
 	
 	private void setSoldTo(final SalesEventDetailsMapper salesEventDetailsMapper) {
 		try {
@@ -85,7 +98,7 @@ public class SalesEventDetailsDrivable implements Derivable{
 		try {
 			if(salesReason != null && salesReason.trim().length() > 0)
 			{
-				String[]  types = StringUtils.split(salesReason, "|");
+				String[]  types = StringUtils.tokenizeToStringArray(salesReason.trim(), "|");
 				if(types != null && types.length > 0)
 				{
 					int i= 0;
@@ -112,7 +125,8 @@ public class SalesEventDetailsDrivable implements Derivable{
 		try {
 			if(salesType != null && salesType.trim().length() > 0)
 			{
-				String[]  types = StringUtils.split(salesType, "|");
+				
+				String[]  types = StringUtils.tokenizeToStringArray(salesType.trim(), "|");
 				if(types != null && types.length > 0)
 				{
 					int i= 0;
@@ -189,6 +203,30 @@ public class SalesEventDetailsDrivable implements Derivable{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+	}
+	
+	private void setTransportTruck(final SalesEventDetailsMapper salesEventDetailsMapper) {
+		try {
+			if(salesEventDetailsMapper.getTransportTruck() != null && !StringUtils.isEmpty(salesEventDetailsMapper.getTransportTruck()))
+			{
+			salesEventDetailsMapper
+					.setDeriveTransportTruck(transportTruckDao.findByTransportTruckByTruckNumber(salesEventDetailsMapper.getTransportTruck()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setTransportTrailer(final SalesEventDetailsMapper salesEventDetailsMapper) {
+		try {
+			if(salesEventDetailsMapper.getTransportTrailer() != null && !StringUtils.isEmpty(salesEventDetailsMapper.getTransportTrailer()))
+			{
+			salesEventDetailsMapper
+					.setDeriveTransportTrailer(transportTrailerDao.findByTransportTrailerByTrailerNumberPlate(salesEventDetailsMapper.getTransportTrailer()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

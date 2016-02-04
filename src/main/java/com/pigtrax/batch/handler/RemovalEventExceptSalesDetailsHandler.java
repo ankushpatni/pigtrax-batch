@@ -18,6 +18,7 @@ import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.RemovalEventExceptSalesDetails;
 import com.pigtrax.batch.beans.SowMovement;
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
@@ -73,6 +74,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 
 		int totalRecordsInInput = list != null ? list.size() : 0;
 		int totalRecordsProcessed = 0;
+		int journeyId =0;
 		if (list != null) {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
@@ -162,6 +164,16 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 									
 								}
 							}
+							if(removalEventExceptSalesDetailsMapper.getDeriveTransportTrailer() != null || removalEventExceptSalesDetailsMapper.getDeriveTransportTruck() != null)
+							{
+								TransportJourney journey = new TransportJourney();
+								journey.setTransportTrailerId(removalEventExceptSalesDetailsMapper.getDeriveTransportTrailer());
+								journey.setTransportTruckId(removalEventExceptSalesDetailsMapper.getDeriveTransportTruck());
+								journey.setUserUpdated(processDTO.getUserName());
+								journeyId = transportJourneyDao.addTransportJourney(journey);
+								if(journeyId > 0)
+									removalEventExceptSalesDetails.setTransportJourneyId(journeyId);
+							}
 							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
 							
 							PigTraxEventMaster eventMaster = populateEventMaster(removalEventExceptSalesDetailsMapper, id, processDTO);
@@ -195,7 +207,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			removalEventExceptSalesDetails.setGroupEventId(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId());
 			removalEventExceptSalesDetails.setPigInfoId(removalEventExceptSalesDetailsMapper.getDerivePigInfoId());
 			removalEventExceptSalesDetails.setCompanyId(removalEventExceptSalesDetailsMapper.getDeriveCompanyId());
-			//removalEventExceptSalesDetails.setNumberOfPigs(removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs());
+			removalEventExceptSalesDetails.setNumberOfPigs(removalEventExceptSalesDetailsMapper.getDeriveNumberOfPigs());
 			removalEventExceptSalesDetails.setRemovalDateTime(removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime());
 			removalEventExceptSalesDetails.setWeightInKgs(new BigDecimal(removalEventExceptSalesDetailsMapper.getDeriveWeightInKgs().intValue()));
 			removalEventExceptSalesDetails.setRemovalEventId(removalEventExceptSalesDetailsMapper.getDeriveRemovalTypeEventId());

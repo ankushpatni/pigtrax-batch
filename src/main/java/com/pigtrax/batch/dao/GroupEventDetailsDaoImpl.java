@@ -91,5 +91,21 @@ private static final Logger logger = Logger.getLogger(GroupEventDetailsDaoImpl.c
 		
 		return keyVal;
 	}
+	
+
+	@Override
+	public void deleteGroupEventDetailsByPigletEvent(final Integer pigletStatusEventId)
+			throws SQLException {
+		final String qry = "delete from pigtrax.\"GroupEventDetails\" where \"id_PigletStatusEvent\" = ?";
+		
+		this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, pigletStatusEventId);
+			}
+		});
+		
+	}
+
 
 }

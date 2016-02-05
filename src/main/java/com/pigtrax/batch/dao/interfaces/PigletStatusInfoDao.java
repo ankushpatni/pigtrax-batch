@@ -11,4 +11,5 @@ public interface PigletStatusInfoDao {
    
    Integer getPKPigletStatus(Integer pigInfoId, Integer farrowEventId,  Integer pigletStatusEventType);
    
+   PigletStatusInfo getPigletStatusEventInformation(Integer pigletStatusEventId);
 }

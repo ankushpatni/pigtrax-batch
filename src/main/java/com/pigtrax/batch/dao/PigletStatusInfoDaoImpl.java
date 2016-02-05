@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.PigletStatusInfo;
-import com.pigtrax.batch.config.PigletStatusEventType;
 import com.pigtrax.batch.dao.interfaces.PigletStatusInfoDao;
 
 @Repository
@@ -177,4 +178,58 @@ public class PigletStatusInfoDaoImpl implements PigletStatusInfoDao {
 		}
 		return null;
 	}
+	
+	/**
+	 * To get the details of a given pigletEventStatusId
+	 */
+	
+	@Override
+	public PigletStatusInfo getPigletStatusEventInformation(
+			final Integer pigletStatusEventId) {
+		String qry = "select PSE.\"id\", PSE.\"id_PigInfo\", PSE.\"fosterFrom\", "
+		   		+ "PSE.\"fosterTo\", PSE.\"id_PigletStatusEventType\", PSE.\"eventDateTime\", PSE.\"numberOfPigs\""
+		   		+ ", PSE.\"weightInKgs\", PSE.\"eventReason\", PSE.\"remarks\", PSE.\"sowCondition\", PSE.\"weanGroupId\", "
+		   		+ " PSE.\"lastUpdated\",PSE.\"userUpdated\", PSE.\"id_FarrowEvent\", PSE.\"id_fosterFarrowEvent\", "
+		   		+ "PSE.\"id_GroupEvent\", PSE.\"id_MortalityReasonType\", PSE.\"id_Pen\",\"id_Premise\" "
+		   		+ " from pigtrax.\"PigletStatus\" PSE where PSE.\"id\" = ? ";
+		
+		List<PigletStatusInfo> pigletStatusEventList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+ 			@Override
+ 			public void setValues(PreparedStatement ps) throws SQLException {
+ 				ps.setInt(1, pigletStatusEventId);
+ 			}}, new PigletStatusEventMapper());
+
+		if(pigletStatusEventList != null && pigletStatusEventList.size() > 0)
+			 return pigletStatusEventList.get(0);
+		return null;
+	}
+	
+	
+	private static final class PigletStatusEventMapper implements RowMapper<PigletStatusInfo> {
+		public PigletStatusInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			PigletStatusInfo pigletStatusEvent = new PigletStatusInfo();
+			pigletStatusEvent.setId(rs.getInt("id"));
+			pigletStatusEvent.setPigInfoId(rs.getInt("id_PigInfo"));
+			pigletStatusEvent.setFosterFrom(rs.getInt("fosterFrom"));
+			pigletStatusEvent.setFosterTo(rs.getInt("fosterTo"));
+			pigletStatusEvent.setPigletStatusEventType(rs.getInt("id_PigletStatusEventType")); 
+			pigletStatusEvent.setEventDateTime(rs.getDate("eventDateTime"));
+			pigletStatusEvent.setNumberOfPigs(rs.getInt("numberOfPigs"));
+			pigletStatusEvent.setWeightInKgs(rs.getDouble("weightInKgs"));
+			pigletStatusEvent.setEventReason(rs.getString("eventReason"));
+			pigletStatusEvent.setRemarks(rs.getString("remarks"));
+			pigletStatusEvent.setSowCondition(rs.getInt("sowCondition"));
+			pigletStatusEvent.setWeanGroupId(rs.getString("weanGroupId"));
+			pigletStatusEvent.setLastUpdated(rs.getDate("lastUpdated"));
+			pigletStatusEvent.setUserUpdated(rs.getString("userUpdated"));
+			pigletStatusEvent.setFarrowEventId(rs.getInt("id_FarrowEvent"));
+			pigletStatusEvent.setFosterFarrowEventId(rs.getInt("id_fosterFarrowEvent"));
+			pigletStatusEvent.setGroupEventId(rs.getInt("id_GroupEvent"));
+			pigletStatusEvent.setMortalityReasonTypeId(rs.getInt("id_MortalityReasonType"));
+			pigletStatusEvent.setPenId(rs.getInt("id_Pen"));
+			pigletStatusEvent.setPremiseId(rs.getInt("id_Premise"));
+			return pigletStatusEvent;
+		}
+	}
+	
 }

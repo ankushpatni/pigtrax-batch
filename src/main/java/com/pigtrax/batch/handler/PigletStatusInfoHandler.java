@@ -17,7 +17,6 @@ import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.PigletStatusInfo;
 import com.pigtrax.batch.config.PigletStatusEventType;
 import com.pigtrax.batch.core.ProcessDTO;
-import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventDetailsDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
@@ -69,6 +68,26 @@ public class PigletStatusInfoHandler implements Handler {
 							if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode())
 							{
 								Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Wean.getTypeCode());
+								
+								if(pkValue != null)
+								{
+									PigletStatusInfo statusEvent = pigletStatusInfoDao.getPigletStatusEventInformation(pkValue);
+									if(statusEvent != null && statusEvent.getGroupEventId() != null)
+									{
+										groupEventDetailsDao.deleteGroupEventDetailsByPigletEvent(statusEvent.getId()); 
+										GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(statusEvent.getGroupEventId(), processDTO.getCompanyId());
+										if(groupEvent != null)
+										{
+											Integer newInvValue = groupEvent.getCurrentInventory() - statusEvent.getNumberOfPigs();
+											groupEvent.setCurrentInventory(newInvValue);
+											groupEventDao.updateGroupEventCurrentInventory(groupEvent);
+										}
+										
+										
+									}
+								}
+								
+								
 								pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Wean.getTypeCode());
 								if(pkValue != null)
 									eventMasterDao.deletePigletStatusEvents(pkValue);

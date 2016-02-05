@@ -8,4 +8,6 @@ public interface GroupEventDetailsDao {
 	
 	int addGroupEventDetails(final GroupEventDetail groupEventDetails) throws SQLException;
 	
+	void deleteGroupEventDetailsByPigletEvent(final Integer pigletStatusEventId) throws SQLException;
+	
 }

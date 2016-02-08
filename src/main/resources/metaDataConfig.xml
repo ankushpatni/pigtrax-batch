@@ -110,7 +110,7 @@
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
 			<col key="litterId" order="2" isEmpty="true" />
-			<col key="tattooId" order="3" isEmpty="false" />
+			<col key="tattooId" order="3" isEmpty="true" />
 			<col key="wtAtBirth" order="4" isEmpty="true" />
 			<col key="wtAtWeaning" order="5" isEmpty="true" />
 			<col key="wtAtFirstMonth" order="6" isEmpty="true" />

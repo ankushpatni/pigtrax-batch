@@ -49,7 +49,9 @@ public class IndividualPigletStatusHandler implements Handler {
 							IndividualPigletStatus individualPigletStatus = populateIndividualPigletInfo(errorMap, individualPigletMapper, processDTO);
 							if (individualPigletStatus != null) {
 								
-								boolean flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDerivePremiseId());
+								boolean flag = false;
+								if(individualPigletMapper.getTattooId() != null && individualPigletMapper.getTattooId().trim().length() > 0)
+									flag = individualPigletDao.checkIfExists(individualPigletMapper.getTattooId(), individualPigletMapper.getDerivePremiseId());
 								if(flag)
 								{
 									individualPigletMapper.setRecovrableErrors(false); 

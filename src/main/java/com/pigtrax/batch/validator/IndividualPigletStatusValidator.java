@@ -153,11 +153,14 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 	
 	
 	private void validateTattooId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
-		boolean flag = individualPigletDao.checkIfExists(individualPigletStatusMapper.getTattooId(), individualPigletStatusMapper.getDeriveCompanyId());
-		if(flag)
+		if(individualPigletStatusMapper.getTattooId() != null && individualPigletStatusMapper.getTattooId().trim().length() > 0)
 		{
-			individualPigletStatusMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
+			boolean flag = individualPigletDao.checkIfExists(individualPigletStatusMapper.getTattooId(), individualPigletStatusMapper.getDeriveCompanyId());
+			if(flag)
+			{
+				individualPigletStatusMapper.setRecovrableErrors(false); 
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE, Constants.IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG, "tattooId", false));
+			}
 		}
 	}
 }

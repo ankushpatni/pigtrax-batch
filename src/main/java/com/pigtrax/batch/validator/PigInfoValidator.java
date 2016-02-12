@@ -167,24 +167,24 @@ public class PigInfoValidator extends AbstractValidator {
 	private void validateSexId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDeriveSexId() == null || pigInfoMapper.getDeriveSexId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
-					Constants.REF_DATA_NOT_FOUND_MSG, "sexTypeId", false));
-		}
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_SEX_CODE,
+					Constants.ENTRY_EVENT_INVALID_SEX_MSG, "sexTypeId", false));
+		}		
 	}
 
 	private void validateGfunctionTypeId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDeriveFfunctionTypeId() == null || pigInfoMapper.getDeriveFfunctionTypeId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
-					Constants.REF_DATA_NOT_FOUND_MSG, "geneticFunction", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_GFUNC_CODE,
+					Constants.ENTRY_EVENT_INVALID_GFUNC_MSG, "geneticFunction", false));
 		}
 	}
 	
 	private void validateGCompany(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDeriveGCompany() == null || pigInfoMapper.getDeriveGCompany() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
-					Constants.REF_DATA_NOT_FOUND_MSG, "geneticCompany", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_GCOMP_CODE,
+					Constants.ENTRY_EVENT_INVALID_GCOMP_MSG, "geneticCompany", false));
 		}
 	}
 
@@ -192,8 +192,8 @@ public class PigInfoValidator extends AbstractValidator {
 	private void validateGLine(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if(pigInfoMapper.getDeriveGline() == null || pigInfoMapper.getDeriveGline() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE,
-					Constants.REF_DATA_NOT_FOUND_MSG, "geneticLine", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_GLINE_CODE,
+					Constants.ENTRY_EVENT_INVALID_GLINE_MSG, "geneticLine", false));
 		}
 	}
 

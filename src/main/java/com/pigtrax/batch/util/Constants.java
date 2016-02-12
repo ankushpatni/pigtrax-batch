@@ -51,16 +51,20 @@ public interface Constants {
 	public static final String REF_DATA_NOT_FOUND_CODE = "200";
 
 	public static final String REF_DATA_NOT_FOUND_MSG = "Invalid data found";
+	
+	public static final String ENTRY_EVENT_INVALID_SEX_CODE = "EE-205";
+
+	public static final String ENTRY_EVENT_INVALID_SEX_MSG = "Invalid sex specified";
 
 	public static final String CUSTOM_VAL_ERR = "CUSTOM_VALIDATION_ERROR";
 
-	public static final String ERR_DATA_TYPE_MIS_MATCH = "501";
+	public static final String ERR_DATA_TYPE_MIS_MATCH = "GEN-103";
 
-	public static final String ERR_DATA_TYPE_MIS_MATCH_MSG = "Data type is wrong";
+	public static final String ERR_DATA_TYPE_MIS_MATCH_MSG = "Invalid type of data specified";
 
-	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "601";
+	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "EE-204";
 
-	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "Entry date should be greater that birthdate by 90 days";
+	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "The difference between Entry Date and Birth Date should fall between 100-300 days.";
 
 	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "701";
 
@@ -333,17 +337,29 @@ public interface Constants {
 	
 	public static final String REF_DATA_SALEREASON = "REF_DATA_SALEREASON";
 
-	public static final String ENTRY_EVENT_INVALID_ORIGIN_CODE = "610";
+	public static final String ENTRY_EVENT_INVALID_ORIGIN_CODE = "EE-206";
 	
-	public static final String ENTRY_EVENT_INVALID_ORIGIN_MSG = "Invalid origin specified";
+	public static final String ENTRY_EVENT_INVALID_ORIGIN_MSG = "Invalid genetic origin specified";
 	
-	public static final String ENTRY_EVENT_DUPLICATE_PIGID_CODE = "611";
+	public static final String ENTRY_EVENT_INVALID_GFUNC_CODE = "EE-207";
 	
-	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig Id given already exists in the farm";
+	public static final String ENTRY_EVENT_INVALID_GFUNC_MSG = "Invalid genetic function specified";
 	
-	public static final String ENTRY_EVENT_INVALID_COMPANYID_CODE ="612";
+	public static final String ENTRY_EVENT_INVALID_GCOMP_CODE = "EE-208";
 	
-	public static final String ENTRY_EVENT_INVALID_PREMISEID_CODE ="612";
+	public static final String ENTRY_EVENT_INVALID_GCOMP_MSG = "Invalid genetic company specified";
+	
+	public static final String ENTRY_EVENT_INVALID_GLINE_CODE = "EE-209";
+	
+	public static final String ENTRY_EVENT_INVALID_GLINE_MSG = "Invalid genetic line specified";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_PIGID_CODE = "EE-202";
+	
+	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig already exists with the given pig id in the premise";
+	
+	public static final String ENTRY_EVENT_INVALID_COMPANYID_CODE ="GEN-101";
+	
+	public static final String ENTRY_EVENT_INVALID_PREMISEID_CODE ="GEN-102";
 
 	public static final String ENTRY_EVENT_INVALID_COMPANYID_MSG ="Invalid company id specified";
 	
@@ -461,13 +477,13 @@ public interface Constants {
 	
 	public static final String ENTRY_EVENT_INVALID_ROOMIDS_MSG = "Invalid room Ids specified";
 	
-	public static final String ENTRY_EVENT_INVALID_ROOMID_CODE = "638";
+	public static final String ENTRY_EVENT_INVALID_ROOMID_CODE = "EE-201";
 	
 	public static final String ENTRY_EVENT_INVALID_ROOMID_MSG = "Invalid room specified for the premise";
 	
-	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_CODE = "639";
+	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_CODE = "EE-203";
 	
-	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_MSG = "Pig already exists in the farm with the given tattoo";
+	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_MSG = "Pig already exists in the premise with the given tattoo";
 	
 	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE = "640";
 	

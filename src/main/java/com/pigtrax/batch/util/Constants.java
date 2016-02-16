@@ -501,6 +501,10 @@ public interface Constants {
 	
 	public static final String REM_REMOVAL_TICKET_NUMBER_MSG = "Ticket Number is missing";
 	
+	public static final String GROUP_EVENT_INVALID_GROUPID_CODE = "644";
+	
+	public static final String GROUP_EVENT_INVALID_GROUPID_MSG = "Invalid Group Id specified";
+	
 }
 
 

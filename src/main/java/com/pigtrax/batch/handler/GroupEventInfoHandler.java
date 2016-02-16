@@ -83,18 +83,21 @@ public class GroupEventInfoHandler implements Handler{
 									
 									groupEventRoomDao.addGroupEventRooms(eventPhaseChange);
 									
-									GroupEventDetail details = new GroupEventDetail();
-									details.setSowSourceId(groupEvent.getPremiseId());
-									details.setDateOfEntry(groupEvent.getGroupStartDateTime());
-									details.setEmployeeGroupId(null);
-									details.setNumberOfPigs(groupEvent.getCurrentInventory());
-									details.setWeightInKgs(0D);
-									details.setRemarks("Entered through mass upload");
-									details.setGroupId(groupEvent.getId());
-									details.setLastUpdated(new Date());
-									details.setUserUpdated(groupEvent.getUserUpdated());
-									details.setPremiseId(groupEvent.getPremiseId());
-									groupEventDetailsDao.addGroupEventDetails(details);
+									if(groupEvent.getCurrentInventory() != null && groupEvent.getCurrentInventory() > 0)
+									{
+										GroupEventDetail details = new GroupEventDetail();
+										details.setSowSourceId(groupEvent.getPremiseId());
+										details.setDateOfEntry(groupEvent.getGroupStartDateTime());
+										details.setEmployeeGroupId(null);
+										details.setNumberOfPigs(groupEvent.getCurrentInventory());
+										details.setWeightInKgs(0D);
+										details.setRemarks("Entered through mass upload");
+										details.setGroupId(groupEvent.getId());
+										details.setLastUpdated(new Date());
+										details.setUserUpdated(groupEvent.getUserUpdated());
+										details.setPremiseId(groupEvent.getPremiseId());
+										groupEventDetailsDao.addGroupEventDetails(details);
+									}
 									
 									
 									PigTraxEventMaster eventMaster = populateEventMaster(groupEventInfoMapper, id, processDTO);

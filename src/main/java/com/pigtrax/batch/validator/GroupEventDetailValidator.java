@@ -54,6 +54,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 				{
 					validateCompanyId(groupEventDetailMapper, errList);
 					validatePremiseId(groupEventDetailMapper, errList);
+					validateGroupId(groupEventDetailMapper, errList);
 					//validateRoomId(groupEventDetailMapper, errList);
 					validateSowSource(groupEventDetailMapper, errList);							
 					validateDateOfEntry(groupEventDetailMapper, errList);
@@ -84,6 +85,14 @@ public class GroupEventDetailValidator extends AbstractValidator {
 			groupEventDetailMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
 					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+		}
+	}
+	
+	private void validateGroupId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
+		if (groupEventDetailMapper.getDeriveGroupId() == null || groupEventDetailMapper.getDeriveGroupId() < 0) {
+			groupEventDetailMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_GROUPID_CODE,
+					Constants.GROUP_EVENT_INVALID_GROUPID_MSG, "groupId", false));
 		}
 	}
 	

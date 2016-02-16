@@ -31,7 +31,7 @@ public class GroupEventDetailMapper extends AbstractMapper{
 	private Integer deriveInventoryAdjustment;
 	private Integer deriveRoomId;
 	private Integer deriveEmployeeGroupId;
-	private int deriveGroupId;
+	private Integer deriveGroupId;
 	private Integer deriveTransportDestination;
 	private Integer derivecompanyId;
 	private Integer derivePremiseId;
@@ -152,10 +152,10 @@ public class GroupEventDetailMapper extends AbstractMapper{
 	public void setDeriveEmployeeGroupId(Integer deriveEmployeeGroupId) {
 		this.deriveEmployeeGroupId = deriveEmployeeGroupId;
 	}
-	public int getDeriveGroupId() {
+	public Integer getDeriveGroupId() {
 		return deriveGroupId;
 	}
-	public void setDeriveGroupId(int deriveGroupId) {
+	public void setDeriveGroupId(Integer deriveGroupId) {
 		this.deriveGroupId = deriveGroupId;
 	}
 	public Integer getDeriveTransportDestination() {

@@ -86,7 +86,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 			if(!pigInfoDao.isPigASow(pigletStatusInfoMapper.getDerivePigInfoId()))
 			{
 				pigletStatusInfoMapper.setRecovrableErrors(false); 
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIG_NOTA_SOW_CODE, Constants.PIG_NOTA_SOW_MSG, "pigId", false));
 			}
 		}
 	}

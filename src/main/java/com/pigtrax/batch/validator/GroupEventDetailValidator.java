@@ -75,16 +75,16 @@ public class GroupEventDetailValidator extends AbstractValidator {
 	private void validateCompanyId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
 		if (groupEventDetailMapper.getDerivecompanyId() == null || groupEventDetailMapper.getDerivecompanyId() < 0) {
 			groupEventDetailMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_COMPANYID_CODE,
-					Constants.ENTRY_EVENT_INVALID_COMPANYID_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE,
+					Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
 	private void validatePremiseId(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
 		if (groupEventDetailMapper.getDerivePremiseId() == null || groupEventDetailMapper.getDerivePremiseId() < 0) {
 			groupEventDetailMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	

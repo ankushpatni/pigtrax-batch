@@ -48,9 +48,9 @@ public class FeedEventDerivable implements Derivable {
 					setCompanyId(feedEventMapper, processDTO);
 					setPremiseId(feedEventMapper, processDTO);
 					setRationId(feedEventMapper);
-					setFeedquantitykgs(feedEventMapper);
-					setFeedCost(feedEventMapper);
-					setInitialFeedEntryDate(feedEventMapper);
+					//setFeedquantitykgs(feedEventMapper);
+					//setFeedCost(feedEventMapper);
+					//setInitialFeedEntryDate(feedEventMapper);
 					setTransportTruck(feedEventMapper);
 					setTransportTrailer(feedEventMapper);
 				}

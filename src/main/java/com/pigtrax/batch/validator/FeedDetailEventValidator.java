@@ -58,16 +58,16 @@ public class FeedDetailEventValidator extends AbstractValidator {
 	private void validateCompanyId(final FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
 		if (feedEventMapper.getDeriveCompanyId() == null || feedEventMapper.getDeriveCompanyId() < 0) {
 			feedEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_COMPANYID_CODE,
-					Constants.ENTRY_EVENT_INVALID_COMPANYID_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE,
+					Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
 	private void validatePremiseId(final FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
 		if (feedEventMapper.getDerivePremiseId() == null || feedEventMapper.getDerivePremiseId() < 0) {
 			feedEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	

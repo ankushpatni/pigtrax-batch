@@ -57,8 +57,8 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 	private void validatePremiseId(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
 		if (groupEventInfoMapper.getDerivePremiseId() == null || groupEventInfoMapper.getDerivePremiseId() < 0) {
 			groupEventInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	

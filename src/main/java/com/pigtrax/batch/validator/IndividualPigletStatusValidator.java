@@ -81,8 +81,8 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 	private void validatePremiseId(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {
 		if (individualPigletStatusMapper.getDerivePremiseId() == null || individualPigletStatusMapper.getDerivePremiseId() < 0) {
 			individualPigletStatusMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}	
 

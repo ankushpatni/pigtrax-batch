@@ -89,19 +89,16 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validatePremiseId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getDerivePremiseId() == null || farrowEventMapper.getDerivePremiseId() < 0) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "premise", false));
 		}
 	}
 	
 	private void validateSowCondition(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
-		if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() == null || farrowEventMapper.getDeriveSowCondition()  < 0)) {
-			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN, Constants.FRW_EVNT_ERR_SOW_CNDTN_MSG, "sowCondition", false));
-		} else if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() < 1 || farrowEventMapper.getDeriveSowCondition() > 5)) {
+		 if (farrowEventMapper.getSowCondition() != null && farrowEventMapper.getSowCondition().trim().length() > 0 && (farrowEventMapper.getDeriveSowCondition() < 1 || farrowEventMapper.getDeriveSowCondition() > 5)) {
 
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL, Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG, "sowCondition", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_SOW_CONDITION_CODE, Constants.INVALID_SOW_CONDITION_CODE, "sowCondition", false));
 
 		}
 
@@ -110,7 +107,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validateLEmployeeGrp(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getEmployeeGrpId() != null && farrowEventMapper.getEmployeeGrpId().trim().length() > 0 && (farrowEventMapper.getDeriveEmployeeGrpId() == null || farrowEventMapper.getDeriveEmployeeGrpId() < 0)) {
 			farrowEventMapper.setRecovrableErrors(true);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_EMP_GRP, Constants.FRW_EVNT_ERR_EMP_GRP_MSG, "employeeGroupId", true));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_EMP_GRP_CODE, Constants.INVALID_EMP_GRP_MSG, "employeeGroupId", true));
 		}
 
 	}
@@ -167,7 +164,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validatePragnancyTest(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if ( farrowEventMapper.getBreedingEventId() == null || farrowEventMapper.getBreedingEventId() == 0) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PRG_TEST, Constants.FRW_EVNT_ERR_PRG_TEST_MSG, "resultDate", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_SERVICE_RECORD_CODE, Constants.FRW_EVNT_ERR_SERVICE_RECORD_MSG, "resultDate", false));
 		}
 	}
 

@@ -61,12 +61,16 @@ public interface Constants {
 	public static final String ERR_DATA_TYPE_MIS_MATCH = "GEN-103";
 
 	public static final String ERR_DATA_TYPE_MIS_MATCH_MSG = "Invalid type of data specified";
-
+	
+	public static final String INVALID_PIGID_CODE = "GEN-104";
+	
+	public static final String INVALID_PIGID_MSG = "Invalid Pig Id specified";
+	
 	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "EE-204";
 
 	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "The difference between Entry Date and Birth Date should fall between 100-300 days.";
 
-	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "701";
+	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "PE-205";
 
 	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_MSG = "An entry already exist with the given combination of (Pig Id, Company Id, service Date)";
 
@@ -82,9 +86,9 @@ public interface Constants {
 
 	public static final String ERR_NOT_IN_PIG_DATE_MSG = "Not in pig date should be between 105 to 125 days from service date";
 
-	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "705";
+	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE = "PE-202";
 
-	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Matching Service record not found for the pig";
+	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Matching Service record not found for the pig for the given date";
 	
 	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_CODE = "705";
 
@@ -124,23 +128,23 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_BRD_DATE_MSG = "Breeding Date  is missing";
 
-	public static final String FRW_EVNT_ERR_PRG_TEST = "606";
+	public static final String FRW_EVNT_ERR_SERVICE_RECORD_CODE = "FE-201";
 
-	public static final String FRW_EVNT_ERR_PRG_TEST_MSG = "No matching service records found for the given result date";
+	public static final String FRW_EVNT_ERR_SERVICE_RECORD_MSG = "No matching service records found for the given result date";
 
-	public static final String FRW_EVNT_ERR_PEN_ID = "607";
+	public static final String FRW_EVNT_ERR_PEN_ID = "FE-202";
 
-	public static final String FRW_EVNT_ERR_PEN_ID_MSG = "Pen Id id missing in CSV file";
+	public static final String FRW_EVNT_ERR_PEN_ID_MSG = "Pen Id id missing";
 
-	public static final String FRW_EVNT_ERR_PEN_ID_PK = "608";
+	public static final String FRW_EVNT_ERR_PEN_ID_PK = "FE-203";
 
-	public static final String FRW_EVNT_ERR_PEN_ID_PK_MSG = "Pen Id id missing in Data Base";
+	public static final String FRW_EVNT_ERR_PEN_ID_PK_MSG = "Invalid pen id specified";
 
-	public static final String FRW_EVNT_ERR_FRW_DATE = "609";
+	public static final String FRW_EVNT_ERR_FRW_DATE = "FE-204";
 
-	public static final String FRW_EVNT_ERR_FRW_DATE_MSG = "Farrow Date is missing in CSV file";
+	public static final String FRW_EVNT_ERR_FRW_DATE_MSG = "Farrow Date is missing";
 
-	public static final String FRW_EVNT_ERR_FRW_DATE_1 = "610";
+	public static final String FRW_EVNT_ERR_FRW_DATE_1 = "FE-205";
 
 	public static final String FRW_EVNT_ERR_FRW_DATE_1_MSG = "Farrow Date is missing.";
 
@@ -152,11 +156,11 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_BORNS_MUM_VAL_MSG = "Atleast 1 Borns or Mummies required.";
 
-	public static final String FRW_EVNT_ERR_LITTER_WEIGHT = "613";
+	public static final String FRW_EVNT_ERR_LITTER_WEIGHT = "FE-207";
 
 	public static final String FRW_EVNT_ERR_LITTER_WEIGHT_MSG = "Litter Weight in KGs is missing";
 	
-	public static final String FRW_EVNT_INVALID_LITTER_WEIGHT = "613";
+	public static final String FRW_EVNT_INVALID_LITTER_WEIGHT = "FE-208";
 
 	public static final String FRW_EVNT_INVALID_LITTER_WEIGHT_MSG = "Invalid Litter Weight specified";
 
@@ -165,19 +169,19 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_BIRTH_TYPE_MSG = "Type Of Birth is missing";
 	
-	public static final String FRW_EVNT_INVALID_BIRTH_TYPE = "614";
+	public static final String FRW_EVNT_INVALID_BIRTH_TYPE = "FE-209";
 
-	public static final String FRW_EVNT_INVALID_BIRTH_TYPE_MSG = "Invalid birth type specified. Please give Assisted/Induced";
+	public static final String FRW_EVNT_INVALID_BIRTH_TYPE_MSG = "Invalid birth type specified. Applicable values - Assisted/Induced";
 
-	public static final String FRW_EVNT_ERR_EMP_GRP = "615";
+	public static final String INVALID_EMP_GRP_CODE = "GEN-107";
 
-	public static final String FRW_EVNT_ERR_EMP_GRP_MSG = "Invalid employee group specified";
+	public static final String INVALID_EMP_GRP_MSG = "Invalid employee group specified";
 
-	public static final String FRW_EVNT_ERR_TEATS = "616";
+	public static final String FRW_EVNT_ERR_TEATS = "FE-210";
 
-	public static final String FRW_EVNT_ERR_EMP_TEATS_MSG = "Teats is missing";
+	public static final String FRW_EVNT_ERR_EMP_TEATS_MSG = "Invalid Teats value";
 
-	public static final String FRW_EVNT_ERR_TEATS_VAL = "617";
+	public static final String FRW_EVNT_ERR_TEATS_VAL = "FE-211";
 
 	public static final String FRW_EVNT_ERR_TEATS_VAL_MSG = "Teats should be between 1-30";
 
@@ -235,11 +239,11 @@ public interface Constants {
 
     public static final String REF_DATA_BREEDINGSERIVCETYPE = "BREEDINGSERVICETYPE";	
 	
-    public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE = "808";
+    public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE = "BE-203";
     
     public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG = "Incomplete service cycle identified for the pig Id.";
 	
-    public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_CODE = "809";
+    public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_CODE = "BE-202";
     
     public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_MSG = "Invalid service type given";
     
@@ -251,53 +255,49 @@ public interface Constants {
     
     public static final String BREED_NG_EVNT_INVALID_PIGID_MSG = "Invalid Pig Id for the company";
     
-    public static final String BREED_NG_EVNT_INVALID_COMPANY_CODE = "811";
+    public static final String MATING_ERR_INVALID_MATEQUALITY_CODE = "MD-201";
     
-    public static final String BREED_NG_EVNT_INVALID_COMPANY_MSG = "Invalid company id";
+    public static final String MATING_ERR_INVALID_MATEQUALITY_MSG = "Invalid mating quality specified. Applicable values are - Good, OK and Poor";
     
-    public static final String MATING_ERR_INVALID_MATEQUALITY_CODE = "812";
-    
-    public static final String MATING_ERR_INVALID_MATEQUALITY_MSG = "Invalid mate quality given";
-    
-    public static final String MATING_ERR_DUPLICATE_MATINGDATE_CODE = "813";
+    public static final String MATING_ERR_DUPLICATE_MATINGDATE_CODE = "MD-205";
     
     public static final String MATING_ERR_DUPLICATE_MATINGDATE_MSG = "Mating date given is same as that of current service date";
 	
-    public static final String MATING_ERR_EARLY_DATE_CODE = "814";
+    public static final String MATING_ERR_EARLY_DATE_CODE = "MD-206";
     
     public static final String MATING_ERR_EARLY_DATE_MSG = "Mating date given is earlier than service date. Pregnancy record already added for the service event";
     
-    public static final String MATING_ERR_NEXT_SERVICE_CODE = "815";
+    public static final String MATING_ERR_NEXT_SERVICE_CODE = "MD-207";
     
-    public static final String MATING_ERR_NEXT_SERVICE_MSG = "Duration is more than 130 days. It should be added as a new service record";
+    public static final String MATING_ERR_NEXT_SERVICE_MSG = "The duration of the mating date and the service start date is more than 130 days. This should be added as a new service record.";
 
-    public static final String MATING_ERR_PREG_RECORD_CODE = "816";
+    public static final String MATING_ERR_PREG_RECORD_CODE = "MD-208";
     
-    public static final String MATING_ERR_PREG_RECORD_MSG = "Pregnancy record already added for the service event";
+    public static final String MATING_ERR_PREG_RECORD_MSG = "Mating date is between 18-130 days. Pregnancy record already added for the service event";
 
-    public static final String MATING_ERR_INVALID_WINDOW_CODE = "817";
+    public static final String MATING_ERR_INVALID_WINDOW_CODE = "MD-209";
     
-    public static final String MATING_ERR_INVALID_WINDOW_MSG = "Mating record added for invalid window of 19 - 60 days";
+    public static final String MATING_ERR_INVALID_WINDOW_MSG = "Mating record added for invalid window of 6 - 18 days";
     
-    public static final String MATING_ERR_NO_SERVICE_RECORD_CODE = "818";
+    public static final String MATING_ERR_NO_SERVICE_RECORD_CODE = "MD-202";
     
     public static final String MATING_ERR_NO_SERVICE_RECORD_MSG = "No active breeding event record available for the given pig Id";
     
-    public static final String BREED_EVNT_INVALID_SOW_CONDITION_CODE="819";
+    public static final String INVALID_SOW_CONDITION_CODE="GEN-106";
     
-    public static final String BREED_EVNT_INVALID_SOW_CONDITION_MSG = "Invalid sow condition given. Value should be between 1-5";
+    public static final String INVALID_SOW_CONDITION_MSG = "Invalid sow condition given. Value should be between 1-5";
     
-    public static final String BREED_EVNT_PIG_NOTA_SOW_CODE="820";
+    public static final String PIG_NOTA_SOW_CODE="BE-201";
     
-    public static final String BREED_EVNT_PIG_NOTA_SOW_MSG = "The given pig  is a boar";
+    public static final String PIG_NOTA_SOW_MSG = "The given pig  is a boar";
     
-    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE="821";
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_CODE="MD-203";
     
-    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG = "Mating date given is earlier than birth date";
+    public static final String MATING_ERR_DATE_EARLIER_BIRTHDATE_MSG = "Mating date given is earlier than the birth date of the Pig";
     
-    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_CODE="822";
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_CODE="MD-204";
     
-    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG = "Mating date given is earlier than entry date";    
+    public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG = "Mating date given is earlier than the entry date of the Pig";    
     
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
 	
@@ -357,23 +357,23 @@ public interface Constants {
 	
 	public static final String ENTRY_EVENT_DUPLICATE_PIGID_MSG = "Pig already exists with the given pig id in the premise";
 	
-	public static final String ENTRY_EVENT_INVALID_COMPANYID_CODE ="GEN-101";
+	public static final String INVALID_COMPANYID_CODE ="GEN-101";
 	
-	public static final String ENTRY_EVENT_INVALID_PREMISEID_CODE ="GEN-102";
+	public static final String INVALID_PREMISEID_CODE ="GEN-102";
 
-	public static final String ENTRY_EVENT_INVALID_COMPANYID_MSG ="Invalid company id specified";
+	public static final String INVALID_COMPANYID_MSG ="Invalid Company Id specified";
 	
-	public static final String ENTRY_EVENT_INVALID_PREMISEID_MSG ="Invalid farm name specified";
+	public static final String INVALID_PREMISEID_MSG ="Invalid premise specified";
 	
 	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_CODE ="612";
 	
 	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_MSG ="Invalid sow source specified";
 	
-	public static final String FRW_EVNT_INVALID_FARROW_NUM = "613";
+	public static final String FRW_EVNT_INVALID_FARROW_NUM = "FE-206";
 	
-	public static final String FRW_EVNT_INVALID_FARROW_NUM_MSG = "Invalid count value";
+	public static final String FRW_EVNT_INVALID_FARROW_NUM_MSG = "Invalid farrow count value";
 
-	public static final String ERR_FARROW_DUPLICATE_CODE = "614";
+	public static final String ERR_FARROW_DUPLICATE_CODE = "FE-212";
 	
 	public static final String ERR_FARROW_DUPLICATE_CODE_MSG = "Farrow entry already exists for the given service record";
 	
@@ -410,9 +410,9 @@ public interface Constants {
 	
 	public static final String ERR_FEED_DUPLICATE_TKTNUM_MSG = "Duplicate ticket number";
 	
-	public static final String ERR_PREGNANCY_EVENTRESULT_DATE_MSG = "Pregnancy result date is missing";
+	public static final String ERR_PREGNANCY_EVENTRESULT_DATE_MSG = "Pregnancy result date is invalid";
 	
-	public static final String ERR_PREGNANCY_EVENTRESULT_DATE = "622";
+	public static final String ERR_PREGNANCY_EVENTRESULT_DATE = "PE-203";
 	
 	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS = "623";
 	
@@ -504,6 +504,14 @@ public interface Constants {
 	public static final String GROUP_EVENT_INVALID_GROUPID_CODE = "644";
 	
 	public static final String GROUP_EVENT_INVALID_GROUPID_MSG = "Invalid Group Id specified";
+	
+	public static final String PREG_EVENT_INVALID_EVENT_TYPE_CODE = "PE-201";
+	
+	public static final String PREG_EVENT_INVALID_EVENT_TYPE_MSG = "Invalid pregnancy event type specified";
+	
+	public static final String PREG_EVENT_INVALID_RESULT_TYPE_CODE = "PE-204";
+	
+	public static final String PREG_EVENT_INVALID_RESULT_TYPE_MSG = "Invalid pregnancy exam result type specified";
 	
 }
 

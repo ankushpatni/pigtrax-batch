@@ -58,7 +58,6 @@ public class PregnancyInfoValidator extends AbstractValidator {
 					validatePigGender(pregnancyInfoMapper, errList);
 					validatePregnacyEventTypeId(pregnancyInfoMapper, errList);
 					validateBreedingEvent(pregnancyInfoMapper, errList);
-					//validateExamDate(pregnancyInfoMapper, errList);
 					validateResultDate(pregnancyInfoMapper, errList);
 					
 					validatePregnacyExamResultTypeId(pregnancyInfoMapper, errList);
@@ -85,8 +84,8 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	private void validatePremiseId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {
 		if (pregnancyInfoMapper.getDerivePremiseId() == null || pregnancyInfoMapper.getDerivePremiseId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	
@@ -103,7 +102,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 			if(!pigInfoDao.isPigASow(pregnancyInfoMapper.getDerivePigInfoId()))
 			{
 				pregnancyInfoMapper.setRecovrableErrors(false); 
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIG_NOTA_SOW_CODE, Constants.PIG_NOTA_SOW_MSG, "pigId", false));
 			}
 		}
 	}
@@ -158,14 +157,14 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	private void validatePregnacyEventTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDerivePregnancyEventTypeId() == null || pregnancyInfoMapper.getDerivePregnancyEventTypeId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE, Constants.REF_DATA_NOT_FOUND_MSG, "pregnancyEventType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.PREG_EVENT_INVALID_EVENT_TYPE_CODE, Constants.PREG_EVENT_INVALID_EVENT_TYPE_MSG, "pregnancyEventType", false));
 		}
 	}
 	
 	private void validatePregnacyExamResultTypeId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getPregnancyExamResultType() != null && pregnancyInfoMapper.getPregnancyExamResultType().trim().length() >0 &&  (pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() == null || pregnancyInfoMapper.getDerivePregnancyExamResultTypeId() < 0)) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REF_DATA_NOT_FOUND_CODE, Constants.REF_DATA_NOT_FOUND_MSG, "pregnancyExamResultType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.PREG_EVENT_INVALID_RESULT_TYPE_CODE, Constants.PREG_EVENT_INVALID_RESULT_TYPE_MSG, "pregnancyExamResultType", false));
 		}
 	}
 	

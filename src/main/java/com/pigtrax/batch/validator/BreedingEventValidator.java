@@ -47,7 +47,6 @@ public class BreedingEventValidator extends AbstractValidator {
 					validatePigInfoId(breedingEventMapper, errList);
 					validatePigGender(breedingEventMapper, errList);				
 					validateSeriveTypeId(breedingEventMapper, errList);
-					//validatePenId(breedingEventMapper, errList);
 					validateSowCondition(breedingEventMapper, errList);
 					validateWeight(breedingEventMapper, errList);
 					
@@ -73,8 +72,8 @@ public class BreedingEventValidator extends AbstractValidator {
 	private void validatePremiseId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
 		if (breedingEventMapper.getDerivePremiseId() == null || breedingEventMapper.getDerivePremiseId() < 0) {
 			breedingEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	
@@ -82,7 +81,7 @@ public class BreedingEventValidator extends AbstractValidator {
 	private void validatePigInfoId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {	
 		if(breedingEventMapper.getDerivePigInfoId() == null || breedingEventMapper.getDerivePigInfoId() < 0) {
 			breedingEventMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_PIGID_CODE, Constants.BREED_NG_EVNT_INVALID_PIGID_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	
@@ -92,7 +91,7 @@ public class BreedingEventValidator extends AbstractValidator {
 			if(!pigInfoDao.isPigASow(breedingEventMapper.getDerivePigInfoId()))
 			{
 				breedingEventMapper.setRecovrableErrors(false); 
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIG_NOTA_SOW_CODE, Constants.PIG_NOTA_SOW_MSG, "pigId", false));
 			}
 		}
 	}
@@ -100,7 +99,7 @@ public class BreedingEventValidator extends AbstractValidator {
 	private void validateCompanyId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
 		if (breedingEventMapper.getDeriveCompanyId() == null || breedingEventMapper.getDeriveCompanyId() < 0) {
 			breedingEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_COMPANY_CODE, Constants.BREED_NG_EVNT_INVALID_COMPANY_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
@@ -111,18 +110,11 @@ public class BreedingEventValidator extends AbstractValidator {
 		}
 	}
 	
-	private void validatePenId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
-		if (breedingEventMapper.getPen() != null && !breedingEventMapper.getPen().equals(Constants.BLANK_STRING) && (breedingEventMapper.getDerivePenId()== null || breedingEventMapper.getDerivePenId() < 0)) {
-			breedingEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_ERR_INVALID_PEN_CODE, Constants.BREEDING_EVNT_ERR_INVALID_PEN_MSG, "pen", false));
-		}
-	}
-	
 	private void validateSowCondition(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {
 		if (breedingEventMapper.getSowCondition() != null && !Constants.BLANK_STRING.equals(breedingEventMapper.getSowCondition()) && 
 				(breedingEventMapper.getDeriveSowCondition() == null ||  breedingEventMapper.getDeriveSowCondition() < 0  || breedingEventMapper.getDeriveSowCondition() > 5)) {
 			breedingEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_INVALID_SOW_CONDITION_CODE, Constants.BREED_EVNT_INVALID_SOW_CONDITION_MSG, "sowCondition", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_SOW_CONDITION_CODE, Constants.INVALID_SOW_CONDITION_MSG, "sowCondition", false));
 		}
 		
 	}

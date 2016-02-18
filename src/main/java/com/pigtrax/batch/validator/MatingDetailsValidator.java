@@ -79,7 +79,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validatePigInfoId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {	
 		if(matingDetailsMapper.getDerivePigInfoId() == null || matingDetailsMapper.getDerivePigInfoId() < 0) {
 			matingDetailsMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_PIGID_CODE, Constants.BREED_NG_EVNT_INVALID_PIGID_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 			if(!pigInfoDao.isPigASow(matingDetailsMapper.getDerivePigInfoId()))
 			{
 				matingDetailsMapper.setRecovrableErrors(false); 
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_EVNT_PIG_NOTA_SOW_CODE, Constants.BREED_EVNT_PIG_NOTA_SOW_MSG, "pigId", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.PIG_NOTA_SOW_CODE, Constants.PIG_NOTA_SOW_MSG, "pigId", false));
 			}
 		}
 	}
@@ -97,7 +97,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validateCompanyId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
 		if (matingDetailsMapper.getDeriveCompanyId() == null || matingDetailsMapper.getDeriveCompanyId() < 0) {
 			matingDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREED_NG_EVNT_INVALID_COMPANY_CODE, Constants.BREED_NG_EVNT_INVALID_COMPANY_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validateEmployeeGroupId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {
 		if (matingDetailsMapper.getEmployeeGroup() != null && !Constants.BLANK_STRING.equals(matingDetailsMapper.getEmployeeGroup().trim()) && matingDetailsMapper.getDeriveEmployeeGroupId() == null ) {
 			matingDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_EMP_GRP, Constants.FRW_EVNT_ERR_EMP_GRP_MSG, "employeeGroup", true));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_EMP_GRP_CODE, Constants.INVALID_EMP_GRP_MSG, "employeeGroup", true));
 		}
 
 	}

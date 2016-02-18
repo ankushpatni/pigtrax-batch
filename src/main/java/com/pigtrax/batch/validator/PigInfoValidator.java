@@ -93,16 +93,16 @@ public class PigInfoValidator extends AbstractValidator {
 	private void validateCompanyId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDeriveCompanyId() == null || pigInfoMapper.getDeriveCompanyId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_COMPANYID_CODE,
-					Constants.ENTRY_EVENT_INVALID_COMPANYID_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE,
+					Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
 	private void validatePremiseId(final PigInfoMapper pigInfoMapper, List<ErrorBean> errList) {
 		if (pigInfoMapper.getDerivePremiseId() == null || pigInfoMapper.getDerivePremiseId() < 0) {
 			pigInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_PREMISEID_CODE,
-					Constants.ENTRY_EVENT_INVALID_PREMISEID_MSG, "farmName", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PREMISEID_CODE,
+					Constants.INVALID_PREMISEID_MSG, "farmName", false));
 		}
 	}
 	

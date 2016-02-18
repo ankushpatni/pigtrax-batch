@@ -1,5 +1,7 @@
 package com.pigtrax.batch.core;
 
+import java.util.Date;
+
 import com.pigtrax.batch.config.BatchType;
 
 public class ProcessDTO {
@@ -19,6 +21,8 @@ public class ProcessDTO {
 	private Integer companyId;
 	
 	private Integer premiseId;
+	
+	private Date startTime;
 	
 	public boolean hasHeaders() {
 		return hasHeaders;
@@ -86,6 +90,14 @@ public class ProcessDTO {
 
 	public void setPremiseId(Integer premiseId) {
 		this.premiseId = premiseId;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 	
 	

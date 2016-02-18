@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class ProcessEngine implements Process {
 		try {
 			long startTime = DateUtil.getCurrentDate().getTime();
 			ProcessDTO processDTO = getProcessDTO(inputMap);
+			processDTO.setStartTime(new Date(startTime));
 			logger.info("Start execution for for event:" + processDTO.getBatchType());
 			execute(processDTO);
 			long endTime = DateUtil.getCurrentDate().getTime();
@@ -55,6 +57,7 @@ public class ProcessEngine implements Process {
 	}
 
 	private void execute(final ProcessDTO processDTO) {
+		long startTime = DateUtil.getCurrentDate().getTime();
 		Config.Event config = ConfigCache.getInstance().getConfig().get(processDTO.getBatchType());
 		if (config == null) {
 			throw new RuntimeException(processDTO.getBatchType() + " :  event type is not found in the system");
@@ -65,7 +68,7 @@ public class ProcessEngine implements Process {
 		}
 		getDerivable(processDTO.getBatchType()).derive(mapper, processDTO);
 		Map<Mapper, List<ErrorBean>> errorBeans = getValidator(processDTO.getBatchType()).validate(mapper, processDTO);
-		Map<String, Object> output = getHandler(processDTO.getBatchType()).execute(mapper, errorBeans, processDTO);
+		Map<String, Object> output = getHandler(processDTO.getBatchType()).execute(mapper, errorBeans, processDTO);		
 		sendReport(output, processDTO);
 	}
 
@@ -168,6 +171,19 @@ public class ProcessEngine implements Process {
 
 			}
 			bufferedWriter.newLine();
+			bufferedWriter.newLine();
+			
+			bufferedWriter.write("Upload Process Started at : "+processDTO.getStartTime());
+			bufferedWriter.newLine();
+			long endTime = DateUtil.getCurrentDate().getTime();
+			bufferedWriter.write("Upload Process completed at : "+new Date(endTime));
+			bufferedWriter.newLine();
+			long duration = endTime - processDTO.getStartTime().getTime();
+			bufferedWriter.write("Total time taken for execution : " + (duration) + " (ms)"+((duration>10000)?(" ["+(duration/1000)+" secs]"):""));
+			
+			bufferedWriter.newLine();
+			bufferedWriter.newLine();
+			
 			bufferedWriter.write(":::::::::::::::End - " + processDTO.getBatchType() + " Batch Report :::::::::::::::::::::::");
 			bufferedWriter.close();
 		} catch (Exception ex) {

@@ -129,7 +129,13 @@ public class FeedDetailEventHandler implements Handler {
 			if(feedEventMapper.isUpdate())
 				feedEvent.setId(feedEventMapper.getDeriveFeedEventId());
 			else
-				feedEvent.setId(null);
+			{
+				Integer feedId = feedEventDao.getFeedEventPKId(feedEventMapper.getTicketNumber(), feedEventMapper.getDerivePremiseId());
+				if(feedId != null && feedId > 0)
+					feedEvent.setId(feedId);
+				else
+					feedEvent.setId(null);
+			}
 			feedEvent.setFeedMadication(feedEventMapper.getFeedMadication());
 			feedEvent.setRationId(feedEventMapper.getDeriveRationId());
 			feedEvent.setTicketNumber(feedEventMapper.getTicketNumber());

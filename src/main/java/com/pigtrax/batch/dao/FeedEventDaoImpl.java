@@ -99,7 +99,7 @@ public class FeedEventDaoImpl implements FeedEventDao {
 			throws SQLException {
 		logger.debug("silo is :" + ticketNumber);
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select \"id\" from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ? and \"id_Company\" = ?");
+		qryBuffer.append("select \"id\" from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ? and \"id_Premise\" = ?");
 		final String qry = qryBuffer.toString();
 		Long retValList1 = null;
 		if (ticketNumber != null) {

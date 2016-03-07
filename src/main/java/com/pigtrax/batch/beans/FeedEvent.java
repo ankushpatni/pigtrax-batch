@@ -8,6 +8,7 @@ public class FeedEvent implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Integer id;
 	private Integer rationId;
 	private Double feedQuantityKGs;
 	private Double feedCost;
@@ -97,6 +98,16 @@ public class FeedEvent implements Serializable {
 
 	public void setPremiseId(Integer premiseId) {
 		this.premiseId = premiseId;
+	}
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

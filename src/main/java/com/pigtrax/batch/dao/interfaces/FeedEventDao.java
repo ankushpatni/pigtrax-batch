@@ -10,4 +10,6 @@ public interface FeedEventDao {
 	boolean checkIfTicketNumberExists(final String ticketNumber, final Integer premiseId);
 	
 	Integer getFeedEventPKId(String ticketNumber, Integer premiseId) throws SQLException;
+	
+	Integer updateFeedEvent(FeedEvent feedEvent)  throws SQLException ;
 }

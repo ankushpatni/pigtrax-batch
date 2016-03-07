@@ -76,7 +76,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	private void validatePigInfoId(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {	
 		if(pigletStatusInfoMapper.getDerivePigInfoId() == null || pigletStatusInfoMapper.getDerivePigInfoId() < 0) {
 			pigletStatusInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	private void validateCompanyId(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
 		if (pigletStatusInfoMapper.getDeriveCompanyId() == null || pigletStatusInfoMapper.getDeriveCompanyId() < 0) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 
@@ -157,7 +157,7 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 	private void validateSowCondition(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
 		if (pigletStatusInfoMapper.getDeriveSowCondition() != null && ( pigletStatusInfoMapper.getDeriveSowCondition() < 0 || pigletStatusInfoMapper.getDeriveSowCondition() > 5) ) {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG, "sowCondition", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_SOW_CONDITION_CODE, Constants.INVALID_SOW_CONDITION_MSG, "sowCondition", false));
 		}
 	}
 	

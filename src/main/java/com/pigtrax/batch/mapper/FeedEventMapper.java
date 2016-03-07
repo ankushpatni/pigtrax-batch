@@ -20,7 +20,7 @@ public class FeedEventMapper  extends AbstractMapper	{
 	private String feedQuantityKGs;
 	private String feedCost;
 	private String feedMadication;
-	private String ticketNumber;
+	private String ticketNumber; 
 	private String feedContentId;
 	private String feedEntryDate;
 	private String transportTruck;

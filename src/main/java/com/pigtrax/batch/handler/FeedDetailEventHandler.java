@@ -1,6 +1,7 @@
 package com.pigtrax.batch.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pigtrax.batch.beans.FeedEvent;
 import com.pigtrax.batch.beans.FeedEventDetail;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
+import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
+import com.pigtrax.batch.dao.interfaces.FeedEventDao;
 import com.pigtrax.batch.dao.interfaces.FeedEventDetailDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
@@ -27,6 +31,10 @@ import com.pigtrax.batch.util.ErrorBeanUtil;
 @Service
 @Transactional
 public class FeedDetailEventHandler implements Handler {
+	
+	@Autowired
+	private FeedEventDao feedEventDao;
+	
 	@Autowired
 	private FeedEventDetailDao feedEventDetailDao;
 
@@ -44,6 +52,7 @@ public class FeedDetailEventHandler implements Handler {
 		Map<String, Object> output = new HashMap<String, Object>();
 		int totalRecordsInInput = list != null ? list.size() : 0;
 		int totalRecordsProcessed = 0;
+		int journeyId = 0;
 		if (list != null) {
 			for (Mapper mapper : list) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
@@ -53,10 +62,42 @@ public class FeedDetailEventHandler implements Handler {
 					if (feedEventMapper.isRecovrableErrors() == null || feedEventMapper.isRecovrableErrors()) {
 						boolean isErrorOccured = false;
 						try {
-							FeedEventDetail feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
 							
-							if (feedEvent != null) {								
-								int id = feedEventDetailDao.addFeedEventDetail(feedEvent);							
+							FeedEvent feedEvent = populateFeedEventfnfo(errorMap, feedEventMapper, processDTO);
+							if(feedEventMapper.getDeriveTransportTrailer() != null || feedEventMapper.getDeriveTransportTruck() != null)
+							{
+								TransportJourney journey = new TransportJourney();
+								journey.setTransportTrailerId(feedEventMapper.getDeriveTransportTrailer());
+								journey.setTransportTruckId(feedEventMapper.getDeriveTransportTruck());
+								journey.setUserUpdated(processDTO.getUserName());
+								journeyId = transportJourneyDao.addTransportJourney(journey);
+								if(journeyId > 0)
+									feedEvent.setTransPortJourneyId(journeyId);
+							}
+							
+							if(feedEvent != null)
+							{
+								if(feedEvent.getId() == null)
+								{							
+									int id = feedEventDao.addFeedEvent(feedEvent);
+									feedEvent.setId(id);
+									feedEventMapper.setDeriveFeedEventId(id);									
+								}
+								else
+								{
+									feedEventDao.updateFeedEvent(feedEvent);
+									feedEventMapper.setDeriveFeedEventId(feedEvent.getId());
+								}
+								
+								PigTraxEventMaster eventMaster = populateEventMaster(feedEventMapper, feedEvent.getId(), processDTO);
+								eventMasterDao.insertEventMaster(eventMaster);
+									
+							}
+							
+							FeedEventDetail feedEventDetail = populateFeedEventDetailInfo(errorMap, feedEventMapper, processDTO);
+							
+							if (feedEventDetail != null) {								
+								int id = feedEventDetailDao.addFeedEventDetail(feedEventDetail);							
 								totalRecordsProcessed = totalRecordsProcessed + 1;
 							}
 							
@@ -79,7 +120,34 @@ public class FeedDetailEventHandler implements Handler {
 		return output;
 	}
 
-	private FeedEventDetail populateFeedEventfnfo(final Map<Mapper, List<ErrorBean>> errorMap, final FeedDetailEventMapper feedEventMapper, final ProcessDTO processDTO) {
+	
+	private FeedEvent populateFeedEventfnfo(final Map<Mapper, List<ErrorBean>> errorMap, final FeedDetailEventMapper feedEventMapper, final ProcessDTO processDTO) {
+		FeedEvent feedEvent = null;
+		List<ErrorBean> errList = new ArrayList<ErrorBean>();
+		try {
+			feedEvent = new FeedEvent();
+			if(feedEventMapper.isUpdate())
+				feedEvent.setId(feedEventMapper.getDeriveFeedEventId());
+			else
+				feedEvent.setId(null);
+			feedEvent.setFeedMadication(feedEventMapper.getFeedMadication());
+			feedEvent.setRationId(feedEventMapper.getDeriveRationId());
+			feedEvent.setTicketNumber(feedEventMapper.getTicketNumber());
+			feedEvent.setUserUpdated(processDTO.getUserName());
+			feedEvent.setPremiseId(feedEventMapper.getDerivePremiseId());
+		} catch (Exception e) {
+			logger.error("Exception in FeedEventHandler.populateFeedEventfnfo" + e.getMessage());
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
+			e.printStackTrace();
+		}
+		if (errList != null && errList.size() > 0) {
+			errorMap.put(feedEventMapper, errList);
+		}
+		return feedEvent;
+	}
+	
+	
+	private FeedEventDetail populateFeedEventDetailInfo(final Map<Mapper, List<ErrorBean>> errorMap, final FeedDetailEventMapper feedEventMapper, final ProcessDTO processDTO) {
 		FeedEventDetail feedEvent = null;
 		List<ErrorBean> errList = new ArrayList<ErrorBean>();
 		try {
@@ -103,6 +171,18 @@ public class FeedDetailEventHandler implements Handler {
 			errorMap.put(feedEventMapper, errList);
 		}
 		return feedEvent;
+	}
+	
+	
+	private PigTraxEventMaster populateEventMaster(FeedDetailEventMapper mapper, Integer generatedKey, ProcessDTO processDTO) {
+		PigTraxEventMaster eventMaster = null;
+		if (generatedKey != null && generatedKey > 0) {
+			eventMaster = new PigTraxEventMaster();
+			eventMaster.setEventTime(new Date());
+			eventMaster.setFeedEventId(generatedKey);
+			eventMaster.setUserUpdated(processDTO.getUserName());
+		}
+		return eventMaster;
 	}
 
 }

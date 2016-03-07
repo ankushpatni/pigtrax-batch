@@ -90,19 +90,19 @@ public interface Constants {
 
 	public static final String ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG = "Matching Service record not found for the pig for the given date";
 	
-	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_CODE = "705";
+	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_CODE = "PSE-204";
 
 	public static final String ERR_FRW_EVENT_SERVICE_NOT_FOUND_MSG = "Matching farrow event record not found for the pig";
 
-	public static final String ERR_FOSTER_PIG_NOT_FOUND_CODE = "801";
+	public static final String ERR_FOSTER_PIG_NOT_FOUND_CODE = "PSE-205";
 
 	public static final String ERR_FOSTER_PIG_NOT_FOUND_MSG = "Transferred to Pig is not found";
 
-	public static final String ERR_FOSTER_FARROW_NOT_FOUND_CODE = "802";
+	public static final String ERR_FOSTER_FARROW_NOT_FOUND_CODE = "PSE-206";
 
 	public static final String ERR_FOSTER_FARROW_NOT_FOUND_MSG = "No valid farrow event associated with transferred to Pig";
 
-	public static final String ERR_WEAN_GROUPID_NOT_FOUND_CODE = "803";
+	public static final String ERR_WEAN_GROUPID_NOT_FOUND_CODE = "PSE-207";
 
 	public static final String ERR_WEAN_GROUPID_NOT_FOUND_MSG = "No valid group event found for the wean record";
 	
@@ -381,20 +381,20 @@ public interface Constants {
 	
 	public static final String PIGLETSTATUS_INVALID_FARROWDATE_MSG = "Invalid farrow date specified";
 
-	public static final String PIGLETSTATUS_INVALID_TRANSFERDATE_CODE = "616";
+	public static final String PIGLETSTATUS_INVALID_TRANSFERDATE_CODE = "PSE-203";
 	
 	public static final String PIGLETSTATUS_INVALID_TRANSFERDATE_MSG = "Invalid transfer date specified. The date should be between 0-50 days of farrow event";
 	
-	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_CODE = "617";
+	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_CODE = "PSE-201";
 	
 	public static final String PIGLETSTATUS_INVALID_WEAN_DATE_MSG = "Invalid wean date specified. The date should be between 0-60 days of farrow event";
 	
-	public static final String PIGLETSTATUS_INVALID_MORTALITY_DATE_CODE = "617";
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_DATE_CODE = "PSE-202";
 	
 	public static final String PIGLETSTATUS_INVALID_MORTALITY_DATE_MSG = "Invalid pre mortality date specified. The date should be between 0-50 days of farrow event";
 
 
-	public static final String PIGLETSTATUS_INVALID_MORTALITY_CODE = "618";
+	public static final String PIGLETSTATUS_INVALID_MORTALITY_CODE = "PSE-208";
 	
 	public static final String PIGLETSTATUS_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";
 	

@@ -99,7 +99,7 @@ public class FeedEventDaoImpl implements FeedEventDao {
 			throws SQLException {
 		logger.debug("silo is :" + ticketNumber);
 		StringBuffer qryBuffer = new StringBuffer();
-		qryBuffer.append("select \"id\" from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ? and \"id_Premise\" = ?");
+		qryBuffer.append("select \"id\" from pigtrax.\"FeedEvent\" where lower(\"ticketNumber\") = ? and \"id_Company\" = ?");
 		final String qry = qryBuffer.toString();
 		Long retValList1 = null;
 		if (ticketNumber != null) {
@@ -124,6 +124,34 @@ public class FeedEventDaoImpl implements FeedEventDao {
 		}
 
 		return null;
+	}
+	
+	
+	@Override
+	public Integer updateFeedEvent(final FeedEvent feedEvent) throws SQLException {
+		String query = "update pigtrax.\"FeedEvent\" SET \"ticketNumber\"=?, \"initialFeedEntryDateTime\"=?, \"batchId\"=?,"
+				+" \"feedMedication\" = ?, \"id_TransportJourney\"=?, \"lastUpdated\"=current_timestamp,"+
+				" \"userUpdated\"=? ,\"id_Premise\"=? where \"id\" = ? ";
+		
+			return this.jdbcTemplate.update(query, new PreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setString(1, feedEvent.getTicketNumber());		
+					ps.setNull(2, java.sql.Types.DATE);		
+					ps.setInt(3, feedEvent.getRationId());
+					ps.setString(4, feedEvent.getFeedMadication());
+					if(feedEvent.getTransPortJourneyId() != null  && feedEvent.getTransPortJourneyId()>0)
+						ps.setInt(5, feedEvent.getTransPortJourneyId());
+					else
+						ps.setNull(5, java.sql.Types.INTEGER);
+					ps.setString(6, feedEvent.getUserUpdated());
+					if(feedEvent.getPremiseId() != null  && feedEvent.getPremiseId()>0)
+						ps.setInt(7, feedEvent.getPremiseId());
+					else
+						ps.setNull(7, java.sql.Types.INTEGER);
+					ps.setInt(8, feedEvent.getId());
+				}
+			});	
 	}
 	
 }

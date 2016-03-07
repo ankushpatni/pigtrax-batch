@@ -27,6 +27,11 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	private String remarks;
 	private String feedCost;
 	
+	private String rationId;
+	private String feedMadication;
+	private String transportTruck;
+	private String transportTrailer;
+	
 	
 	private Integer derivePremiseId;
 	private Integer deriveCompanyId;
@@ -37,6 +42,12 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	private Integer deriveSilo;
 	private Integer deriveFeedEventId;
 	private Double deriveFeedCost;
+	
+	private Integer deriveRationId;
+	private Integer deriveTransportTruck;
+	private Integer deriveTransportTrailer;
+	
+	private boolean isUpdate;
 	
 	public String getFarmName() {
 		return farmName;
@@ -158,7 +169,58 @@ public class FeedDetailEventMapper  extends AbstractMapper	{
 	public void setDeriveFeedCost(Double deriveFeedCost) {
 		this.deriveFeedCost = deriveFeedCost;
 	}
+		
+	public String getRationId() {
+		return rationId;
+	}
+	public void setRationId(String rationId) {
+		this.rationId = rationId;
+	}
+	public String getFeedMadication() {
+		return feedMadication;
+	}
+	public void setFeedMadication(String feedMadication) {
+		this.feedMadication = feedMadication;
+	}
+	public String getTransportTruck() {
+		return transportTruck;
+	}
+	public void setTransportTruck(String transportTruck) {
+		this.transportTruck = transportTruck;
+	}
+	public String getTransportTrailer() {
+		return transportTrailer;
+	}
+	public void setTransportTrailer(String transportTrailer) {
+		this.transportTrailer = transportTrailer;
+	}
+	public Integer getDeriveRationId() {
+		return deriveRationId;
+	}
+	public void setDeriveRationId(Integer deriveRationId) {
+		this.deriveRationId = deriveRationId;
+	}
+	public Integer getDeriveTransportTruck() {
+		return deriveTransportTruck;
+	}
+	public void setDeriveTransportTruck(Integer deriveTransportTruck) {
+		this.deriveTransportTruck = deriveTransportTruck;
+	}
+	public Integer getDeriveTransportTrailer() {
+		return deriveTransportTrailer;
+	}
+	public void setDeriveTransportTrailer(Integer deriveTransportTrailer) {
+		this.deriveTransportTrailer = deriveTransportTrailer;
+	}
 	
+	
+	
+	public boolean isUpdate() {
+		return isUpdate;
+	}
+	public void setUpdate(boolean isUpdate) {
+		this.isUpdate = isUpdate;
+	}
 	public boolean isEmpty()
 	{	
 		if((this.ticketNumber==null || this.ticketNumber.trim().length() == 0)

@@ -42,6 +42,8 @@ public class FeedDetailEventValidator extends AbstractValidator {
 					validateCompanyId(feedEventMapper, errList);
 					validatePremiseId(feedEventMapper, errList);
 					validateFeedEventId(feedEventMapper, errList);
+					validateTicketNumber(feedEventMapper, errList);
+					validateRationId(feedEventMapper, errList);
 					validateGroupEventId(feedEventMapper, errList);
 					validateFeedEventDate(feedEventMapper, errList);
 					valdiateFeedEventType(feedEventMapper, errList);
@@ -53,6 +55,25 @@ public class FeedDetailEventValidator extends AbstractValidator {
 			}
 		}
 		return errorMap;
+	}
+	
+	
+	private void validateTicketNumber(FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getTicketNumber() == null || Constants.BLANK_STRING.equals(feedEventMapper.getTicketNumber().trim())) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_TICKETID,
+					Constants.FEED_EVNT_ERR_TICKETID_MSG, "TicketNumber", false));
+		}
+
+	}
+	
+	private void validateRationId(FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
+		if (feedEventMapper.getDeriveRationId() == null) {
+			feedEventMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVNT_ERR_RATIONID,
+					Constants.FEED_EVNT_ERR_RATIONID_MSG, "rationId", false));
+		}
+
 	}
 
 	private void validateCompanyId(final FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
@@ -73,10 +94,11 @@ public class FeedDetailEventValidator extends AbstractValidator {
 	
 	private void validateFeedEventId(final FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {
 		if (feedEventMapper.getDeriveFeedEventId() == null || feedEventMapper.getDeriveFeedEventId() < 0) {
-			feedEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FEED_EVENT_DETAIL_INVALID_ID_CODE,
-					Constants.FEED_EVENT_DETAIL_INVALID_ID_MSG, "ticketNumber", false));
+			feedEventMapper.setUpdate(false);
 		}
+		else
+			feedEventMapper.setUpdate(true);
+		
 	}
 	
 	private void validateGroupEventId(final FeedDetailEventMapper feedEventMapper, List<ErrorBean> errList) {

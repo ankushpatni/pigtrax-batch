@@ -97,15 +97,15 @@
 		<dataInfo>
 			<col key="ticketNumber" order="1" isEmpty="false" />
 			<col key="rationId" order="2" isEmpty="false" />
-			<col key="feedMadication" order="3" isEmpty="true" />
-			<col key="transportTruck" order="4" isEmpty="true" />
-			<col key="transportTrailer" order="5" isEmpty="true" />    
-			<col key="groupEventId" order="6" isEmpty="false" />			
-			<col key="feedEventDate" order="7" isEmpty="false" />			
-			<col key="feedMill" order="8" isEmpty="true" />
-			<col key="feedEventType" order="9" isEmpty="false" />
-			<col key="weightInKgs" order="10" isEmpty="true" />
-			<col key="feedCost" order="11" isEmpty="true" />
+			<col key="groupEventId" order="3" isEmpty="false" />
+			<col key="feedEventDate" order="4" isEmpty="false" />
+			<col key="feedMill" order="5" isEmpty="true" />
+			<col key="feedEventType" order="6" isEmpty="false" />
+			<col key="weightInKgs" order="7" isEmpty="true" />
+			<col key="feedCost" order="8" isEmpty="true" />		
+			<col key="feedMadication" order="9" isEmpty="true" />
+			<col key="transportTruck" order="10" isEmpty="true" />
+			<col key="transportTrailer" order="11" isEmpty="true" />
 			<col key="silo" order="12" isEmpty="false" />
 			<col key="remarks" order="13" isEmpty="true" /> 
 		</dataInfo>

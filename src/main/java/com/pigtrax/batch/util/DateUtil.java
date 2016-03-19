@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class DateUtil {
 
-	private static final String DATE_FORMATTER = "MM/dd/yyyy";
+	private static final String DATE_FORMATTER = "dd/MM/yyyy";
 
 	private static final String DEFAULT_FORMATTER = "yyyy-MM-dd";
 

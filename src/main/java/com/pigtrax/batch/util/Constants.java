@@ -238,6 +238,10 @@ public interface Constants {
 	public static final String IND_PIGLET_ERR_PIGLET_CNT_MSG = "Individual piglet count can not be more than live borns captured in farrow event";
 
     public static final String REF_DATA_BREEDINGSERIVCETYPE = "BREEDINGSERVICETYPE";	
+    
+    public static final String BREEDING_EVNT_DUPLICATE_SERVICEDT_CODE = "BE-204";
+    
+    public static final String BREEDING_EVNT_DUPLICATE_SERVICEDT_MSG = "An existing service record found with the same service date";
 	
     public static final String BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE = "BE-203";
     
@@ -278,6 +282,10 @@ public interface Constants {
     public static final String MATING_ERR_INVALID_WINDOW_CODE = "MD-209";
     
     public static final String MATING_ERR_INVALID_WINDOW_MSG = "Mating record added for invalid window of 6 - 18 days";
+    
+    public static final String MATING_ERR_INVALID_SERVICE_CODE = "MD-210";
+    
+    public static final String MATING_ERR_INVALID_SERVICE_MSG = "No matching service records found for the mating details";
     
     public static final String MATING_ERR_NO_SERVICE_RECORD_CODE = "MD-202";
     

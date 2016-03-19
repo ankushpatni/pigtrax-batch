@@ -15,6 +15,7 @@ public class BreedingEventMapper extends AbstractMapper {
 	private String pen;
 	private String weightInKgs;
 	private String farmName;
+	private String serviceDate;
 	
 	//derived properties
 	private Integer derivePigInfoId;
@@ -24,6 +25,7 @@ public class BreedingEventMapper extends AbstractMapper {
 	private Integer deriveSowCondition;
 	private Double deriveWtInKgs;
 	private Integer derivePremiseId;
+	private Date deriveServiceDate;
 	
 	public String getPigId() {
 		return pigId;
@@ -201,6 +203,31 @@ public class BreedingEventMapper extends AbstractMapper {
 
 	public void setDerivePremiseId(Integer derivePremiseId) {
 		this.derivePremiseId = derivePremiseId;
+	}
+
+
+	
+
+	public String getServiceDate() {
+		return serviceDate;
+	}
+
+
+
+	public void setServiceDate(String serviceDate) {
+		this.serviceDate = serviceDate;
+	}
+
+
+
+	public Date getDeriveServiceDate() {
+		return deriveServiceDate;
+	}
+
+
+
+	public void setDeriveServiceDate(Date deriveServiceDate) {
+		this.deriveServiceDate = deriveServiceDate;
 	}
 
 

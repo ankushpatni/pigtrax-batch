@@ -18,6 +18,7 @@ import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
+import com.pigtrax.batch.util.DateUtil;
 
 @Component
 public class BreedingEventDerivable implements Derivable {
@@ -49,6 +50,7 @@ public class BreedingEventDerivable implements Derivable {
 					setPigInfoId(breedingEventMapper);
 					setBreedingServiceTypeId(breedingEventMapper);
 					setSowCondition(breedingEventMapper);
+					setServiceDate(breedingEventMapper);
 					//setPenId(breedingEventMapper);
 					setWtInKgs(breedingEventMapper);
 				}
@@ -61,6 +63,16 @@ public class BreedingEventDerivable implements Derivable {
 	
 		try {
 			breedingEventMapper.setDeriveCompanyId(processDto.getCompanyId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	private void setServiceDate(final BreedingEventMapper breedingEventMapper) {
+		
+		try {
+			breedingEventMapper.setDeriveServiceDate(DateUtil.getDateFromString(breedingEventMapper.getServiceDate()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

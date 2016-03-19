@@ -58,8 +58,8 @@ public class MatingDetailsValidator extends AbstractValidator {
 					validateCompanyId(matingDetailsMapper, errList);				
 					validateEmployeeGroupId(matingDetailsMapper, errList);
 					validateMateQuality(matingDetailsMapper, errList);
-					validateMatingRecord(matingDetailsMapper, errList);
-					
+					validateBreedingEventId(matingDetailsMapper, errList);
+					validateMatingRecord(matingDetailsMapper, errList);					
 					if (errList.size() > 0) {
 						errorMap.put(mapper, errList);
 					}
@@ -80,6 +80,13 @@ public class MatingDetailsValidator extends AbstractValidator {
 		if(matingDetailsMapper.getDerivePigInfoId() == null || matingDetailsMapper.getDerivePigInfoId() < 0) {
 			matingDetailsMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
+		}
+	}
+	
+	private void validateBreedingEventId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {	
+		if(matingDetailsMapper.getDeriveBreedingEventId() == null || matingDetailsMapper.getDeriveBreedingEventId() < 0) {
+			matingDetailsMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_SERVICE_CODE, Constants.MATING_ERR_INVALID_SERVICE_MSG, "matingDate", false));
 		}
 	}
 	
@@ -137,7 +144,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 			
 			DateTime recordMatingDate = new DateTime(matingDetailsMapper.getDeriveMatingDate());
 			
-			Integer lastBreedingEventId = breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId());
+			Integer lastBreedingEventId = matingDetailsMapper.getDeriveBreedingEventId();//breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId());
 			if(lastBreedingEventId == null)
 			{
 				
@@ -154,13 +161,14 @@ public class MatingDetailsValidator extends AbstractValidator {
 					
 					int durationDays = Days.daysBetween(serviceStartDateTime, recordMatingDate).getDays();
 					
-					
-					 if(recordMatingDate.toLocalDate().equals(serviceStartDateTime.toLocalDate()))
+					//Not required to check this as its a valid case
+					 /*if(recordMatingDate.toLocalDate().equals(serviceStartDateTime.toLocalDate()))
 					  {
 						 matingDetailsMapper.setRecovrableErrors(false);
 						 errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_DUPLICATE_MATINGDATE_CODE, Constants.MATING_ERR_DUPLICATE_MATINGDATE_MSG, "pigId", true));
-					  }
-					 else if(recordMatingDate.toLocalDate().isBefore(serviceStartDateTime.toLocalDate()))
+					  }*/
+					 
+					  if(recordMatingDate.toLocalDate().isBefore(serviceStartDateTime.toLocalDate()))
 					  {
 						 if(pregnancyEventFlag)
 						 {

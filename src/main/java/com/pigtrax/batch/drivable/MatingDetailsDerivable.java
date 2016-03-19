@@ -2,9 +2,12 @@ package com.pigtrax.batch.drivable;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.BreedingEvent;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
@@ -135,8 +138,23 @@ public class MatingDetailsDerivable implements Derivable {
 	}
 	
 	private void setBreedingEventId(final MatingDetailsMapper matingDetailsMapper) {
-		if(matingDetailsMapper.getDerivePigInfoId() != null)
-			matingDetailsMapper.setDeriveBreedingEventId(breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId()));
+		if(matingDetailsMapper.getDerivePigInfoId() != null && matingDetailsMapper.getDeriveMatingDate() != null)
+		{ 
+			//matingDetailsMapper.setDeriveBreedingEventId(breedingEventDao.getLatestServiceEventId(matingDetailsMapper.getDerivePigInfoId()));
+			List<BreedingEvent> breedingEventList = breedingEventDao.getPendingFarrowServiceRecords(matingDetailsMapper.getDerivePigInfoId() );
+			if(breedingEventList != null && 0<breedingEventList.size())
+			{
+				for(BreedingEvent breedingEvent : breedingEventList)
+				{
+					DateTime serviceDate = new DateTime(breedingEvent.getServiceStartDate());
+					int durationDays = Days.daysBetween(serviceDate, new DateTime(matingDetailsMapper.getDeriveMatingDate())).getDays();
+					if (durationDays >= 0 && durationDays <= 5) {
+						matingDetailsMapper.setDeriveBreedingEventId(breedingEvent.getId());
+						break;
+					}
+				}
+			}
+		}
 	}
 
 }

@@ -49,7 +49,7 @@ public class BreedingEventValidator extends AbstractValidator {
 					validateSeriveTypeId(breedingEventMapper, errList);
 					validateSowCondition(breedingEventMapper, errList);
 					validateWeight(breedingEventMapper, errList);
-					
+					validateServiceDate(breedingEventMapper, errList);
 					
 					if (errList.size() > 0) {
 						errorMap.put(mapper, errList);
@@ -66,6 +66,14 @@ public class BreedingEventValidator extends AbstractValidator {
 			breedingEventMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
 		}
+	}
+	
+	private void validateServiceDate(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {	
+		if(breedingEventMapper.getDeriveServiceDate() == null) {
+			breedingEventMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "serviceDate", false));
+		}
+			
 	}
 	
 	

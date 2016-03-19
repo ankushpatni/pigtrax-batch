@@ -46,7 +46,8 @@ public class BreedingEventHandler implements Handler {
 						try {
 							BreedingEvent breedingEvent = populateBreedingEvent(errorMap, breedingEventMapper, processDTO);
 							if (breedingEvent != null) {
-								if(breedingEventDao.checkIfPreviousCycleCompleted(breedingEvent.getPigInfoId()))
+								Integer breedingEventPKId = breedingEventDao.getBreedingEventPKId(breedingEvent.getPigInfoId(), breedingEvent.getServiceStartDate());
+								if(breedingEventPKId == null)
 								{
 									breedingEventDao.insertBreedingEventInfo(breedingEvent);
 									totalRecordsProcessed+=1;
@@ -55,7 +56,7 @@ public class BreedingEventHandler implements Handler {
 								{
 									breedingEventMapper.setRecovrableErrors(false);
 									isErrorOccured = true;
-									errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_CODE, Constants.BREEDING_EVNT_ERR_INCOMPLETE_CYCLE_MSG, "pigId", false));
+									errList.add(ErrorBeanUtil.populateErrorBean(Constants.BREEDING_EVNT_DUPLICATE_SERVICEDT_CODE, Constants.BREEDING_EVNT_DUPLICATE_SERVICEDT_MSG, "pigId", false));
 								}
 							}
 						} catch (Exception e) {
@@ -91,6 +92,7 @@ public class BreedingEventHandler implements Handler {
 			breedingEvent.setWeight(breedingEventMapper.getDeriveWtInKgs());
 			breedingEvent.setUserUpdated(processDTO.getUserName());
 			breedingEvent.setPremiseId(breedingEventMapper.getDerivePremiseId());
+			breedingEvent.setServiceStartDate(breedingEventMapper.getDeriveServiceDate());
 		} catch (Exception e) {
 			logger.error("Exception in FarrowEventHandler.populateFarrowEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

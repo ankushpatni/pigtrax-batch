@@ -111,8 +111,8 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 	public Integer insertBreedingEventInfo(final BreedingEvent breedingEvent)
 			throws SQLException{
 		final String Qry = "insert into pigtrax.\"BreedingEvent\"(\"id_PigInfo\", \"id_BreedingServiceType\", "
-				+ "\"serviceGroupId\", \"id_Pen\", \"sowCondition\",  \"weightInKgs\",\"lastUpdated\", \"userUpdated\", \"id_Premise\") "
-				+ "values(?,?,?,?,?,?,current_timestamp,?, ?)";
+				+ "\"serviceGroupId\", \"id_Pen\", \"sowCondition\",  \"weightInKgs\",\"lastUpdated\", \"userUpdated\", \"id_Premise\",\"serviceStartDate\") "
+				+ "values(?,?,?,?,?,?,current_timestamp,?, ?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -149,6 +149,10 @@ public class BreedingEventDaoImpl implements BreedingEventDao {
 	    				ps.setString(7, breedingEvent.getUserUpdated());
 	    				
 	    				ps.setObject(8, breedingEvent.getPremiseId(), java.sql.Types.INTEGER);
+	    				if(breedingEvent.getServiceStartDate() != null)
+	    					ps.setObject(9, new java.sql.Date(breedingEvent.getServiceStartDate().getTime()), java.sql.Types.DATE);
+	    				else
+	    					ps.setNull(9, java.sql.Types.DATE);
 	    			
 	    	            return ps;
 	    	        }

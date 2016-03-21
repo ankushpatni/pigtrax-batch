@@ -12,21 +12,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.BreedingEvent;
 import com.pigtrax.batch.beans.IndividualPigletStatus;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.BreedingEventMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
-
 @Service
 @Transactional
 public class BreedingEventHandler implements Handler {
 
 	@Autowired
 	private BreedingEventDao breedingEventDao;
+	
+	@Autowired
+	private PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(BreedingEventHandler.class);
 
@@ -49,7 +53,15 @@ public class BreedingEventHandler implements Handler {
 								Integer breedingEventPKId = breedingEventDao.getBreedingEventPKId(breedingEvent.getPigInfoId(), breedingEvent.getServiceStartDate());
 								if(breedingEventPKId == null)
 								{
-									breedingEventDao.insertBreedingEventInfo(breedingEvent);
+									Integer pkId = breedingEventDao.insertBreedingEventInfo(breedingEvent);
+									
+									PigTraxEventMaster master = new PigTraxEventMaster();
+									master.setPigInfoId(breedingEvent.getPigInfoId());
+									master.setUserUpdated(breedingEvent.getUserUpdated());
+									master.setBreedingEventId(pkId);
+									master.setEventTime(breedingEvent.getServiceStartDate());
+									eventMasterDao.insertEventMaster(master);
+									
 									totalRecordsProcessed+=1;
 								}
 								else

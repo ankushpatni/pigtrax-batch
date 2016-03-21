@@ -1,5 +1,6 @@
 package com.pigtrax.batch.handler;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -146,13 +147,14 @@ public class FarrowEventHandler implements Handler {
 		return farrowEvent;
 	}
 	
-	private PigTraxEventMaster populateEventMaster(FarrowEventMapper mapper, Integer generatedKey, ProcessDTO processDTO) {
+	private PigTraxEventMaster populateEventMaster(FarrowEventMapper mapper, Integer generatedKey, ProcessDTO processDTO) throws SQLException {
 		PigTraxEventMaster eventMaster = null;
 		if (generatedKey != null && generatedKey > 0) {
 			eventMaster = new PigTraxEventMaster();
 			eventMaster.setEventTime(mapper.getDeriveFarrowDate());
 			eventMaster.setFarrowEventId(generatedKey);
 			eventMaster.setUserUpdated(processDTO.getUserName());
+			eventMaster.setPigInfoId(mapper.getDerivePigInfoId());
 		}
 		return eventMaster;
 	}

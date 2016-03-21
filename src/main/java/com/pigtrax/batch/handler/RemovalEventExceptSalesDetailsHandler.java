@@ -113,7 +113,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 										//Add a negative transaction in the group event details
 										GroupEventDetail groupEventDetails = new GroupEventDetail();
 										groupEventDetails.setGroupId(groupEvent.getId());
-										groupEventDetails.setDateOfEntry(new Date());
+										groupEventDetails.setDateOfEntry(removalEventExceptSalesDetails.getRemovalDateTime());
 										groupEventDetails.setNumberOfPigs(-1*removalEventExceptSalesDetails.getNumberOfPigs());
 										groupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());
 										groupEventDetails.setUserUpdated(removalEventExceptSalesDetails.getUserUpdated());

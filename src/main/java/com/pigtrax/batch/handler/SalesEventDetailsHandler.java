@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.GroupEventDetail;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.beans.SalesEventDetails;
 import com.pigtrax.batch.beans.TransportJourney;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
+import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.SalesEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
@@ -37,6 +39,11 @@ public class SalesEventDetailsHandler implements Handler{
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+
+	@Autowired
+	private GroupEventDetailsDaoImpl groupEventDetailDaoImpl;
+	
 	
 	@Autowired
 	PigInfoDao pigInfoDao;
@@ -75,6 +82,17 @@ public class SalesEventDetailsHandler implements Handler{
 							if(salesEventDetails.getGroupEventId() != null)
 							{
 								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(salesEventDetails.getGroupEventId(),salesEventDetails.getCompanyId());
+								
+								//Add a negative transaction in the group event details
+								GroupEventDetail groupEventDetails = new GroupEventDetail();
+								groupEventDetails.setGroupId(groupEvent.getId());
+								groupEventDetails.setDateOfEntry(salesEventDetails.getSalesDateTime());
+								groupEventDetails.setNumberOfPigs(-1*salesEventDetails.getNumberOfPigs());
+								groupEventDetails.setWeightInKgs(salesEventDetails.getWeightInKgs().doubleValue());
+								groupEventDetails.setUserUpdated(salesEventDetails.getUserUpdated());
+								groupEventDetails.setRemarks("Sales tracked through Pig Movement Mass Upload");
+								groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetails);
+								
 								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - salesEventDetails.getNumberOfPigs());
 								groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
 							}

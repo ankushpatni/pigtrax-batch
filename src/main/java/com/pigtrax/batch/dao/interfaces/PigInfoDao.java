@@ -28,4 +28,6 @@ public interface PigInfoDao {
 
 	int updatePigInformation(PigInfo pigInfo) throws SQLException,
 			DuplicateKeyException;
+	
+	int increaseParity(Integer pigInfoId, Integer gestationLength);
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,8 @@ import com.pigtrax.batch.beans.FarrowEvent;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.FarrowEventDaoImpl;
+import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
@@ -31,6 +35,12 @@ public class FarrowEventHandler implements Handler {
 
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	BreedingEventDao breedingEventDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 
 	
 	private static final Logger logger = Logger.getLogger(FarrowEventHandler.class);
@@ -62,6 +72,13 @@ public class FarrowEventHandler implements Handler {
 								{							
 									int id = farrowEventDao.insertFarrowEventformation(farrowEvent);
 									farrowEventDao.updateLitterId(id, farrowEvent.getCompanyId());
+									
+									DateTime serviceDate = new DateTime(breedingEventDao.getServiceStartDate(farrowEvent.getBreedingEventId()));
+									DateTime farrowDate = new DateTime(farrowEvent.getFarrowDateTime());
+									int duration = Days.daysBetween(serviceDate, farrowDate).getDays();
+									
+									pigInfoDao.increaseParity(farrowEvent.getPigInfoId(), duration);
+									
 									PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
 									eventMasterDao.insertEventMaster(eventMaster);
 									totalRecordsProcessed = totalRecordsProcessed + 1;

@@ -120,7 +120,7 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 	}
 	
 	private void validateRevenus(final SalesEventDetailsMapper salesEventDetailsMapper, List<ErrorBean> errList) {
-		if (salesEventDetailsMapper.getRevenueUsd() != null || !StringUtils.isEmpty(salesEventDetailsMapper.getRevenueUsd())) {
+		if (!StringUtils.isEmpty(salesEventDetailsMapper.getRevenueUsd())) {
 			try
 			{
 				Double revenus = Double.parseDouble(salesEventDetailsMapper.getRevenueUsd());
@@ -129,7 +129,7 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 			catch(Exception e)
 			{
 				salesEventDetailsMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REM_EVENT_TYPE_PRESENT_CODE, Constants.REM_REM_EVENT_TYPE_PRESENT_MSG, "RemovalEventType", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.SALE_EVENT_TYPE_REVENUE_CODE, Constants.SALE_EVENT_TYPE_REVENUE_MSG, "revenueUsd", false));
 			}
 			
 		}

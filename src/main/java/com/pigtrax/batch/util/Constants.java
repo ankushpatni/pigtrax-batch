@@ -521,6 +521,10 @@ public interface Constants {
 	
 	public static final String PREG_EVENT_INVALID_RESULT_TYPE_MSG = "Invalid pregnancy exam result type specified";
 	
+	public static final String SALE_EVENT_TYPE_REVENUE_CODE = "1101";
+	
+	public static final String SALE_EVENT_TYPE_REVENUE_MSG = "Invalid Revenue Not able to parse.";
+	
 }
 
 

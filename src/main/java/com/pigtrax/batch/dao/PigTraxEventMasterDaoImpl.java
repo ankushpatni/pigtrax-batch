@@ -80,4 +80,25 @@ public class PigTraxEventMasterDaoImpl implements PigTraxEventMasterDao {
 		return rowsDeleted;
 	}
 	
+	
+	/**
+	 * update the breeding event details of a given pigInfoId
+	 * @param breedingEvent
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateBreedingEventMasterDetails(final PigTraxEventMaster master)
+			throws SQLException {
+		String qry = "update pigtrax.\"PigTraxEventMaster\" set \"eventTime\" = ?, \"lastUpdated\"=current_timestamp where \"id_BreedingEvent\" = ? and \"id_PigInfo\" = ?";
+		return this.jdbcTemplate.update(qry, new PreparedStatementSetter() {
+			
+			public void setValues(PreparedStatement ps) throws SQLException {
+				
+				ps.setDate(1, new  java.sql.Date(master.getEventTime().getTime()));
+				ps.setInt(2, master.getBreedingEventId());
+				ps.setInt(3, master.getPigInfoId());
+			}
+		});
+	}
+	
 }

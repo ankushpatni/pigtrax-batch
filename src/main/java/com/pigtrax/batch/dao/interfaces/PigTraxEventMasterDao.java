@@ -20,4 +20,12 @@ public interface PigTraxEventMasterDao {
 	 * @throws SQLException
 	 */	
 	int deletePigletStatusEvents(final Integer farrowEventId) throws SQLException;
+	
+	/**
+	 * update the breeding event master details of a given pigInfoId
+	 * @param breedingEvent
+	 * @return
+	 * @throws SQLException
+	 */
+	int updateBreedingEventMasterDetails(final PigTraxEventMaster master) throws SQLException;
 }

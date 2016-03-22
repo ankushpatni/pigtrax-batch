@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.MatingDetails;
+import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
 import com.pigtrax.batch.dao.interfaces.MatingDetailsDao;
+import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.MatingDetailsMapper;
@@ -30,6 +32,9 @@ public class MatingDetailsHandler implements Handler {
 	
 	@Autowired
 	BreedingEventDao breedingEventDao;
+	
+	@Autowired
+	PigTraxEventMasterDao eventMasterDao;
 
 	private static final Logger logger = Logger.getLogger(MatingDetailsHandler.class);
 
@@ -52,6 +57,13 @@ public class MatingDetailsHandler implements Handler {
 								matingDetailsDao.insertMatingDetails(matingDetails);
 								
 								breedingEventDao.resetServiceStartDate(matingDetails.getBreedingEventId());
+								
+								PigTraxEventMaster master = new PigTraxEventMaster();
+								master.setPigInfoId(matingDetailsMapper.getDerivePigInfoId());
+								master.setUserUpdated(matingDetails.getUserUpdated());
+								master.setBreedingEventId(matingDetails.getBreedingEventId());
+								master.setEventTime(matingDetails.getMatingDate());
+								eventMasterDao.updateBreedingEventMasterDetails(master);
 								
 								totalRecordsProcessed+=1;
 							}

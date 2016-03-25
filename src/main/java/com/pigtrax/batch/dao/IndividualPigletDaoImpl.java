@@ -61,8 +61,8 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	public Integer insertIndividualPigletStatus(
 			final IndividualPigletStatus individualPigletStatus) throws Exception {
 		final String Qry = "insert into pigtrax.\"IndividualPigletStatus\"(\"tattooId\", \"weightAtBirth\", \"weightAtWeaning\", \"lastUpdated\","
-				+ " \"userUpdated\", \"pigId\",\"litterId\",\"id_Premise\",\"weight1\",\"weight2\", \"weight3\", \"weight4\", \"weight5\",\"weight6\") "
-				+ "values(?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?)";
+				+ " \"userUpdated\", \"pigId\",\"litterId\",\"id_Premise\",\"weight1\",\"weight2\", \"weight3\", \"weight4\", \"weight5\",\"weight6\",\"date1\",\"date2\",\"date3\",\"date4\",\"date5\",\"date6\") "
+				+ "values(?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -84,6 +84,12 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	    				ps.setObject(11, individualPigletStatus.getWtAtFourthMonth(), java.sql.Types.DOUBLE);
 	    				ps.setObject(12, individualPigletStatus.getWtAtFifthMonth(), java.sql.Types.DOUBLE);
 	    				ps.setObject(13, individualPigletStatus.getWtAtSixthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(14, individualPigletStatus.getFirstDate(), java.sql.Types.DATE);
+	    				ps.setObject(15, individualPigletStatus.getSecondDate(), java.sql.Types.DATE);
+	    				ps.setObject(16, individualPigletStatus.getThirdDate(), java.sql.Types.DATE);
+	    				ps.setObject(17, individualPigletStatus.getFourthDate(), java.sql.Types.DATE);
+	    				ps.setObject(18, individualPigletStatus.getFifthDate(), java.sql.Types.DATE);
+	    				ps.setObject(19, individualPigletStatus.getSixthDate(), java.sql.Types.DATE);
 	    	            return ps;
 	    	        }
 	    	    },

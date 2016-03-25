@@ -20,6 +20,13 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private String wtAtFifthMonth;
 	private String wtAtSixthMonth;
 	private String farmName;
+	
+	private String firstDate;
+	private String secondDate;
+	private String thirdDate;
+	private String fourthDate;
+	private String fifthDate;
+	private String sixthDate;
 
 	private Integer deriveCompanyId;
 	private Integer derivePremiseId;
@@ -32,6 +39,13 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private Double deriveWtAtFourthMonth;
 	private Double deriveWtAtFifthMonth;
 	private Double deriveWtAtSixthMonth;
+	
+	private Date deriveFirstDate;
+	private Date deriveSecondDate;
+	private Date deriveThirdDate;
+	private Date deriveFourthDate;
+	private Date deriveFifthDate;
+	private Date deriveSixthDate;
 	
 	
 	
@@ -398,5 +412,175 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 			return true;
 		else
 			return false;
+	}
+
+
+
+
+	public String getFirstDate() {
+		return firstDate;
+	}
+
+
+
+
+	public void setFirstDate(String firstDate) {
+		this.firstDate = firstDate;
+	}
+
+
+
+
+	public String getSecondDate() {
+		return secondDate;
+	}
+
+
+
+
+	public void setSecondDate(String secondDate) {
+		this.secondDate = secondDate;
+	}
+
+
+
+
+	public String getThirdDate() {
+		return thirdDate;
+	}
+
+
+
+
+	public void setThirdDate(String thirdDate) {
+		this.thirdDate = thirdDate;
+	}
+
+
+
+
+	public String getFourthDate() {
+		return fourthDate;
+	}
+
+
+
+
+	public void setFourthDate(String fourthDate) {
+		this.fourthDate = fourthDate;
+	}
+
+
+
+
+	public String getFifthDate() {
+		return fifthDate;
+	}
+
+
+
+
+	public void setFifthDate(String fifthDate) {
+		this.fifthDate = fifthDate;
+	}
+
+
+
+
+	public String getSixthDate() {
+		return sixthDate;
+	}
+
+
+
+
+	public void setSixthDate(String sixthDate) {
+		this.sixthDate = sixthDate;
+	}
+
+
+
+
+	public Date getDeriveFirstDate() {
+		return deriveFirstDate;
+	}
+
+
+
+
+	public void setDeriveFirstDate(Date deriveFirstDate) {
+		this.deriveFirstDate = deriveFirstDate;
+	}
+
+
+
+
+	public Date getDeriveSecondDate() {
+		return deriveSecondDate;
+	}
+
+
+
+
+	public void setDeriveSecondDate(Date deriveSecondDate) {
+		this.deriveSecondDate = deriveSecondDate;
+	}
+
+
+
+
+	public Date getDeriveThirdDate() {
+		return deriveThirdDate;
+	}
+
+
+
+
+	public void setDeriveThirdDate(Date deriveThirdDate) {
+		this.deriveThirdDate = deriveThirdDate;
+	}
+
+
+
+
+	public Date getDeriveFourthDate() {
+		return deriveFourthDate;
+	}
+
+
+
+
+	public void setDeriveFourthDate(Date deriveFourthDate) {
+		this.deriveFourthDate = deriveFourthDate;
+	}
+
+
+
+
+	public Date getDeriveFifthDate() {
+		return deriveFifthDate;
+	}
+
+
+
+
+	public void setDeriveFifthDate(Date deriveFifthDate) {
+		this.deriveFifthDate = deriveFifthDate;
+	}
+
+
+
+
+	public Date getDeriveSixthDate() {
+		return deriveSixthDate;
+	}
+
+
+
+
+	public void setDeriveSixthDate(Date deriveSixthDate) {
+		this.deriveSixthDate = deriveSixthDate;
 	}	
+	
+	
 }

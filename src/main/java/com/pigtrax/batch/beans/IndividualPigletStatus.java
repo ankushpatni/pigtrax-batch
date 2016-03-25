@@ -1,5 +1,7 @@
 package com.pigtrax.batch.beans;
 
+import java.util.Date;
+
 public class IndividualPigletStatus {
 	
 	private Integer pigInfoId;
@@ -16,6 +18,14 @@ public class IndividualPigletStatus {
 	private Double wtAtFifthMonth;
 	private Double wtAtSixthMonth;
 	private Integer premiseId;
+	
+	private Date firstDate;
+	private Date secondDate;
+	private Date thirdDate;
+	private Date fourthDate;
+	private Date fifthDate;
+	private Date sixthDate;
+	
 	
 	public Integer getPigInfoId() {
 		return pigInfoId;
@@ -101,6 +111,43 @@ public class IndividualPigletStatus {
 	public void setPremiseId(Integer premiseId) {
 		this.premiseId = premiseId;
 	}
+	public Date getFirstDate() {
+		return firstDate;
+	}
+	public void setFirstDate(Date firstDate) {
+		this.firstDate = firstDate;
+	}
+	public Date getSecondDate() {
+		return secondDate;
+	}
+	public void setSecondDate(Date secondDate) {
+		this.secondDate = secondDate;
+	}
+	public Date getThirdDate() {
+		return thirdDate;
+	}
+	public void setThirdDate(Date thirdDate) {
+		this.thirdDate = thirdDate;
+	}
+	public Date getFourthDate() {
+		return fourthDate;
+	}
+	public void setFourthDate(Date fourthDate) {
+		this.fourthDate = fourthDate;
+	}
+	public Date getFifthDate() {
+		return fifthDate;
+	}
+	public void setFifthDate(Date fifthDate) {
+		this.fifthDate = fifthDate;
+	}
+	public Date getSixthDate() {
+		return sixthDate;
+	}
+	public void setSixthDate(Date sixthDate) {
+		this.sixthDate = sixthDate;
+	}
+	
 	
 	
 }

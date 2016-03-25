@@ -102,6 +102,12 @@ public class IndividualPigletStatusHandler implements Handler {
 			individualPigletStatus.setWtAtFourthMonth(individualPigletMapper.getDeriveWtAtFourthMonth());
 			individualPigletStatus.setWtAtFifthMonth(individualPigletMapper.getDeriveWtAtFifthMonth());
 			individualPigletStatus.setWtAtSixthMonth(individualPigletMapper.getDeriveWtAtSixthMonth());
+			individualPigletStatus.setFirstDate(individualPigletMapper.getDeriveFirstDate());
+			individualPigletStatus.setSecondDate(individualPigletMapper.getDeriveSecondDate());
+			individualPigletStatus.setThirdDate(individualPigletMapper.getDeriveThirdDate());
+			individualPigletStatus.setFourthDate(individualPigletMapper.getDeriveFourthDate());
+			individualPigletStatus.setFifthDate(individualPigletMapper.getDeriveFifthDate());
+			individualPigletStatus.setSixthDate(individualPigletMapper.getDeriveSixthDate());
 		} catch (Exception e) {
 			logger.error("Exception in FarrowEventHandler.populateFarrowEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

@@ -48,6 +48,12 @@ public class IndividualPigletStatusDerivable implements Derivable {
 					setWtAtFourthMonth(individualPigletMapper);
 					setWtAtFifthMonth(individualPigletMapper);
 					setWtAtSixthMonth(individualPigletMapper);
+					setFirstDate(individualPigletMapper);
+					setSecondDate(individualPigletMapper);
+					setThirdDate(individualPigletMapper);
+					setFourthDate(individualPigletMapper);
+					setFifthDate(individualPigletMapper);
+					setSixthDate(individualPigletMapper);
 				}
 			}
 		}
@@ -146,6 +152,62 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	{
 		try {
 			individualPigletMapper.setDeriveWtAtSixthMonth(Double.parseDouble(individualPigletMapper.getWtAtSixthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
+	private void setFirstDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveFirstDate(DateUtil.getDateFromString(individualPigletMapper.getFirstDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	private void setSecondDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveSecondDate(DateUtil.getDateFromString(individualPigletMapper.getSecondDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setThirdDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveThirdDate(DateUtil.getDateFromString(individualPigletMapper.getThirdDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setFourthDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveFourthDate(DateUtil.getDateFromString(individualPigletMapper.getFourthDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setFifthDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveFifthDate(DateUtil.getDateFromString(individualPigletMapper.getFifthDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setSixthDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveSixthDate(DateUtil.getDateFromString(individualPigletMapper.getSixthDate()));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

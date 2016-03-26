@@ -160,6 +160,7 @@ public class SalesEventDetailsHandler implements Handler{
 			eventMaster.setEventTime(salesEventDetailsMapper.getDeriveSalesDateTime());
 			eventMaster.setSalesEventDetails(generatedKey);
 			eventMaster.setUserUpdated(processDTO.getUserName());
+			eventMaster.setPigInfoId(salesEventDetailsMapper.getDerivePigInfoId());
 		}
 		return eventMaster;
 	}

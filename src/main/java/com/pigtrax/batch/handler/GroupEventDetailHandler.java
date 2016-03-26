@@ -97,7 +97,7 @@ public class GroupEventDetailHandler implements Handler{
 			groupEventDetail.setNumberOfPigs(groupEventDetailMapper.getDeriveNumberOfPigs());
 			groupEventDetail.setWeightInKgs(groupEventDetailMapper.getDeriveWeightInKgs());
 			groupEventDetail.setInventoryAdjustment(groupEventDetailMapper.getDeriveInventoryAdjustment());
-			groupEventDetail.setRemarks(groupEventDetailMapper.getRemarks());
+			groupEventDetail.setRemarks("Pigs Added");
 			groupEventDetail.setRoomId(groupEventDetailMapper.getDeriveRoomId());
 			groupEventDetail.setEmployeeGroupId(groupEventDetailMapper.getDeriveEmployeeGroupId());
 			groupEventDetail.setUserUpdated(processDTO.getUserName());

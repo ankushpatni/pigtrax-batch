@@ -186,6 +186,13 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REM_EVENT_TYPE_PRESENT_CODE, Constants.REM_REM_EVENT_TYPE_PRESENT_MSG, "RemovalEventType", false));
 		}
+		
+		if(removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId() != null && removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId() == 9 && 
+				removalEventExceptSalesDetailsMapper.getDeriveToGroupEventId() == null && removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null)
+		{
+			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_CODE, Constants.REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_MSG, "RemovalEventType Transfer", false));
+		}
 	}
 	
 	private void validateMortalityReason(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {

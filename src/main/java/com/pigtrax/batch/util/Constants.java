@@ -529,6 +529,11 @@ public interface Constants {
 	
 	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_MSG = "Given To Group not present";
 	
+	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_CODE = "1103";
+	
+	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_MSG = "Group premises transfer not allowed in mass upload";
+	
+	
 	
 }
 

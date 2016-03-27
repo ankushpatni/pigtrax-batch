@@ -33,6 +33,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private String roomId;
 	private String transportTruck;
 	private String transportTrailer;
+	private String toGroupEventId;
 	
 	
 /*	private Integer transportJourneyId;
@@ -53,6 +54,7 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	private Integer deriveRoomId;
 	private Integer deriveTransportTruck;
 	private Integer deriveTransportTrailer;
+	private Integer deriveToGroupEventId;
 	
 	public String getNumberOfPigs() {
 		return numberOfPigs;
@@ -230,6 +232,19 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 	public void setDeriveTransportTrailer(Integer deriveTransportTrailer) {
 		this.deriveTransportTrailer = deriveTransportTrailer;
 	}
+	public String getToGroupEventId() {
+		return toGroupEventId;
+	}
+	public void setToGroupEventId(String toGroupEventId) {
+		this.toGroupEventId = toGroupEventId;
+	}
+	public Integer getDeriveToGroupEventId() {
+		return deriveToGroupEventId;
+	}
+	public void setDeriveToGroupEventId(Integer deriveToGroupEventId) {
+		this.deriveToGroupEventId = deriveToGroupEventId;
+	}
+	
 	
 	
 }

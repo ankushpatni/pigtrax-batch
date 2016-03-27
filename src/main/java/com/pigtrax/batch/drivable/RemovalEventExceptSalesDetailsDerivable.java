@@ -82,6 +82,7 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 				setRoomId(removalEventExceptSalesDetailsMapper);
 				setTransportTruck(removalEventExceptSalesDetailsMapper);
 				setTransportTrailer(removalEventExceptSalesDetailsMapper);
+				setToGroupEventId(removalEventExceptSalesDetailsMapper);
 			}
 		}
 	}
@@ -218,6 +219,17 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 			try {
 				removalEventExceptSalesDetailsMapper.setDeriveRoomId(roomDao.getRoomPkId(removalEventExceptSalesDetailsMapper.getRoomId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId(), 
 						removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setToGroupEventId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper){
+		if(removalEventExceptSalesDetailsMapper.getToGroupEventId() != null && removalEventExceptSalesDetailsMapper.getToGroupEventId().trim().length() > 0)
+		{
+			try {
+				removalEventExceptSalesDetailsMapper.setDeriveToGroupEventId(groupEventDao.getGroupEventId(removalEventExceptSalesDetailsMapper.getToGroupEventId(),removalEventExceptSalesDetailsMapper.getDeriveCompanyId()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

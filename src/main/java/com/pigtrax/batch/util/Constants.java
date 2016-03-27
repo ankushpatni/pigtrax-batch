@@ -525,6 +525,11 @@ public interface Constants {
 	
 	public static final String SALE_EVENT_TYPE_REVENUE_MSG = "Invalid Revenue Not able to parse.";
 	
+	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_CODE = "1102";
+	
+	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_MSG = "Given To Group not present";
+	
+	
 }
 
 

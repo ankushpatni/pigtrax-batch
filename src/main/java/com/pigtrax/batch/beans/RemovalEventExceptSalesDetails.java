@@ -24,6 +24,7 @@ public class RemovalEventExceptSalesDetails {
 	private Integer companyId;
 	private BigDecimal revenueUsd;
 	private Integer roomId;
+	private Integer toGroupEventId;
 	
 	public Integer getId() {
 		return id;
@@ -133,5 +134,12 @@ public class RemovalEventExceptSalesDetails {
 	public void setRoomId(Integer roomId) {
 		this.roomId = roomId;
 	}
+	public Integer getToGroupEventId() {
+		return toGroupEventId;
+	}
+	public void setToGroupEventId(Integer toGroupEventId) {
+		this.toGroupEventId = toGroupEventId;
+	}
+	
 	
 }

@@ -157,6 +157,7 @@
 			<col key="revenue" order="11" isEmpty="true" />
 			<col key="transportTruck" order="12" isEmpty="true" />
 			<col key="transportTrailer" order="13" isEmpty="true" />
+			<col key="toGroupEventId" order="14" isEmpty="true" />	
 			
 		</dataInfo>
 	</event>

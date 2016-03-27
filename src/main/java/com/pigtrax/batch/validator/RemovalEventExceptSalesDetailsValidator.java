@@ -66,6 +66,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				validateMortalityReason(removalEventExceptSalesDetailsMapper, errList);
 				//validateRoom(removalEventExceptSalesDetailsMapper, errList);
 				validatePremises(removalEventExceptSalesDetailsMapper, errList);
+				validateToGroup(removalEventExceptSalesDetailsMapper, errList);
 				
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
@@ -75,13 +76,14 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 		return errorMap;
 	}
 	
-	/*private void validateRoom(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
-		if (removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveCompanyId()) ||
-				removalEventExceptSalesDetailsMapper.getDeriveCompanyId() <1) {
+	private void validateToGroup(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
+		if(removalEventExceptSalesDetailsMapper.getToGroupEventId() != null && removalEventExceptSalesDetailsMapper.getToGroupEventId().trim().length() > 0 &&
+				removalEventExceptSalesDetailsMapper.getDeriveToGroupEventId() == null)
+		{
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_COMPANY_PRESENT_CODE, Constants.REM_COMPANY_PRESENT_MSG, "CompanyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_CODE, Constants.REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_MSG, "ToGroup", false));
 		}
-	}*/
+	}
 	
 	private void validatePremises(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
 		if (removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId() != null && ! StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveRemovalEventTypeId()) &&

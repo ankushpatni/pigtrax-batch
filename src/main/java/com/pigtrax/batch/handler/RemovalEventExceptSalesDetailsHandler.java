@@ -92,7 +92,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 								//removalEventExceptSalesDetails.setNumberOfPigs(groupEvent.getCurrentInventory());
 								if(groupEvent != null)
 								{
-									if(removalEventExceptSalesDetails.getRemovalEventId().intValue() == 9)
+									if(removalEventExceptSalesDetails.getRemovalEventId().intValue() == 9 && removalEventExceptSalesDetails.getToGroupEventId() == null)
 									{
 										groupEvent.setPremiseId(removalEventExceptSalesDetails.getDestPremiseId());
 										groupEventDaoImpl.updateGroupEvent(groupEvent);
@@ -122,6 +122,23 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 										
 										groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
 										groupEventDaoImpl.updateGroupEventCurrentInventory(groupEvent);
+										
+										if(removalEventExceptSalesDetails.getToGroupEventId() != null)
+										{
+											GroupEventDetail toGroupEventDetails = new GroupEventDetail();
+											toGroupEventDetails.setGroupId(groupEvent.getId());
+											toGroupEventDetails.setDateOfEntry(removalEventExceptSalesDetails.getRemovalDateTime());
+											toGroupEventDetails.setNumberOfPigs(removalEventExceptSalesDetails.getNumberOfPigs());
+											toGroupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());
+											toGroupEventDetails.setUserUpdated(removalEventExceptSalesDetails.getUserUpdated());
+											toGroupEventDetails.setRemarks("Recived through Pig Movement Mass Upload");
+											groupEventDetailDaoImpl.addGroupEventDetails(toGroupEventDetails);
+											
+											GroupEvent newGroupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getToGroupEventId(), removalEventExceptSalesDetails.getCompanyId());
+											newGroupEvent.setCurrentInventory(removalEventExceptSalesDetails.getNumberOfPigs()+newGroupEvent.getCurrentInventory());
+											groupEventDaoImpl.updateGroupEventCurrentInventory(newGroupEvent);
+											
+										}
 									}
 								}
 								
@@ -218,6 +235,8 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			removalEventExceptSalesDetails.setRevenue(removalEventExceptSalesDetailsMapper.getDeriveRevenue());
 			removalEventExceptSalesDetails.setRoomId(removalEventExceptSalesDetailsMapper.getDeriveRoomId());
 			removalEventExceptSalesDetails.setUserUpdated(processDTO.getUserName());
+			
+			removalEventExceptSalesDetails.setToGroupEventId(removalEventExceptSalesDetailsMapper.getDeriveToGroupEventId());
 		} catch (Exception e) {
 			logger.error("Exception in RemovalEventExceptSalesDetailsHandler.removalEventExceptSalesDetails" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));
@@ -236,6 +255,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			eventMaster.setEventTime(removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime());
 			eventMaster.setRemovalEventExceptSalesDetails(generatedKey);
 			eventMaster.setUserUpdated(processDTO.getUserName());
+			eventMaster.setPigInfoId(removalEventExceptSalesDetailsMapper.getDerivePigInfoId());
 		}
 		return eventMaster;
 	}

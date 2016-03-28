@@ -126,7 +126,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 										if(removalEventExceptSalesDetails.getToGroupEventId() != null)
 										{
 											GroupEventDetail toGroupEventDetails = new GroupEventDetail();
-											toGroupEventDetails.setGroupId(groupEvent.getId());
+											toGroupEventDetails.setGroupId(removalEventExceptSalesDetails.getToGroupEventId());
 											toGroupEventDetails.setDateOfEntry(removalEventExceptSalesDetails.getRemovalDateTime());
 											toGroupEventDetails.setNumberOfPigs(removalEventExceptSalesDetails.getNumberOfPigs());
 											toGroupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());

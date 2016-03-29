@@ -91,6 +91,7 @@ public class SalesEventDetailsHandler implements Handler{
 								groupEventDetails.setWeightInKgs(salesEventDetails.getWeightInKgs().doubleValue());
 								groupEventDetails.setUserUpdated(salesEventDetails.getUserUpdated());
 								groupEventDetails.setRemarks("Sales tracked through Pig Movement Mass Upload");
+								groupEventDetails.setSalesId(id);
 								groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetails);
 								
 								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - salesEventDetails.getNumberOfPigs());

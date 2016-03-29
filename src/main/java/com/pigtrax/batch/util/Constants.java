@@ -533,7 +533,14 @@ public interface Constants {
 	
 	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_MSG = "Group premises transfer not allowed in mass upload";
 	
+	public static final String REM_REMOVAL_DATE_BEFORE_GROUP_START_CODE = "1103";
 	
+	public static final String REM_REMOVAL_DATE_BEFORE_GROUP_START_MSG = "Date specified is earlier than group start date";
+	
+	public static final String REM_REMOVAL_DATE_BEFORE_PIG_START_CODE = "1103";
+	
+	public static final String REM_REMOVAL_DATE_BEFORE_PIG_START_MSG = "Date specified is earlier than pig entry date";
+
 	
 }
 

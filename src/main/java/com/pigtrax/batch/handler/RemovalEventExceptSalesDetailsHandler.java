@@ -85,6 +85,11 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 						RemovalEventExceptSalesDetails removalEventExceptSalesDetails = populateRemovalEventExceptSalesDetails(errorMap, removalEventExceptSalesDetailsMapper, processDTO);
 						if (removalEventExceptSalesDetails != null) {
 							
+							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
+							
+							PigTraxEventMaster eventMaster = populateEventMaster(removalEventExceptSalesDetailsMapper, id, processDTO);
+							eventMasterDao.insertEventMaster(eventMaster);
+							
 							if(removalEventExceptSalesDetails.getGroupEventId() != null)
 							{
 								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getGroupEventId(),removalEventExceptSalesDetails.getCompanyId());
@@ -118,6 +123,11 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 										groupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());
 										groupEventDetails.setUserUpdated(removalEventExceptSalesDetails.getUserUpdated());
 										groupEventDetails.setRemarks("Removed through Pig Movement Mass Upload");
+										groupEventDetails.setRemovalId(id);
+										
+										if(removalEventExceptSalesDetails.getRemovalEventId() == 9)
+											groupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getToGroupEventId());
+										
 										groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetails);
 										
 										groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
@@ -132,6 +142,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 											toGroupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());
 											toGroupEventDetails.setUserUpdated(removalEventExceptSalesDetails.getUserUpdated());
 											toGroupEventDetails.setRemarks("Recived through Pig Movement Mass Upload");
+											groupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getGroupEventId());
 											groupEventDetailDaoImpl.addGroupEventDetails(toGroupEventDetails);
 											
 											GroupEvent newGroupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getToGroupEventId(), removalEventExceptSalesDetails.getCompanyId());
@@ -191,10 +202,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 								if(journeyId > 0)
 									removalEventExceptSalesDetails.setTransportJourneyId(journeyId);
 							}
-							Integer id = removalEventExceptSalesDetailsDaoImpl.addRemovalEventExceptSalesDetails(removalEventExceptSalesDetails);
 							
-							PigTraxEventMaster eventMaster = populateEventMaster(removalEventExceptSalesDetailsMapper, id, processDTO);
-							eventMasterDao.insertEventMaster(eventMaster);
 							
 							totalRecordsProcessed = totalRecordsProcessed + 1;
 						}
@@ -228,7 +236,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 			removalEventExceptSalesDetails.setRemovalDateTime(removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime());
 			removalEventExceptSalesDetails.setWeightInKgs(new BigDecimal(removalEventExceptSalesDetailsMapper.getDeriveWeightInKgs().intValue()));
 			removalEventExceptSalesDetails.setRemovalEventId(removalEventExceptSalesDetailsMapper.getDeriveRemovalTypeEventId());
-			//removalEventExceptSalesDetails.setPremiseId(removalEventExceptSalesDetailsMapper.getDerivePremiseId());
+			removalEventExceptSalesDetails.setPremiseId(removalEventExceptSalesDetailsMapper.getDerivePremiseId());
 			removalEventExceptSalesDetails.setDestPremiseId(removalEventExceptSalesDetailsMapper.getDeriveDestPremiseId());
 			removalEventExceptSalesDetails.setRemarks(removalEventExceptSalesDetailsMapper.getRemarks());
 			removalEventExceptSalesDetails.setMortalityReasonId(removalEventExceptSalesDetailsMapper.getDeriveMortalityReasonId());

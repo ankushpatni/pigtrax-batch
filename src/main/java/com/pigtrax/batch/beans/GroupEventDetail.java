@@ -19,6 +19,9 @@ public class GroupEventDetail {
 	private Integer premiseId;
 	private Integer sowSourceId;
 	private Integer pigletStatusEventId;
+	private Integer removalId;
+	private Integer salesId;
+	private Integer fromGroupId;
 	
 	public Integer getBarnId() {
 		return barnId;
@@ -118,6 +121,24 @@ public class GroupEventDetail {
 	}
 	public void setPigletStatusEventId(Integer pigletStatusEventId) {
 		this.pigletStatusEventId = pigletStatusEventId;
+	}
+	public Integer getRemovalId() {
+		return removalId;
+	}
+	public void setRemovalId(Integer removalId) {
+		this.removalId = removalId;
+	}
+	public Integer getSalesId() {
+		return salesId;
+	}
+	public void setSalesId(Integer salesId) {
+		this.salesId = salesId;
+	}
+	public Integer getFromGroupId() {
+		return fromGroupId;
+	}
+	public void setFromGroupId(Integer fromGroupId) {
+		this.fromGroupId = fromGroupId;
 	}
 	
 	

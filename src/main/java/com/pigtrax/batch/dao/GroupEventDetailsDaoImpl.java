@@ -36,8 +36,8 @@ private static final Logger logger = Logger.getLogger(GroupEventDetailsDaoImpl.c
 	@Override
 	public int addGroupEventDetails(final GroupEventDetail groupEventDetails) throws SQLException {
 		final String Qry = "insert into pigtrax.\"GroupEventDetails\"(\"id_GroupEvent\", \"id_Barn\", \"dateOfEntry\", \"id_Room\", \"id_EmployeeGroup\", \"numberOfPigs\","
-					+"\"weightInKgs\", \"indeventoryAdjustment\", \"remarks\", \"lastUpdated\", \"userUpdated\",\"id_SowSource\", \"id_Premise\", \"id_PigletStatusEvent\") "
-				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?, ?)";
+					+"\"weightInKgs\", \"indeventoryAdjustment\", \"remarks\", \"lastUpdated\", \"userUpdated\",\"id_SowSource\", \"id_Premise\", \"id_PigletStatusEvent\",\"id_RemovalEventExceptSalesDetails\",\"id_SalesEventDetails\", \"id_FromGroup\") "
+				+ "values(?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?, ?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -81,6 +81,21 @@ private static final Logger logger = Logger.getLogger(GroupEventDetailsDaoImpl.c
 	     	            	ps.setInt(13, groupEventDetails.getPigletStatusEventId());
 	     	            else
 	     	            	ps.setNull(13, java.sql.Types.INTEGER);
+	    	            
+	    	            if(groupEventDetails.getRemovalId() != null && groupEventDetails.getRemovalId() != 0)
+	     	            	ps.setInt(14, groupEventDetails.getRemovalId());
+	     	            else
+	     	            	ps.setNull(14, java.sql.Types.INTEGER);
+	    	            
+	    	            if(groupEventDetails.getSalesId() != null && groupEventDetails.getSalesId() != 0)
+	     	            	ps.setInt(15, groupEventDetails.getSalesId());
+	     	            else
+	     	            	ps.setNull(15, java.sql.Types.INTEGER);
+	    	            
+	    	            if(groupEventDetails.getFromGroupId() != null && groupEventDetails.getFromGroupId() != 0)
+	     	            	ps.setInt(16, groupEventDetails.getFromGroupId());
+	     	            else
+	     	            	ps.setNull(16, java.sql.Types.INTEGER);
 	    	           
 	    	            return ps;
 	    	        }

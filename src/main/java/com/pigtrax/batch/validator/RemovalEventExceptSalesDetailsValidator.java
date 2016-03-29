@@ -1,10 +1,12 @@
 package com.pigtrax.batch.validator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,7 +20,6 @@ import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PregnancyInfoDao;
-import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -57,8 +58,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				
 				validateCompanyId( removalEventExceptSalesDetailsMapper, errList);
-				validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);
-				validateRemovalDateTime(removalEventExceptSalesDetailsMapper, errList);
+				validateNumberOfPigs(removalEventExceptSalesDetailsMapper, errList);				
 				validatePigInfoAndGroupEvent(removalEventExceptSalesDetailsMapper, errList);
 				validateWeightInKg(removalEventExceptSalesDetailsMapper, errList);
 				validateRemovalEventType(removalEventExceptSalesDetailsMapper, errList);
@@ -67,7 +67,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 				//validateRoom(removalEventExceptSalesDetailsMapper, errList);
 				validatePremises(removalEventExceptSalesDetailsMapper, errList);
 				validateToGroup(removalEventExceptSalesDetailsMapper, errList);
-				
+				validateRemovalDateTime(removalEventExceptSalesDetailsMapper, errList);
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -141,9 +141,39 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 	}
 
 	private void validateRemovalDateTime(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, List<ErrorBean> errList) {
-		if (removalEventExceptSalesDetailsMapper.getRemovalDateTime() == null) {
+		if (removalEventExceptSalesDetailsMapper.getRemovalDateTime() == null || removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime() == null) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_PRESENT_CODE, Constants.REM_REMOVAL_DATE_PRESENT_MSG, "RemovalDateTime", false));
+		}
+		else
+		{
+			DateTime removalDate = new DateTime(removalEventExceptSalesDetailsMapper.getDeriveRemovalDateTime());
+			if(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() != null && removalEventExceptSalesDetailsMapper.getDeriveGroupEventId() > 0 && removalEventExceptSalesDetailsMapper.getDeriveCompanyId() != null)
+			{
+				GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetailsMapper.getDeriveGroupEventId(), removalEventExceptSalesDetailsMapper.getDeriveCompanyId());
+				if(groupEvent != null)
+				{
+					DateTime startDate = new DateTime(groupEvent.getGroupStartDateTime());
+					if(startDate.isAfter(removalDate))
+					{
+						removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+						errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_BEFORE_GROUP_START_CODE, Constants.REM_REMOVAL_DATE_BEFORE_GROUP_START_MSG, "RemovalDateTime", false));
+					}
+				}
+			}
+			else if(removalEventExceptSalesDetailsMapper.getDerivePigInfoId() != null && removalEventExceptSalesDetailsMapper.getDerivePigInfoId() > 0)
+			{
+				PigInfo pigInfo = pigInfoDao.getPigDetails(removalEventExceptSalesDetailsMapper.getDerivePigInfoId());
+				if(pigInfo != null)
+				{
+					DateTime entryDate = new DateTime(pigInfo.getEntryDate());
+					if(entryDate.isAfter(removalDate))
+					{
+						removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
+						errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_BEFORE_PIG_START_CODE, Constants.REM_REMOVAL_DATE_BEFORE_PIG_START_MSG, "RemovalDateTime", false));
+					}
+				}
+			}
 		}
 	}
 	

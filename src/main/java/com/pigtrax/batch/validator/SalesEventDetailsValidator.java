@@ -6,15 +6,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.pigtrax.batch.beans.GroupEvent;
+import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.GroupEventDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
@@ -27,6 +30,9 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 	
 	@Autowired
 	GroupEventDao groupEventDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -43,12 +49,12 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 			if (salesEventDetailsMapper.isRecovrableErrors() == null || salesEventDetailsMapper.isRecovrableErrors()) {
 				List<ErrorBean> errList = new ArrayList<ErrorBean>();
 				
-				validateNumberOfPigs(salesEventDetailsMapper, errList);//
-				validateRemovalDateTime(salesEventDetailsMapper, errList);//
+				validateNumberOfPigs(salesEventDetailsMapper, errList);//				
 				validatePigInfoAndGroupEvent(salesEventDetailsMapper, errList);//
 				validateWeightInKg(salesEventDetailsMapper, errList);//
 				validateRevenus(salesEventDetailsMapper,errList);
 				validateTicketNumber(salesEventDetailsMapper,errList);
+				validateRemovalDateTime(salesEventDetailsMapper, errList);//
 				if (errList.size() > 0) {
 					errorMap.put(mapper, errList);
 				}
@@ -65,9 +71,39 @@ public class SalesEventDetailsValidator extends AbstractValidator{
 	}
 	
 	private void validateRemovalDateTime(final SalesEventDetailsMapper salesEventDetailsMapper, List<ErrorBean> errList) {
-		if (salesEventDetailsMapper.getDeriveSalesDateTime() == null) {
+		if (salesEventDetailsMapper.getDeriveSalesDateTime() == null || salesEventDetailsMapper.getDeriveSalesDateTime() == null) {
 			salesEventDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_PRESENT_CODE, Constants.REM_REMOVAL_DATE_PRESENT_MSG, "RemovalDateTime", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_PRESENT_CODE, Constants.REM_REMOVAL_DATE_PRESENT_MSG, "salesDateTime", false));
+		}
+		else
+		{
+			DateTime removalDate = new DateTime(salesEventDetailsMapper.getDeriveSalesDateTime());
+			if(salesEventDetailsMapper.getDeriveGroupEventId() != null && salesEventDetailsMapper.getDeriveGroupEventId() > 0 && salesEventDetailsMapper.getDeriveCompanyId() != null)
+			{
+				GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(salesEventDetailsMapper.getDeriveGroupEventId(), salesEventDetailsMapper.getDeriveCompanyId());
+				if(groupEvent != null)
+				{
+					DateTime startDate = new DateTime(groupEvent.getGroupStartDateTime());
+					if(startDate.isAfter(removalDate))
+					{
+						salesEventDetailsMapper.setRecovrableErrors(false);
+						errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_BEFORE_GROUP_START_CODE, Constants.REM_REMOVAL_DATE_BEFORE_GROUP_START_MSG, "salesDateTime", false));
+					}
+				}
+			}
+			else if(salesEventDetailsMapper.getDerivePigInfoId() != null && salesEventDetailsMapper.getDerivePigInfoId() > 0)
+			{
+				PigInfo pigInfo = pigInfoDao.getPigDetails(salesEventDetailsMapper.getDerivePigInfoId());
+				if(pigInfo != null)
+				{
+					DateTime entryDate = new DateTime(pigInfo.getEntryDate());
+					if(entryDate.isAfter(removalDate))
+					{
+						salesEventDetailsMapper.setRecovrableErrors(false);
+						errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_REMOVAL_DATE_BEFORE_PIG_START_CODE, Constants.REM_REMOVAL_DATE_BEFORE_PIG_START_MSG, "salesDateTime", false));
+					}
+				}
+			}
 		}
 	}
 	

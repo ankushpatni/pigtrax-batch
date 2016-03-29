@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.BreedingEvent;
-import com.pigtrax.batch.beans.IndividualPigletStatus;
+import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BreedingEventDao;
+import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
@@ -31,6 +32,9 @@ public class BreedingEventHandler implements Handler {
 	
 	@Autowired
 	private PigTraxEventMasterDao eventMasterDao;
+	
+	@Autowired
+	PigInfoDao pigInfoDao;
 
 	private static final Logger logger = Logger.getLogger(BreedingEventHandler.class);
 
@@ -105,6 +109,11 @@ public class BreedingEventHandler implements Handler {
 			breedingEvent.setUserUpdated(processDTO.getUserName());
 			breedingEvent.setPremiseId(breedingEventMapper.getDerivePremiseId());
 			breedingEvent.setServiceStartDate(breedingEventMapper.getDeriveServiceDate());
+			
+			PigInfo pigInfo = pigInfoDao.getPigDetails(breedingEventMapper.getDerivePigInfoId());
+			
+			breedingEvent.setCurrentParity(pigInfo.getParity()+1);
+			
 		} catch (Exception e) {
 			logger.error("Exception in FarrowEventHandler.populateFarrowEventfnfo" + e.getMessage());
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_SYS_CODE, Constants.ERR_SYS_MESSASGE + e.getMessage(), null, false));

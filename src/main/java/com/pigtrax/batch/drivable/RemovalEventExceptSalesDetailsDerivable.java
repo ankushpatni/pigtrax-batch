@@ -114,6 +114,7 @@ public class RemovalEventExceptSalesDetailsDerivable implements Derivable{
 	private void setCompanyId(final RemovalEventExceptSalesDetailsMapper removalEventExceptSalesDetailsMapper, ProcessDTO processDTO) {
 		try {
 			removalEventExceptSalesDetailsMapper.setDeriveCompanyId(processDTO.getCompanyId());
+			removalEventExceptSalesDetailsMapper.setDerivePremiseId(processDTO.getPremiseId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

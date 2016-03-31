@@ -142,7 +142,8 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 											toGroupEventDetails.setWeightInKgs(removalEventExceptSalesDetails.getWeightInKgs().doubleValue());
 											toGroupEventDetails.setUserUpdated(removalEventExceptSalesDetails.getUserUpdated());
 											toGroupEventDetails.setRemarks("Recived through Pig Movement Mass Upload");
-											groupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getGroupEventId());
+											toGroupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getGroupEventId());
+											toGroupEventDetails.setRemovalId(id);
 											groupEventDetailDaoImpl.addGroupEventDetails(toGroupEventDetails);
 											
 											GroupEvent newGroupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getToGroupEventId(), removalEventExceptSalesDetails.getCompanyId());

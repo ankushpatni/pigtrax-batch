@@ -172,7 +172,7 @@ public class FarrowEventValidator extends AbstractValidator {
 		if (farrowEventMapper.getPenId() == null) {
 			farrowEventMapper.setRecovrableErrors(true);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PEN_ID, Constants.FRW_EVNT_ERR_PEN_ID_MSG, "penID", true));
-		} else if (farrowEventMapper.getPenId() == null) {
+		} else if (farrowEventMapper.getDerivePenId() == null) {
 			farrowEventMapper.setRecovrableErrors(true);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PEN_ID_PK, Constants.FRW_EVNT_ERR_PEN_ID_PK_MSG, "penID", true));
 

@@ -18,4 +18,13 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	 <bean id="myQueue" class="java.util.concurrent.LinkedBlockingQueue" >
+   		<constructor-arg type="int"><value>10</value></constructor-arg>
+   	</bean>
+	
+	<bean id="notificationManager" class="com.pigtrax.batch.notification.NotificationManager">
+		<property name="blockingQueue" ref="myQueue" />
+   	</bean>
+   
 </beans>

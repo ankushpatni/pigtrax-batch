@@ -63,7 +63,7 @@ public class FarrowEventHandler implements Handler {
 							FarrowEvent farrowEvent = populateFarrowEventfnfo(errorMap, farrowEventMapper, processDTO);
 							if (farrowEvent != null) {
 								
-								boolean flag = false;//farrowEventDao.checkIfFarrowExists(farrowEvent.getPragnancyEventId());
+								boolean flag = farrowEventDao.checkIfFarrowExists(farrowEvent.getBreedingEventId());
 								if (flag) {
 									
 									errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_FARROW_DUPLICATE_CODE, Constants.ERR_FARROW_DUPLICATE_CODE_MSG, "serviceDate", false));

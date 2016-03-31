@@ -13,6 +13,7 @@ public class BreedingEvent {
 	private String userUpdated;
 	private Date serviceStartDate;
 	private Integer premiseId;
+	private Integer currentParity;
 
 	
 	public Integer getId() {
@@ -93,6 +94,14 @@ public class BreedingEvent {
 
 	public void setPremiseId(Integer premiseId) {
 		this.premiseId = premiseId;
+	}
+
+	public Integer getCurrentParity() {
+		return currentParity;
+	}
+
+	public void setCurrentParity(Integer currentParity) {
+		this.currentParity = currentParity;
 	}
    
 	

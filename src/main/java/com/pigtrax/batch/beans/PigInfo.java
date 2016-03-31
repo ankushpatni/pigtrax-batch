@@ -236,6 +236,8 @@ public class PigInfo {
 	public void setRoomId(Integer roomId) {
 		this.roomId = roomId;
 	}
+	
+	
 
 	@Override
 	public String toString() {

@@ -20,9 +20,11 @@ import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.drivable.interfaces.Derivable;
 import com.pigtrax.batch.exception.ErrorBean;
+import com.pigtrax.batch.exception.ErrorBeanCollection;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.loader.interfaces.DataLoader;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
+import com.pigtrax.batch.notification.NotificationManager;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.DateUtil;
 import com.pigtrax.batch.validator.interfaces.Validator;
@@ -37,6 +39,9 @@ public class ProcessEngine implements Process {
 
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+	@Autowired
+	NotificationManager notificationManager;
 
 	public void execute(final Map<String, Object> inputMap) {		
 		try {
@@ -113,6 +118,16 @@ public class ProcessEngine implements Process {
 		OutputStreamWriter outputStreamWriter = null;
 		BufferedWriter bufferedWriter = null;
 		try {
+			
+			if(errorMap != null)
+			{
+				ErrorBeanCollection collection  = new ErrorBeanCollection();
+				
+				collection.setEventType(processDTO.getBatchType().toString());
+				collection.setErrorBeanList(errorMap);
+				notificationManager.put(collection);
+			}
+			
 			File reportFile = new File(getFileName(processDTO.getDataSrc()));
 			outputStream = new FileOutputStream(reportFile);
 			outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");

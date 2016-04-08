@@ -92,7 +92,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	private void validatePigInfoId(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDerivePigInfoId() == null || pregnancyInfoMapper.getDerivePigInfoId() < 0) {
 			pregnancyInfoMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	

@@ -108,8 +108,8 @@ public class GroupEventDetailValidator extends AbstractValidator {
 	private void validateSowSource(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
 		if (groupEventDetailMapper.getDerivePremiseId() == null || groupEventDetailMapper.getDerivePremiseId() < 0) {
 			groupEventDetailMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_SOWSOURCE_CODE,
-					Constants.ENTRY_EVENT_INVALID_SOWSOURCE_MSG, "sowSource", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_SOWSOURCE_CODE,
+					Constants.GROUP_EVENT_INVALID_SOWSOURCE_MSG, "sowSource", false));
 		}
 	}
 	
@@ -131,7 +131,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 				if(e instanceof NumberFormatException)
 				{
 					groupEventDetailMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "DateOfEntry", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "Number of Pigs", false));
 				}
 				else
 				{
@@ -142,7 +142,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 		else
 		{
 			groupEventDetailMapper.setRecovrableErrors(false);
-				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "DateOfEntry", false));
+				errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "Number of Pigs", false));
 		}
 	}
 	

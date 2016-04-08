@@ -64,7 +64,7 @@ public class BreedingEventValidator extends AbstractValidator {
 	private void validatePigId(final BreedingEventMapper breedingEventMapper, List<ErrorBean> errList) {	
 		if(breedingEventMapper.getPigId() == null) {
 			breedingEventMapper.setRecovrableErrors(false); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 	}
 	

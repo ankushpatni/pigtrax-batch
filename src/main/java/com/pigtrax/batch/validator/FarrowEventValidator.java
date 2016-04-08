@@ -139,7 +139,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validatePigId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getPigId() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getPigId())) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PIG_ID, Constants.FRW_EVNT_ERR_PIG_ID_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_MSG, "pigId", false));
 		}
 
 	}
@@ -147,7 +147,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validateCompanyId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getDeriveCompanyId() == null || farrowEventMapper.getDeriveCompanyId() < 0 ) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_CMPNY_ID, Constants.FRW_EVNT_ERR_CMPNY_ID_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 
 	}
@@ -155,7 +155,7 @@ public class FarrowEventValidator extends AbstractValidator {
 	private void validatePigPKId(final FarrowEventMapper farrowEventMapper, List<ErrorBean> errList) {
 		if (farrowEventMapper.getDerivePigInfoId() == null || Constants.BLANK_STRING.equals(farrowEventMapper.getDerivePigInfoId())) {
 			farrowEventMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.FRW_EVNT_ERR_PIG_ID, Constants.FRW_EVNT_ERR_PIG_ID_MSG, "pigId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_PIGID_CODE, Constants.INVALID_PIGID_CODE, "pigId", false));
 		}
 
 	}

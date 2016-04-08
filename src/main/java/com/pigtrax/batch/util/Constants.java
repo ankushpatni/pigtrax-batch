@@ -193,11 +193,11 @@ public interface Constants {
 
 	public static final String FRW_EVNT_ERR_SOW_CNDTN_VAL_MSG = "Sow Condition should be between 1-5";
 	
-	public static final String FEED_EVNT_ERR_RATIONID = "701";
+	public static final String FEED_EVNT_ERR_RATIONID = "FED-202";
 
 	public static final String FEED_EVNT_ERR_RATIONID_MSG = "Ration Id is missing";
 	
-	public static final String FEED_EVNT_ERR_TICKETID = "702";
+	public static final String FEED_EVNT_ERR_TICKETID = "FED-201";
 
 	public static final String FEED_EVNT_ERR_TICKETID_MSG = "Ticket id is missing";
 	
@@ -209,33 +209,25 @@ public interface Constants {
 
 	public static final String FEED_EVNT_ERR_TRNS_JRNY_ID_MSG = "Transport Journey Id is missing";
 	
-	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE = "801";
+	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_CODE = "IND-206";
 	
-	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG = "Individual piglet duplicate tattoo Id";
+	public static final String IND_PIGLET_ERR_DUPLICATE_TATTOO_MSG = "Piglet duplicate tattoo Id";
 	
-	public static final String IND_PIGLET_ERR_WT_WEANING_CODE= "802";
+	public static final String IND_PIGLET_ERR_WT_WEANING_CODE= "IND-204";
 	
-	public static final String IND_PIGLET_ERR_WT_WEANING_MSG= "Individual piglet weight at weaning is missing";
+	public static final String IND_PIGLET_ERR_WT_WEANING_MSG= "Piglet weight at weaning is missing";
 	
-	public static final String IND_PIGLET_ERR_WT_BIRTH_CODE = "803";
+	public static final String IND_PIGLET_ERR_WT_BIRTH_CODE = "IND-202";
 	
-	public static final String IND_PIGLET_ERR_WT_BIRTH_MSG = "Individual piglet weight at birth is missing";
+	public static final String IND_PIGLET_ERR_WT_BIRTH_MSG = "Piglet weight at birth is missing";
 	
-	public static final String IND_PIGLET_ERR_TATTOO_CODE = "804";
+	public static final String IND_PIGLET_ERR_WT_CODE = "IND-205";
 	
-	public static final String IND_PIGLET_ERR_TATTOO_MSG = "Individual piglet tattoo is missing";
+	public static final String IND_PIGLET_ERR_WT_MSG = "Piglet weight is missing";
 	
-	public static final String IND_PIGLET_ERR_FARROW_DATE_CODE = "805";
+	public static final String IND_PIGLET_ERR_TATTOO_CODE = "IND-203";
 	
-	public static final String IND_PIGLET_ERR_FARROW_DATE_MSG = "Individual piglet farrow date is missing";
-	
-	public static final String IND_PIGLET_ERR_FARROW_EVENT_CODE = "806";
-	
-	public static final String IND_PIGLET_ERR_FARROW_EVENT_MSG = "Invalid farrow date specified.";
-	
-	public static final String IND_PIGLET_ERR_PIGLET_CNT_CODE = "807";
-	
-	public static final String IND_PIGLET_ERR_PIGLET_CNT_MSG = "Individual piglet count can not be more than live borns captured in farrow event";
+	public static final String IND_PIGLET_ERR_TATTOO_MSG = "Piglet tattoo is missing";
 
     public static final String REF_DATA_BREEDINGSERIVCETYPE = "BREEDINGSERVICETYPE";	
     
@@ -250,14 +242,6 @@ public interface Constants {
     public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_CODE = "BE-202";
     
     public static final String BREEDING_EVNT_ERR_INVALID_SERVICETYPE_MSG = "Invalid service type given";
-    
-    public static final String BREEDING_EVNT_ERR_INVALID_PEN_CODE = "810";
-    
-    public static final String BREEDING_EVNT_ERR_INVALID_PEN_MSG = "Invalid pen given";
-    
-    public static final String BREED_NG_EVNT_INVALID_PIGID_CODE = "810";
-    
-    public static final String BREED_NG_EVNT_INVALID_PIGID_MSG = "Invalid Pig Id for the company";
     
     public static final String MATING_ERR_INVALID_MATEQUALITY_CODE = "MD-201";
     
@@ -307,11 +291,11 @@ public interface Constants {
     
     public static final String MATING_ERR_DATE_EARLIER_ENTRYDATE_MSG = "Mating date given is earlier than the entry date of the Pig";    
     
-	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "1001";
+	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_CODE = "MA-211";
 	
 	public static final String REM_GROUP_PIG_ERR_BOTH_PRESENT_MSG = "Removal/Transfer/Sales can have either GroupID or PigInfoId, not both Of them";
 	
-	public static final String REM_REM_EVENT_TYPE_PRESENT_CODE = "1002";
+	public static final String REM_REM_EVENT_TYPE_PRESENT_CODE = "MA-207";
 	
 	public static final String REM_REM_EVENT_TYPE_PRESENT_MSG = "Removal Event Type missing";
 	
@@ -319,21 +303,21 @@ public interface Constants {
 	
 	public static final String REM_COMPANY_PRESENT_MSG = "Company missing";
 	
-	public static final String REM_NUMBER_OF_PIGS_PRESENT_CODE = "1004";
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_CODE = "MA-204";
 	
 	public static final String REM_NUMBER_OF_PIGS_PRESENT_MSG = "Number Of Pigs are missing";
 	
-	public static final String REM_REMOVAL_DATE_PRESENT_CODE = "1005";
+	public static final String REM_REMOVAL_DATE_PRESENT_CODE = "MA-201";
 	
-	public static final String REM_REMOVAL_DATE_PRESENT_MSG = "Removal Date is missing";
+	public static final String REM_REMOVAL_DATE_PRESENT_MSG = "Date is missing";
 	
-	public static final String REM_WEIGHT_IN_KG_PRESENT_PRESENT_CODE = "1006";
+	public static final String REM_WEIGHT_IN_KG_PRESENT_PRESENT_CODE = "MA-206";
 	
 	public static final String REM_WEIGHT_IN_KG_PRESENT_PRESENT_MSG = "Weight in KG missing";
 	
-	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_CODE = "1007";
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_CODE = "MA-205";
 	
-	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG = "Number of Pigs can not be more then Group  in KG missing";
+	public static final String REM_NUMBER_OF_PIGS_PRESENT_MORE_MSG = "Number of Pigs can not be more than group inventory count";
 	
 	public static final String REF_DATA_REMOVALEVENTTYPE = "REF_DATA_REMOVALEVENTTYPE";
 	
@@ -373,9 +357,9 @@ public interface Constants {
 	
 	public static final String INVALID_PREMISEID_MSG ="Invalid premise specified";
 	
-	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_CODE ="612";
+	public static final String GROUP_EVENT_INVALID_SOWSOURCE_CODE ="GED-202";
 	
-	public static final String ENTRY_EVENT_INVALID_SOWSOURCE_MSG ="Invalid sow source specified";
+	public static final String GROUP_EVENT_INVALID_SOWSOURCE_MSG ="Invalid sow source specified";
 	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM = "FE-206";
 	
@@ -426,64 +410,63 @@ public interface Constants {
 	
 	public static final String ERR_PREGNANCY_NO_BREEDINGRECORDS_MSG = "No breeding records available for the pig ";
 	
-	public static final String REM_REMOVAL_REVENUE_CODE = "624";
+	public static final String REM_REMOVAL_REVENUE_CODE = "MA-214";
 	
 	public static final String REM_REMOVAL_REVENUE_MSG = "Invalid revenue value specified";
 	
-	public static final String ERR_REMOVAL_MISSING_GRP_PIGID_CODE = "625";
+	public static final String ERR_REMOVAL_MISSING_GRP_PIGID_CODE = "MA-210";
 	
 	public static final String ERR_REMOVAL_MISSING_GRP_PIGID_MSG = "Both group event id and pig id are missing. Please specify any one of the value";
 	
-	public static final String REMOVAL_INVALID_GROUPID_CODE = "626";
+	public static final String REMOVAL_INVALID_GROUPID_CODE = "MA-212";
 		
 	public static final String REMOVAL_INVALID_GROUPID_MSG = "Invalid group event id specified";
 	
-	public static final String REMOVAL_INVALID_PIGID_CODE = "627";
+	public static final String REMOVAL_INVALID_PIGID_CODE = "MA-213";
 	
 	public static final String REMOVAL_INVALID_PIGID_MSG = "Invalid pig id specified. Please specify an active pig id";
 	
-	public static final String REMOVAL_INVALID_MORTALITY_CODE = "628";
+	public static final String REMOVAL_INVALID_MORTALITY_CODE = "MA-209";
 	
 	public static final String REMOVAL_INVALID_MORTALITY_MSG = "Invalid mortality reason specified";	
 	
-	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_CODE = "629";
+	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_CODE = "GE-203";
 	
-	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_MSG = "Group Id already present for the company";
+	public static final String GROUP_EVENT_DUPLICATE_GRP_ID_MSG = "Group Id already present";
 	
+	public static final String GROUP_EVENT_INVALID_PHASE_CODE = "GE-202";
 	
-	public static final String GROUP_EVENT_INVALID_ROOM_CODE ="630";
+	public static final String GROUP_EVENT_INVALID_PHASE_MSG = "Invalid phase of production specified";	
+	
+	public static final String GROUP_EVENT_INVALID_ROOM_CODE ="GED-201";
 	
 	public static final String GROUP_EVENT_INVALID_ROOM_MSG ="Invalid room specified";
 	
-	public static final String REF_DATA_FEEDEVENTTYPE = "REF_DATA_FEEDEVENTTYPE";
+	public static final String REF_DATA_FEEDEVENTTYPE = "REF_DATA_FEEDEVENTTYPE";		
 	
-	public static final String FEED_EVENT_DETAIL_INVALID_ID_CODE = "631";
-	
-	public static final String FEED_EVENT_DETAIL_INVALID_ID_MSG = "No feed event record identified for the given ticket number";
-	
-	public static final String FEED_EVENT_DETAIL_INVALID_GRPID_CODE = "632";
+	public static final String FEED_EVENT_DETAIL_INVALID_GRPID_CODE = "FED-203";
 	
 	public static final String FEED_EVENT_DETAIL_INVALID_GRPID_MSG = "Invalid group event id specified";
 	
-	public static final String FEED_EVENT_DETAIL_INVALID_DATE_CODE = "633";
+	public static final String FEED_EVENT_DETAIL_INVALID_DATE_CODE = "FED-204";
 	
 	public static final String FEED_EVENT_DETAIL_INVALID_DATE_MSG = "Invalid feed event date specified";
 	
-	public static final String FEED_EVENT_DETAIL_INVALID_EVT_TYPE_CODE = "634";
+	public static final String FEED_EVENT_DETAIL_INVALID_EVT_TYPE_CODE = "FED-205";
 	
 	public static final String FEED_EVENT_DETAIL_INVALID_EVT_TYPE_MSG = "Invalid feed event type specified";
 	
-	public static final String FEED_EVENT_DETAIL_INVALID_SILO_CODE = "635";
+	public static final String FEED_EVENT_DETAIL_INVALID_SILO_CODE = "FED-206";
 	
 	public static final String FEED_EVENT_DETAIL_INVALID_SILO_MSG = "Invalid silo specified";
 
-	public static final String IND_PIGLET_ERR_LITTERID_CODE = "636";
+	public static final String IND_PIGLET_ERR_LITTERID_CODE = "IND-201";
 	
 	public static final String IND_PIGLET_ERR_LITTERID_MSG = "Invalid litterId specified";
 	
-	public static final String ENTRY_EVENT_INVALID_ROOMIDS_CODE = "637";
+	public static final String GROUP_EVENT_INVALID_ROOMIDS_CODE = "GE-201";
 	
-	public static final String ENTRY_EVENT_INVALID_ROOMIDS_MSG = "Invalid room Ids specified";
+	public static final String GROUP_EVENT_INVALID_ROOMIDS_MSG = "Invalid room(s) specified for the premise";
 	
 	public static final String ENTRY_EVENT_INVALID_ROOMID_CODE = "EE-201";
 	
@@ -493,23 +476,23 @@ public interface Constants {
 	
 	public static final String ENTRY_EVENT_DUPLICATE_TATTOO_MSG = "Pig already exists in the premise with the given tattoo";
 	
-	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE = "640";
+	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_CODE = "MA-216";
 	
 	public static final String REM_REMOVAL_TRANSFER_DEST_PREMISES_NOT_PRESENT_MSG = "For Given Removal Event Transfer Destination Premises is required";
 	
-	public static final String REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_CODE = "641";
+	public static final String REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_CODE = "MA-217";
 	
 	public static final String REM_REMOVAL_TRANSFER_DEST_ROOM_NOT_PRESENT_MSG = "For Given Removal Event Transfer For Group Transfer Room is required";
 	
-	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE = "642";
+	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_CODE = "MA-218";
 	
 	public static final String REM_REMOVAL_TRANSFER_CURRENT_PREM_DEST_PREM_SAME_MSG = "For Given Removal Event Transfer Current and Destination Premises is same";
 	
-	public static final String REM_REMOVAL_TICKET_NUMBER_CODE = "643";
+	public static final String REM_REMOVAL_TICKET_NUMBER_CODE = "SA-201";
 	
 	public static final String REM_REMOVAL_TICKET_NUMBER_MSG = "Ticket Number is missing";
 	
-	public static final String GROUP_EVENT_INVALID_GROUPID_CODE = "644";
+	public static final String GROUP_EVENT_INVALID_GROUPID_CODE = "GED-201";
 	
 	public static final String GROUP_EVENT_INVALID_GROUPID_MSG = "Invalid Group Id specified";
 	
@@ -521,23 +504,23 @@ public interface Constants {
 	
 	public static final String PREG_EVENT_INVALID_RESULT_TYPE_MSG = "Invalid pregnancy exam result type specified";
 	
-	public static final String SALE_EVENT_TYPE_REVENUE_CODE = "1101";
+	public static final String SALE_EVENT_TYPE_REVENUE_CODE = "SA-202";
 	
-	public static final String SALE_EVENT_TYPE_REVENUE_MSG = "Invalid Revenue Not able to parse.";
+	public static final String SALE_EVENT_TYPE_REVENUE_MSG = "Invalid Revenue ";
 	
-	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_CODE = "1102";
+	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_CODE = "MA-215";
 	
 	public static final String REM_REMOVAL_TRANSFER_TO_GROUP_NOT_PRESENT_MSG = "Given To Group not present";
 	
-	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_CODE = "1103";
+	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_CODE = "MA-208";
 	
 	public static final String REM_REMOVAL_GROUP_PREMISES_TRANSFER_NOT_ALLOWED_MSG = "Group premises transfer not allowed in mass upload";
 	
-	public static final String REM_REMOVAL_DATE_BEFORE_GROUP_START_CODE = "1103";
+	public static final String REM_REMOVAL_DATE_BEFORE_GROUP_START_CODE = "MA-202";
 	
 	public static final String REM_REMOVAL_DATE_BEFORE_GROUP_START_MSG = "Date specified is earlier than group start date";
 	
-	public static final String REM_REMOVAL_DATE_BEFORE_PIG_START_CODE = "1103";
+	public static final String REM_REMOVAL_DATE_BEFORE_PIG_START_CODE = "MA-203";
 	
 	public static final String REM_REMOVAL_DATE_BEFORE_PIG_START_MSG = "Date specified is earlier than pig entry date";
 

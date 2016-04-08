@@ -65,8 +65,8 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 	private void validateRoomIds(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
 		if (groupEventInfoMapper.getDeriveRoomIds() == null || groupEventInfoMapper.getDeriveRoomIds().size() == 0) {
 			groupEventInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ENTRY_EVENT_INVALID_ROOMIDS_CODE,
-					Constants.ENTRY_EVENT_INVALID_ROOMIDS_MSG, "roomIds", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_ROOMIDS_CODE,
+					Constants.GROUP_EVENT_INVALID_ROOMIDS_MSG, "roomIds", false));
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 	private void validateCompanyId(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
 		if (groupEventInfoMapper.getDeriveCompanyId() == null || groupEventInfoMapper.getDeriveCompanyId()  < 0) {
 			groupEventInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "companyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "companyId", false));
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class GroupEventInfoValidator  extends AbstractValidator {
 	private void validatePhaseOfProduction(final GroupEventInfoMapper groupEventInfoMapper, List<ErrorBean> errList) {
 		if (groupEventInfoMapper.getDerivePhaseOfProductionTypeId() == null || groupEventInfoMapper.getDerivePhaseOfProductionTypeId() < 0) {
 			groupEventInfoMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "PhaseOfProductionType", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_PHASE_CODE, Constants.GROUP_EVENT_INVALID_PHASE_MSG, "PhaseOfProductionType", false));
 		}
 	}
 }

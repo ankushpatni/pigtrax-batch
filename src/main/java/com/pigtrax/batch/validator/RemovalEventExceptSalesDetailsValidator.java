@@ -136,7 +136,7 @@ public class RemovalEventExceptSalesDetailsValidator extends AbstractValidator {
 		if (removalEventExceptSalesDetailsMapper.getDeriveCompanyId() == null || StringUtils.isEmpty(removalEventExceptSalesDetailsMapper.getDeriveCompanyId()) ||
 				removalEventExceptSalesDetailsMapper.getDeriveCompanyId() <1) {
 			removalEventExceptSalesDetailsMapper.setRecovrableErrors(false);
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.REM_COMPANY_PRESENT_CODE, Constants.REM_COMPANY_PRESENT_MSG, "CompanyId", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.INVALID_COMPANYID_CODE, Constants.INVALID_COMPANYID_MSG, "CompanyId", false));
 		}
 	}
 

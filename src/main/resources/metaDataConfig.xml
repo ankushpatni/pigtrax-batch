@@ -152,12 +152,13 @@
 			<!--  <col key="premiseId" order="7" isEmpty="true" />-->
 			<col key="destPremiseId" order="7" isEmpty="true" />
 			<col key="roomId" order="8" isEmpty="true" />
-			<col key="remarks" order="9" isEmpty="true" />	
-			<col key="mortalityReasonId" order="10" isEmpty="true" />		
-			<col key="revenue" order="11" isEmpty="true" />
-			<col key="transportTruck" order="12" isEmpty="true" />
-			<col key="transportTrailer" order="13" isEmpty="true" />
-			<col key="toGroupEventId" order="14" isEmpty="true" />	
+			<col key="toGroupEventId" order="9" isEmpty="true" />	
+			<col key="remarks" order="10" isEmpty="true" />	
+			<col key="mortalityReasonId" order="11" isEmpty="true" />		
+			<col key="revenue" order="12" isEmpty="true" />
+			<col key="transportTruck" order="13" isEmpty="true" />
+			<col key="transportTrailer" order="14" isEmpty="true" />
+			
 			
 		</dataInfo>
 	</event>

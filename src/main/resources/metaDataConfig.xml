@@ -36,12 +36,13 @@
 			<col key="numberOfPigs" order="3" isEmpty="false" />
 			<col key="weightOfPigs" order="4" isEmpty="true" />
 			<col key="eventDate" order="5" isEmpty="false" />
-			<col key="weanGroupEventId" order="6" isEmpty="true" />			
-			<col key="transferredToPig" order="7" isEmpty="true" />
-			<col key="mortalityReason" order="8" isEmpty="true" />
-			<col key="pen" order="9" isEmpty="true" />
-			<col key="remarks" order="10" isEmpty="true" />
-			<col key="sowCondition" order="11" isEmpty="true" />
+			<col key="weanGroupEventId" order="6" isEmpty="true" />	
+			<col key="weanToPremises" order="7" isEmpty="true" />			
+			<col key="transferredToPig" order="8" isEmpty="true" />
+			<col key="mortalityReason" order="9" isEmpty="true" />
+			<col key="pen" order="10" isEmpty="true" />
+			<col key="remarks" order="11" isEmpty="true" />
+			<col key="sowCondition" order="12" isEmpty="true" />
 		</dataInfo>
 	</event>
 	<event id="GROUPEVENT">

@@ -221,8 +221,13 @@ public class PigletStatusInfoDerivable implements Derivable {
 		if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode())
 		{		
 			try { 
-				if(pigletStatusInfoMapper.getWeanGroupEventId() != null && pigletStatusInfoMapper.getDeriveCompanyId() != null &&  pigletStatusInfoMapper.getDerivePremiseId() != null)
-					pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupEventId(), pigletStatusInfoMapper.getDeriveCompanyId(), pigletStatusInfoMapper.getDerivePremiseId()));
+				if(pigletStatusInfoMapper.getWeanGroupEventId() != null && pigletStatusInfoMapper.getDeriveCompanyId() != null &&  pigletStatusInfoMapper.getDerivePremiseId() != null &&
+						pigletStatusInfoMapper.getWeanToPremises()!=null)
+				{
+					
+					pigletStatusInfoMapper.setDeriveGroupEventId(groupEventDao.getGroupEventId(pigletStatusInfoMapper.getWeanGroupEventId(), pigletStatusInfoMapper.getDeriveCompanyId(), 
+							premisesDao.getPremisesPK(pigletStatusInfoMapper.getWeanToPremises(), pigletStatusInfoMapper.getDeriveCompanyId())));
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

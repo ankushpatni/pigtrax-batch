@@ -22,7 +22,18 @@ public class PigletStatusInfoMapper extends AbstractMapper {
 	private String pen;
 	private String remarks;
 	private String sowCondition;
+	private String weanToPremises;
 	
+	public String getWeanToPremises() {
+		return weanToPremises;
+	}
+
+
+
+	public void setWeanToPremises(String weanToPremises) {
+		this.weanToPremises = weanToPremises;
+	}
+
 	// Derivable properties
 	private Integer deriveCompanyId;
 	private Integer derivePremiseId;

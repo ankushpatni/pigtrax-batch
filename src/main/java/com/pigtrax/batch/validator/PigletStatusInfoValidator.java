@@ -185,6 +185,12 @@ public class PigletStatusInfoValidator extends AbstractValidator {
 			pigletStatusInfoMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_WEAN_GROUPID_NOT_FOUND_CODE, Constants.ERR_WEAN_GROUPID_NOT_FOUND_MSG, "weanGroupEventId", false));
 		}
+		
+		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Wean.getTypeCode() &&  
+				pigletStatusInfoMapper.getWeanGroupEventId() == null ) {
+			pigletStatusInfoMapper.setRecovrableErrors(false);
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_WEAN_GROUPID_NOT_FOUND_CODE, Constants.ERR_WEAN_GROUPID_NOT_FOUND_MSG, "weanGroupEventId", false));
+		}
 	}
 	private void validateMortalityReason(final PigletStatusInfoMapper pigletStatusInfoMapper, List<ErrorBean> errList) {
 		if (pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() != null &&  pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode() && 

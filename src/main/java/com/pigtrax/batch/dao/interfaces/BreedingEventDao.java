@@ -27,4 +27,6 @@ public interface BreedingEventDao {
 	List<BreedingEvent> getOpenServiceRecords(Integer pigInfoId);
 	
 	List<BreedingEvent> getPendingFarrowServiceRecords(final Integer pigInfoId);
+
+	int updateBreedingParity(int parity, Integer breedingEventId);
 }

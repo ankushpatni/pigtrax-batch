@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pigtrax.batch.beans.FarrowEvent;
+import com.pigtrax.batch.beans.PigInfo;
 import com.pigtrax.batch.beans.PigTraxEventMaster;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.FarrowEventDaoImpl;
@@ -79,6 +80,9 @@ public class FarrowEventHandler implements Handler {
 									int duration = Days.daysBetween(serviceDate, farrowDate).getDays();
 									
 									pigInfoDao.increaseParity(farrowEvent.getPigInfoId(), duration);
+									//get updated pig parity and update it in Breeding event
+									PigInfo pigDetails = pigInfoDao.getPigDetails(farrowEvent.getPigInfoId());
+									breedingEventDao.updateBreedingParity(pigDetails.getParity()+1,farrowEvent.getBreedingEventId());
 									
 									PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
 									eventMasterDao.insertEventMaster(eventMaster);

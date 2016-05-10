@@ -82,7 +82,7 @@ public class FarrowEventHandler implements Handler {
 									pigInfoDao.increaseParity(farrowEvent.getPigInfoId(), duration);
 									//get updated pig parity and update it in Breeding event
 									PigInfo pigDetails = pigInfoDao.getPigDetails(farrowEvent.getPigInfoId());
-									breedingEventDao.updateBreedingParity(pigDetails.getParity()+1,farrowEvent.getBreedingEventId());
+									breedingEventDao.updateBreedingParity(pigDetails.getParity(),farrowEvent.getBreedingEventId());
 									
 									PigTraxEventMaster eventMaster = populateEventMaster(farrowEventMapper, id, processDTO);
 									eventMasterDao.insertEventMaster(eventMaster);

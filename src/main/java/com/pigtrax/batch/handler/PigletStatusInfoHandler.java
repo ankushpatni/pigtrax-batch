@@ -155,10 +155,10 @@ public class PigletStatusInfoHandler implements Handler {
 							
 							if(pigletStatusInfoMapper.getDerivePigletStatusEventTypeId() == PigletStatusEventType.Death.getTypeCode())
 							{
-								Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
-								pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
-								if(pkValue != null)
-								eventMasterDao.deletePigletStatusEvents(pkValue);
+							//	Integer pkValue = pigletStatusInfoDao.getPKPigletStatus(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
+							//	pigletStatusInfoDao.deletePigletStatusEventsByFarrowId(pigletStatusInfoMapper.getDerivePigInfoId(), pigletStatusInfoMapper.getDeriveFarrowEventId(), PigletStatusEventType.Death.getTypeCode());
+							//	if(pkValue != null)
+							//	eventMasterDao.deletePigletStatusEvents(pkValue);
 								pigletStatusInfo = populatePreMortalityInfo(errorMap, pigletStatusInfoMapper, processDTO);
 								if (pigletStatusInfo != null) {
 									int generatedKey = pigletStatusInfoDao.insertPigletStatusInfo(pigletStatusInfo);

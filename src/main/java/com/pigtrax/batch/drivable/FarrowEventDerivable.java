@@ -239,7 +239,7 @@ public class FarrowEventDerivable implements Derivable {
 						DateTime serviceDate = new DateTime(breedingEventDetails.getServiceStartDate());
 						DateTime farrowDate = new DateTime(farrowEventMapper.getDeriveFarrowDate());
 						int duration = Days.daysBetween(serviceDate, farrowDate).getDays();
-						if(duration >= 105 && duration <= 130)
+						if(duration >= 105 && duration <= 125)
 						{
 							farrowEventMapper.setBreedingEventId(breedingEventDetails.getId());
 							break;

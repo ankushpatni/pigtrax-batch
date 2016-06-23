@@ -7,5 +7,7 @@ public interface Mapper {
 	public void setRecovrableErrors(final Boolean isRecovrableErrors);
 
 	public String getId();
+	
+	public String getCompanyId();
 
 }

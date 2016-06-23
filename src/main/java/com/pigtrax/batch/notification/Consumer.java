@@ -58,6 +58,8 @@ public class Consumer implements Runnable{
             				errorBeanList = errorMap.get(mapper);
             				for (ErrorBean errBean : errorBeanList) {	
             					DataIntegrityLog log = populateDataIntegrityBean(eventType, mapper, errBean);
+            					log.setCompanyId(errorBeanCollection.getCompanyId());
+            					log.setUserId(errorBeanCollection.getUserId());
             					logDao.insert(log);
             					}
             				}
@@ -74,9 +76,8 @@ public class Consumer implements Runnable{
   
 	
 	private DataIntegrityLog populateDataIntegrityBean(String eventType, Mapper mapper, ErrorBean errBean)
-	{
-		
-		DataIntegrityLog log = new DataIntegrityLog();
+	{			
+		DataIntegrityLog log = new DataIntegrityLog();		
 		log.setEventType(eventType);
 		if(errBean.isRecoverable())
 			log.setErrorType("Integrity Error");

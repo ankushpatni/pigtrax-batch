@@ -122,7 +122,8 @@ public class ProcessEngine implements Process {
 			if(errorMap != null)
 			{
 				ErrorBeanCollection collection  = new ErrorBeanCollection();
-				
+				collection.setCompanyId(processDTO.getCompanyId());
+				collection.setUserId(processDTO.getUserName());
 				collection.setEventType(processDTO.getBatchType().toString());
 				collection.setErrorBeanList(errorMap);
 				notificationManager.put(collection);

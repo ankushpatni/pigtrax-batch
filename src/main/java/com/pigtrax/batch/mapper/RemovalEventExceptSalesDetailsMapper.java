@@ -245,6 +245,10 @@ public class RemovalEventExceptSalesDetailsMapper extends AbstractMapper{
 		this.deriveToGroupEventId = deriveToGroupEventId;
 	}
 	
-	
+@Override
+	public String getCompanyId() {
+		// TODO Auto-generated method stub
+		return Integer.toString(deriveCompanyId);
+	}	
 	
 }

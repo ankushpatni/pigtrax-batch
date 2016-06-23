@@ -32,7 +32,7 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 	@Override
 	public void insert(DataIntegrityLog log) {
 		final String Qry = "insert into pigtrax.\"DataIntegrityLog\"(\"eventType\", \"errorType\", "
-				+ "\"eventDate\", \"errorDescription\") values(?,?,?,?)";
+				+ "\"eventDate\", \"errorDescription\", \"companyId\", \"userId\") values(?,?,?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -49,6 +49,8 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 	    				else
 	    					ps.setNull(3, java.sql.Types.DATE);
 	    				ps.setString(4, log.getErrorDescription());
+	    				ps.setInt(5, log.getCompanyId());
+	    				ps.setString(6, log.getUserId());
 	    	            return ps;
 	    	        }
 	    	    },
@@ -62,7 +64,7 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 		java.sql.Date start = new java.sql.Date(startDate.getTime());
 		java.sql.Date end = new java.sql.Date(endDate.getTime());
 		
-		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\" from pigtrax.\"DataIntegrityLog\""
+		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"companyId\",\"userId\" from pigtrax.\"DataIntegrityLog\""
 				+ " where \"eventDate\" between ? and ?";
 		
 		List<DataIntegrityLog> logList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
@@ -75,13 +77,35 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 		return logList;
 	} 
 	
+	
+	@Override
+	public List<DataIntegrityLog> getLog(final Date startDate, final Date endDate, Integer companyId) {
+		java.sql.Date start = new java.sql.Date(startDate.getTime());
+		java.sql.Date end = new java.sql.Date(endDate.getTime());
+		
+		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"companyId\",\"userId\" from pigtrax.\"DataIntegrityLog\""
+				+ " where \"eventDate\" between ? and ? and \"companyId\" = ?";
+		
+		List<DataIntegrityLog> logList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setDate(1, start);
+				ps.setDate(2, end);
+				ps.setInt(3, companyId);
+			}}, new EventMapper());
+		
+		return logList;
+	} 
+	
 	private static final class EventMapper implements RowMapper<DataIntegrityLog> {
 		public DataIntegrityLog mapRow(ResultSet rs, int rowNum) throws SQLException {
 			DataIntegrityLog log = new DataIntegrityLog();	
 			log.setEventType(rs.getString("eventType"));
 			log.setErrorType(rs.getString("errorType"));
 			log.setEventDate(rs.getDate("eventDate"));
-			log.setErrorDescription(rs.getString("errorDescription"));			
+			log.setErrorDescription(rs.getString("errorDescription"));	
+			log.setCompanyId(rs.getInt("companyId"));
+			log.setUserId(rs.getString("userId"));
 			return log;
 		}
 	}

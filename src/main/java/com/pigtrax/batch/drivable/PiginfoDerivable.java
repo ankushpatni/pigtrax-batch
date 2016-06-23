@@ -79,7 +79,7 @@ public class PiginfoDerivable implements Derivable {
 	private void setOrigin(final PigInfoMapper pigInfoMapper) {	
 		try {
 			Integer originDerived = originDao.getOriginId(pigInfoMapper.getGeneticOrigin());
-			if (originDerived > 0) {
+			if (originDerived != null && originDerived > 0) {
 				pigInfoMapper.setDeriveOriginId(originDerived);
 			}
 		} catch (Exception e) {

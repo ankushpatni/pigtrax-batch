@@ -9,5 +9,7 @@ public interface DataIntegrityLogDao {
 	void insert(DataIntegrityLog log);
 	
 	List<DataIntegrityLog> getLog(Date startDate, Date endDate);
+	
+	List<DataIntegrityLog> getLog(Date startDate, Date endDate, Integer companyId);
 
 }

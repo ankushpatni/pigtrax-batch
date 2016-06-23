@@ -10,6 +10,10 @@ public class ErrorBeanCollection {
     private Map<Mapper, List<ErrorBean>> errorBeanList;
     
     private String eventType;
+    
+    private Integer companyId;
+    
+    private String userId;
 
 	public Map<Mapper, List<ErrorBean>> getErrorBeanList() {
 		return errorBeanList;
@@ -26,6 +30,23 @@ public class ErrorBeanCollection {
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
     
+	
     
 }

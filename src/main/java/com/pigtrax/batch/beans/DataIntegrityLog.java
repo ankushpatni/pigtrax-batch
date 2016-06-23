@@ -7,6 +7,8 @@ public class DataIntegrityLog {
 	private String errorType;
 	private Date eventDate;
 	private String errorDescription;
+	private Integer companyId;
+	private String userId;
 
 	public String getEventType() {
 		return eventType;
@@ -39,5 +41,22 @@ public class DataIntegrityLog {
 	public void setErrorDescription(String errorDescription) {
 		this.errorDescription = errorDescription;
 	}
+	
+	public Integer getCompanyId() {
+		return companyId;
+	}
 
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	
 }

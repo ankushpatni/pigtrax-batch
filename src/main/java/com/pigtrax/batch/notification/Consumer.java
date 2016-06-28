@@ -84,7 +84,7 @@ public class Consumer implements Runnable{
 		else
 			log.setErrorType("Structural Error");
 		log.setEventDate(DateUtil.getCurrentDate());
-		log.setErrorDescription(errBean.getCode()+" : "+errBean.getMessage());
+		log.setErrorDescription("Property : "+errBean.getProperty()+ " : "+errBean.getCode()+" : "+errBean.getMessage());
 		return log;
 	}
   

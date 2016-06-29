@@ -60,6 +60,7 @@ public class Consumer implements Runnable{
             					DataIntegrityLog log = populateDataIntegrityBean(eventType, mapper, errBean);
             					log.setCompanyId(errorBeanCollection.getCompanyId());
             					log.setUserId(errorBeanCollection.getUserId());
+            					log.setPremiseId(errorBeanCollection.getPremiseId());
             					logDao.insert(log);
             					}
             				}
@@ -84,7 +85,8 @@ public class Consumer implements Runnable{
 		else
 			log.setErrorType("Structural Error");
 		log.setEventDate(DateUtil.getCurrentDate());
-		log.setErrorDescription("Property : "+errBean.getProperty()+ " : "+errBean.getCode()+" : "+errBean.getMessage());
+		log.setRelevantField(errBean.getProperty());
+		log.setErrorDescription(errBean.getCode()+" : "+errBean.getMessage());
 		return log;
 	}
   

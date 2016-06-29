@@ -1,25 +1,24 @@
 package com.pigtrax.batch.validator;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.pigtrax.batch.beans.GroupEvent;
 import com.pigtrax.batch.config.Config;
 import com.pigtrax.batch.config.ConfigCache;
 import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.interfaces.BarnDao;
 import com.pigtrax.batch.dao.interfaces.CompanyDao;
+import com.pigtrax.batch.dao.interfaces.GroupEventDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
-import com.pigtrax.batch.mapper.GroupEventInfoMapper;
-import com.pigtrax.batch.mapper.PigInfoMapper;
 import com.pigtrax.batch.mapper.interfaces.Mapper;
 import com.pigtrax.batch.util.Constants;
 import com.pigtrax.batch.util.ErrorBeanUtil;
@@ -36,6 +35,9 @@ public class GroupEventDetailValidator extends AbstractValidator {
 
 	@Autowired
 	private CompanyDao companyDao;
+	
+	@Autowired
+	private GroupEventDao groupEventDao;
 	
 	public Map<Mapper, List<ErrorBean>> validate(final List<Mapper> list, final ProcessDTO processDTO) {
 		final Map<Mapper, List<ErrorBean>> errorMap = new HashMap<Mapper, List<ErrorBean>>();
@@ -115,9 +117,23 @@ public class GroupEventDetailValidator extends AbstractValidator {
 	
 	
 	private void validateDateOfEntry(final GroupEventDetailMapper groupEventDetailMapper, List<ErrorBean> errList) {
-		if (groupEventDetailMapper.getDateOfEntry() == null || groupEventDetailMapper.getDateOfEntry().trim().length() == 0) {
+		if (groupEventDetailMapper.getDeriveDateOfEntry() == null || groupEventDetailMapper.getDateOfEntry() == null || groupEventDetailMapper.getDateOfEntry().trim().length() == 0) {
 			groupEventDetailMapper.setRecovrableErrors(false);
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_DATA_TYPE_MIS_MATCH, Constants.ERR_DATA_TYPE_MIS_MATCH_MSG, "DateOfEntry", false));
+		}
+		else
+		{
+			if(groupEventDetailMapper.getDeriveGroupId() != null && groupEventDetailMapper.getDerivecompanyId() != null)
+			{
+				GroupEvent groupEvent = groupEventDao.getGroupEventByGeneratedGroupId(groupEventDetailMapper.getDeriveGroupId(), groupEventDetailMapper.getDerivecompanyId());
+				DateTime startDate = new DateTime(groupEvent.getGroupStartDateTime());
+				DateTime entryDate = new DateTime(groupEventDetailMapper.getDeriveDateOfEntry());
+				if(entryDate.isBefore(startDate))
+				{
+					groupEventDetailMapper.setRecovrableErrors(true);
+					errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_DATE_ENTRY_CODE, Constants.GROUP_EVENT_INVALID_DATE_ENTRY_MSG, "DateOfEntry", false));
+				}
+			}
 		}
 		
 	}

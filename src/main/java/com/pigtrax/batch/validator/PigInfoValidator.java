@@ -74,8 +74,8 @@ public class PigInfoValidator extends AbstractValidator {
 			Date birthDate = pigInfoMapper.getDeriveBirthDate(); 
 			if (birthDate != null) {
 				long diff = pigInfoMapper.getDeriveEntryDate().getTime() - birthDate.getTime();
-				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 100 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 300) {
-					pigInfoMapper.setRecovrableErrors(false);
+				if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 100 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 600) {
+					pigInfoMapper.setRecovrableErrors(true);
 					errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE,
 							Constants.ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG, "entryDate", false));
 				}

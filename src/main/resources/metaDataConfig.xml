@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<event id="PIGINFO">
+	<event id="ENTRYEVENT">
 		<dataInfo>
 			<col key="roomId" order="1" isEmpty="true" />
 			<col key="pigId" order="2" isEmpty="false" />
@@ -18,7 +18,7 @@
 			<col key="remarks" order="14" isEmpty="true" />			
 		</dataInfo>
 	</event>
-	<event id="PREGNANCYINFO">
+	<event id="PREGNANCYEVENT">
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
 			<col key="resultDate" order="2" isEmpty="false" />			
@@ -29,7 +29,7 @@
 			
 		</dataInfo>
 	</event>
-	<event id="PIGLETSTATUSINFO">
+	<event id="PIGLETSTATUSEVENT">
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
 			<col key="eventType" order="2" isEmpty="false" />
@@ -74,7 +74,7 @@
 			<col key="teats" order="14" isEmpty="true" />
 		</dataInfo>
 	</event>
-	<event id="GROUPEVENTDETAILEVENT">
+	<event id="GROUPEVENTDETAILS">
 		<dataInfo>
 			<col key="groupId" order="1" isEmpty="false" />
 			<col key="sowSource" order="2" isEmpty="false" />
@@ -94,7 +94,7 @@
 			<col key="transportTrailer" order="5" isEmpty="true" />    
 		</dataInfo>
 	</event>
-	<event id="FEEDDETAILEVENT">
+	<event id="FEEDEVENTDETAILS">
 		<dataInfo>
 			<col key="ticketNumber" order="1" isEmpty="false" />
 			<col key="rationId" order="2" isEmpty="false" />
@@ -111,7 +111,7 @@
 			<col key="remarks" order="13" isEmpty="true" /> 
 		</dataInfo>
 	</event>
-	<event id="INDIVIDUALPIGLETSTATUS">
+	<event id="INDIVIDUALPIGLET">
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
 			<col key="litterId" order="2" isEmpty="true" />
@@ -142,7 +142,7 @@
 			<col key="weightInKgs" order="6" isEmpty="true" />
 		</dataInfo>
 	</event>	
-	<event id="REMOVALEVENTEXCEPTSALESEVENT">
+	<event id="MORTALITYANDADJUSTMENT">
 		<dataInfo>
 			<col key="groupEventId" order="1" isEmpty="true" />			
 			<col key="pigInfoId" order="2" isEmpty="true" />
@@ -163,7 +163,7 @@
 			
 		</dataInfo>
 	</event>
-	<event id="SALESEVENTDETAILS">
+	<event id="SALES">
 		<dataInfo>
 			<col key="salesDateTime" order="1" isEmpty="false" />	
 			<col key="groupEventId" order="2" isEmpty="true" />

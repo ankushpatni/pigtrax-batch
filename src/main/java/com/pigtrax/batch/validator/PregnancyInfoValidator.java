@@ -117,7 +117,7 @@ public class PregnancyInfoValidator extends AbstractValidator {
 	
 	private void validateBreedingEvent(final PregnancyInfoMapper pregnancyInfoMapper, List<ErrorBean> errList) {	
 		if(pregnancyInfoMapper.getDeriveBreedingEventId() == null || pregnancyInfoMapper.getDeriveBreedingEventId() < 0) {
-			pregnancyInfoMapper.setRecovrableErrors(false); 
+			pregnancyInfoMapper.setRecovrableErrors(true); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_CODE, Constants.ERR_PREG_EVENT_SERVICE_NOT_FOUND_MSG, "pigId, resultDate", false));
 		}
 	}

@@ -123,6 +123,7 @@ public class ProcessEngine implements Process {
 			{
 				ErrorBeanCollection collection  = new ErrorBeanCollection();
 				collection.setCompanyId(processDTO.getCompanyId());
+				collection.setPremiseId(processDTO.getPremiseId());
 				collection.setUserId(processDTO.getUserName());
 				collection.setEventType(processDTO.getBatchType().toString());
 				collection.setErrorBeanList(errorMap);

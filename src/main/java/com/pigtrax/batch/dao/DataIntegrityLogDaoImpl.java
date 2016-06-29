@@ -32,7 +32,7 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 	@Override
 	public void insert(DataIntegrityLog log) {
 		final String Qry = "insert into pigtrax.\"DataIntegrityLog\"(\"eventType\", \"errorType\", "
-				+ "\"eventDate\", \"errorDescription\", \"companyId\", \"userId\") values(?,?,?,?,?,?)";
+				+ "\"eventDate\", \"errorDescription\", \"id_Company\", \"userId\", \"relevantField\",\"id_Premise\") values(?,?,?,?,?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -51,6 +51,8 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 	    				ps.setString(4, log.getErrorDescription());
 	    				ps.setInt(5, log.getCompanyId());
 	    				ps.setString(6, log.getUserId());
+	    				ps.setString(7, log.getRelevantField());
+	    				ps.setInt(8, log.getPremiseId());
 	    	            return ps;
 	    	        }
 	    	    },
@@ -64,7 +66,7 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 		java.sql.Date start = new java.sql.Date(startDate.getTime());
 		java.sql.Date end = new java.sql.Date(endDate.getTime());
 		
-		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"companyId\",\"userId\" from pigtrax.\"DataIntegrityLog\""
+		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"id_Company\",\"userId\",\"relevantField\",\"id_Premise\" from pigtrax.\"DataIntegrityLog\""
 				+ " where \"eventDate\" between ? and ?";
 		
 		List<DataIntegrityLog> logList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
@@ -83,8 +85,8 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 		java.sql.Date start = new java.sql.Date(startDate.getTime());
 		java.sql.Date end = new java.sql.Date(endDate.getTime());
 		
-		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"companyId\",\"userId\" from pigtrax.\"DataIntegrityLog\""
-				+ " where \"eventDate\" between ? and ? and \"companyId\" = ?";
+		String qry = "select \"id\", \"eventType\", \"errorType\", \"eventDate\", \"errorDescription\",\"id_Company\",\"userId\",\"relevantField\",\"id_Premise\" from pigtrax.\"DataIntegrityLog\""
+				+ " where \"eventDate\" between ? and ? and \"id_Company\" = ?";
 		
 		List<DataIntegrityLog> logList = jdbcTemplate.query(qry, new PreparedStatementSetter(){
 			@Override
@@ -104,8 +106,10 @@ public class DataIntegrityLogDaoImpl implements DataIntegrityLogDao {
 			log.setErrorType(rs.getString("errorType"));
 			log.setEventDate(rs.getDate("eventDate"));
 			log.setErrorDescription(rs.getString("errorDescription"));	
-			log.setCompanyId(rs.getInt("companyId"));
+			log.setCompanyId(rs.getInt("id_Company"));
 			log.setUserId(rs.getString("userId"));
+			log.setRelevantField(rs.getString("relevantField"));
+			log.setPremiseId(rs.getInt("id_Premise"));
 			return log;
 		}
 	}

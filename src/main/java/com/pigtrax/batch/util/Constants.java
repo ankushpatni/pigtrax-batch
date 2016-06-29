@@ -361,6 +361,10 @@ public interface Constants {
 	
 	public static final String GROUP_EVENT_INVALID_SOWSOURCE_MSG ="Invalid sow source specified";
 	
+	public static final String GROUP_EVENT_INVALID_DATE_ENTRY_CODE ="GED-203";
+	
+	public static final String GROUP_EVENT_INVALID_DATE_ENTRY_MSG ="Invalid date of entry specified. It should be later than group start date";	
+	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM = "FE-206";
 	
 	public static final String FRW_EVNT_INVALID_FARROW_NUM_MSG = "Invalid farrow count value";

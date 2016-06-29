@@ -55,7 +55,7 @@ import com.pigtrax.batch.validator.SalesEventDetailsValidator;
 
 
 public enum BatchType {
-	PIGINFO {
+	ENTRYEVENT {
 		@Override
 		public Class<?> getMapperClass() {
 			return PigInfoMapper.class;
@@ -76,7 +76,7 @@ public enum BatchType {
 			return PiginfoDerivable.class;
 		}
 	},
-	PREGNANCYINFO {
+	PREGNANCYEVENT {
 		@Override
 		public Class<?> getMapperClass() {
 			return PregnancyInfoMapper.class;
@@ -98,7 +98,7 @@ public enum BatchType {
 		}
 	},
 
-	PIGLETSTATUSINFO {
+	PIGLETSTATUSEVENT {
 		@Override
 		public Class<?> getMapperClass() {
 			return PigletStatusInfoMapper.class;
@@ -182,7 +182,7 @@ public enum BatchType {
 			return FeedEventDerivable.class;
 		}
 	},
-	FEEDDETAILEVENT{
+	FEEDEVENTDETAILS{
 		@Override
 		public Class<?> getMapperClass() {
 			return FeedDetailEventMapper.class;
@@ -203,7 +203,7 @@ public enum BatchType {
 			return FeedDetailEventDerivable.class;
 		}
 	},
-	GROUPEVENTDETAILEVENT{
+	GROUPEVENTDETAILS{
 		@Override
 		public Class<?> getMapperClass() {
 			return GroupEventDetailMapper.class;
@@ -224,7 +224,7 @@ public enum BatchType {
 			return GroupEventDetailDerivable.class;
 		}
 	},
-	INDIVIDUALPIGLETSTATUS{
+	INDIVIDUALPIGLET{
 		@Override
 		public Class<?> getMapperClass() {
 			return IndividualPigletStatusMapper.class;
@@ -266,7 +266,7 @@ public enum BatchType {
 		}
 	},
 		
-	REMOVALEVENTEXCEPTSALESEVENT{
+	MORTALITYANDADJUSTMENT{
 		@Override
 		public Class<?> getMapperClass() {
 			return RemovalEventExceptSalesDetailsMapper.class;
@@ -287,7 +287,7 @@ public enum BatchType {
 			return RemovalEventExceptSalesDetailsDerivable.class;
 		}
 	},
-	SALESEVENTDETAILS{
+	SALES{
 		@Override
 		public Class<?> getMapperClass() {
 			return SalesEventDetailsMapper.class;

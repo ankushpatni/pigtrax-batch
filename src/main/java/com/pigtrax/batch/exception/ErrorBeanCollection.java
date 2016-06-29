@@ -14,6 +14,8 @@ public class ErrorBeanCollection {
     private Integer companyId;
     
     private String userId;
+    
+    private Integer premiseId;
 
 	public Map<Mapper, List<ErrorBean>> getErrorBeanList() {
 		return errorBeanList;
@@ -45,6 +47,14 @@ public class ErrorBeanCollection {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Integer getPremiseId() {
+		return premiseId;
+	}
+
+	public void setPremiseId(Integer premiseId) {
+		this.premiseId = premiseId;
 	}
     
 	

@@ -86,7 +86,7 @@ public class MatingDetailsValidator extends AbstractValidator {
 	private void validateBreedingEventId(final MatingDetailsMapper matingDetailsMapper, List<ErrorBean> errList) {	
 		if(matingDetailsMapper.getDeriveBreedingEventId() == null || matingDetailsMapper.getDeriveBreedingEventId() < 0) {
 			matingDetailsMapper.setRecovrableErrors(true); 
-			errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_SERVICE_CODE, Constants.MATING_ERR_INVALID_SERVICE_MSG, "matingDate", false));
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.MATING_ERR_INVALID_SERVICE_CODE, Constants.MATING_ERR_INVALID_SERVICE_MSG, "matingDate", true));
 		}
 	}
 	

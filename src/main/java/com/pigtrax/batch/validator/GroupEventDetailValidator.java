@@ -131,7 +131,7 @@ public class GroupEventDetailValidator extends AbstractValidator {
 				if(entryDate.isBefore(startDate))
 				{
 					groupEventDetailMapper.setRecovrableErrors(true);
-					errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_DATE_ENTRY_CODE, Constants.GROUP_EVENT_INVALID_DATE_ENTRY_MSG, "DateOfEntry", false));
+					errList.add(ErrorBeanUtil.populateErrorBean(Constants.GROUP_EVENT_INVALID_DATE_ENTRY_CODE, Constants.GROUP_EVENT_INVALID_DATE_ENTRY_MSG, "DateOfEntry", true));
 				}
 			}
 		}

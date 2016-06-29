@@ -68,7 +68,7 @@ public interface Constants {
 	
 	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE = "EE-204";
 
-	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "The difference between Entry Date and Birth Date should fall between 100-300 days.";
+	public static final String ERR_PIGONFO_ENTRY_EVENT_ENTRY_DATE_MSG = "The difference between Entry Date and Birth Date should fall between 100-600 days.";
 
 	public static final String ERR_PREGNANCY_EVENT_DUPLICATE_CODE = "PE-205";
 

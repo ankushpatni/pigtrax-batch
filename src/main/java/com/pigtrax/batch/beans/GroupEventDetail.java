@@ -22,6 +22,7 @@ public class GroupEventDetail {
 	private Integer removalId;
 	private Integer salesId;
 	private Integer fromGroupId;
+	private Integer groupEventActionType;
 	
 	public Integer getBarnId() {
 		return barnId;
@@ -139,6 +140,12 @@ public class GroupEventDetail {
 	}
 	public void setFromGroupId(Integer fromGroupId) {
 		this.fromGroupId = fromGroupId;
+	}
+	public Integer getGroupEventActionType() {
+		return groupEventActionType;
+	}
+	public void setGroupEventActionType(Integer groupEventActionType) {
+		this.groupEventActionType = groupEventActionType;
 	}
 	
 	

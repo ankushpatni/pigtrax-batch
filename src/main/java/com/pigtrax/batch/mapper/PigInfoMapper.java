@@ -320,4 +320,6 @@ public class PigInfoMapper extends AbstractMapper {
 			return false;
 	}
 	
+	
+	
 }

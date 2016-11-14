@@ -22,6 +22,7 @@ import com.pigtrax.batch.dao.SalesEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
+import com.pigtrax.batch.enums.GroupEventActionType;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.SalesEventDetailsMapper;
@@ -92,6 +93,7 @@ public class SalesEventDetailsHandler implements Handler{
 								groupEventDetails.setUserUpdated(salesEventDetails.getUserUpdated());
 								groupEventDetails.setRemarks("Sales tracked through Pig Movement Mass Upload");
 								groupEventDetails.setSalesId(id);
+								groupEventDetails.setGroupEventActionType(GroupEventActionType.Sold.getTypeCode());
 								groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetails);
 								
 								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - salesEventDetails.getNumberOfPigs());

@@ -16,6 +16,7 @@ import com.pigtrax.batch.core.ProcessDTO;
 import com.pigtrax.batch.dao.GroupEventDaoImpl;
 import com.pigtrax.batch.dao.GroupEventDetailsDaoImpl;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.enums.GroupEventActionType;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.GroupEventDetailMapper;
@@ -54,6 +55,7 @@ public class GroupEventDetailHandler implements Handler{
 						try {
 							GroupEventDetail groupEventDetail = populateGroupEventDetails(errorMap, groupEventDetailMapper, processDTO);
 							if (groupEventDetail != null) {
+								groupEventDetail.setGroupEventActionType(GroupEventActionType.Add.getTypeCode());
 								groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetail);
 								GroupEvent groupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(groupEventDetail.getGroupId(),groupEventDetail.getCompanyId());
 								groupEvent.setCurrentInventory(groupEvent.getCurrentInventory()+groupEventDetail.getNumberOfPigs());

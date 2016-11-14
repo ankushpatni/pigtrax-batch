@@ -22,6 +22,7 @@ import com.pigtrax.batch.dao.interfaces.GroupEventDetailsDao;
 import com.pigtrax.batch.dao.interfaces.PenDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.PigletStatusInfoDao;
+import com.pigtrax.batch.enums.GroupEventActionType;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.PigletStatusInfoMapper;
@@ -223,6 +224,7 @@ public class PigletStatusInfoHandler implements Handler {
 				groupEventDetails.setGroupId(pigletStatusInfo.getGroupEventId());
 				groupEventDetails.setUserUpdated(pigletStatusInfo.getUserUpdated());
 				groupEventDetails.setRemarks("From piglet wean");
+				groupEventDetails.setGroupEventActionType(GroupEventActionType.Add.getTypeCode());
 				groupEventDetailsDao.addGroupEventDetails(groupEventDetails);
 				
 				groupEventDao.updateGroupEventCurrentInventory(groupEvent);

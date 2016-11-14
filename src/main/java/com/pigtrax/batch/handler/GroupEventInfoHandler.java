@@ -20,6 +20,7 @@ import com.pigtrax.batch.dao.interfaces.GroupEventDetailsDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventPhaseChangeDao;
 import com.pigtrax.batch.dao.interfaces.GroupEventRoomDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
+import com.pigtrax.batch.enums.GroupEventActionType;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.GroupEventInfoMapper;
@@ -96,6 +97,7 @@ public class GroupEventInfoHandler implements Handler{
 										details.setLastUpdated(new Date());
 										details.setUserUpdated(groupEvent.getUserUpdated());
 										details.setPremiseId(groupEvent.getPremiseId());
+										details.setGroupEventActionType(GroupEventActionType.Add.getTypeCode());
 										groupEventDetailsDao.addGroupEventDetails(details);
 									}
 									

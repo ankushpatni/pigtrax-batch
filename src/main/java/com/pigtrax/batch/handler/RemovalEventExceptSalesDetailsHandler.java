@@ -29,6 +29,7 @@ import com.pigtrax.batch.dao.interfaces.PigInfoDao;
 import com.pigtrax.batch.dao.interfaces.PigTraxEventMasterDao;
 import com.pigtrax.batch.dao.interfaces.SowMovementDao;
 import com.pigtrax.batch.dao.interfaces.TransportJourneyDao;
+import com.pigtrax.batch.enums.GroupEventActionType;
 import com.pigtrax.batch.exception.ErrorBean;
 import com.pigtrax.batch.handler.interfaces.Handler;
 import com.pigtrax.batch.mapper.RemovalEventExceptSalesDetailsMapper;
@@ -128,6 +129,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 										if(removalEventExceptSalesDetails.getRemovalEventId() == 9)
 											groupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getToGroupEventId());
 										
+										groupEventDetails.setGroupEventActionType(GroupEventActionType.Removal.getTypeCode());
 										groupEventDetailDaoImpl.addGroupEventDetails(groupEventDetails);
 										
 										groupEvent.setCurrentInventory(groupEvent.getCurrentInventory() - removalEventExceptSalesDetails.getNumberOfPigs());
@@ -144,6 +146,7 @@ public class RemovalEventExceptSalesDetailsHandler implements Handler{
 											toGroupEventDetails.setRemarks("Recived through Pig Movement Mass Upload");
 											toGroupEventDetails.setFromGroupId(removalEventExceptSalesDetails.getGroupEventId());
 											toGroupEventDetails.setRemovalId(id);
+											toGroupEventDetails.setGroupEventActionType(GroupEventActionType.Transferred.getTypeCode());
 											groupEventDetailDaoImpl.addGroupEventDetails(toGroupEventDetails);
 											
 											GroupEvent newGroupEvent = groupEventDaoImpl.getGroupEventByGeneratedGroupId(removalEventExceptSalesDetails.getToGroupEventId(), removalEventExceptSalesDetails.getCompanyId());

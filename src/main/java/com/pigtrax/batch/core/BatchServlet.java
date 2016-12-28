@@ -70,12 +70,14 @@ public class BatchServlet extends HttpServlet {
 	public static void main(String[] args) {
 		ApplicationContext apContext = new ClassPathXmlApplicationContext("springConfig.xml");
 		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put(Constants.EVENT_TYPE.toString(), "PREGNANCYINFO");
+		inputMap.put(Constants.EVENT_TYPE.toString(), "INDIVIDUALPIGLET");
 		inputMap.put(Constants.HEADER.toString(), "false");
 		inputMap.put(Constants.SEPERATOR.toString(), ",");
 		inputMap.put(Constants.FILE_TYPE.toString(), "csv");
 		inputMap.put(Constants.USER_NAME.toString(), "pigtraxsuperadmin");
-		inputMap.put(Constants.DATA.toString(), "d://test.csv");
+		inputMap.put(Constants.DATA.toString(), "C://Users//606706481//Downloads//CSV_Report_DataExtractionReport_28-12-2016.csv");
+		inputMap.put(Constants.COMPANY_ID.toString(), 4);
+		inputMap.put(Constants.PREMISE_ID.toString(), 1); 
 		ProcessEngine p = apContext.getBean(ProcessEngine.class);
 		p.execute(inputMap);
 	}

@@ -116,20 +116,23 @@
 			<col key="pigId" order="1" isEmpty="false" />
 			<col key="litterId" order="2" isEmpty="true" />
 			<col key="tattooId" order="3" isEmpty="true" />
-			<col key="wtAtBirth" order="4" isEmpty="true" />
-			<col key="wtAtWeaning" order="5" isEmpty="true" />
-			<col key="wtAtFirstMonth" order="6" isEmpty="true" />
-			<col key="firstDate" order="7" isEmpty="true" />
-			<col key="wtAtSecondMonth" order="8" isEmpty="true" />
-			<col key="secondDate" order="9" isEmpty="true" />
-			<col key="wtAtThirdMonth" order="10" isEmpty="true" />
-			<col key="thirdDate" order="11" isEmpty="true" />
-			<col key="wtAtFourthMonth" order="12" isEmpty="true" />
-			<col key="fourthDate" order="13" isEmpty="true" />
-			<col key="wtAtFifthMonth" order="14" isEmpty="true" />
-			<col key="fifthDate" order="15" isEmpty="true" />
-			<col key="wtAtSixthMonth" order="16" isEmpty="true" />
-			<col key="sixthDate" order="17" isEmpty="true" />
+			<col key="groupId" order="4" isEmpty="true" />
+			<col key="wtAtFirstMonth" order="5" isEmpty="true" />
+			<col key="firstDate" order="6" isEmpty="true" />
+			<col key="wtAtSecondMonth" order="7" isEmpty="true" />
+			<col key="secondDate" order="8" isEmpty="true" />
+			<col key="wtAtThirdMonth" order="9" isEmpty="true" />
+			<col key="thirdDate" order="10" isEmpty="true" />
+			<col key="wtAtFourthMonth" order="11" isEmpty="true" />
+			<col key="fourthDate" order="12" isEmpty="true" />
+			<col key="wtAtFifthMonth" order="13" isEmpty="true" />
+			<col key="fifthDate" order="14" isEmpty="true" />
+			<col key="wtAtSixthMonth" order="15" isEmpty="true" />
+			<col key="sixthDate" order="16" isEmpty="true" />
+			<col key="wtAtSeventhMonth" order="17" isEmpty="true" />
+			<col key="seventhDate" order="18" isEmpty="true" />
+			<col key="wtAtEighthMonth" order="19" isEmpty="true" />
+			<col key="eighthDate" order="20" isEmpty="true" />
 		</dataInfo>
 	</event>	
 	<event id="BREEDINGEVENT">

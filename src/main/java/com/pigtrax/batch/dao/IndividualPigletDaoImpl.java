@@ -60,9 +60,10 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	@Override
 	public Integer insertIndividualPigletStatus(
 			final IndividualPigletStatus individualPigletStatus) throws Exception {
-		final String Qry = "insert into pigtrax.\"IndividualPigletStatus\"(\"tattooId\", \"weightAtBirth\", \"weightAtWeaning\", \"lastUpdated\","
-				+ " \"userUpdated\", \"pigId\",\"litterId\",\"id_Premise\",\"weight1\",\"weight2\", \"weight3\", \"weight4\", \"weight5\",\"weight6\",\"date1\",\"date2\",\"date3\",\"date4\",\"date5\",\"date6\") "
-				+ "values(?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		final String Qry = "insert into pigtrax.\"IndividualPigletStatus\"(\"tattooId\", \"groupId\",  \"lastUpdated\","
+				+ " \"userUpdated\", \"pigId\",\"litterId\",\"id_Premise\",\"weight1\",\"weight2\", \"weight3\", \"weight4\", \"weight5\",\"weight6\",\"weight7\",\"weight8\","
+				+ "\"date1\",\"date2\",\"date3\",\"date4\",\"date5\",\"date6\",\"date7\",\"date8\") "
+				+ "values(?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		KeyHolder holder = new GeneratedKeyHolder();
 
@@ -72,24 +73,28 @@ public class IndividualPigletDaoImpl implements IndividualPigletDao {
 	    	            PreparedStatement ps =
 	    	                con.prepareStatement(Qry, new String[] {"id"});
 	    	            ps.setString(1, individualPigletStatus.getTattooId());
-	    	            ps.setObject(2, individualPigletStatus.getWtAtBirth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(3, individualPigletStatus.getWtAtWeaning(), java.sql.Types.DOUBLE);
-	    				ps.setString(4, individualPigletStatus.getUserUpdated());
-	    				ps.setObject(5, individualPigletStatus.getPigId());
-	    				ps.setObject(6, individualPigletStatus.getLitterId(), java.sql.Types.INTEGER);
-	    				ps.setObject(7, individualPigletStatus.getPremiseId(), java.sql.Types.INTEGER);
-	    				ps.setObject(8, individualPigletStatus.getWtAtFirstMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(9, individualPigletStatus.getWtAtSecondMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(10, individualPigletStatus.getWtAtThirdMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(11, individualPigletStatus.getWtAtFourthMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(12, individualPigletStatus.getWtAtFifthMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(13, individualPigletStatus.getWtAtSixthMonth(), java.sql.Types.DOUBLE);
-	    				ps.setObject(14, individualPigletStatus.getFirstDate(), java.sql.Types.DATE);
-	    				ps.setObject(15, individualPigletStatus.getSecondDate(), java.sql.Types.DATE);
-	    				ps.setObject(16, individualPigletStatus.getThirdDate(), java.sql.Types.DATE);
-	    				ps.setObject(17, individualPigletStatus.getFourthDate(), java.sql.Types.DATE);
-	    				ps.setObject(18, individualPigletStatus.getFifthDate(), java.sql.Types.DATE);
-	    				ps.setObject(19, individualPigletStatus.getSixthDate(), java.sql.Types.DATE);
+	    	            ps.setObject(2, individualPigletStatus.getGroupId());
+//	    				ps.setObject(3, individualPigletStatus.getWtAtWeaning(), java.sql.Types.DOUBLE);
+	    				ps.setString(3, individualPigletStatus.getUserUpdated());
+	    				ps.setObject(4, individualPigletStatus.getPigId());
+	    				ps.setObject(5, individualPigletStatus.getLitterId(), java.sql.Types.INTEGER);
+	    				ps.setObject(6, individualPigletStatus.getPremiseId(), java.sql.Types.INTEGER);
+	    				ps.setObject(7, individualPigletStatus.getWtAtFirstMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(8, individualPigletStatus.getWtAtSecondMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(9, individualPigletStatus.getWtAtThirdMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(10, individualPigletStatus.getWtAtFourthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(11, individualPigletStatus.getWtAtFifthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(12, individualPigletStatus.getWtAtSixthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(13, individualPigletStatus.getWtAtSeventhMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(14, individualPigletStatus.getWtAtEighthMonth(), java.sql.Types.DOUBLE);
+	    				ps.setObject(15, individualPigletStatus.getFirstDate(), java.sql.Types.DATE);
+	    				ps.setObject(16, individualPigletStatus.getSecondDate(), java.sql.Types.DATE);
+	    				ps.setObject(17, individualPigletStatus.getThirdDate(), java.sql.Types.DATE);
+	    				ps.setObject(18, individualPigletStatus.getFourthDate(), java.sql.Types.DATE);
+	    				ps.setObject(19, individualPigletStatus.getFifthDate(), java.sql.Types.DATE);
+	    				ps.setObject(20, individualPigletStatus.getSixthDate(), java.sql.Types.DATE);
+	    				ps.setObject(21, individualPigletStatus.getSeventhDate(), java.sql.Types.DATE);
+	    				ps.setObject(22, individualPigletStatus.getEighthDate(), java.sql.Types.DATE);
 	    	            return ps;
 	    	        }
 	    	    },

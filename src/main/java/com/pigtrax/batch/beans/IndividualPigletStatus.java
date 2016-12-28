@@ -6,10 +6,11 @@ public class IndividualPigletStatus {
 	
 	private Integer pigInfoId;
 	private String pigId;
+	private Integer groupId;
 	private Integer litterId;
 	private String tattooId;
-	private Double wtAtBirth;
-	private Double wtAtWeaning;
+//	private Double wtAtBirth;
+//	private Double wtAtWeaning;
 	private String userUpdated;
 	private Double wtAtFirstMonth;
 	private Double wtAtSecondMonth;
@@ -17,6 +18,8 @@ public class IndividualPigletStatus {
 	private Double wtAtFourthMonth;
 	private Double wtAtFifthMonth;
 	private Double wtAtSixthMonth;
+	private Double 	wtAtSeventhMonth;
+	private Double 	wtAtEighthMonth;
 	private Integer premiseId;
 	
 	private Date firstDate;
@@ -25,6 +28,8 @@ public class IndividualPigletStatus {
 	private Date fourthDate;
 	private Date fifthDate;
 	private Date sixthDate;
+	private Date seventhDate;
+	private Date eighthDate;
 	
 	
 	public Integer getPigInfoId() {
@@ -51,7 +56,7 @@ public class IndividualPigletStatus {
 	public void setTattooId(String tattooId) {
 		this.tattooId = tattooId;
 	}
-	public Double getWtAtBirth() {
+/*	public Double getWtAtBirth() {
 		return wtAtBirth;
 	}
 	public void setWtAtBirth(Double wtAtBirth) {
@@ -63,7 +68,7 @@ public class IndividualPigletStatus {
 	public void setWtAtWeaning(Double wtAtWeaning) {
 		this.wtAtWeaning = wtAtWeaning;
 	}
-	public String getUserUpdated() {
+*/	public String getUserUpdated() {
 		return userUpdated;
 	}
 	public void setUserUpdated(String userUpdated) {
@@ -146,6 +151,36 @@ public class IndividualPigletStatus {
 	}
 	public void setSixthDate(Date sixthDate) {
 		this.sixthDate = sixthDate;
+	}
+	public Integer getGroupId() {
+		return groupId;
+	}
+	public Double getWtAtSeventhMonth() {
+		return wtAtSeventhMonth;
+	}
+	public Double getWtAtEighthMonth() {
+		return wtAtEighthMonth;
+	}
+	public Date getSeventhDate() {
+		return seventhDate;
+	}
+	public Date getEighthDate() {
+		return eighthDate;
+	}
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+	public void setWtAtSeventhMonth(Double wtAtSeventhMonth) {
+		this.wtAtSeventhMonth = wtAtSeventhMonth;
+	}
+	public void setWtAtEighthMonth(Double wtAtEighthMonth) {
+		this.wtAtEighthMonth = wtAtEighthMonth;
+	}
+	public void setSeventhDate(Date seventhDate) {
+		this.seventhDate = seventhDate;
+	}
+	public void setEighthDate(Date eighthDate) {
+		this.eighthDate = eighthDate;
 	}
 	
 	

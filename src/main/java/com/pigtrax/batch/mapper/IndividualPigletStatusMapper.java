@@ -10,8 +10,9 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private String pigId;
 	private String companyId;
 	private String tattooId;
-	private String wtAtBirth;
-	private String wtAtWeaning;
+	private String groupId;
+//	private String wtAtBirth;
+//	private String wtAtWeaning;
 	private String litterId;
 	private String wtAtFirstMonth;
 	private String wtAtSecondMonth;
@@ -19,6 +20,8 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private String wtAtFourthMonth;
 	private String wtAtFifthMonth;
 	private String wtAtSixthMonth;
+	private String 	wtAtSeventhMonth;
+	private String 	wtAtEighthMonth;
 	private String farmName;
 	
 	private String firstDate;
@@ -27,18 +30,23 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private String fourthDate;
 	private String fifthDate;
 	private String sixthDate;
+	private String seventhDate;
+	private String eighthDate;
 
 	private Integer deriveCompanyId;
 	private Integer derivePremiseId;
 	private Integer deriveLitterId;
-	private Double deriveWtAtBirth;
-	private Double deriveWtAtWeaning;
+	private Integer deriveGroupId;
+//	private Double deriveWtAtBirth;
+//	private Double deriveWtAtWeaning;
 	private Double deriveWtAtFirstMonth;
 	private Double deriveWtAtSecondMonth;
 	private Double deriveWtAtThirdMonth;
 	private Double deriveWtAtFourthMonth;
 	private Double deriveWtAtFifthMonth;
 	private Double deriveWtAtSixthMonth;
+	private Double deriveWtAtSeventhMonth;
+	private Double deriveWtAtEighthMonth;
 	
 	private Date deriveFirstDate;
 	private Date deriveSecondDate;
@@ -46,6 +54,8 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 	private Date deriveFourthDate;
 	private Date deriveFifthDate;
 	private Date deriveSixthDate;
+	private Date deriveSeventhDate;
+	private Date deriveEighthDate;
 	
 	
 	
@@ -92,7 +102,7 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
-	public String getWtAtBirth() {
+/*	public String getWtAtBirth() {
 		return wtAtBirth;
 	}
 
@@ -117,7 +127,7 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 		this.wtAtWeaning = wtAtWeaning;
 	}
 
-
+*/
 
 
 	public String getLitterId() {
@@ -274,7 +284,7 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 
 
-	public Double getDeriveWtAtBirth() {
+/*	public Double getDeriveWtAtBirth() {
 		return deriveWtAtBirth;
 	}
 
@@ -299,7 +309,7 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 		this.deriveWtAtWeaning = deriveWtAtWeaning;
 	}
 
-
+*/
 
 
 	public Double getDeriveWtAtFirstMonth() {
@@ -400,14 +410,16 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 		if((this.pigId==null || this.pigId.trim().length() == 0)
 				&& (this.litterId==null || this.litterId.trim().length() == 0)
 				&& (this.tattooId == null || this.tattooId.trim().length() == 0)
-				&& (this.wtAtBirth == null || this.wtAtBirth.trim().length() == 0)
-				&& (this.wtAtWeaning == null || this.wtAtWeaning.trim().length() == 0)
+//				&& (this.wtAtBirth == null || this.wtAtBirth.trim().length() == 0)
+//				&& (this.wtAtWeaning == null || this.wtAtWeaning.trim().length() == 0)
 				&& (this.wtAtFirstMonth == null || this.wtAtFirstMonth.trim().length() == 0)
 				&& (this.wtAtSecondMonth == null || this.wtAtSecondMonth.trim().length() == 0)
 				&& (this.wtAtThirdMonth == null || this.wtAtThirdMonth.trim().length() == 0)
 				&& (this.wtAtFourthMonth == null || this.wtAtFourthMonth.trim().length() == 0)
 				&& (this.wtAtFifthMonth == null || this.wtAtFifthMonth.trim().length() == 0)
 				&& (this.wtAtSixthMonth == null || this.wtAtSixthMonth.trim().length() == 0)
+				&& (this.wtAtSeventhMonth == null || this.wtAtSeventhMonth.trim().length() == 0)
+				&& (this.wtAtEighthMonth == null || this.wtAtEighthMonth.trim().length() == 0)
 				)
 			return true;
 		else
@@ -580,6 +592,146 @@ public class IndividualPigletStatusMapper extends AbstractMapper {
 
 	public void setDeriveSixthDate(Date deriveSixthDate) {
 		this.deriveSixthDate = deriveSixthDate;
+	}
+
+
+
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+
+
+
+	public String getWtAtSeventhMonth() {
+		return wtAtSeventhMonth;
+	}
+
+
+
+
+	public String getWtAtEighthMonth() {
+		return wtAtEighthMonth;
+	}
+
+
+
+
+	public String getSeventhDate() {
+		return seventhDate;
+	}
+
+
+
+
+	public String getEighthDate() {
+		return eighthDate;
+	}
+
+
+
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+
+
+
+	public void setWtAtSeventhMonth(String wtAtSeventhMonth) {
+		this.wtAtSeventhMonth = wtAtSeventhMonth;
+	}
+
+
+
+
+	public void setWtAtEighthMonth(String wtAtEighthMonth) {
+		this.wtAtEighthMonth = wtAtEighthMonth;
+	}
+
+
+
+
+	public void setSeventhDate(String seventhDate) {
+		this.seventhDate = seventhDate;
+	}
+
+
+
+
+	public void setEighthDate(String eighthDate) {
+		this.eighthDate = eighthDate;
+	}
+
+
+
+
+	public Double getDeriveWtAtSeventhMonth() {
+		return deriveWtAtSeventhMonth;
+	}
+
+
+
+
+	public Double getDeriveWtAtEighthMonth() {
+		return deriveWtAtEighthMonth;
+	}
+
+
+
+
+	public Date getDeriveSeventhDate() {
+		return deriveSeventhDate;
+	}
+
+
+
+
+	public Date getDeriveEighthDate() {
+		return deriveEighthDate;
+	}
+
+
+
+
+	public void setDeriveWtAtSeventhMonth(Double deriveWtAtSeventhMonth) {
+		this.deriveWtAtSeventhMonth = deriveWtAtSeventhMonth;
+	}
+
+
+
+
+	public void setDeriveWtAtEighthMonth(Double deriveWtAtEighthMonth) {
+		this.deriveWtAtEighthMonth = deriveWtAtEighthMonth;
+	}
+
+
+
+
+	public void setDeriveSeventhDate(Date deriveSeventhDate) {
+		this.deriveSeventhDate = deriveSeventhDate;
+	}
+
+
+
+
+	public void setDeriveEighthDate(Date deriveEighthDate) {
+		this.deriveEighthDate = deriveEighthDate;
+	}
+
+
+
+
+	public Integer getDeriveGroupId() {
+		return deriveGroupId;
+	}
+
+
+
+
+	public void setDeriveGroupId(Integer deriveGroupId) {
+		this.deriveGroupId = deriveGroupId;
 	}	
 	
 	

@@ -40,20 +40,26 @@ public class IndividualPigletStatusDerivable implements Derivable {
 					setCompanyId(individualPigletMapper, processDTO);
 					setPremiseId(individualPigletMapper, processDTO);
 					setLitterId(individualPigletMapper);
-					setWtAtBirth(individualPigletMapper);
-					setWtAtWeaning(individualPigletMapper);
+					setgroupId(individualPigletMapper);
+//					setWtAtWeaning(individualPigletMapper);
 					setWtAtFirstMonth(individualPigletMapper);
 					setWtAtSecondMonth(individualPigletMapper);
 					setWtAtThirdMonth(individualPigletMapper);
 					setWtAtFourthMonth(individualPigletMapper);
 					setWtAtFifthMonth(individualPigletMapper);
 					setWtAtSixthMonth(individualPigletMapper);
+					setWtAtSeventhMonth(individualPigletMapper);
+					setWtAtEigthMonth(individualPigletMapper);
 					setFirstDate(individualPigletMapper);
 					setSecondDate(individualPigletMapper);
 					setThirdDate(individualPigletMapper);
 					setFourthDate(individualPigletMapper);
 					setFifthDate(individualPigletMapper);
 					setSixthDate(individualPigletMapper);
+					setSeventhDate(individualPigletMapper);
+					setEighthDate(individualPigletMapper);
+
+					
 				}
 			}
 		}
@@ -84,7 +90,15 @@ public class IndividualPigletStatusDerivable implements Derivable {
 		}
 	}
 		
-	private void setWtAtBirth(final IndividualPigletStatusMapper individualPigletMapper)
+	private void setgroupId(final IndividualPigletStatusMapper individualPigletMapper) {
+		try {
+			individualPigletMapper.setDeriveGroupId(Integer.parseInt(individualPigletMapper.getGroupId())); 
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+	}
+		
+/*	private void setWtAtBirth(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
 			individualPigletMapper.setDeriveWtAtBirth(Double.parseDouble(individualPigletMapper.getWtAtBirth()));
@@ -101,7 +115,7 @@ public class IndividualPigletStatusDerivable implements Derivable {
 			e.printStackTrace();
 		}
 	}
-	
+*/	
 	private void setWtAtFirstMonth(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
@@ -158,6 +172,26 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	}
 	
 		
+	private void setWtAtSeventhMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtSeventhMonth(Double.parseDouble(individualPigletMapper.getWtAtSeventhMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
+	private void setWtAtEigthMonth(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveWtAtEighthMonth(Double.parseDouble(individualPigletMapper.getWtAtEighthMonth()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
 	private void setFirstDate(final IndividualPigletStatusMapper individualPigletMapper)
 	{
 		try {
@@ -208,6 +242,24 @@ public class IndividualPigletStatusDerivable implements Derivable {
 	{
 		try {
 			individualPigletMapper.setDeriveSixthDate(DateUtil.getDateFromString(individualPigletMapper.getSixthDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setSeventhDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveSeventhDate(DateUtil.getDateFromString(individualPigletMapper.getEighthDate()));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setEighthDate(final IndividualPigletStatusMapper individualPigletMapper)
+	{
+		try {
+			individualPigletMapper.setDeriveEighthDate(DateUtil.getDateFromString(individualPigletMapper.getSeventhDate()));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

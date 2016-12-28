@@ -45,8 +45,8 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 					validatePremiseId(individualPigletStatusMapper, errList);
 					validatePigId(individualPigletStatusMapper, errList);
 					validateLitterId(individualPigletStatusMapper, errList);
-					validateWtAtBirth(individualPigletStatusMapper, errList);
-					validateWtAtWeaning(individualPigletStatusMapper, errList);
+//					validateWtAtBirth(individualPigletStatusMapper, errList);
+//					validateWtAtWeaning(individualPigletStatusMapper, errList);
 					validateTattooId(individualPigletStatusMapper, errList);
 					validateWtAtFirstMonth(individualPigletStatusMapper, errList);
 					validateWtAtSecondMonth(individualPigletStatusMapper, errList);
@@ -54,6 +54,8 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 					validateWtAtFourthMonth(individualPigletStatusMapper, errList);
 					validateWtAtFifthMonth(individualPigletStatusMapper, errList);
 					validateWtAtSixthMonth(individualPigletStatusMapper, errList);
+					validateWtAtSeventhMonth(individualPigletStatusMapper, errList);
+					validateWtAtEighthMonth(individualPigletStatusMapper, errList);
 					if (errList.size() > 0) {
 						errorMap.put(mapper, errList);
 					}
@@ -94,7 +96,7 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 		}
 	}
 	
-	private void validateWtAtBirth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+/*	private void validateWtAtBirth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
 		if(individualPigletStatusMapper.getWtAtBirth() != null && individualPigletStatusMapper.getWtAtBirth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtBirth() == null || individualPigletStatusMapper.getDeriveWtAtBirth() < 0)) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_BIRTH_CODE, Constants.IND_PIGLET_ERR_WT_BIRTH_MSG, "wtAtBirth", false));
@@ -107,7 +109,7 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_WEANING_CODE, Constants.IND_PIGLET_ERR_WT_WEANING_MSG, "wtAtWeaning", false));
 		}
 	}
-	
+*/	
 	private void validateWtAtFirstMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
 		if(individualPigletStatusMapper.getWtAtFirstMonth() != null && individualPigletStatusMapper.getWtAtFirstMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtFirstMonth() == null || individualPigletStatusMapper.getDeriveWtAtFirstMonth() < 0)) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
@@ -148,6 +150,20 @@ public class IndividualPigletStatusValidator extends AbstractValidator {
 		if(individualPigletStatusMapper.getWtAtSixthMonth() != null  && individualPigletStatusMapper.getWtAtSixthMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtSixthMonth() == null || individualPigletStatusMapper.getDeriveWtAtSixthMonth() < 0)) {
 			individualPigletStatusMapper.setRecovrableErrors(false); 
 			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_CODE, Constants.IND_PIGLET_ERR_WT_MSG, "wtAtSixthMonth", false));
+		}
+	}
+	
+	private void validateWtAtSeventhMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtSeventhMonth() != null  && individualPigletStatusMapper.getWtAtSeventhMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtSeventhMonth() == null || individualPigletStatusMapper.getDeriveWtAtSeventhMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_CODE, Constants.IND_PIGLET_ERR_WT_MSG, "wtAtSeventhMonth", false));
+		}
+	}
+	
+	private void validateWtAtEighthMonth(final IndividualPigletStatusMapper individualPigletStatusMapper, List<ErrorBean> errList) {	
+		if(individualPigletStatusMapper.getWtAtEighthMonth() != null  && individualPigletStatusMapper.getWtAtEighthMonth().trim().length() > 0 && (individualPigletStatusMapper.getDeriveWtAtEighthMonth()== null || individualPigletStatusMapper.getDeriveWtAtSixthMonth() < 0)) {
+			individualPigletStatusMapper.setRecovrableErrors(false); 
+			errList.add(ErrorBeanUtil.populateErrorBean(Constants.IND_PIGLET_ERR_WT_CODE, Constants.IND_PIGLET_ERR_WT_MSG, "wtAtEighthMonth", false));
 		}
 	}
 	

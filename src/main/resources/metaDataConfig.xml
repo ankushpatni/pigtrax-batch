@@ -2,11 +2,11 @@
 <config>
 	<event id="ENTRYEVENT">
 		<dataInfo>
-			<col key="roomId" order="1" isEmpty="true" />
-			<col key="pigId" order="2" isEmpty="false" />
+			<col key="pigId" order="1" isEmpty="false" />
+			<col key="entryDate" order="2" isEmpty="false" />
 			<col key="tattoo" order="3" isEmpty="true" />
 			<col key="alternateTattoo" order="4" isEmpty="true" />
-			<col key="entryDate" order="5" isEmpty="false" />
+			<col key="roomId" order="5" isEmpty="true" />
 			<col key="sexTypeId" order="6" isEmpty="false" />
 			<col key="geneticOrigin" order="7" isEmpty="true" />
 			<col key="geneticCompany" order="8" isEmpty="false" />			
@@ -32,10 +32,10 @@
 	<event id="PIGLETSTATUSEVENT">
 		<dataInfo>
 			<col key="pigId" order="1" isEmpty="false" />
-			<col key="eventType" order="2" isEmpty="false" />
-			<col key="numberOfPigs" order="3" isEmpty="false" />
-			<col key="weightOfPigs" order="4" isEmpty="true" />
-			<col key="eventDate" order="5" isEmpty="false" />
+			<col key="eventDate" order="2" isEmpty="false" />
+			<col key="eventType" order="3" isEmpty="false" />
+			<col key="numberOfPigs" order="4" isEmpty="false" />
+			<col key="weightOfPigs" order="5" isEmpty="true" />
 			<col key="weanGroupEventId" order="6" isEmpty="true" />	
 			<col key="weanToPremises" order="7" isEmpty="true" />			
 			<col key="transferredToPig" order="8" isEmpty="true" />
@@ -58,9 +58,9 @@
 	</event>
 	<event id="FARROWEVENT">
 		<dataInfo>
-			<col key="penId" order="1" isEmpty="false" />
-			<col key="pigId" order="2" isEmpty="false" />			
-			<col key="farrowDate" order="3" isEmpty="false" />
+			<col key="pigId" order="1" isEmpty="false" />			
+			<col key="farrowDate" order="2" isEmpty="false" />
+			<col key="penId" order="3" isEmpty="false" />
 			<col key="liveBorns" order="4" isEmpty="true" />
 			<col key="stillBorns" order="5" isEmpty="true" />
 			<col key="mummies" order="6" isEmpty="true" />
